@@ -241,6 +241,7 @@
                               type="text"
                               class="form-control"
                               v-model="fillregistrarCotizacion.cFlete"
+                              placeholder="CLIENTE/NOVESUR"
                             />
                           </div>
                         </div>
@@ -324,6 +325,7 @@
                       <label class="col-md-2 col-form-label"
                         >DESCRIPCION DEL MEDIDOR</label
                       >
+
                       <div class="col-md-9">
                         <el-select
                           v-model="fillregistrarCotizacion.nIdprod"
@@ -335,13 +337,19 @@
                             v-for="item in listProd"
                             :key="item.id"
                             :label="
+                              item.codigo +
+                              ' - ' +
                               item.familia.nombre +
                               ' , ' +
                               item.subfamilia.nombre +
                               ' , Modelo: ' +
                               item.modelotipo.nombre +
                               ' , Marca : ' +
-                              item.marca.nombre
+                              item.marca.nombre +
+                              ' , Material : ' +
+                              item.material.nombre +
+                              ' ,' +
+                              item.homologacion.nombre
                             "
                             :value="item.id"
                           >
@@ -361,7 +369,7 @@
                           type="text"
                           class="form-control"
                           v-model="fillregistrarCotizacion.cPUnit"
-                           :onchange ="this.setCalculaTotal()"
+                          :onchange="this.setCalculaTotal()"
                         />
                       </div>
                     </div>
@@ -376,7 +384,7 @@
                           class="form-control"
                           v-model="fillregistrarCotizacion.cTotal"
                           :readonly="true"
-                          :onchange ="this.setCalculaTotal()"
+                          :onchange="this.setCalculaTotal()"
                         />
                       </div>
                     </div>
@@ -413,11 +421,12 @@
                     >
                       <thead>
                         <tr>
-
                           <th>ITEM</th>
                           <th>CANT</th>
                           <th>MEDIDA</th>
+                          <th>CODIGO</th>
                           <th>DESCRIPCION DEL PRODUCTO</th>
+                          <th>HOMOLOGADO</th>
                           <th>P/UNIT</th>
                           <th>TOTAL S/IGV</th>
                           <th>Acciones</th>
@@ -428,54 +437,58 @@
                           v-for="(item, index) in listarProductosPaginated"
                           :key="index"
                         >
-
-                          <td v-text="index+1"></td>
+                          <td v-text="index + 1"></td>
                           <td v-text="item.cantidad"></td>
                           <td v-text="item.unidmedNombre"></td>
-                          <td v-text="item.productoFamilia +' '+ item.productoSubfamilia +', MARCA :'+ item.productoMarca +', MODELO/TIPO :' + item.productoModelotipo "></td>
+                          <td v-text="item.codigo"></td>
+                          <td
+                            v-text="
+                              item.productoFamilia +
+                              ' ' +
+                              item.productoSubfamilia +
+                              ', MARCA :' +
+                              item.productoMarca +
+                              ', MODELO/TIPO :' +
+                              item.productoModelotipo +
+                              ', MATERIAL :' +
+                              item.material
+                            "
+                          ></td>
+                          <td v-text="item.homologacion"></td>
                           <td v-text="item.punit"></td>
                           <td v-text="item.total"></td>
 
-
-
-
                           <td>
-                          <button
-                      class="btn btn-info btn-sm"
-                      @click.prevent=" borradoItems(item.producto_id)"
-                    >
-                      Eliminar
-                    </button>
-
+                            <button
+                              class="btn btn-info btn-sm"
+                              @click.prevent="borradoItems(item.producto_id)"
+                            >
+                              Eliminar
+                            </button>
                           </td>
                         </tr>
                       </tbody>
                     </table>
-
                   </div>
 
-
-                           <div class="card-footer">
-              <div class="row">
-                <div class="col-md-4 offset-4">
-                  <button
-                    class="btn btn-flat btn-info btnWidth"
-                    @click.prevent="setGuardarKardex"
-                  >
-                    Guardar
-                  </button>
-                  <button
-                    class="btn btn-flat btn-default btnWidth"
-                    @click.prevent="eliminarTempitemCoti"
-                  >
-                    Limpiar
-                  </button>
-                </div>
-              </div>
-            </div>
-
-
-
+                  <div class="card-footer">
+                    <div class="row">
+                      <div class="col-md-4 offset-4">
+                        <button
+                          class="btn btn-flat btn-info btnWidth"
+                          @click.prevent="setGrabarCotizacion"
+                        >
+                          Guardar
+                        </button>
+                        <button
+                          class="btn btn-flat btn-default btnWidth"
+                          @click.prevent="eliminarTempitemCoti"
+                        >
+                          Limpiar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </form>
             </div>
@@ -521,6 +534,7 @@ export default {
     return {
       fillregistrarCotizacion: {
         nIdCliente: this.$attrs.id,
+        nIdUsuario: "",
         cNomClient: "",
         cDirClient: "",
         cRucClient: "",
@@ -545,12 +559,13 @@ export default {
         Docu: "",
         cGarantia: "",
         cTotal: "",
+        cEstado: "",
       },
 
       listUnidMed: [],
       listTipoPago: [],
       listProd: [],
-      listarProductosPaginated:[],
+      listarProductosPaginated: [],
 
       modalShow: false,
       mostrarModal: {
@@ -569,7 +584,8 @@ export default {
     this.getListarUnidadMedida();
     this.getListarproductosByName();
     this.getListarTipoPago();
-    this. setListtempCotizacion();
+    this.setListtempCotizacion();
+    this.cargaDatosPredeterminados();
   },
 
   methods: {
@@ -669,6 +685,7 @@ export default {
         })
         .then((response) => {
           this.listProd = response.data;
+          console.log(response.data);
         });
     },
 
@@ -677,7 +694,7 @@ export default {
         this.modalShow = true;
         return;
       }
-       this.setAddTempCotizacion();
+      this.setAddTempCotizacion();
     },
 
     validarCotizacion() {
@@ -690,11 +707,6 @@ export default {
       }
       if (!this.fillregistrarCotizacion.cEntrega) {
         this.mensajeError.push("El Campo Entrega es un campo obligatorio");
-      }
-      if (!this.fillregistrarCotizacion.cFPago) {
-        this.mensajeError.push(
-          "El Campo Forma de pago es un campo obligatorio"
-        );
       }
 
       if (!this.fillregistrarCotizacion.cFlete) {
@@ -738,6 +750,31 @@ export default {
           nIdUnidMed: this.fillregistrarCotizacion.nIdUnidMed,
           nIdprod: this.fillregistrarCotizacion.nIdprod,
           cPUnit: this.fillregistrarCotizacion.cPUnit,
+          cTotal: this.fillregistrarCotizacion.cTotal,
+        })
+        .then((response) => {
+          this.listarProductosPaginated = response.data.datos;
+          this.limpiaItems();
+
+          console.log(response.data.message);
+          if (response.data.message == "Ya fue agregado anteriormente") {
+            Swal.fire({
+              position: "center",
+              icon: response.data.icon,
+              title: response.data.message,
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+        });
+    },
+    setGrabarCotizacion() {
+      var url = "/administracion/tempcotizacion/grabaCotizacion";
+      axios
+        .post(url, {
+          nIdCliente: this.fillregistrarCotizacion.nIdCliente,
+          nIdUsuario: this.fillregistrarCotizacion.vidUSer,
+          cEstado: "2",
           cValidez: this.fillregistrarCotizacion.cValidez,
           cEntrega: this.fillregistrarCotizacion.cEntrega,
           nIdTipoPago: this.fillregistrarCotizacion.nIdTipoPago,
@@ -745,38 +782,34 @@ export default {
           cFlete: this.fillregistrarCotizacion.cFlete,
           Docu: this.fillregistrarCotizacion.Docu,
           cGarantia: this.fillregistrarCotizacion.cGarantia,
-          cTotal: this.fillregistrarCotizacion.cTotal,
         })
         .then((response) => {
-         this.setListtempCotizacion();
-        this.limpiaItems();
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "El pedido ha sido grabado",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          this.eliminarTempitemCoti();
         });
     },
 
-    setListtempCotizacion(){
-        var url = "/administracion/tempcotizacion/ListtempCotizacion";
-             axios
-        .get(url, {
-
-        })
-        .then((response) => {
-            this.listarProductosPaginated = response.data.datos;
-            console.log(response.data);
-        });
-
-
+    setListtempCotizacion() {
+      var url = "/administracion/tempcotizacion/ListtempCotizacion";
+      axios.get(url, {}).then((response) => {
+        this.listarProductosPaginated = response.data.datos;
+      });
     },
-    eliminarTempitemCoti(){
-         var url = '/administracion/tempcotizacion/eliminarTempitemCoti';
+    eliminarTempitemCoti() {
+      var url = "/administracion/tempcotizacion/eliminarTempitemCoti";
       axios
         .post(url, {
-            nIdprod: this.fillregistrarCotizacion.nIdprod,
-
-          }).then((response) => {
-         this.setListtempCotizacion();
-
+          nIdprod: this.fillregistrarCotizacion.nIdprod,
+        })
+        .then((response) => {
+          this.setListtempCotizacion();
         });
-
     },
     setCalculaTotal() {
       const a = parseFloat(this.fillregistrarCotizacion.cCantidad);
@@ -784,28 +817,30 @@ export default {
       const c = a * b;
       this.fillregistrarCotizacion.cTotal = parseFloat(c).toFixed(2);
     },
-      limpiaItems(){
-      this.fillregistrarCotizacion.cCantidad ="";
-        this.fillregistrarCotizacion.cMedida = "";
+    limpiaItems() {
+      this.fillregistrarCotizacion.cCantidad = "";
+      this.fillregistrarCotizacion.cMedida = "";
       this.fillregistrarCotizacion.cDescripcion = "";
       this.fillregistrarCotizacion.cPUnit = "";
       this.fillregistrarCotizacion.cTotal = "";
-  },
+    },
 
-  borradoItems(item){
-         var url = '/administracion/tempcotizacion/reorder';
-              axios
+    borradoItems(item) {
+      var url = "/administracion/tempcotizacion/reorder";
+      axios
         .post(url, {
-            item: item,
-          }).then((response) => {
-       console.log(response.data);
-
+          item: item,
+        })
+        .then((response) => {
+          this.listarProductosPaginated = response.data.datos;
+          //console.log(item);
         });
+    },
 
-
-
-  }
+    cargaDatosPredeterminados() {
+      this.fillregistrarCotizacion.cValidez = "15 días";
+      this.fillregistrarCotizacion.Docu = "Factura, guía y carta de Garantía";
+    },
   },
-
 };
 </script>

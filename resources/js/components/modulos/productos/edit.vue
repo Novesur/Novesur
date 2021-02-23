@@ -54,7 +54,7 @@
                     <div class="col-md-6">
                       <div class="form-group row">
                         <label class="col-md-3 col-form-label"
-                          >SubFamilia</label
+                          >Diametro/Longitud</label
                         >
                         <div class="col-md-8">
                           <el-select
@@ -123,7 +123,9 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group row">
-                        <label class="col-md-3 col-form-label">Modelo/Tipo</label>
+                        <label class="col-md-3 col-form-label"
+                          >Modelo/Tipo</label
+                        >
                         <div class="col-md-8">
                           <el-select
                             v-model="fillEditarProducto.nIdModeloTipo"
@@ -142,7 +144,7 @@
                       </div>
                     </div>
 
-                         <div class="col-md-6">
+                    <div class="col-md-6">
                       <div class="form-group row">
                         <label class="col-md-3 col-form-label">Estado</label>
                         <div class="col-md-8">
@@ -162,7 +164,33 @@
                         </div>
                       </div>
                     </div>
+                  </div>
+                  <div class="row">
 
+
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-md-3 col-form-label"
+                          >Homologado</label
+                        >
+                        <div class="col-md-8">
+                          <el-select
+                            v-model="fillEditarProducto.nIdHomologado"
+                            filterable
+                            placeholder="Seleccione el tipo"
+                            clearable
+                          >
+                            <el-option
+                              v-for="item in listHomologado"
+                              :key="item.id"
+                              :label="item.nombre"
+                              :value="item.id"
+                            >
+                            </el-option>
+                          </el-select>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </form>
               </div>
@@ -233,8 +261,9 @@ export default {
         nIdMarca: "",
         nIdMaterial: "",
         nIdEstado: "",
-        nIdModeloTipo:"",
-         nIdUser : sessionStorage.getItem('iduser'),
+        nIdModeloTipo: "",
+        nIdHomologado: "",
+        nIdUser: sessionStorage.getItem("iduser"),
 
       },
       listFamilia: [],
@@ -242,7 +271,8 @@ export default {
       listMarca: [],
       listMaterial: [],
       listEstadoProd: [],
-      listModeloTipo:[],
+      listModeloTipo: [],
+      listHomologado: [],
       modalShow: false,
       mostrarModal: {
         display: "block",
@@ -258,42 +288,51 @@ export default {
 
   mounted() {
     this.getListarFamilia();
-   this.getListarSubFamilia();
+    this.getListarSubFamilia();
     this.getListarMarca();
     this.getListarMaterial();
     this.getListarEstadoProd();
     this.getListarModeloTipo();
     this.getProductoById();
+    this.getListarHomologacion();
   },
-
 
   methods: {
     abrirModal() {
       this.modalShow = !this.modalShow;
     },
-    getProductoById(){
-        var url = "/administracion/producto/getListarProductoById";
+    getProductoById() {
+      var url = "/administracion/producto/getListarProductoById";
       axios
         .get(url, {
           params: {
-            'nIdProducto': this.fillEditarProducto.nIdProducto,
+            nIdProducto: this.fillEditarProducto.nIdProducto,
           },
         })
         .then((response) => {
 
-      this.fillEditarProducto.nIdFamilia = response.data.familia_id;
-            this.getListarSubFamilia();
-            this.fillEditarProducto.nIdMarca = response.data.marca_id;
-            this.fillEditarProducto.nIdMaterial = response.data.material_id;
-            this.fillEditarProducto.nIdModeloTipo = response.data.modelotipo_id;
-            this.fillEditarProducto.nIdEstado = response.data.estado_id;
+          this.fillEditarProducto.nIdFamilia = response.data.familia_id;
+          this.getListarSubFamilia();
+          this.fillEditarProducto.nIdMarca = response.data.marca_id;
+          this.fillEditarProducto.nIdMaterial = response.data.material_id;
+          this.fillEditarProducto.nIdModeloTipo = response.data.modelotipo_id;
+          this.fillEditarProducto.nIdEstado = response.data.estado_id;
+          this.fillEditarProducto.nIdSubFamilia = response.data.subfamilia_id;
+          this.fillEditarProducto.nIdHomologado= response.data.homologacion_id;
         });
     },
 
-        getListarModeloTipo() {
+    getListarModeloTipo() {
       var url = "/administracion/modelotipo/getListarModelotipo";
       axios.get(url).then((response) => {
         this.listModeloTipo = response.data;
+      });
+    },
+
+      getListarHomologacion() {
+      var url = "/administracion/tempcotizacion/getListarHomologacion";
+      axios.get(url).then((response) => {
+        this.listHomologado = response.data;
       });
     },
 
@@ -326,7 +365,7 @@ export default {
       this.fillEditarProducto.nIdMarca = "";
       this.fillEditarProducto.nIdMaterial = "";
       this.fillEditarProducto.nIdEstado = "";
-      this.fillEditarProducto.nIdModeloTipo="";
+      this.fillEditarProducto.nIdModeloTipo = "";
     },
     getListarFamilia() {
       var url = "/administracion/familia/getListarFamilias";
@@ -349,8 +388,9 @@ export default {
           },
         })
         .then((response) => {
-          (this.fillEditarProducto.nIdSubFamilia = ""),
-            (this.listSubFamilia = response.data);
+          /*  (this.fillEditarProducto.nIdSubFamilia = ""),
+            (this.listSubFamilia = response.data); */
+          this.listSubFamilia = response.data;
         });
     },
     getListarMaterial() {
@@ -378,29 +418,45 @@ export default {
       }
       this.setEditarProductos();
     },
-    setEditarProductos(){
-        var url = '/administracion/producto/setEditarProductos'
-        axios.post(url,{
-            'codiprod' : String('0' + this.fillEditarProducto.nIdFamilia).slice(-2) + String('0' + this.fillEditarProducto.nIdSubFamilia).slice(-2) + String('0' + this.fillEditarProducto.nIdModeloTipo).slice(-2) + String('0'+ this.fillEditarProducto.nIdMarca).slice(-2) + String('0' + this.fillEditarProducto.nIdMaterial).slice(-2),
-            'nIdProducto' : this.fillEditarProducto.nIdProducto,
-            'nIdFamilia' : this.fillEditarProducto.nIdFamilia,
-            'nIdSubFamilia' : this.fillEditarProducto.nIdSubFamilia,
-            'nIdMarca' : this.fillEditarProducto.nIdMarca,
-            'nIdMaterial' : this.fillEditarProducto.nIdMaterial,
-            'nIdModeloTipo' : this.fillEditarProducto.nIdModeloTipo,
-            'nIdEstado' : this.fillEditarProducto.nIdEstado,
-            'nIdUser' : this.fillEditarProducto.nIdUser,
+    setEditarProductos() {
+      var url = "/administracion/producto/setEditarProductos";
+      axios
+        .post(url, {
+       codiprod:
+            String("0" + this.fillEditarProducto.nIdFamilia).slice(-2) +
+            String("0" + this.fillEditarProducto.nIdSubFamilia).slice(-2) +
+            String("0" + this.fillEditarProducto.nIdModeloTipo).slice(-2) +
+            String("0" + this.fillEditarProducto.nIdMarca).slice(-2) +
+            String("0" + this.fillEditarProducto.nIdMaterial).slice(-2),
+          codiprodcert:
+            String("C" + this.fillEditarProducto.nIdFamilia).slice(-2) +
+            String("0" + this.fillEditarProducto.nIdSubFamilia).slice(-2) +
+            String("0" + this.fillEditarProducto.nIdModeloTipo).slice(-2) +
+            String("0" + this.fillEditarProducto.nIdMarca).slice(-2) +
+            String("0" + this.fillEditarProducto.nIdMaterial).slice(-2),
 
-        }).then((response)=>{
-               Swal.fire({
+          nIdProducto: this.fillEditarProducto.nIdProducto,
+          nIdFamilia: this.fillEditarProducto.nIdFamilia,
+          nIdSubFamilia: this.fillEditarProducto.nIdSubFamilia,
+          nIdMarca: this.fillEditarProducto.nIdMarca,
+          nIdMaterial: this.fillEditarProducto.nIdMaterial,
+          nIdModeloTipo: this.fillEditarProducto.nIdModeloTipo,
+          nIdEstado: this.fillEditarProducto.nIdEstado,
+          nIdUser: this.fillEditarProducto.nIdUser,
+          nIdHomologado : this.fillEditarProducto.nIdHomologado,
+
+
+        })
+        .then((response) => {
+          Swal.fire({
             icon: "success",
             title: "Se edito correctamente",
             showConfirmButton: false,
             timer: 1500,
           });
-            this.$router.push("/productos");
-        })
-    }
+          this.$router.push("/productos");
+        });
+    },
   },
 };
 </script>

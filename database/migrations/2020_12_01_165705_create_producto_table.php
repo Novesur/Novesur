@@ -16,7 +16,7 @@ class CreateProductoTable extends Migration
         Schema::create('producto', function (Blueprint $table) {
             $table->id();
 
-            $table->char('codigo',10)->unique();
+            $table->char('codigo',11)->unique();
 
             $table->unsignedBigInteger('familia_id');
             $table->foreign('familia_id')->references('id')->on('familia');
@@ -38,6 +38,10 @@ class CreateProductoTable extends Migration
 
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
+
+            $table->unsignedBigInteger('homologacion_id');
+            $table->foreign('homologacion_id')->references('id')->on('homologacion');
+
             $table->timestamps();
         });
     }

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Estadoprod;
+use App\EstadoProducto;
 class EstadoprodSeeder extends Seeder
 {
     /**
@@ -15,9 +15,9 @@ class EstadoprodSeeder extends Seeder
             ['nombre' => 'Activo'],
             ['nombre' => 'Inactivo'],
         ];
-        Estadoprod::query()->delete();
+        EstadoProducto::query()->delete();
         foreach ($estadoprod as $data) {
-            Estadoprod::create($data);
+            EstadoProducto::create($data);
         }
     }
 }

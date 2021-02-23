@@ -54,10 +54,8 @@ class Producto extends Model
         return $this->hasOne(kardex::class);
     }
 
-
-
-
-
-
+    public function homologacion(){
+        return $this->belongsTo(Homologacion::class);
+    }
 }
 

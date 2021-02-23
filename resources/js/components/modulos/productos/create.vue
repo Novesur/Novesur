@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0 text-dark">Crear Producto </h1>
+          <h1 class="m-0 text-dark">Crear Producto</h1>
         </div>
       </div>
     </div>
@@ -54,7 +54,7 @@
                     <div class="col-md-6">
                       <div class="form-group row">
                         <label class="col-md-3 col-form-label"
-                          >SubFamilia</label
+                          >Diametro/Longitud</label
                         >
                         <div class="col-md-8">
                           <el-select
@@ -123,7 +123,9 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group row">
-                        <label class="col-md-3 col-form-label">Modelo/Tipo</label>
+                        <label class="col-md-3 col-form-label"
+                          >Modelo/Tipo</label
+                        >
                         <div class="col-md-8">
                           <el-select
                             v-model="fillCrearProducto.nIdModeloTipo"
@@ -142,7 +144,7 @@
                       </div>
                     </div>
 
-                         <div class="col-md-6">
+                    <div class="col-md-6">
                       <div class="form-group row">
                         <label class="col-md-3 col-form-label">Estado</label>
                         <div class="col-md-8">
@@ -162,7 +164,33 @@
                         </div>
                       </div>
                     </div>
+                  </div>
 
+                  <div class="row">
+
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-md-3 col-form-label"
+                          >Homologado</label
+                        >
+                        <div class="col-md-8">
+                          <el-select
+                            v-model="fillCrearProducto.nIdHomologado"
+                            filterable
+                            placeholder="Seleccione el tipo"
+                            clearable
+                          >
+                            <el-option
+                              v-for="item in listHomologado"
+                              :key="item.id"
+                              :label="item.nombre"
+                              :value="item.id"
+                            >
+                            </el-option>
+                          </el-select>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </form>
               </div>
@@ -232,16 +260,17 @@ export default {
         nIdMarca: "",
         nIdMaterial: "",
         nIdEstado: "",
-        nIdModeloTipo:"",
-        nIdUser : sessionStorage.getItem('iduser'),
-
+        nIdModeloTipo: "",
+        nIdHomologado: "",
+        nIdUser: sessionStorage.getItem("iduser"),
       },
       listFamilia: [],
       listSubFamilia: [],
       listMarca: [],
       listMaterial: [],
       listEstadoProd: [],
-      listModeloTipo:[],
+      listModeloTipo: [],
+      listHomologado: [],
       modalShow: false,
       mostrarModal: {
         display: "block",
@@ -256,14 +285,13 @@ export default {
   },
   mounted() {
     this.getListarFamilia();
-    this.getListarSubFamilia()
+    this.getListarSubFamilia();
     this.getListarMarca();
     this.getListarMaterial();
     this.getListarEstadoProd();
     this.getListarModeloTipo();
-   // console.log(sessionStorage.getItem('iduser'));
-
-
+    this.getListarHomologacion();
+    // console.log(sessionStorage.getItem('iduser'));
   },
 
   methods: {
@@ -271,7 +299,7 @@ export default {
       this.modalShow = !this.modalShow;
     },
 
-        getListarModeloTipo() {
+    getListarModeloTipo() {
       var url = "/administracion/modelotipo/getListarModelotipo";
       axios.get(url).then((response) => {
         this.listModeloTipo = response.data;
@@ -314,13 +342,14 @@ export default {
         this.listFamilia = response.data;
       });
     },
+
     getListarMarca() {
       var url = "/administracion/marcas/getListarMarcas";
       axios.get(url).then((response) => {
         this.listMarca = response.data;
       });
     },
-/*     getListarSubFamilia() {
+    /*     getListarSubFamilia() {
       var url = "/administracion/subfamilia/listSubFamiliabyFamilia";
       axios
         .get(url, {
@@ -334,11 +363,11 @@ export default {
         });
     }, */
 
-        getListarSubFamilia() {
+    getListarSubFamilia() {
       var url = "/administracion/subfamilia/listSubFamiliabyFamilia";
       axios.get(url).then((response) => {
-            this.listSubFamilia = response.data;
-        });
+        this.listSubFamilia = response.data;
+      });
     },
     getListarMaterial() {
       var url = "/administracion/material/getListarMaterial";
@@ -346,10 +375,19 @@ export default {
         this.listMaterial = response.data;
       });
     },
+    getListarHomologacion() {
+      var url = "/administracion/tempcotizacion/getListarHomologacion";
+      axios.get(url).then((response) => {
+        this.listHomologado = response.data;
+        this.fillCrearProducto.nIdHomologado = this.listHomologado[2].id;
+
+      });
+    },
     getListarEstadoProd() {
       var url = "/administracion/estadoprod/getListarEstadoprod";
       axios.get(url).then((response) => {
         this.listEstadoProd = response.data;
+         this.fillCrearProducto.nIdEstado = this.listEstadoProd[0].id;
       });
     },
     setGuardarProductos() {
@@ -365,22 +403,36 @@ export default {
       }
       this.setGuardarProductos();
     },
-    setGuardarProductos(){
-        var url = '/administracion/producto/setRegistrarProducto'
-        axios.post(url,{
-            'codiprod' : String('0' + this.fillCrearProducto.nIdFamilia).slice(-2) + String('0' + this.fillCrearProducto.nIdSubFamilia).slice(-2) + String('0' + this.fillCrearProducto.nIdModeloTipo).slice(-2) + String('0'+ this.fillCrearProducto.nIdMarca).slice(-2) + String('0' + this.fillCrearProducto.nIdMaterial).slice(-2),
-            nIdFamilia : this.fillCrearProducto.nIdFamilia,
-            nIdSubFamilia : this.fillCrearProducto.nIdSubFamilia,
-            nIdMarca : this.fillCrearProducto.nIdMarca,
-            nIdMaterial : this.fillCrearProducto.nIdMaterial,
-            nIdEstado : this.fillCrearProducto.nIdEstado,
-            nIdModeloTipo : this.fillCrearProducto.nIdModeloTipo,
-            nIdUser : this.fillCrearProducto.nIdUser,
+    setGuardarProductos() {
+      var url = "/administracion/producto/setRegistrarProducto";
+      axios
+        .post(url, {
+          codiprod:
+            String("0" + this.fillCrearProducto.nIdFamilia).slice(-2) +
+            String("0" + this.fillCrearProducto.nIdSubFamilia).slice(-2) +
+            String("0" + this.fillCrearProducto.nIdModeloTipo).slice(-2) +
+            String("0" + this.fillCrearProducto.nIdMarca).slice(-2) +
+            String("0" + this.fillCrearProducto.nIdMaterial).slice(-2),
+          codiprodcert:
+            String("C" + this.fillCrearProducto.nIdFamilia).slice(-2) +
+            String("0" + this.fillCrearProducto.nIdSubFamilia).slice(-2) +
+            String("0" + this.fillCrearProducto.nIdModeloTipo).slice(-2) +
+            String("0" + this.fillCrearProducto.nIdMarca).slice(-2) +
+            String("0" + this.fillCrearProducto.nIdMaterial).slice(-2),
 
-        }).then((response)=>{
-            this.$router.push("/productos");
+          nIdFamilia: this.fillCrearProducto.nIdFamilia,
+          nIdSubFamilia: this.fillCrearProducto.nIdSubFamilia,
+          nIdMarca: this.fillCrearProducto.nIdMarca,
+          nIdMaterial: this.fillCrearProducto.nIdMaterial,
+          nIdEstado: this.fillCrearProducto.nIdEstado,
+          nIdModeloTipo: this.fillCrearProducto.nIdModeloTipo,
+          nIdUser: this.fillCrearProducto.nIdUser,
+          nIdHomologado: this.fillCrearProducto.nIdHomologado,
         })
-    }
+        .then((response) => {
+          this.$router.push("/productos");
+        });
+    },
   },
 };
 </script>

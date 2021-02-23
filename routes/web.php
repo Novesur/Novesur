@@ -40,8 +40,8 @@ Route::post('/administracion/material/setEditarMaterial', 'Administracion\Materi
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /////////// SubFamilia
-Route::get('/administracion/subfamilia/getListarSubfamilia', 'Administracion\SubFamiliaController@store');
-Route::post('/administracion/subfamilia/setRegistrarSubfamilia', 'Administracion\SubFamiliaController@create');
+Route::get('/administracion/subfamilia/getListarSubfamilia', 'Administracion\SubfamiliaController@store');
+Route::post('/administracion/subfamilia/setRegistrarSubfamilia', 'Administracion\SubfamiliaController@create');
 Route::get('/administracion/subfamilia/listByIdSubfamilia', 'Administracion\SubfamiliaController@listByIdSubfamilia');
 Route::post('/administracion/subfamilia/setEditarSubfamilia', 'Administracion\SubfamiliaController@edit');
 Route::get('/administracion/subfamilia/listSubFamiliabyFamilia', 'Administracion\SubfamiliaController@listSubFamiliabyFamilia');
@@ -153,9 +153,13 @@ Route::get('/administracion/cotizacion/listTipoPago', 'Administracion\Cotizacion
 //TempCotizacion
 Route::get('/administracion/tempcotizacion/ListtempCotizacion', 'Administracion\CotizacionController@ListtempCotizacion');
 Route::post('/administracion/tempcotizacion/eliminarTempitemCoti', 'Administracion\CotizacionController@eliminarTempitemCoti');
+//Elimina por boton eliminar de listado de items
 Route::post('/administracion/tempcotizacion/reorder', 'Administracion\CotizacionController@reorder');
+Route::post('/administracion/tempcotizacion/grabaCotizacion', 'Administracion\CotizacionController@create');
 
 
+//Homologacion
+Route::get('/administracion/tempcotizacion/getListarHomologacion', 'Administracion\HomologadoController@index');
 
 
 

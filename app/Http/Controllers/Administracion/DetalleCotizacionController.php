@@ -13,8 +13,7 @@ class DetalleCotizacionController extends Controller
         $nIdprod = $request->nIdUsuario;
 
         $nIdprod = ($nIdprod == NULL) ? ($nIdprod = '') : $nIdprod;
-        $dato = Producto::with('familia', 'marca', 'material', 'modelotipo', 'subfamilia', 'estado')
-        ->get();
+        $dato = Producto::with('familia', 'marca', 'material', 'modelotipo', 'subfamilia', 'estado','homologacion')->get();
     return $dato;
     }
 

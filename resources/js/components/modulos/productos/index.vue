@@ -12,11 +12,13 @@
       <div class="card">
         <div class="card-header">
           <div class="card-tools">
-              <template v-if="listRolPermisoByUsuario.includes('productos.crear')">
-            <router-link class="btn btn-info btn-sm" :to="'/productos/crear'">
-              <i class="fas fa-plus-square">Nuevo Producto</i>
-            </router-link>
-              </template>
+            <template
+              v-if="listRolPermisoByUsuario.includes('productos.crear')"
+            >
+              <router-link class="btn btn-info btn-sm" :to="'/productos/crear'">
+                <i class="fas fa-plus-square">Nuevo Producto</i>
+              </router-link>
+            </template>
           </div>
         </div>
 
@@ -56,7 +58,7 @@
                     <div class="col-md-6">
                       <div class="form-group row">
                         <label class="col-md-3 col-form-label"
-                          >SubFamilia</label
+                          >Diametro/Longitud</label
                         >
                         <div class="col-md-8">
                           <el-select
@@ -77,7 +79,6 @@
                         </div>
                       </div>
                     </div>
-
                   </div>
 
                   <div class="row">
@@ -173,6 +174,33 @@
                       </div>
                     </div>
                   </div>
+
+                  <div class="row">
+
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-md-3 col-form-label"
+                          >Homologado</label
+                        >
+                        <div class="col-md-8">
+                          <el-select
+                            v-model="fillBsqProducto.nIdHomologado"
+                            filterable
+                            placeholder="Seleccione el tipo"
+                            clearable
+                          >
+                            <el-option
+                              v-for="item in listHomologado"
+                              :key="item.id"
+                              :label="item.nombre"
+                              :value="item.id"
+                            >
+                            </el-option>
+                          </el-select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </form>
               </div>
 
@@ -207,11 +235,12 @@
                     <thead>
                       <tr>
                         <th>Codigo</th>
-                        <th>Modelo/Tipo</th>
                         <th>Familia</th>
                         <th>SubFamilia</th>
                         <th>Marca</th>
                         <th>Material</th>
+                        <th>Modelo/Tipo</th>
+                        <th>Homologación</th>
                         <th>Estado</th>
                         <th>Acciones</th>
                       </tr>
@@ -222,11 +251,12 @@
                         :key="index"
                       >
                         <td v-text="item.codigo"></td>
-                        <td v-text="item.modelotipo.nombre"></td>
                         <td v-text="item.familia.nombre"></td>
                         <td v-text="item.subfamilia.nombre"></td>
                         <td v-text="item.marca.nombre"></td>
                         <td v-text="item.material.nombre"></td>
+                        <td v-text="item.modelotipo.nombre"></td>
+                        <td v-text="item.homologacion.nombre"></td>
                         <td>
                           <template v-if="item.estado_id == '1'">
                             <span class="badge badge-success">Activo</span>
@@ -236,20 +266,31 @@
                           </template>
                         </td>
                         <td>
+                          <router-link
+                            class="btn btn-info btn-sm"
+                            :to="{
+                              name: 'productos.editar',
+                              params: { id: item.id },
+                            }"
+                          >
+                            <i class="fas fa-pencil-alt"></i> Editar
+                          </router-link>
 
-                            <router-link class="btn btn-info btn-sm" :to="{name:'productos.editar' , params:{id:item.id}} ">
-                              <i class="fas fa-pencil-alt"></i> Editar
-                             </router-link>
-
-                                <template v-if="listRolPermisoByUsuario.includes('kardex.index')">
-                             <router-link class="btn btn-secondary btn-sm" :to="{name:'kardex.index' , params:{id:item.id}} ">
+                          <template
+                            v-if="
+                              listRolPermisoByUsuario.includes('kardex.index')
+                            "
+                          >
+                            <router-link
+                              class="btn btn-secondary btn-sm"
+                              :to="{
+                                name: 'kardex.index',
+                                params: { id: item.id },
+                              }"
+                            >
                               <i class="fas fa-clipboard-check"></i> Kardex
-                             </router-link>
-                                </template>
-
-
-
-
+                            </router-link>
+                          </template>
                         </td>
                       </tr>
                     </tbody>
@@ -296,13 +337,14 @@ export default {
   data() {
     return {
       fillBsqProducto: {
-
         nIdFamilia: "",
         nIdSubFamilia: "",
         nIdMarca: "",
         nIdMaterial: "",
         nIdEstado: "",
         nIdModeloTipo: "",
+        nIdHomologado:"",
+
       },
       pageNumber: 0,
       perPage: 5,
@@ -313,7 +355,8 @@ export default {
       listEstadoProd: [],
       listProductos: [],
       listModeloTipo: [],
-        listRolPermisoByUsuario: JSON.parse(
+      listHomologado:[],
+      listRolPermisoByUsuario: JSON.parse(
         sessionStorage.getItem("listRolPermisosByUsuario")
       ),
     };
@@ -325,6 +368,7 @@ export default {
     this.getListarMaterial();
     this.getListarEstadoProd();
     this.getListarModeloTipo();
+    this.getListarHomologacion();
   },
   computed: {
     pageCount() {
@@ -358,6 +402,13 @@ export default {
       this.fillBsqProducto.nIdMaterial = "";
       this.fillBsqProducto.nIdEstado = "";
     },
+     getListarHomologacion() {
+      var url = "/administracion/tempcotizacion/getListarHomologacion";
+      axios.get(url).then((response) => {
+        this.listHomologado = response.data;
+        this.fillBsqProducto.nIdHomologado = this.listHomologado[2].id;
+      });
+    },
     getListarModeloTipo() {
       var url = "/administracion/modelotipo/getListarModelotipo";
       axios.get(url).then((response) => {
@@ -368,7 +419,6 @@ export default {
       var url = "/administracion/familia/getListarFamilias";
       axios.get(url).then((response) => {
         this.listFamilia = response.data;
-
       });
     },
     getListarMarca() {
@@ -380,8 +430,8 @@ export default {
     getListarSubFamilia() {
       var url = "/administracion/subfamilia/listSubFamiliabyFamilia";
       axios.get(url).then((response) => {
-            this.listSubFamilia = response.data;
-        });
+        this.listSubFamilia = response.data;
+      });
     },
     getListarMaterial() {
       var url = "/administracion/material/getListarMaterial";
@@ -393,6 +443,7 @@ export default {
       var url = "/administracion/estadoprod/getListarEstadoprod";
       axios.get(url).then((response) => {
         this.listEstadoProd = response.data;
+         this.fillBsqProducto.nIdEstado = this.listEstadoProd[0].id;
       });
     },
     getListarProducto() {
@@ -403,8 +454,9 @@ export default {
             nIdFamilia: this.fillBsqProducto.nIdFamilia,
             nIdSubFamilia: this.fillBsqProducto.nIdSubFamilia,
             nIdMarca: this.fillBsqProducto.nIdMarca,
-            nIdMaterial : this.fillBsqProducto.nIdMaterial,
-            nIdEstado : this.fillBsqProducto.nIdEstado,
+            nIdMaterial: this.fillBsqProducto.nIdMaterial,
+            nIdEstado: this.fillBsqProducto.nIdEstado,
+            nIdHomologado : this.fillBsqProducto.nIdHomologado,
           },
         })
         .then((response) => {
@@ -412,8 +464,6 @@ export default {
           this.listProductos = response.data;
         });
     },
-
-
 
     limpiarBandejaProductos() {
       this.listProductos = [];

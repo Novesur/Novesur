@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Producto;
 use App\Familia;
-
+use phpDocumentor\Reflection\PseudoTypes\True_;
 
 class ProductoController extends Controller
 {
@@ -14,21 +14,36 @@ class ProductoController extends Controller
     public function index(Request $request)
 
     {
-        $dato = Producto::with('familia', 'marca', 'material', 'modelotipo', 'subfamilia', 'estado')
-            ->orWhere('familia_id', $request->nIdFamilia)
-            ->orWhere('subfamilia_id', $request->nIdSubFamilia)
-            ->orWhere('marca_id', $request->nIdMarca)
-            ->orWhere('material_id', $request->nIdMaterial)
-            ->orWhere('estado_id', $request->nIdEstado)
-            ->get();
+
+        if ($request->nIdFamilia == null && $request->nIdSubFamilia == null && $request->nIdMarca == null && $request->nIdMaterial == null && $request->nIdEstado == null && $request->nIdHomologado == null) {
+            $dato = Producto::with('familia', 'marca', 'material', 'modelotipo', 'subfamilia','homologacion', 'estado')->get();
+        } else {
+            $dato = Producto::with('familia', 'marca', 'material', 'modelotipo', 'subfamilia','homologacion', 'estado')
+                ->orWhere('familia_id', $request->nIdFamilia)
+                ->orWhere('subfamilia_id', $request->nIdSubFamilia)
+                ->orWhere('marca_id', $request->nIdMarca)
+                ->orWhere('material_id', $request->nIdMaterial)
+                ->orWhere('estado_id', $request->nIdEstado)
+                ->orWhere('homologacion_id', $request->nIdHomologado)
+                ->get();
+        }
         return $dato;
     }
 
     public function create(Request $request)
     {
+
         if (!$request->ajax()) return redirect('/');
         $producto = new Producto;
-        $producto->codigo = $request->codiprod;
+
+        if ($request->nIdHomologado == 2) {
+            $codiprod = $request->codiprodcert;
+
+        } else {
+            $codiprod = $request->codiprod;
+
+        }
+        $producto->codigo = $codiprod;
         $producto->familia_id = $request->nIdFamilia;
         $producto->subfamilia_id = $request->nIdSubFamilia;
         $producto->modelotipo_id = $request->nIdModeloTipo;
@@ -36,6 +51,8 @@ class ProductoController extends Controller
         $producto->material_id = $request->nIdMaterial;
         $producto->estado_id = $request->nIdEstado;
         $producto->user_id = $request->nIdUser;
+
+        $producto->homologacion_id = $request->nIdHomologado;
         $producto->save();
     }
 
@@ -47,7 +64,7 @@ class ProductoController extends Controller
 
     public function ListarProductoByIdKardex(Request $request)
     {
-        $dato = Producto::with('familia', 'marca', 'material', 'modelotipo', 'subfamilia', 'estado')
+        $dato = Producto::with('familia', 'marca', 'material', 'modelotipo', 'subfamilia','homologacion', 'estado')
             ->where('id', '=', $request->nIdProducto)->first();
         return $dato;
     }
@@ -66,8 +83,17 @@ class ProductoController extends Controller
         if (!$request->ajax()) return redirect('/');
         $nIdProducto = $request->nIdProducto;
         $Producto = Producto::where('id', $nIdProducto)->first();
+
+        if ($request->nIdHomologado == '2') {
+            $codiprod = $request->codiprodcert;
+
+        } else {
+            $codiprod = $request->codiprod;
+
+        }
+
         if ($Producto) {
-            $Producto->codigo = $request->codiprod;
+            $Producto->codigo = $codiprod;
             $Producto->familia_id = $request->nIdFamilia;
             $Producto->subfamilia_id = $request->nIdSubFamilia;
             $Producto->modelotipo_id = $request->nIdModeloTipo;
@@ -75,8 +101,11 @@ class ProductoController extends Controller
             $Producto->material_id = $request->nIdMaterial;
             $Producto->estado_id = $request->nIdEstado;
             $Producto->user_id = $request->nIdUser;
+            $Producto->homologacion_id = $request->nIdHomologado;
 
             $Producto->save();
         }
     }
+
+
 }

@@ -23,17 +23,10 @@ class CreateDetalleCotizacionTable extends Migration
             $table->unsignedBigInteger('producto_id');
             $table->foreign('producto_id')->references('id')->on('producto');
             $table->decimal('punit', 8, 2)->required();
-            $table->string('validezoferta',20);
-            $table->string('Entrega',120);
-            $table->foreign('tipopago_id')->references('id')->on('tipopago');
-            $table->unsignedBigInteger('tipopago_id');
-            $table->string('descripcionTipopago')->nullable();;
-            $table->string('flete',20);
-            $table->string('documentacion',50);
-            $table->string('garantia');
-            $table->timestamps();
         });
+
     }
+
 
     /**
      * Reverse the migrations.
