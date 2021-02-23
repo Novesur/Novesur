@@ -209,7 +209,7 @@ export default {
         sessionStorage.getItem("listRolPermisosByUsuario")
       ),
       pageNumber: 0,
-      perPage: 5,
+      perPage: 10,
     };
   },
   computed: {

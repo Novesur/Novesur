@@ -113,7 +113,7 @@ export default {
             },
             listFamilia:[],
             pageNumber:0,
-            perPage : 5,
+            perPage : 10,
         }
     },
     computed:{

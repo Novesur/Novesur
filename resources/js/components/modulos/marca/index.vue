@@ -138,7 +138,7 @@ export default {
       },
       listMarca: [],
       pageNumber: 0,
-      perPage: 5,
+      perPage: 10,
     };
   },
   computed: {
