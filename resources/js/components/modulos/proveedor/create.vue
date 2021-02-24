@@ -112,9 +112,11 @@
                         </div>
                       </div>
                     </div>
-                        <div class="col-md-6">
+                    <div class="col-md-6">
                       <div class="form-group row">
-                        <label class="col-md-2 col-form-label">Cuenta1 en S/.</label>
+                        <label class="col-md-2 col-form-label"
+                          >Cuenta1 en S/.</label
+                        >
                         <div class="col-md-9">
                           <input
                             type="text"
@@ -127,10 +129,12 @@
                     </div>
                   </div>
 
-                      <div class="row">
+                  <div class="row">
                     <div class="col-md-6">
                       <div class="form-group row">
-                        <label class="col-md-2 col-form-label">Cuenta2 en S/.</label>
+                        <label class="col-md-2 col-form-label"
+                          >Cuenta2 en S/.</label
+                        >
                         <div class="col-md-9">
                           <input
                             type="text"
@@ -141,9 +145,11 @@
                         </div>
                       </div>
                     </div>
-                        <div class="col-md-6">
+                    <div class="col-md-6">
                       <div class="form-group row">
-                        <label class="col-md-2 col-form-label">Cuenta3 en S/.</label>
+                        <label class="col-md-2 col-form-label"
+                          >Cuenta3 en S/.</label
+                        >
                         <div class="col-md-9">
                           <input
                             type="text"
@@ -256,28 +262,35 @@ export default {
     limpiarBandejaProveedor() {
       this.listProveedor = [];
     },
-    setRegistrarProveedor(){
-        if(this.validarProveedor()){
-            this.modalShow = true;
-            return;
-        }
-        this.setGuardarProveedor();
-
+    setRegistrarProveedor() {
+      if (this.validarProveedor()) {
+        this.modalShow = true;
+        return;
+      }
+      this.setGuardarProveedor();
     },
     setGuardarProveedor() {
-      var url = '/administracion/proveedor/setRegistrarProveedor';
+      var url = "/administracion/proveedor/setRegistrarProveedor";
       axios
         .post(url, {
-            cNombre: this.fillRegistrarProveedor.cNombre,
-            cRuc: this.fillRegistrarProveedor.cRuc,
-            cDireccion: this.fillRegistrarProveedor.cDireccion,
-            cTelefono: this.fillRegistrarProveedor.cTelefono,
-            cEmail: this.fillRegistrarProveedor.cEmail,
-            cContacto : this.fillRegistrarProveedor.cContacto,
-            cCuentaNro1 : this.fillRegistrarProveedor.cCuentaNro1,
-            cCuentaNro2 : this.fillRegistrarProveedor.cCuentaNro2,
-            cCuentaNro3 : this.fillRegistrarProveedor.cCuentaNro3
-          }).then((response) => {
+          cNombre: this.fillRegistrarProveedor.cNombre,
+          cRuc: this.fillRegistrarProveedor.cRuc,
+          cDireccion: this.fillRegistrarProveedor.cDireccion,
+          cTelefono: this.fillRegistrarProveedor.cTelefono,
+          cEmail: this.fillRegistrarProveedor.cEmail,
+          cContacto: this.fillRegistrarProveedor.cContacto,
+          cCuentaNro1: this.fillRegistrarProveedor.cCuentaNro1,
+          cCuentaNro2: this.fillRegistrarProveedor.cCuentaNro2,
+          cCuentaNro3: this.fillRegistrarProveedor.cCuentaNro3,
+        })
+        .then((response) => {
+          Swal.fire({
+            position: "center",
+            icon: response.data.icon,
+            title: response.data.message,
+            showConfirmButton: false,
+            timer: 2000,
+          });
           this.$router.push("/proveedor");
         });
     },
@@ -306,8 +319,8 @@ export default {
         this.mensajeError.push("El Campo Contacto es un campo obligatorio");
       }
 
-      if(this.mensajeError.length){
-          this.error=1;
+      if (this.mensajeError.length) {
+        this.error = 1;
       }
       return this.error;
     },

@@ -90,7 +90,7 @@
                 <template v-if="listPermisos.includes('subfamilia.index')">
                   <router-link class="nav-link" :to="'/subfamilia'">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>SubFamilia</p>
+                    <p>Diametro/Longitud</p>
                   </router-link>
                 </template>
               </li>

@@ -167,7 +167,6 @@
                   </div>
 
                   <div class="row">
-
                     <div class="col-md-6">
                       <div class="form-group row">
                         <label class="col-md-3 col-form-label"
@@ -380,22 +379,16 @@ export default {
       axios.get(url).then((response) => {
         this.listHomologado = response.data;
         this.fillCrearProducto.nIdHomologado = this.listHomologado[2].id;
-
       });
     },
     getListarEstadoProd() {
       var url = "/administracion/estadoprod/getListarEstadoprod";
       axios.get(url).then((response) => {
         this.listEstadoProd = response.data;
-         this.fillCrearProducto.nIdEstado = this.listEstadoProd[0].id;
+        this.fillCrearProducto.nIdEstado = this.listEstadoProd[0].id;
       });
     },
-    setGuardarProductos() {
-      var url = "/administracion/producto/setRegistrarProducto";
-      axios.post(url, {
-        params: {},
-      });
-    },
+
     setRegistrarProductos() {
       if (this.validarProductos()) {
         this.modalShow = true;
@@ -430,6 +423,13 @@ export default {
           nIdHomologado: this.fillCrearProducto.nIdHomologado,
         })
         .then((response) => {
+            Swal.fire({
+            position: "center",
+            icon: response.data.icon,
+            title: response.data.message,
+            showConfirmButton: false,
+            timer: 2000,
+          });
           this.$router.push("/productos");
         });
     },

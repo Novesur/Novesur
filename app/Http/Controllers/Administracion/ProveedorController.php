@@ -31,18 +31,31 @@ class ProveedorController extends Controller
     public function create(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
-        $proveedor = new Proveedor;
-        //dd($request->all());
-        $proveedor->nombre = mb_strtoupper($request->cNombre);
-        $proveedor->ruc = $request->cRuc;
-        $proveedor->direccion = mb_strtoupper($request->cDireccion);
-        $proveedor->telefono = $request->cTelefono;
-        $proveedor->email = $request->cEmail;
-        $proveedor->contacto = mb_strtoupper($request->cContacto);
-        $proveedor->nrocuenta1 = mb_strtoupper($request->cCuentaNro1);
-        $proveedor->nrocuenta2 = mb_strtoupper($request->cCuentaNro2);
-        $proveedor->nrocuenta3 = mb_strtoupper($request->cCuentaNro3);
-        $proveedor->save();
+
+        $cons = Proveedor::where('ruc', '=', $request->cRuc)->exists();
+
+        if ($cons) {
+            return response()->json(['message' => 'Ya fue agregado anteriormente', 'icon' => 'error'], 200);
+        }else{
+
+            $proveedor = new Proveedor;
+            //dd($request->all());
+            $proveedor->nombre = mb_strtoupper($request->cNombre);
+            $proveedor->ruc = $request->cRuc;
+            $proveedor->direccion = mb_strtoupper($request->cDireccion);
+            $proveedor->telefono = $request->cTelefono;
+            $proveedor->email = $request->cEmail;
+            $proveedor->contacto = mb_strtoupper($request->cContacto);
+            $proveedor->nrocuenta1 = mb_strtoupper($request->cCuentaNro1);
+            $proveedor->nrocuenta2 = mb_strtoupper($request->cCuentaNro2);
+            $proveedor->nrocuenta3 = mb_strtoupper($request->cCuentaNro3);
+            $proveedor->save();
+            return response()->json(['message' => 'Nuevo Proveedor grabado', 'icon' => 'success'], 200);
+        }
+
+
+
+
     }
 
     public function ListarProveedorById(Request $request)

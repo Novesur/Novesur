@@ -15,17 +15,17 @@ class ProductoController extends Controller
 
     {
 
+
         if ($request->nIdFamilia == null && $request->nIdSubFamilia == null && $request->nIdMarca == null && $request->nIdMaterial == null && $request->nIdEstado == null && $request->nIdHomologado == null) {
-            $dato = Producto::with('familia', 'marca', 'material', 'modelotipo', 'subfamilia','homologacion', 'estado')->get();
+            $dato = Producto::with('familia', 'marca', 'material', 'modelotipo', 'subfamilia', 'homologacion', 'estado')->orderBy('codigo', 'ASC')->get();
         } else {
-            $dato = Producto::with('familia', 'marca', 'material', 'modelotipo', 'subfamilia','homologacion', 'estado')
+            $dato = Producto::with('familia', 'marca', 'material', 'modelotipo', 'subfamilia', 'homologacion', 'estado')
                 ->orWhere('familia_id', $request->nIdFamilia)
                 ->orWhere('subfamilia_id', $request->nIdSubFamilia)
                 ->orWhere('marca_id', $request->nIdMarca)
                 ->orWhere('material_id', $request->nIdMaterial)
                 ->orWhere('estado_id', $request->nIdEstado)
-                ->orWhere('homologacion_id', $request->nIdHomologado)
-                ->get();
+                ->orWhere('homologacion_id', $request->nIdHomologado)->orderBy('codigo', 'DESC')->get();
         }
         return $dato;
     }
@@ -38,22 +38,25 @@ class ProductoController extends Controller
 
         if ($request->nIdHomologado == 2) {
             $codiprod = $request->codiprodcert;
-
         } else {
             $codiprod = $request->codiprod;
-
         }
-        $producto->codigo = $codiprod;
-        $producto->familia_id = $request->nIdFamilia;
-        $producto->subfamilia_id = $request->nIdSubFamilia;
-        $producto->modelotipo_id = $request->nIdModeloTipo;
-        $producto->marca_id = $request->nIdMarca;
-        $producto->material_id = $request->nIdMaterial;
-        $producto->estado_id = $request->nIdEstado;
-        $producto->user_id = $request->nIdUser;
-
-        $producto->homologacion_id = $request->nIdHomologado;
-        $producto->save();
+        $cons = Producto::where('codigo', '=', $codiprod)->exists();
+        if ($cons) {
+            return response()->json(['message' => 'Ya fue agregado anteriormente', 'icon' => 'error'], 200);
+        } else {
+            $producto->codigo = $codiprod;
+            $producto->familia_id = $request->nIdFamilia;
+            $producto->subfamilia_id = $request->nIdSubFamilia;
+            $producto->modelotipo_id = $request->nIdModeloTipo;
+            $producto->marca_id = $request->nIdMarca;
+            $producto->material_id = $request->nIdMaterial;
+            $producto->estado_id = $request->nIdEstado;
+            $producto->user_id = $request->nIdUser;
+            $producto->homologacion_id = $request->nIdHomologado;
+            $producto->save();
+            return response()->json(['message' => 'Producto grabado', 'icon' => 'success'], 200);
+        }
     }
 
     public function ListarProductoById(Request $request)
@@ -64,7 +67,7 @@ class ProductoController extends Controller
 
     public function ListarProductoByIdKardex(Request $request)
     {
-        $dato = Producto::with('familia', 'marca', 'material', 'modelotipo', 'subfamilia','homologacion', 'estado')
+        $dato = Producto::with('familia', 'marca', 'material', 'modelotipo', 'subfamilia', 'homologacion', 'estado')
             ->where('id', '=', $request->nIdProducto)->first();
         return $dato;
     }
@@ -86,10 +89,8 @@ class ProductoController extends Controller
 
         if ($request->nIdHomologado == '2') {
             $codiprod = $request->codiprodcert;
-
         } else {
             $codiprod = $request->codiprod;
-
         }
 
         if ($Producto) {
@@ -106,6 +107,4 @@ class ProductoController extends Controller
             $Producto->save();
         }
     }
-
-
 }

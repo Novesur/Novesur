@@ -756,7 +756,7 @@ export default {
           this.listarProductosPaginated = response.data.datos;
           this.limpiaItems();
 
-          console.log(response.data.message);
+
           if (response.data.message == "Ya fue agregado anteriormente") {
             Swal.fire({
               position: "center",
