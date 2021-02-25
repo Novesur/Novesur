@@ -176,7 +176,6 @@
                   </div>
 
                   <div class="row">
-
                     <div class="col-md-6">
                       <div class="form-group row">
                         <label class="col-md-3 col-form-label"
@@ -223,45 +222,34 @@
                 </div>
               </div>
 
-
-
-
               <div class="card card-info">
-
-                           <div class="card-footer clearfix">
-                    <ul class="pagination pagination-sm m-0 float-right">
-                      <li class="page-item" v-if="pageNumber > 0">
-                        <a href="" class="page-link" @click.prevent="prevPage"
-                          >Ant</a
-                        >
-                      </li>
-                      <li
-                        class="page-item"
-                        v-for="(page, index) in pagesList"
-                        :key="index"
-                        :class="page == pageNumber ? 'active' : ''"
+                <div class="card-footer clearfix">
+                  <ul class="pagination pagination-sm m-0 float-right">
+                    <li class="page-item" v-if="pageNumber > 0">
+                      <a href="" class="page-link" @click.prevent="prevPage"
+                        >Ant</a
                       >
-                        <a
-                          href=""
-                          class="page-link"
-                          @click.prevent="selectPage(page)"
-                          >{{ page + 1 }}</a
-                        >
-                      </li>
-                      <li class="page-item" v-if="pageNumber < pageCount - 1">
-                        <a href="" class="page-link" @click.prevent="nextPage"
-                          >Post</a
-                        >
-                      </li>
-                    </ul>
-                  </div>
-
-
-
-
-
-
-
+                    </li>
+                    <li
+                      class="page-item"
+                      v-for="(page, index) in pagesList"
+                      :key="index"
+                      :class="page == pageNumber ? 'active' : ''"
+                    >
+                      <a
+                        href=""
+                        class="page-link"
+                        @click.prevent="selectPage(page)"
+                        >{{ page + 1 }}</a
+                      >
+                    </li>
+                    <li class="page-item" v-if="pageNumber < pageCount - 1">
+                      <a href="" class="page-link" @click.prevent="nextPage"
+                        >Post</a
+                      >
+                    </li>
+                  </ul>
+                </div>
 
                 <div class="card-header">
                   <h3 class="card-title">Bandeja de Resultados</h3>
@@ -295,7 +283,7 @@
                         <td v-text="item.modelotipo.nombre"></td>
                         <td v-text="item.marca.nombre"></td>
                         <td v-text="item.material.nombre"></td>
-                       <td v-text="item.subfamilia.nombre"></td>
+                        <td v-text="item.subfamilia.nombre"></td>
                         <td v-text="item.homologacion.nombre"></td>
                         <td>
                           <template v-if="item.estado_id == '1'">
@@ -383,8 +371,7 @@ export default {
         nIdMaterial: "",
         nIdEstado: "",
         nIdModeloTipo: "",
-        nIdHomologado:"",
-
+        nIdHomologado: "",
       },
       pageNumber: 0,
       perPage: 10,
@@ -395,7 +382,7 @@ export default {
       listEstadoProd: [],
       listProductos: [],
       listModeloTipo: [],
-      listHomologado:[],
+      listHomologado: [],
       listRolPermisoByUsuario: JSON.parse(
         sessionStorage.getItem("listRolPermisosByUsuario")
       ),
@@ -442,11 +429,11 @@ export default {
       this.fillBsqProducto.nIdMaterial = "";
       this.fillBsqProducto.nIdEstado = "";
     },
-     getListarHomologacion() {
+    getListarHomologacion() {
       var url = "/administracion/tempcotizacion/getListarHomologacion";
       axios.get(url).then((response) => {
         this.listHomologado = response.data;
-       // this.fillBsqProducto.nIdHomologado = this.listHomologado[2].id;
+        // this.fillBsqProducto.nIdHomologado = this.listHomologado[2].id;
       });
     },
     getListarModeloTipo() {
@@ -483,7 +470,7 @@ export default {
       var url = "/administracion/estadoprod/getListarEstadoprod";
       axios.get(url).then((response) => {
         this.listEstadoProd = response.data;
-         //this.fillBsqProducto.nIdEstado = this.listEstadoProd[0].id;
+        //this.fillBsqProducto.nIdEstado = this.listEstadoProd[0].id;
       });
     },
     getListarProducto() {
@@ -496,7 +483,7 @@ export default {
             nIdMarca: this.fillBsqProducto.nIdMarca,
             nIdMaterial: this.fillBsqProducto.nIdMaterial,
             nIdEstado: this.fillBsqProducto.nIdEstado,
-            nIdHomologado : this.fillBsqProducto.nIdHomologado,
+            nIdHomologado: this.fillBsqProducto.nIdHomologado,
           },
         })
         .then((response) => {

@@ -100,7 +100,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="(item, index) in listProveedor" :key="index">
+                    <tr v-for="(item, index) in listarProveedoresPaginated" :key="index">
                       <td v-text="item.nombre"></td>
                       <td v-text="item.ruc"></td>
                       <td v-text="item.direccion"></td>
@@ -129,13 +129,12 @@
                       class="page-item"
                       v-for="(page, index) in pagesList"
                       :key="index"
-                      :class="[page == pageNumber ? 'active' : '']"
+                      :class="page == pageNumber ? 'active' : ''"
                     >
                       <a
                         href=""
                         class="page-link"
-                        @click.prevent="selectPage(page)"
-                        >{{ page + 1 }}</a
+                        @click.prevent="selectPage(page)">{{ page + 1 }}</a
                       >
                     </li>
                     <li class="page-item" v-if="pageNumber < pageCount - 1">
@@ -164,7 +163,7 @@ export default {
       },
       listProveedor: [],
       pageNumber: 0,
-      perPage: 5,
+      perPage: 10,
     };
   },
   computed: {
@@ -219,7 +218,7 @@ export default {
     prevPage() {
       this.pageNumber--;
     },
-    selectPage() {
+    selectPage(page) {
       this.pageNumber = page;
     },
     inicializarPAginacion() {
