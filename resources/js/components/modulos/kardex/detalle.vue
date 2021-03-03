@@ -121,7 +121,7 @@
                         format="dd/MM/yyyy"
                         value-format="yyyy-MM-dd"
                       >
-                        >
+
                       </el-date-picker>
                     </div>
                   </div>
@@ -189,12 +189,14 @@
                         style="width: 100%"
                         v-bind="valorprov"
                         :selectitem="valorprov"
+                        clearable
                       >
                         <el-option
                           v-for="item in listProveedor"
                           :key="item.id"
                           :label="item.nombre"
                           :value="item.id"
+
                         >
                         </el-option>
                       </el-select>
@@ -448,9 +450,9 @@ export default {
       if (!this.fillBsqDetalleKardex.cFecha) {
         this.mensajeError.push("Ingrese la Fecha");
       }
-      if (!this.fillBsqDetalleKardex.nIdProveedor) {
+   /*    if (!this.fillBsqDetalleKardex.nIdProveedor) {
         this.mensajeError.push("Seleccione el Proveedor");
-      }
+      } */
       if (!this.fillBsqDetalleKardex.nIdUnidMed) {
         this.mensajeError.push("Seleccione la Unidad de Medida");
       }
@@ -586,7 +588,7 @@ export default {
 
 
           this.listProveedor = response.data;
-          this.fillBsqDetalleKardex.nIdProveedor = this.listProveedor[0].id;
+          //this.fillBsqDetalleKardex.nIdProveedor = this.listProveedor[0].id;
         });
     },
 

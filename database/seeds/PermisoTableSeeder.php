@@ -35,6 +35,7 @@ class PermisoTableSeeder extends Seeder
             ['slug' => 'reporte.movimientoXProducto','name' => 'Movimiento por Producto','created_at' => $createdDate,'updated_at' => $createdDate],
             ['slug' => 'area.ventas','name' => 'Seccion Ventas','created_at' => $createdDate,'updated_at' => $createdDate],
             ['slug' => 'cotizacion.create','name' => 'Cotizar Clientes','created_at' => $createdDate,'updated_at' => $createdDate],
+            ['slug' => 'admin.listado_coti','name' => 'Listado cotizaciones admin','created_at' => $createdDate,'updated_at' => $createdDate],
         ];
 
         Permission::query()->delete();

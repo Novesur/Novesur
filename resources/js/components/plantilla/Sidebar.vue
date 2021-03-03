@@ -197,10 +197,11 @@
          </router-link>
               </li>
               <li class="nav-item">
-                <a href="pages/examples/e-commerce.html" class="nav-link">
+
+                <router-link class="nav-link" :to="'/cotizacion/index'">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>E-commerce</p>
-                </a>
+                  <p>Listado de Pedidos</p>
+                </router-link>
               </li>
               <li class="nav-item">
                 <a href="pages/examples/projects.html" class="nav-link">

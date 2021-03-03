@@ -356,6 +356,13 @@ export default new Router({
                 props: true
             },
 
+            {
+                path: '/cotizacion/index',
+                name: 'cotizacion.index',
+                component: require('./components/modulos/cotizacion/index').default
+            },
+
+
 
     ],
 

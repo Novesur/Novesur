@@ -21,7 +21,6 @@ class KardexDetalleController extends Controller
 
 
     {
-
         $kardex = Kardex::where('id', '=', $request->nidKardex)->first();
         $DetalleKardexcount = DetalleKardex::where('kardex_id', '=', $request->nidKardex)->get()->count();
 
@@ -47,7 +46,13 @@ class KardexDetalleController extends Controller
             $DetalleKardex->fecha =  $date;
             $DetalleKardex->FactNo =  mb_strtoupper($request->cFacturaNro);
             $DetalleKardex->GuiaNo =  mb_strtoupper($request->cNroGuia);
-            $DetalleKardex->proveedor_id = $request->nIdProveedor;
+            if($request->nIdMotivo == 4){
+                $datprov = '19';
+            }else{
+                $datprov =  $request->nIdProveedor;
+            }
+
+            $DetalleKardex->proveedor_id = $datprov;
             $DetalleKardex->motivo_id = $request->nIdMotivo;
             $DetalleKardex->unidmedida_id = $request->nIdUnidMed;
             $DetalleKardex->cantidad = $request->cCantidad;
@@ -83,14 +88,19 @@ class KardexDetalleController extends Controller
                 $DetalleKardex->fecha =  $date;
                 $DetalleKardex->FactNo =  mb_strtoupper($request->cFacturaNro);
                 $DetalleKardex->GuiaNo =  mb_strtoupper($request->cNroGuia);
-                $DetalleKardex->proveedor_id = $request->nIdProveedor;
+
+                if($request->nIdMotivo == 4){
+                    $datprov = '19';
+                }else{
+                    $datprov = $request->nIdProveedor;
+                }
+                $DetalleKardex->proveedor_id = $datprov;
                 $DetalleKardex->motivo_id = $request->nIdMotivo;
                 $DetalleKardex->unidmedida_id = $request->nIdUnidMed;
                 $DetalleKardex->cantidad = $request->cCantidad;
                 $DetalleKardex->costunit = $request->cCostUnit;
                 $DetalleKardex->movimiento_id = $request->nIdMovimiento;
                 $DetalleKardex->user_id = $request->nIdUser;
-
                 $DetalleKardex->save();
 
                 if ($DetalleKardexcount == 0) {

@@ -104,6 +104,9 @@ Route::post('/administracion/usuario/setDesactivarUsuario', 'Administracion\Usua
 Route::get('/administracion/usuario/getRolByUsuario', 'Administracion\UsuarioController@getRolByUsuario');
 Route::get('/administracion/usuario/getListarPermisosByRol', 'Administracion\UsuarioController@ListarPermisosByRol');
 Route::get('/administracion/usuario/getListarRolPermisosByUsuario', 'Administracion\UsuarioController@ListarRolPermisosByUsuario');
+Route::get('/administracion/usuario/getListarUsusarios', 'Administracion\UsuarioController@getListarUsusarios');
+Route::get('/administracion/usuario/getListarUsusariosbyId', 'Administracion\UsuarioController@getListarUsusariosbyId');
+
 
 
 
@@ -140,6 +143,7 @@ Route::post('/administracion/cliente/createClientes', 'Administracion\ClienteCon
 Route::get('/administracion/cliente/getListarCliente', 'Administracion\ClienteController@store');
 Route::get('/administracion/cliente/listClientesById', 'Administracion\ClienteController@listPermisosById');
 Route::post('/administracion/cliente/EditClientes', 'Administracion\ClienteController@edit');
+Route::get('/administracion/cliente/getListarCliente', 'Administracion\ClienteController@getListarCliente');
 
 //DetalleCotizacion
 Route::get('/administracion/detallecotizancion/listProdByName', 'Administracion\DetalleCotizacionController@listProdByName');

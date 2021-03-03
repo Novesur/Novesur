@@ -14,17 +14,9 @@ class UsuarioController extends Controller
 
     public function index(Request $request)
     {
-       /*  $dato = User::where('firstname', 'like', '%' . $request->cFirstname . '%')
-            ->where('username', 'like', '%' . $request->cUsername . '%')
-            ->where('email', 'like', '%' . $request->cEmail . '%')->get(); */
-
-
-
             $dato = User::with('almacen')->where('firstname', 'like', '%' . $request->cFirstname . '%')
             ->where('username', 'like', '%' . $request->cUsername . '%')
             ->where('email', 'like', '%' . $request->cEmail . '%')->get();
-
-
         return $dato;
     }
 
@@ -88,8 +80,6 @@ class UsuarioController extends Controller
             $nIdUsuario = Auth::id();
         }
 
-
-
         $nIdUsuario = ($nIdUsuario == NULL) ? ($nIdUsuario = 0) : $nIdUsuario;
         $rpta = DB::select('call sp_Usuario_getListarRolByUsuario (?)', [
             $nIdUsuario
@@ -101,5 +91,16 @@ class UsuarioController extends Controller
     {
 
         User::find($request->nIdUsuario)->delete();
+    }
+
+    public function getListarUsusarios(){
+        $dato = User::all();
+        return $dato;
+    }
+
+    public function getListarUsusariosbyId(Request $request){
+
+        $dato = User::where('id', $request->nIdUsuario)->get();
+        return $dato;
     }
 }

@@ -111,7 +111,7 @@
                     class="btn btn-flat btn-info btnWidth"
                     @click.prevent="setGuardarKardex"
                   >
-                    Guardar
+                    Generar
                   </button>
                   <button
                     class="btn btn-flat btn-default btnWidth"
