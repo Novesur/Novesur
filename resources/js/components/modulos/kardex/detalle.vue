@@ -347,7 +347,7 @@ export default {
       },
 
       valorcu: true,
-      estadoProv:false,
+      estadoProv:true,
       modalShow: false,
       mostrarModal: {
         display: "block",
@@ -402,7 +402,6 @@ export default {
 
   },
   mounted() {
-    this.estadoProv = false;
     this.getListarKardex();
     this.getListarMovimiento();
     this.getListarMotivo();
@@ -681,9 +680,9 @@ export default {
 
     setSelectProveedor(){
       if(this.fillBsqDetalleKardex.nIdMotivo == 4){
-       this.estadoProv=true
+       this.estadoProv = true;
       }else{
-        this.estadoProv=false
+        this.estadoProv = false;
       }
     }
 
