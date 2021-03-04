@@ -187,15 +187,17 @@
                         filterable
                         placeholder="Select"
                         style="width: 100%"
-                        v-bind="valorprov"
-                        :selectitem="valorprov"
                         clearable
+                         :disabled= estadoProv
+                         :onchange ="this.setSelectProveedor()"
+
                       >
                         <el-option
                           v-for="item in listProveedor"
                           :key="item.id"
                           :label="item.nombre"
                           :value="item.id"
+
 
                         >
                         </el-option>
@@ -231,7 +233,6 @@
                         type="text"
                         class="form-control"
                         v-model="fillBsqDetalleKardex.cCantidad"
-
                            :onchange ="this.cCostUnitMoneda()"
 
                         v-int
@@ -246,7 +247,6 @@
                         type="text"
                         class="form-control"
                         v-model="fillBsqDetalleKardex.cCostUnit"
-
                          :onchange ="this.cCostUnitMoneda()"
                         :readonly="valorcu"
                       />
@@ -347,7 +347,7 @@ export default {
       },
 
       valorcu: true,
-      valorprov: 0,
+      estadoProv:false,
       modalShow: false,
       mostrarModal: {
         display: "block",
@@ -402,6 +402,7 @@ export default {
 
   },
   mounted() {
+    this.estadoProv = false;
     this.getListarKardex();
     this.getListarMovimiento();
     this.getListarMotivo();
@@ -677,6 +678,15 @@ export default {
           }
         });
     },
+
+    setSelectProveedor(){
+      if(this.fillBsqDetalleKardex.nIdMotivo == 4){
+       this.estadoProv=true
+      }else{
+        this.estadoProv=false
+      }
+    }
+
   },
 };
 </script>
