@@ -41,6 +41,7 @@
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
+                      <td>&nbsp;</td>
                       <td v-bind:colspan='3' class="text-center" style="background-color:#BDE3FB;">ENTRADA</td>
                       <td v-bind:colspan="3" class="text-center" style="background-color:#F5F6CE;">SALIDA</td>
                       <td v-bind:colspan="3" class="text-center" style="background-color:#CEF6CE;">SALDOS</td>
@@ -51,6 +52,7 @@
                       <td>Fac. Nº</td>
                       <td>Guia Nº</td>
                       <td>Proveedor / Referencia</td>
+                      <td>Cliente</td>
                       <td>Unid / Medida</td>
                       <td style="background-color:#BDE3FB;">Cant</td>
                       <td style="background-color:#BDE3FB;">CU</td>
@@ -75,6 +77,7 @@
                       <td v-text="item.FactNo"></td>
                       <td v-text="item.GuiaNo"></td>
                       <td v-text="item.provee + ' / '+ item.moti "></td>
+                      <td v-text="item.client"></td>
                       <td v-text="item.unidmed" ></td>
                       <td v-text="item.cantidading" style="background-color:#BDE3FB;"></td>
                       <td v-text="item.costuniting" style="background-color:#BDE3FB;"></td>

@@ -206,7 +206,7 @@ export default {
       this.listCliente = [];
     },
     getListarCliente() {
-      var url = "/administracion/cliente/getListarCliente";
+      var url = "/administracion/cliente/store";
       axios
         .get(url, {
           params: {

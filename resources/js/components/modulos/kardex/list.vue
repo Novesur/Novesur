@@ -39,6 +39,7 @@
                         <th>Nro Factura</th>
                         <th>Nro Guia</th>
                         <th>Proveedor</th>
+                         <th>Cliente</th>
                         <th>Motivo</th>
                         <th>Unid. Medida</th>
                         <th>Cantidad</th>
@@ -57,6 +58,7 @@
                          <td v-text="item.FactNo"></td>
                         <td v-text="item.GuiaNo"></td>
                         <td v-text="item.proveedor.nombre"></td>
+                        <td v-text="item.cliente.razonsocial"></td>
                         <td v-text="item.motivo.nombre"></td>
                         <td>{{ item.unidmedida.nombre }}</td>
                         <td v-text="item.cantidad"></td>
@@ -163,6 +165,7 @@ this.getListarXKardex();
         .then((response) => {
           //this.inicializarPaginacion();
           this.listDetKardex = response.data;
+          console.log(response.data);
 
 
         });

@@ -43,4 +43,9 @@ class DetalleKardex extends Model
         return $this->belongsTo(Movimiento::class);
     }
 
+    public function cliente()
+    {
+        return $this->belongsTo(Cliente::class);
+    }
+
 }

@@ -32,6 +32,8 @@ class CreateDetallekardexTable extends Migration
             $table->foreign('movimiento_id')->references('id')->on('movimiento');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('cliente_id')->references('id')->on('cliente');
+            $table->unsignedBigInteger('cliente_id');
             $table->timestamps();
         });
     }

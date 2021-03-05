@@ -70,7 +70,7 @@
                 </div>
 
                 <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-md-4">
                     <label class="col-md-3 col-form-label">Movimiento</label>
                     <div class="col-md-9">
                       <el-select
@@ -90,7 +90,7 @@
                     </div>
                   </div>
 
-                  <div class="col-md-6">
+                  <div class="col-md-4">
                     <label class="col-md-3 col-form-label">Motivo</label>
                     <div class="col-md-9">
                       <el-select
@@ -108,6 +108,29 @@
                       </el-select>
                     </div>
                   </div>
+                        <div class="col-md-4">
+                    <label class="col-md-3 col-form-label">Clientes</label>
+                    <div class="col-md-9">
+                      <el-select
+                        v-model="fillBsqDetalleKardex.nICliente"
+                        placeholder="Select"
+                        style="width: 100%"
+                        :disabled="estadoProv"
+                        :onchange="this.setSelectProveedor()"
+                      >
+                        <el-option
+                          v-for="item in listCliente"
+                          :key="item.id"
+                          :label="item.razonsocial"
+                          :value="item.id"
+
+                        >
+                        </el-option>
+                      </el-select>
+                    </div>
+                  </div>
+
+
                 </div>
 
                 <div class="row">
@@ -121,7 +144,6 @@
                         format="dd/MM/yyyy"
                         value-format="yyyy-MM-dd"
                       >
-
                       </el-date-picker>
                     </div>
                   </div>
@@ -162,7 +184,7 @@
                           v-model="fillBsqDetalleKardex.cRuc"
                           v-int
                           :maxlength="11"
-                           @keyup.enter="buscaProveedorXRuc"
+                          @keyup.enter="buscaProveedorXRuc"
                         />
                         <span class="input-group-btn">
                           <button
@@ -188,17 +210,14 @@
                         placeholder="Select"
                         style="width: 100%"
                         clearable
-                         :disabled= estadoProv
-                         :onchange ="this.setSelectProveedor()"
-
+                        :disabled="estadoProv"
+                        :onchange="this.setSelectProveedor()"
                       >
                         <el-option
                           v-for="item in listProveedor"
                           :key="item.id"
                           :label="item.nombre"
                           :value="item.id"
-
-
                         >
                         </el-option>
                       </el-select>
@@ -233,8 +252,7 @@
                         type="text"
                         class="form-control"
                         v-model="fillBsqDetalleKardex.cCantidad"
-                           :onchange ="this.cCostUnitMoneda()"
-
+                        :onchange="this.cCostUnitMoneda()"
                         v-int
                       />
                     </div>
@@ -247,7 +265,7 @@
                         type="text"
                         class="form-control"
                         v-model="fillBsqDetalleKardex.cCostUnit"
-                         :onchange ="this.cCostUnitMoneda()"
+                        :onchange="this.cCostUnitMoneda()"
                         :readonly="valorcu"
                       />
                     </div>
@@ -344,10 +362,11 @@ export default {
         nIdUnidMed: "",
         nIdUser: sessionStorage.getItem("iduser"),
         stockAct: "",
+        nICliente:"",
       },
 
       valorcu: true,
-      estadoProv:true,
+      estadoProv: true,
       modalShow: false,
       mostrarModal: {
         display: "block",
@@ -358,7 +377,7 @@ export default {
       },
       error: 0,
       mensajeError: [],
-
+      listCliente: [],
       listMovimiento: [],
       listMotivo: [],
       listProveedor: [],
@@ -398,17 +417,15 @@ export default {
       value2: "",
       //// Fin del formato de la fecha
     };
-
-
   },
   mounted() {
     this.getListarKardex();
     this.getListarMovimiento();
     this.getListarMotivo();
-    //this.getListarProveedor();
     this.buscaProveedorXRuc();
     this.getListarUnidadMedida();
     this.setRecuperaStockActual();
+    this.getListarClientes()
   },
 
   methods: {
@@ -450,7 +467,7 @@ export default {
       if (!this.fillBsqDetalleKardex.cFecha) {
         this.mensajeError.push("Ingrese la Fecha");
       }
-   /*    if (!this.fillBsqDetalleKardex.nIdProveedor) {
+      /*    if (!this.fillBsqDetalleKardex.nIdProveedor) {
         this.mensajeError.push("Seleccione el Proveedor");
       } */
       if (!this.fillBsqDetalleKardex.nIdUnidMed) {
@@ -478,23 +495,20 @@ export default {
       this.setGuardarDetalleKardex();
     },
     cCostUnitMoneda() {
- /*      this.fillBsqDetalleKardex.cCostUnit = this.convertMoney(
+      /*      this.fillBsqDetalleKardex.cCostUnit = this.convertMoney(
         this.fillBsqDetalleKardex.cCostUnit
       );
       this.fillBsqDetalleKardex.cTotal = this.convertMoney(
         this.fillBsqDetalleKardex.cCantidad *
           this.fillBsqDetalleKardex.cCostUnit.substring(2)
       ); */
-     const  a= this.fillBsqDetalleKardex.cCantidad
-     const b = this.fillBsqDetalleKardex.cCostUnit
-     const c = a * b;
-     this.fillBsqDetalleKardex.cTotal = 'S/.'+ parseFloat(c).toFixed(2);
-
-
-
+      const a = this.fillBsqDetalleKardex.cCantidad;
+      const b = this.fillBsqDetalleKardex.cCostUnit;
+      const c = a * b;
+      this.fillBsqDetalleKardex.cTotal = "S/." + parseFloat(c).toFixed(2);
     },
 
-/*     convertMoney(value) {
+    /*     convertMoney(value) {
       const formatterPeso = new Intl.NumberFormat("es-PE", {
         style: "currency",
         currency: "PEN",
@@ -527,11 +541,9 @@ export default {
             response.data.producto.marca.nombre;
 
           this.fillBsqDetalleKardex.nIdProduct = response.data.producto.id;
-          this.fillBsqDetalleKardex.cFecha = new Date() ;
+          this.fillBsqDetalleKardex.cFecha = new Date();
         });
     },
-
-
 
     getListarMovimiento() {
       var url = "/administracion/KardexDetalle/listMovimiento";
@@ -547,6 +559,17 @@ export default {
       });
     },
 
+        getListarClientes() {
+      var url = "/administracion/cliente/getListarCliente";
+      axios.get(url).then((response) => {
+        this.listCliente = response.data;
+      });
+    },
+
+
+
+
+
     /*     getListarProveedor() {
       var url = "/administracion/KardexDetalle/listProveedor";
       axios.get(url).then((response) => {
@@ -558,7 +581,7 @@ export default {
       var url = "/administracion/KardexDetalle/listUnidMed";
       axios.get(url).then((response) => {
         this.listUnidMed = response.data;
-         this.fillBsqDetalleKardex.nIdUnidMed = this.listUnidMed[0].id;
+        this.fillBsqDetalleKardex.nIdUnidMed = this.listUnidMed[0].id;
       });
     },
 
@@ -585,8 +608,6 @@ export default {
           },
         })
         .then((response) => {
-
-
           this.listProveedor = response.data;
           //this.fillBsqDetalleKardex.nIdProveedor = this.listProveedor[0].id;
         });
@@ -612,10 +633,9 @@ export default {
           stockAct: this.fillBsqDetalleKardex.stockAct,
           nIdUser: this.fillBsqDetalleKardex.nIdUser,
           nIdProduct: this.fillBsqDetalleKardex.nIdProduct,
+          nICliente : this.fillBsqDetalleKardex.nICliente,
         })
         .then((response) => {
-
-
           Swal.fire({
             position: "center",
             icon: response.data.icon,
@@ -624,16 +644,13 @@ export default {
             timer: 1500,
           });
 
-          if (response.data.message = 'El stock actual es'){
-
-                 this.fillBsqDetalleKardex.cTotal = "";
-                  //this.limpiarDetalleKardexBsq();
-          }else{
-               this.fillBsqDetalleKardex.stockAct = response.data.stock;
-
+          if ((response.data.message = "El stock actual es")) {
+            this.fillBsqDetalleKardex.cTotal = "";
+            //this.limpiarDetalleKardexBsq();
+          } else {
+            this.fillBsqDetalleKardex.stockAct = response.data.stock;
           }
           this.setRecuperaStockActual();
-
         })
         .catch(function (error) {
           console.log(error.message);
@@ -650,9 +667,9 @@ export default {
           if (response.data.length == 0) {
             this.fillBsqDetalleKardex.stockAct = "0";
           } else {
-            this.fillBsqDetalleKardex.stockAct = response.data[0].stock_cantidad;
+            this.fillBsqDetalleKardex.stockAct =
+              response.data[0].stock_cantidad;
           }
-
         });
     },
     setSelectMovimiento() {
@@ -678,14 +695,13 @@ export default {
         });
     },
 
-    setSelectProveedor(){
-      if(this.fillBsqDetalleKardex.nIdMotivo == 4){
-       this.estadoProv = true;
-      }else{
+    setSelectProveedor() {
+      if (this.fillBsqDetalleKardex.nIdMotivo == 4) {
+        this.estadoProv = true;
+      } else {
         this.estadoProv = false;
       }
-    }
-
+    },
   },
 };
 </script>

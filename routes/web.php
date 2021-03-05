@@ -140,7 +140,7 @@ Route::get('/administracion/ventas/getListarStockProds', 'Administracion\VentaCo
 
 //Clientes
 Route::post('/administracion/cliente/createClientes', 'Administracion\ClienteController@create');
-Route::get('/administracion/cliente/getListarCliente', 'Administracion\ClienteController@store');
+Route::get('/administracion/cliente/store', 'Administracion\ClienteController@store');
 Route::get('/administracion/cliente/listClientesById', 'Administracion\ClienteController@listPermisosById');
 Route::post('/administracion/cliente/EditClientes', 'Administracion\ClienteController@edit');
 Route::get('/administracion/cliente/getListarCliente', 'Administracion\ClienteController@getListarCliente');

@@ -15,7 +15,7 @@ class CreateClienteTable extends Migration
     {
         Schema::create('cliente', function (Blueprint $table) {
             $table->id();
-            $table->string('razonsocial',50)-> required();
+            $table->string('razonsocial',200)-> required();
             $table->string('direccion')-> required();
             $table->char('ruc',11)-> required()->unique();
             $table->string('atencion',50)->nullable();

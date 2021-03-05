@@ -48,8 +48,10 @@ class KardexDetalleController extends Controller
             $DetalleKardex->GuiaNo =  mb_strtoupper($request->cNroGuia);
             if($request->nIdMotivo == 4){
                 $datprov = '19';
+                $datclient= '1';
             }else{
                 $datprov =  $request->nIdProveedor;
+                $datclient =  $request->nICliente;
             }
 
             $DetalleKardex->proveedor_id = $datprov;
@@ -59,6 +61,7 @@ class KardexDetalleController extends Controller
             $DetalleKardex->costunit = $request->cCostUnit;
             $DetalleKardex->movimiento_id = $request->nIdMovimiento;
             $DetalleKardex->user_id = $request->nIdUser;
+            $DetalleKardex->cliente_id =  $datclient;
             $DetalleKardex->save();
 
             if ($DetalleKardexcount == 0) {
@@ -91,8 +94,10 @@ class KardexDetalleController extends Controller
 
                 if($request->nIdMotivo == 4){
                     $datprov = '19';
+                    $datclient= '1';
                 }else{
                     $datprov = $request->nIdProveedor;
+                    $datclient =  $request->nICliente;
                 }
                 $DetalleKardex->proveedor_id = $datprov;
                 $DetalleKardex->motivo_id = $request->nIdMotivo;
@@ -101,6 +106,7 @@ class KardexDetalleController extends Controller
                 $DetalleKardex->costunit = $request->cCostUnit;
                 $DetalleKardex->movimiento_id = $request->nIdMovimiento;
                 $DetalleKardex->user_id = $request->nIdUser;
+                $DetalleKardex->cliente_id =  $datclient;
                 $DetalleKardex->save();
 
                 if ($DetalleKardexcount == 0) {
@@ -210,7 +216,7 @@ class KardexDetalleController extends Controller
 
     public function getListarXKardex(Request $request)
     {
-        $dato = DetalleKardex::with('proveedor', 'motivo', 'unidmedida', 'movimiento')->where('kardex_id', '=', $request->nidKardex)->get();
+        $dato = DetalleKardex::with('proveedor', 'motivo', 'unidmedida', 'movimiento','cliente')->where('kardex_id', '=', $request->nidKardex)->get();
         return $dato;
     }
 
@@ -229,13 +235,23 @@ class KardexDetalleController extends Controller
             $detalleKardex->fecha =  $detalleKardex->fecha;
             $detalleKardex->FactNo =  mb_strtoupper($request->cFacturaNro);
             $detalleKardex->GuiaNo =  mb_strtoupper($request->cNroGuia);
-            $detalleKardex->proveedor_id = $request->nIdProveedor;
+
+            if($request->nIdMotivo == 4){
+                $datprov = '19';
+                $datclient= '1';
+            }else{
+                $datprov = $request->nIdProveedor;
+                $datclient =  $request->nICliente;
+            }
+            $detalleKardex->proveedor_id =  $datprov;
             $detalleKardex->motivo_id = $request->nIdMotivo;
             $detalleKardex->unidmedida_id = $request->nIdUnidMed;
             $detalleKardex->cantidad = $request->cCantidad;
             $detalleKardex->costunit = $request->cCostUnit;
             $detalleKardex->movimiento_id = $request->nIdMovimiento;
             $detalleKardex->user_id =   $detalleKardex->user_id;
+
+            $detalleKardex->cliente_id =  $datclient;
             $detalleKardex->save();
         }
 

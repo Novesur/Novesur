@@ -45,7 +45,7 @@
                 </div>
 
                 <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-md-4">
                     <label class="col-md-3 col-form-label">Movimiento</label>
                     <div class="col-md-9">
                       <el-select
@@ -65,7 +65,7 @@
                     </div>
                   </div>
 
-                  <div class="col-md-6">
+                  <div class="col-md-4">
                     <label class="col-md-3 col-form-label">Motivo</label>
                     <div class="col-md-9">
                       <el-select
@@ -83,6 +83,30 @@
                       </el-select>
                     </div>
                   </div>
+
+                           <div class="col-md-4">
+                    <label class="col-md-3 col-form-label">Clientes</label>
+                    <div class="col-md-9">
+                      <el-select
+                        v-model="fillBsqEditDetalleKardex.nICliente"
+                        placeholder="Select"
+                        style="width: 100%"
+                        :disabled="estadoProv"
+                        :onchange="this.setSelectProveedor()"
+                      >
+                        <el-option
+                          v-for="item in listCliente"
+                          :key="item.id"
+                          :label="item.razonsocial"
+                          :value="item.id"
+
+                        >
+                        </el-option>
+                      </el-select>
+                    </div>
+                  </div>
+
+
                 </div>
 
                 <div class="row">
@@ -162,8 +186,8 @@
                         filterable
                         placeholder="Select"
                         style="width: 100%"
-                        v-bind="valorprov"
-                        :selectitem="valorprov"
+                        :disabled="estadoProv"
+                        :onchange="this.setSelectProveedor()"
                       >
                         <el-option
                           v-for="item in listProveedor"
@@ -311,9 +335,12 @@ export default {
         nIdProveedor: "",
         nIdProduct: "",
         nIdUnidMed: "",
+        nICliente:"",
+
       },
 
       valorcu: true,
+      estadoProv: true,
       valorprov: 0,
       modalShow: false,
       mostrarModal: {
@@ -373,6 +400,7 @@ export default {
     this.getListarMotivo();
     this.buscaProveedorXRuc();
     this.getListarUnidadMedida();
+    this.getListarClientes();
   },
 
   methods: {
@@ -415,6 +443,13 @@ export default {
 
     abrirModal() {
       this.modalShow = !this.modalShow;
+    },
+
+          getListarClientes() {
+      var url = "/administracion/cliente/getListarCliente";
+      axios.get(url).then((response) => {
+        this.listCliente = response.data;
+      });
     },
     validarRegistarDetKardex() {
       this.error = 0;
@@ -548,6 +583,7 @@ export default {
             .substring(0, 4)
             .trim(),
           nIdMovimiento: this.fillBsqEditDetalleKardex.nIdMovimiento,
+          nICliente:this.fillBsqEditDetalleKardex.nICliente,
         })
         .then((response) => {
           Swal.fire({
@@ -585,6 +621,13 @@ export default {
             this.fillBsqEditDetalleKardex.cCostUnit = "";
           }
         });
+    },
+      setSelectProveedor() {
+      if (this.fillBsqEditDetalleKardex.nIdMotivo == 4) {
+        this.estadoProv = true;
+      } else {
+        this.estadoProv = false;
+      }
     },
   },
 };
