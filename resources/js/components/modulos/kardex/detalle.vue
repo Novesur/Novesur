@@ -108,7 +108,7 @@
                       </el-select>
                     </div>
                   </div>
-                        <div class="col-md-4">
+                  <div class="col-md-4">
                     <label class="col-md-3 col-form-label">Clientes</label>
                     <div class="col-md-9">
                       <el-select
@@ -116,6 +116,7 @@
                         placeholder="Select"
                         style="width: 100%"
                         :disabled="estadoProv"
+                        filterable
                         :onchange="this.setSelectProveedor()"
                       >
                         <el-option
@@ -123,14 +124,11 @@
                           :key="item.id"
                           :label="item.razonsocial"
                           :value="item.id"
-
                         >
                         </el-option>
                       </el-select>
                     </div>
                   </div>
-
-
                 </div>
 
                 <div class="row">
@@ -362,7 +360,7 @@ export default {
         nIdUnidMed: "",
         nIdUser: sessionStorage.getItem("iduser"),
         stockAct: "",
-        nICliente:"",
+        nICliente: "",
       },
 
       valorcu: true,
@@ -425,7 +423,7 @@ export default {
     this.buscaProveedorXRuc();
     this.getListarUnidadMedida();
     this.setRecuperaStockActual();
-    this.getListarClientes()
+    this.getListarClientes();
   },
 
   methods: {
@@ -559,16 +557,12 @@ export default {
       });
     },
 
-        getListarClientes() {
+    getListarClientes() {
       var url = "/administracion/cliente/getListarCliente";
       axios.get(url).then((response) => {
         this.listCliente = response.data;
       });
     },
-
-
-
-
 
     /*     getListarProveedor() {
       var url = "/administracion/KardexDetalle/listProveedor";
@@ -633,7 +627,7 @@ export default {
           stockAct: this.fillBsqDetalleKardex.stockAct,
           nIdUser: this.fillBsqDetalleKardex.nIdUser,
           nIdProduct: this.fillBsqDetalleKardex.nIdProduct,
-          nICliente : this.fillBsqDetalleKardex.nICliente,
+          nICliente: this.fillBsqDetalleKardex.nICliente,
         })
         .then((response) => {
           Swal.fire({
