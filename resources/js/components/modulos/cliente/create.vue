@@ -29,7 +29,9 @@
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group row">
-                        <label class="col-md-1 col-form-label">Razon Social</label>
+                        <label class="col-md-1 col-form-label"
+                          >Razon Social</label
+                        >
                         <div class="col-md-10">
                           <input
                             type="text"
@@ -40,7 +42,7 @@
                       </div>
                     </div>
 
-                           <div class="col-md-12">
+                    <div class="col-md-12">
                       <div class="form-group row">
                         <label class="col-md-1 col-form-label">Dirección</label>
                         <div class="col-md-9">
@@ -52,12 +54,10 @@
                         </div>
                       </div>
                     </div>
-
-
                   </div>
 
                   <div class="row">
-              <div class="col-md-6">
+                    <div class="col-md-6">
                       <div class="form-group row">
                         <label class="col-md-2 col-form-label">Ruc</label>
                         <div class="col-md-5">
@@ -72,7 +72,7 @@
                       </div>
                     </div>
 
-                         <div class="col-md-6">
+                    <div class="col-md-6">
                       <div class="form-group row">
                         <label class="col-md-2 col-form-label">Atencion</label>
                         <div class="col-md-9">
@@ -127,10 +127,7 @@
                         </div>
                       </div>
                     </div>
-
                   </div>
-
-
                 </form>
               </div>
               <div class="card-footer">
@@ -193,7 +190,7 @@ export default {
     return {
       fillRegistrarCliente: {
         cRSocial: "",
-        cDireccion:"",
+        cDireccion: "",
         cRuc: "",
         cAtencion: "",
         cTelefono: "",
@@ -218,7 +215,7 @@ export default {
     },
     limpiarClienteBsq() {
       this.fillRegistrarCliente.cRSocial = "";
-      this.fillRegistrarCliente.cDireccion= "";
+      this.fillRegistrarCliente.cDireccion = "";
       this.fillRegistrarCliente.cRuc = "";
       this.fillRegistrarCliente.cAtencion = "";
       this.fillRegistrarCliente.cTelefono = "";
@@ -228,26 +225,33 @@ export default {
     limpiarBandejaProveedor() {
       this.listProveedor = [];
     },
-    setRegistrarCliente(){
-        if(this.validarProveedor()){
-            this.modalShow = true;
-            return;
-        }
-        this.setGuardarProveedor();
-
+    setRegistrarCliente() {
+      if (this.validarProveedor()) {
+        this.modalShow = true;
+        return;
+      }
+      this.setGuardarProveedor();
     },
     setGuardarProveedor() {
-      var url = '/administracion/cliente/createClientes';
+      var url = "/administracion/cliente/createClientes";
       axios
         .post(url, {
-            cRSocial: this.fillRegistrarCliente.cRSocial,
-            cDireccion: this.fillRegistrarCliente.cDireccion,
-            cRuc: this.fillRegistrarCliente.cRuc,
-            cAtencion: this.fillRegistrarCliente.cAtencion,
-            cTelefono: this.fillRegistrarCliente.cTelefono,
-            cCelular : this.fillRegistrarCliente.cCelular,
-            cEmail : this.fillRegistrarCliente.cEmail,
-          }).then((response) => {
+          cRSocial: this.fillRegistrarCliente.cRSocial,
+          cDireccion: this.fillRegistrarCliente.cDireccion,
+          cRuc: this.fillRegistrarCliente.cRuc,
+          cAtencion: this.fillRegistrarCliente.cAtencion,
+          cTelefono: this.fillRegistrarCliente.cTelefono,
+          cCelular: this.fillRegistrarCliente.cCelular,
+          cEmail: this.fillRegistrarCliente.cEmail,
+        })
+        .then((response) => {
+          Swal.fire({
+            position: "center",
+            icon: response.data.icon,
+            title: response.data.message,
+            showConfirmButton: false,
+            timer: 2000,
+          });
           this.$router.push("/cliente/index");
         });
     },
@@ -264,8 +268,8 @@ export default {
         this.mensajeError.push("El Campo Ruc es un campo obligatorio");
       }
 
-      if(this.mensajeError.length){
-          this.error=1;
+      if (this.mensajeError.length) {
+        this.error = 1;
       }
       return this.error;
     },

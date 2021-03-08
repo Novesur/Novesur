@@ -25,16 +25,26 @@ class ClienteController extends Controller
      */
     public function create(Request $request)
     {
-      $cliente = new Cliente;
 
-      $cliente->razonsocial = mb_strtoupper($request->cRSocial);
-      $cliente->direccion = mb_strtoupper($request->cDireccion);
-      $cliente->ruc = $request->cRuc;
-      $cliente->atencion = mb_strtoupper($request->cAtencion);
-      $cliente->telefono = $request->cTelefono;
-      $cliente->celular = $request->cCelular;
-      $cliente->email = $request->cEmail;
-      $cliente->save();
+        $cons = Cliente::where('ruc', '=', $request->cRuc)->exists();
+
+        if ($cons) {
+            return response()->json(['message' => 'Ya fue agregado anteriormente', 'icon' => 'error'], 200);
+        }else{
+
+            $cliente = new Cliente;
+            $cliente->razonsocial = mb_strtoupper($request->cRSocial);
+            $cliente->direccion = mb_strtoupper($request->cDireccion);
+            $cliente->ruc = $request->cRuc;
+            $cliente->atencion = mb_strtoupper($request->cAtencion);
+            $cliente->telefono = $request->cTelefono;
+            $cliente->celular = $request->cCelular;
+            $cliente->email = $request->cEmail;
+            $cliente->save();
+            return response()->json(['message' => 'Nuevo Cliente agregado', 'icon' => 'success'], 200);
+
+        }
+
     }
 
     /**

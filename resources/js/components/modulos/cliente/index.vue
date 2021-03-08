@@ -99,7 +99,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="(item, index) in listCliente" :key="index">
+                    <tr v-for="(item, index) in listarClientesPaginated" :key="index">
                       <td v-text="item.razonsocial"></td>
                       <td v-text="item.direccion"></td>
                       <td v-text="item.ruc"></td>
@@ -167,7 +167,7 @@ export default {
       },
       listCliente: [],
       pageNumber: 0,
-      perPage: 5,
+      perPage: 10,
         listRolPermisoByUsuario: JSON.parse(
         sessionStorage.getItem("listRolPermisosByUsuario")
       ),
@@ -179,7 +179,7 @@ export default {
         b = this.perPage;
       return Math.ceil(a / b);
     },
-    listarProveedoresPaginated() {
+    listarClientesPaginated() {
       let inicio = this.pageNumber * this.perPage,
         fin = inicio + this.perPage;
       return this.listCliente.slice(inicio, fin);
@@ -226,7 +226,7 @@ export default {
     prevPage() {
       this.pageNumber--;
     },
-    selectPage() {
+    selectPage(page) {
       this.pageNumber = page;
     },
     inicializarPAginacion() {
