@@ -15,8 +15,8 @@
     </div>
 
     <!-- /.content-wrapper -->
-    <Footert></Footert>
-
+   <!--  <Footert></Footert>
+ -->
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
       <!-- Control sidebar content goes here -->
@@ -37,8 +37,6 @@ export default {
       return{
           AuthUser: this.usuario,
           listRolPermisoByUsuario:[],
-
-
       }
       },
       mounted(){

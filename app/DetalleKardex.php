@@ -15,7 +15,6 @@ class DetalleKardex extends Model
         'unidmed_id',
         'movimiento_id',
         'user_id',
-
     ];
 
     public function kardex()

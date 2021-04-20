@@ -147,9 +147,23 @@ Route::get('/administracion/cliente/getListarCliente', 'Administracion\ClienteCo
 
 //DetalleCotizacion
 Route::get('/administracion/detallecotizancion/listProdByName', 'Administracion\DetalleCotizacionController@listProdByName');
+Route::get('/administracion/detallecotizancion/listDetCotizacionBy', 'Administracion\DetalleCotizacionController@listDetCotizacionBy');
+
+/// Estado de Cotizacion
+Route::get('/administracion/detallecotizancion/listEstadoCotizacion', 'Administracion\DetalleCotizacionController@listEstadoCotizacion');
+Route::post('/administracion/cotizacion/editEstadoCotizacion', 'Administracion\CotizacionController@editEstadoCotizacion');
+
 
 //Cotizacion
 Route::post('/administracion/cotizacion/addTempCotizacion', 'Administracion\CotizacionController@addTempCotizacion');
+Route::get('/administracion/cotizacion/ListCotizacionesby', 'Administracion\CotizacionController@ListCotizacionesby');
+Route::get('/administracion/cotizacion/ListCotizacionbyId', 'Administracion\CotizacionController@ListCotizacionbyId');
+
+
+/// COTIZACION A PDF
+Route::get('/administracion/cotizacion/CotizacionCabecera', 'Administracion\CotizacionController@CotizacionCabecera');
+Route::post('/administracion/cotizacion/CotizacionPdf', 'Administracion\CotizacionController@CotizacionPdf');
+
 
 //Tipo de pago
 Route::get('/administracion/cotizacion/listTipoPago', 'Administracion\CotizacionController@listTipoPago');
@@ -165,12 +179,28 @@ Route::post('/administracion/tempcotizacion/grabaCotizacion', 'Administracion\Co
 //Homologacion
 Route::get('/administracion/tempcotizacion/getListarHomologacion', 'Administracion\HomologadoController@index');
 
+/// Tipo de Articulo
+Route::post('/administracion/tipo/store', 'Administracion\TipoController@Store');
+Route::get('/administracion/tipo/index', 'Administracion\TipoController@index');
+Route::post('/administracion/tipo/edit', 'Administracion\TipoController@edit');
+Route::get('/administracion/tipo/create', 'Administracion\TipoController@create');
+
+/// Categoria de Articulos
+Route::get('/administracion/catart/index', 'Administracion\CatArticuloController@index');
 
 
+///  Articulo de Tienda
+Route::get('/administracion/articulo/index', 'Administracion\ArticuloController@index');
+Route::post('/administracion/setRegistrarArchivo', 'Administracion\FilesController@setRegistrarArchivo');
+Route::post('/administracion/articulo/store', 'Administracion\ArticuloController@store');
+Route::get('/administracion/articulo/listArticulosById', 'Administracion\ArticuloController@listArticulosById');
 
-
-
-
+/// Parte de Ingreso
+Route::post('/administracion/parte_ingreso/create', 'Administracion\ParteIngresoController@addPIngreso');
+Route::get('/administracion/parte_ingreso/ListtempParteIngreso', 'Administracion\ParteIngresoController@ListtempParteIngreso');
+Route::post('/administracion/parte_ingreso/setGrabarPIngreso', 'Administracion\ParteIngresoController@setGrabaPIngreso');
+Route::post('/administracion/parte_ingreso/eliminarTempitemPIngreso', 'Administracion\ParteIngresoController@eliminarTempitemPIngreso');
+Route::post('/administracion/parte_ingreso/setGrabaPIngreso', 'Administracion\ParteIngresoController@setGrabaPIngreso');
 
 
 

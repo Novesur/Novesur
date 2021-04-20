@@ -349,6 +349,8 @@ export default new Router({
                 props: true
             },
 
+
+
             {
                 path: '/cotizacion/create/:id',
                 name: 'cotizacion.create',
@@ -360,6 +362,73 @@ export default new Router({
                 path: '/cotizacion/index',
                 name: 'cotizacion.index',
                 component: require('./components/modulos/cotizacion/index').default
+            },
+
+             /// REPORTE DE COTIZACION EN PDF
+
+             {
+                path: '/cotizacion/reportCotizacionPdf/:id',
+                name: 'cotizacion.reportCotizacionPdf',
+                component: require('./components/modulos/cotizacion/reportCotizacionPdf').default,
+                props: true
+            },
+
+
+            ///  TIENDA
+
+            /// TIPO DE PRODUCTO EN LA TIENDA
+
+            {
+                path: '/tipo/create',
+                name: 'tipo.create',
+                component: require('./components/tienda/tipo/create').default
+            },
+
+            {
+                path: '/tipo/index',
+                name: 'tipo.index',
+                component: require('./components/tienda/tipo/index').default
+            },
+
+            {
+                path: '/tipo/edit/:id',
+                name: 'tipo.edit',
+                component: require('./components/tienda/tipo/edit').default,
+                props: true
+            },
+
+            ///  ARTICULO
+
+            {
+                path: '/articulo/index',
+                name: 'articulo.index',
+                component: require('./components/tienda/articulo/index').default
+            },
+
+            {
+                path: '/articulo/create',
+                name: 'articulo.create',
+                component: require('./components/tienda/articulo/create').default
+            },
+
+            {
+                path: '/articulo/editar/:id',
+                name: 'articulo.editar',
+                component: require('./components/tienda/articulo/edit').default,
+                props: true
+            },
+
+            // PARTE DE INGRESO
+            {
+                path: '/parteingreso/create/:id',
+                name: 'parteingreso.create',
+                component: require('./components/modulos/parte_ingreso/create').default,
+                props: true
+            },
+            {
+                path: '/parteingreso/list',
+                name: 'parteingreso.list',
+                component: require('./components/modulos/parte_ingreso/list').default
             },
 
 

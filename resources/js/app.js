@@ -6,12 +6,22 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import locale from 'element-ui/lib/locale/lang/es'
 import onlyInt from 'vue-input-only-number';
+import VueCurrencyFilter from 'vue-currency-filter'
 
 
 
 window.Vue.use(ElementUI,{ locale });
 window.Vue.use(onlyInt);
 window.Vue.use(require('vue-moment'));
+window.Vue.use(VueCurrencyFilter,
+    {
+      symbol : 'S/.',
+      thousandsSeparator: '.',
+      fractionCount: 2,
+      fractionSeparator: ',',
+      symbolPosition: 'front',
+      symbolSpacing: true
+    })
 
 import Swal from 'sweetalert2'
 window.Swal = Swal;

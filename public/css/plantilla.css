@@ -6173,7 +6173,7 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
 @media (min-width: 992px) {
   .modal-lg,
   .modal-xl {
-    max-width: 800px;
+    max-width: 70%;
   }
 }
 
@@ -31099,6 +31099,7 @@ a.text-muted:hover {
   color: #ffffff;
 }
 /*# sourceMappingURL=adminlte.css.map */
+
 .btnWidth{
     width: 40% !important;
 }

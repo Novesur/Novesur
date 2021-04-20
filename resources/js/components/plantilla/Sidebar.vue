@@ -124,10 +124,10 @@
                 </template>
               </li>
               <li class="nav-item">
-                <a href="pages/mailbox/compose.html" class="nav-link">
+                <router-link class="nav-link" :to="'/parteingreso/list'">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Kardex</p>
-                </a>
+                  <p>Listado P.Ingresos</p>
+                </router-link>
               </li>
               <li class="nav-item">
                 <a href="pages/mailbox/read-mail.html" class="nav-link">
@@ -196,11 +196,12 @@
                   <p>Clientes</p>
          </router-link>
               </li>
+
               <li class="nav-item">
 
                 <router-link class="nav-link" :to="'/cotizacion/index'">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Listado de Pedidos</p>
+                  <p>Listado de Cotizaciones</p>
                 </router-link>
               </li>
               <li class="nav-item">
@@ -235,87 +236,31 @@
               </li>
             </ul>
           </li>
+
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-              <i class="nav-icon far fa-plus-square"></i>
+              <i class="fas fa-cart-plus"></i>
               <p>
-                Extras
+                Tienda
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/examples/login.html" class="nav-link">
+                 <router-link class="nav-link" :to="'/articulo/index'">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Login</p>
-                </a>
+                  <p>Articulo</p>
+                 </router-link>
               </li>
               <li class="nav-item">
-                <a href="pages/examples/register.html" class="nav-link">
+                 <router-link class="nav-link" :to="'/tipo/index'">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Register</p>
-                </a>
+                  <p>Tipo</p>
+                </router-link>
               </li>
-              <li class="nav-item">
-                <a href="pages/examples/forgot-password.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Forgot Password</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/examples/recover-password.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Recover Password</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/examples/lockscreen.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Lockscreen</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/examples/legacy-user-menu.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Legacy User Menu</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/examples/language-menu.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Language Menu</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/examples/404.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Error 404</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/examples/500.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Error 500</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/examples/pace.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Pace</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/examples/blank.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Blank Page</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="starter.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Starter Page</p>
-                </a>
-              </li>
+
+
+
             </ul>
           </li>
           <li class="nav-header">MISCELLANEOUS</li>
