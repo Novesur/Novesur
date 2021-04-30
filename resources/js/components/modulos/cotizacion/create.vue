@@ -1,6 +1,14 @@
 <template>
   <div class="content-header">
     <div class="container-fluid">
+      <div class="float-right">
+
+
+                <router-link class="btn btn-info btn-sm" :to="'/cliente/index'">
+              <i class="fas fa-angle-double-left"></i> Regresar
+            </router-link>
+
+      </div>
       <div class="row mb-2">
         <div class="col-sm-6">
           <h1 class="m-0 text-dark">Generar Cotizacion</h1>
@@ -241,7 +249,6 @@
                               type="text"
                               class="form-control"
                               v-model="fillregistrarCotizacion.cFlete"
-                              placeholder="CLIENTE/NOVESUR"
                             />
                           </div>
                         </div>
@@ -646,7 +653,6 @@ export default {
       this.fillregistrarCotizacion.cTotal = "";
     },
 
-
     getListarUnidadMedida() {
       var url = "/administracion/KardexDetalle/listUnidMed";
       axios.get(url).then((response) => {
@@ -743,7 +749,6 @@ export default {
           this.listarProductosPaginated = response.data.datos;
           this.limpiaItems();
 
-
           if (response.data.message == "Ya fue agregado anteriormente") {
             Swal.fire({
               position: "center",
@@ -790,11 +795,9 @@ export default {
     },
     eliminarTempitemCoti() {
       var url = "/administracion/tempcotizacion/eliminarTempitemCoti";
-      axios
-        .post(url)
-        .then((response) => {
-          this.setListtempCotizacion();
-        });
+      axios.post(url).then((response) => {
+        this.setListtempCotizacion();
+      });
     },
     setCalculaTotal() {
       const a = parseFloat(this.fillregistrarCotizacion.cCantidad);
@@ -825,6 +828,7 @@ export default {
     cargaDatosPredeterminados() {
       this.fillregistrarCotizacion.cValidez = "15 días";
       this.fillregistrarCotizacion.Docu = "Factura, guía y carta de Garantía";
+      this.fillregistrarCotizacion.cFlete = "NOVESUR";
     },
   },
 };

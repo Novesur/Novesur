@@ -12,6 +12,7 @@ use App\TempCotizacion;
 use App\Cotizacion;
 use App\DetalleCotizacion;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use PDF;
 
 
@@ -110,40 +111,28 @@ class CotizacionController extends Controller
 
     public function ListCotizacionesby(Request $request)
     {
+        $nIdCliente   =    $request->nIdCliente;
+        $nIdVendedor    =   $request->nIdVendedor;
+        $nIdtEstadoCoti2=   $request->nIdtEstadoCoti2;
+        $dFechaInicio   =   $request->dFechainicio;
+        $dFechaFin      =   $request->dFechafin;
 
-        if ($request->nIdCliente == null && $request->dFecha == null && $request->nIdtEstadoCoti2 == null) {
-            $dato = Cotizacion::with('cliente', 'user', 'tipopago', 'estadopedido')->where('user_id', $request->nIdVendedor)->get();
-            return $dato;
-        }
+        $nIdCliente   =   ($nIdCliente   ==  NULL) ? ($nIdCliente   =   '') :   $nIdCliente;
+        $nIdVendedor   =   ($nIdVendedor   ==  NULL) ? ($nIdVendedor   =   '') :   $nIdVendedor;
+        $nIdtEstadoCoti2   =   ($nIdtEstadoCoti2   ==  NULL) ? ($nIdtEstadoCoti2   =   '') :   $nIdtEstadoCoti2;
+        $dFechaInicio   =   ($dFechaInicio   ==  NULL) ? ($dFechaInicio   =   '') :   $dFechaInicio;
+        $dFechaFin      =   ($dFechaFin   ==  NULL) ? ($dFechaFin   =   '') :   $dFechaFin;
 
-        if ($request->dFecha == null && $request->nIdtEstadoCoti2 == null) {
-            $dato = Cotizacion::with('cliente', 'user', 'tipopago', 'estadopedido')
-                ->where('user_id', $request->nIdVendedor)
-                ->where('cliente_id', $request->nIdCliente)
-                ->get();
-            return $dato;
-        }
-
-        if ($request->nIdtEstadoCoti2 == null) {
-            $inicio =  substr($request->dFecha[0], 0, 10);
-            $fin =  substr($request->dFecha[1], 0, 10);
-            $dato = Cotizacion::with('cliente', 'user', 'tipopago', 'estadopedido')
-                ->where('user_id', $request->nIdVendedor)
-                ->where('cliente_id', $request->nIdCliente)
-                ->whereBetween('fecha', [$inicio, $fin])
-                ->get();
-            return $dato;
-        }
+        $dato = DB::select('call sp_ReporteCotizacion (?,?,?,?,?)', [
+            $nIdVendedor,
+            $nIdCliente,
+            $nIdtEstadoCoti2,
+            $dFechaInicio,
+            $dFechaFin
+        ]);
 
 
-        if ($request->dFecha == null) {
-            $dato = Cotizacion::with('cliente', 'user', 'tipopago', 'estadopedido')
-                ->where('user_id', $request->nIdVendedor)
-                ->where('cliente_id', $request->nIdCliente)
-                ->where('estadopedido_id', $request->nIdtEstadoCoti2)
-                ->get();
-            return $dato;
-        }
+        return $dato;
     }
 
     public function ListCotizacionbyId(Request $request)
@@ -168,7 +157,7 @@ class CotizacionController extends Controller
         //dd($request->get("params")['item']);
         $valor = $request->get("params")['item'];
         $coti = Cotizacion::with('cliente', 'user', 'tipopago', 'estadopedido')->where('id', $valor)->first();
-        $detcoti = DetalleCotizacion::with('unidmedida','producto','producto.marca','producto.familia','producto.material','producto.modelotipo','producto.subfamilia')->where('cotizacion_id', $valor)->get();
+        $detcoti = DetalleCotizacion::with('unidmedida', 'producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia')->where('cotizacion_id', $valor)->get();
         $logo = asset('img/logo02.png');
         $productos01 = asset('img/banner01.png');
         //dd($coti);

@@ -77,11 +77,14 @@
                                 filterable
                                 placeholder="Seleccione una Vendedor"
                                 :style="{ width: '350px' }"
-                                clearable
+
+                                default-value="2010-10-01"
+
                               >
                                 <el-option
                                   v-for="item in listVendedorUser"
                                   :key="item.id"
+
                                   :label="
                                     item.firstname +
                                     ' ' +
@@ -133,6 +136,8 @@
                               range-separator="To"
                               start-placeholder="Start date"
                               end-placeholder="End date"
+                              value-format="yyyy-MM-dd"
+                               clearable
                               :style="{ width: '530px', height: '38px' }"
                             >
                             </el-date-picker>
@@ -147,9 +152,10 @@
                               <el-select
                                 v-model="fillBsqCotizacion.nIdtEstadoCoti2"
                                 filterable
-                                placeholder="Seleccione un cliente"
+                                placeholder="Seleccione un estado"
                                 :style="{ width: '700px' }"
                                 clearable
+
                               >
                                 <el-option
                                   v-for="item in listEstadoCoti2"
@@ -214,13 +220,13 @@
                       <td>{{ item.fecha | moment("DD - MM - Y") }}</td>
                       <td v-text="item.validezoferta"></td>
                       <td v-text="item.Entrega"></td>
-                      <td v-text="item.tipopago.nombre"></td>
+                      <td v-text="item.tipopago"></td>
                       <td v-text="item.descripcionTipopago"></td>
                       <td v-text="item.flete"></td>
                       <td v-text="item.documentacion"></td>
                       <td v-text="item.garantia"></td>
-                      <td v-text="item.cliente.razonsocial"></td>
-                      <td v-text="item.estadopedido.nombre"></td>
+                      <td v-text="item.razonsocial"></td>
+                      <td v-text="item.estadopedido"></td>
 
                       <td>
                         <button
@@ -232,12 +238,12 @@
                       </td>
 
                       <td>
-                        <b-button
+                        <button
                           class="btn btn-primary btn-sm"
                           @click="abrirModal(item.id)"
                         >
                           <i class="fas fa-pencil-alt"></i> Detalle
-                        </b-button>
+                        </button>
                       </td>
 
                       <td>
@@ -298,7 +304,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Detalle de cotizacion</h5>
-            <button class="close" @click="abrirModal()"></button>
+            <button class="close" @click="abrirModal(item.id)"></button>
           </div>
           <div class="modal-body">
             <!-- Listado de Detalle de Cotizaciones -->
@@ -568,11 +574,13 @@ export default {
           params: {
             nIdCliente: this.fillBsqCotizacion.nIdCliente,
             nIdVendedor: this.fillBsqCotizacion.nIdVendedor,
-            dFecha: this.fillBsqCotizacion.dFecha,
+            dFechainicio: (!this.fillBsqCotizacion.dFecha)? '': this.fillBsqCotizacion.dFecha[0],
+            dFechafin: (!this.fillBsqCotizacion.dFecha)? '': this.fillBsqCotizacion.dFecha[1],
             nIdtEstadoCoti2: this.fillBsqCotizacion.nIdtEstadoCoti2,
           },
         })
         .then((response) => {
+console.log(response.data);
           this.listPaginacion = response.data;
           //console.log(response.data[0].estadopedido.id);
         });
@@ -594,7 +602,7 @@ export default {
           },
         })
         .then((response) => {
-          console.log(item);
+          //console.log(item);
           this.getlistEstadoPedido(response.data.estadopedido_id);
         });
     },

@@ -88,7 +88,7 @@
                   <thead>
                     <tr>
                       <th>Razon Social</th>
-                      <th>Direccion</th>
+
                       <th>Ruc</th>
                       <th>Atencion</th>
                       <th>Telefono</th>
@@ -101,7 +101,7 @@
                   <tbody>
                     <tr v-for="(item, index) in listarClientesPaginated" :key="index">
                       <td v-text="item.razonsocial"></td>
-                      <td v-text="item.direccion"></td>
+
                       <td v-text="item.ruc"></td>
                       <td v-text="item.atencion"></td>
                       <td v-text="item.telefono"></td>
