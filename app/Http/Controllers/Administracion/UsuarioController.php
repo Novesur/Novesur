@@ -29,6 +29,7 @@ class UsuarioController extends Controller
         $user->lastname = $request->cLastname;
         $user->username = $request->cUsername;
         $user->email = $request->cEmail;
+        $user->celular = $request->cCelular;
         $user->roles_id = $request->nIdRol;
         $user->almacen_id = $request->nIdAlmacen;
         $user->password = Hash::make($request->cPassword);

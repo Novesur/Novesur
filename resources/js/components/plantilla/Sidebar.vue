@@ -123,18 +123,18 @@
                   </router-link>
                 </template>
               </li>
-              <li class="nav-item">
+        <!--       <li class="nav-item">
                 <router-link class="nav-link" :to="'/parteingreso/list'">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Listado P.Ingresos</p>
                 </router-link>
-              </li>
-              <li class="nav-item">
+              </li> -->
+          <!--     <li class="nav-item">
                 <a href="pages/mailbox/read-mail.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Read</p>
                 </a>
-              </li>
+              </li> -->
             </ul>
           </li>
 
@@ -219,16 +219,20 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
+                   <template v-if="listPermisos.includes('articulo.tienda')">
                  <router-link class="nav-link" :to="'/articulo/index'">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Articulo</p>
                  </router-link>
+                   </template>
               </li>
               <li class="nav-item">
+                  <template v-if="listPermisos.includes('tipo.tienda')">
                  <router-link class="nav-link" :to="'/tipo/index'">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Tipo</p>
                 </router-link>
+                  </template>
               </li>
 
 
