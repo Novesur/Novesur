@@ -107,9 +107,6 @@ Route::get('/administracion/usuario/getListarRolPermisosByUsuario', 'Administrac
 Route::get('/administracion/usuario/getListarUsusarios', 'Administracion\UsuarioController@getListarUsusarios');
 Route::get('/administracion/usuario/getListarUsusariosbyId', 'Administracion\UsuarioController@getListarUsusariosbyId');
 
-
-
-
 /// Roles
 Route::get('/administracion/rol/listRoles', 'Administracion\RolController@index');
 Route::get('/administracion/rol/listRolByUSer', 'Administracion\RolController@listRolByUSer');
@@ -168,6 +165,10 @@ Route::post('/administracion/cotizacion/CotizacionPdf', 'Administracion\Cotizaci
 //Tipo de pago
 Route::get('/administracion/cotizacion/listTipoPago', 'Administracion\CotizacionController@listTipoPago');
 
+//Listado de dias de Pago
+Route::get('/administracion/pago/index', 'Administracion\PagoController@index');
+
+
 //TempCotizacion
 Route::get('/administracion/tempcotizacion/ListtempCotizacion', 'Administracion\CotizacionController@ListtempCotizacion');
 Route::post('/administracion/tempcotizacion/eliminarTempitemCoti', 'Administracion\CotizacionController@eliminarTempitemCoti');
@@ -201,6 +202,10 @@ Route::get('/administracion/parte_ingreso/ListtempParteIngreso', 'Administracion
 Route::post('/administracion/parte_ingreso/setGrabarPIngreso', 'Administracion\ParteIngresoController@setGrabaPIngreso');
 Route::post('/administracion/parte_ingreso/eliminarTempitemPIngreso', 'Administracion\ParteIngresoController@eliminarTempitemPIngreso');
 Route::post('/administracion/parte_ingreso/setGrabaPIngreso', 'Administracion\ParteIngresoController@setGrabaPIngreso');
+
+/// Garantia
+Route::get('/administracion/garantia/index', 'Administracion\GarantiaController@index');
+
 
 
 

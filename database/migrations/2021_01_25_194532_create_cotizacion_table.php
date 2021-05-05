@@ -26,10 +26,12 @@ class CreateCotizacionTable extends Migration
             $table->string('Entrega',120);
             $table->foreign('tipopago_id')->references('id')->on('tipopago');
             $table->unsignedBigInteger('tipopago_id');
-            $table->string('descripcionTipopago')->nullable();;
+            $table->foreign('pago_id')->references('id')->on('pago');
+            $table->unsignedBigInteger('pago_id');
             $table->string('flete',20);
             $table->string('documentacion',50);
-            $table->string('garantia');
+            $table->unsignedBigInteger('garantia_id');
+            $table->foreign('garantia_id')->references('id')->on('garantia');
             $table->timestamps();
         });
     }

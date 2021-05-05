@@ -77,14 +77,11 @@
                                 filterable
                                 placeholder="Seleccione una Vendedor"
                                 :style="{ width: '350px' }"
-
                                 default-value="2010-10-01"
-
                               >
                                 <el-option
                                   v-for="item in listVendedorUser"
                                   :key="item.id"
-
                                   :label="
                                     item.firstname +
                                     ' ' +
@@ -137,7 +134,7 @@
                               start-placeholder="Start date"
                               end-placeholder="End date"
                               value-format="yyyy-MM-dd"
-                               clearable
+                              clearable
                               :style="{ width: '530px', height: '38px' }"
                             >
                             </el-date-picker>
@@ -155,7 +152,6 @@
                                 placeholder="Seleccione un estado"
                                 :style="{ width: '700px' }"
                                 clearable
-
                               >
                                 <el-option
                                   v-for="item in listEstadoCoti2"
@@ -203,6 +199,7 @@
                   <thead>
                     <tr>
                       <th>Fecha</th>
+                      <th>Cliente</th>
                       <th>Validez de oferta</th>
                       <th>Entrega</th>
                       <th>Tipo de pago</th>
@@ -210,7 +207,6 @@
                       <th>Flete</th>
                       <th>Documentacion</th>
                       <th>Garantia</th>
-                      <th>Cliente</th>
                       <th>Estado</th>
                       <th>Accion</th>
                     </tr>
@@ -218,14 +214,14 @@
                   <tbody>
                     <tr v-for="(item, index) in listPaginacion" :key="index">
                       <td>{{ item.fecha | moment("DD - MM - Y") }}</td>
+                      <td v-text="item.razonsocial"></td>
                       <td v-text="item.validezoferta"></td>
                       <td v-text="item.Entrega"></td>
                       <td v-text="item.tipopago"></td>
-                      <td v-text="item.descripcionTipopago"></td>
+                      <td v-text="item.pago"></td>
                       <td v-text="item.flete"></td>
                       <td v-text="item.documentacion"></td>
                       <td v-text="item.garantia"></td>
-                      <td v-text="item.razonsocial"></td>
                       <td v-text="item.estadopedido"></td>
 
                       <td>
@@ -416,7 +412,7 @@ export default {
         itemid: "",
         dFecha: "",
         nIdtEstadoCoti: "",
-        nIdtEstadoCoti2:"",
+        nIdtEstadoCoti2: "",
         nIdUser: sessionStorage.getItem("iduser"),
       },
       listDetPedido: [],
@@ -425,7 +421,7 @@ export default {
       listPaginacion: [],
       listCliente: [],
       listEstadoCoti: [],
-      listEstadoCoti2:[],
+      listEstadoCoti2: [],
       modalShow: false,
       modalEstado: false,
       mostrarModal: {
@@ -481,7 +477,7 @@ export default {
     this.getlistVendedorxUsu();
     this.getlistCliente();
     this.getlistEstadoPedido();
-    this. getlistEstadoPedidoTodos();
+    this.getlistEstadoPedidoTodos();
   },
 
   computed: {
@@ -574,15 +570,20 @@ export default {
           params: {
             nIdCliente: this.fillBsqCotizacion.nIdCliente,
             nIdVendedor: this.fillBsqCotizacion.nIdVendedor,
-            dFechainicio: (!this.fillBsqCotizacion.dFecha)? '': this.fillBsqCotizacion.dFecha[0],
-            dFechafin: (!this.fillBsqCotizacion.dFecha)? '': this.fillBsqCotizacion.dFecha[1],
+            dFechainicio: !this.fillBsqCotizacion.dFecha
+              ? ""
+              : this.fillBsqCotizacion.dFecha[0],
+            dFechafin: !this.fillBsqCotizacion.dFecha
+              ? ""
+              : this.fillBsqCotizacion.dFecha[1],
             nIdtEstadoCoti2: this.fillBsqCotizacion.nIdtEstadoCoti2,
           },
         })
         .then((response) => {
-console.log(response.data);
+
+
           this.listPaginacion = response.data;
-          //console.log(response.data[0].estadopedido.id);
+          //console.log(response.data);
         });
     },
 
@@ -617,14 +618,13 @@ console.log(response.data);
       });
     },
 
-       getlistEstadoPedidoTodos() {
+    getlistEstadoPedidoTodos() {
       var url = "/administracion/detallecotizancion/listEstadoCotizacion";
       axios.get(url).then((response) => {
         this.listEstadoCoti2 = response.data;
         //this.fillBsqCotizacion.nIdtEstadoCoti = this.listEstadoCoti[0].id;
       });
     },
-
 
     setEditarPedido() {
       var url = "/administracion/cotizacion/editEstadoCotizacion";

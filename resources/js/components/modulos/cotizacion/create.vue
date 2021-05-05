@@ -233,13 +233,22 @@
                           <label class="col-md-2 col-form-label"
                             >DESCRIPCION DEL PAGO</label
                           >
-                          <div class="col-md-8">
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="fillregistrarCotizacion.cFPago"
-                            />
+                          <div class="col-md-4">
+                             <el-select
+                              v-model="fillregistrarCotizacion.nIdDescripPago"
+                              placeholder="Select"
+                              style="width: 70%"
+                            >
+                              <el-option
+                                v-for="item in listDescripPago"
+                                :key="item.id"
+                                :label="item.nombre"
+                                :value="item.id"
+                              >
+                              </el-option>
+                            </el-select>
                           </div>
+
                         </div>
 
                         <div class="form-group row">
@@ -270,14 +279,24 @@
                           <label class="col-md-2 col-form-label"
                             >GARANTIA</label
                           >
-                          <div class="col-md-10">
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="fillregistrarCotizacion.cGarantia"
-                            />
+                        <div class="col-md-4">
+                             <el-select
+                              v-model="fillregistrarCotizacion.nIdGarantia"
+                              placeholder="Select"
+                              style="width: 70%"
+                            >
+                              <el-option
+                                v-for="item in listGarantia"
+                                :key="item.id"
+                                :label="item.nombre"
+                                :value="item.id"
+                              >
+                              </el-option>
+                            </el-select>
                           </div>
                         </div>
+
+
                       </div>
                     </div>
                   </div>
@@ -542,6 +561,8 @@ export default {
       fillregistrarCotizacion: {
         nIdCliente: this.$attrs.id,
         nIdUsuario: "",
+        nIdDescripPago:"",
+        nIdGarantia:"",
         cNomClient: "",
         cDirClient: "",
         cRucClient: "",
@@ -572,6 +593,8 @@ export default {
       listUnidMed: [],
       listTipoPago: [],
       listProd: [],
+      listDescripPago:[],
+      listGarantia:[],
       listarProductosPaginated: [],
 
       modalShow: false,
@@ -593,9 +616,34 @@ export default {
     this.getListarTipoPago();
     this.setListtempCotizacion();
     this.cargaDatosPredeterminados();
+    this.getlistDescricionPago();
+    this.getListGarantia();
   },
 
   methods: {
+
+      getlistDescricionPago(){
+     var url = "/administracion/pago/index";
+      axios
+        .get(url)
+        .then((response) => {
+          this.listDescripPago = response.data;
+              this.fillregistrarCotizacion.nIdDescripPago = this.listDescripPago[0].id;
+        });
+},
+
+      getListGarantia(){
+     var url = "/administracion/garantia/index";
+      axios
+        .get(url)
+        .then((response) => {
+          this.listGarantia = response.data;
+              this.fillregistrarCotizacion.nIdGarantia = this.listGarantia[0].id;
+        });
+},
+
+
+
     abrirModal() {
       this.modalShow = !this.modalShow;
     },
@@ -709,9 +757,7 @@ export default {
         this.mensajeError.push("El Campo Documento es un campo obligatorio");
       }
 
-      if (!this.fillregistrarCotizacion.cGarantia) {
-        this.mensajeError.push("El Campo Garantia es un campo obligatorio");
-      }
+
 
       if (!this.fillregistrarCotizacion.cCantidad) {
         this.mensajeError.push("El Campo Cantidad es un campo obligatorio");
@@ -770,9 +816,11 @@ export default {
           cValidez: this.fillregistrarCotizacion.cValidez,
           cEntrega: this.fillregistrarCotizacion.cEntrega,
           nIdTipoPago: this.fillregistrarCotizacion.nIdTipoPago,
+          nIdDescripPago : this.fillregistrarCotizacion.nIdDescripPago,
           cFPago: this.fillregistrarCotizacion.cFPago,
           cFlete: this.fillregistrarCotizacion.cFlete,
           Docu: this.fillregistrarCotizacion.Docu,
+          nIdGarantia: this.fillregistrarCotizacion.nIdGarantia,
           cGarantia: this.fillregistrarCotizacion.cGarantia,
         })
         .then((response) => {

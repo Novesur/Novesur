@@ -40,5 +40,13 @@ class Cotizacion extends Model
     {
         return $this->belongsTo(EstadoPedido::class);
     }
+    public function pago()
+    {
+        return $this->belongsTo(Pago::class);
+    }
+    public function garantia()
+    {
+        return $this->belongsTo(Garantia::class);
+    }
 }
 

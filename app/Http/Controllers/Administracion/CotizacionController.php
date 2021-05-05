@@ -46,6 +46,7 @@ class CotizacionController extends Controller
 
     public function create(Request $request)
     {
+
         $formatreq = date("Y-m-d");
         $cotizacion = new Cotizacion();
         $cotizacion->fecha =  $formatreq;
@@ -53,13 +54,12 @@ class CotizacionController extends Controller
         $cotizacion->user_id =  $request->nIdUsuario;
         $cotizacion->estadopedido_id =  $request->cEstado;
         $cotizacion->validezoferta =  $request->cValidez;
-        $cotizacion->Entrega =  $request->cEntrega;
+        $cotizacion->Entrega =  mb_strtoupper($request->cEntrega);
         $cotizacion->tipopago_id =  $request->nIdTipoPago;
-        $cotizacion->descripcionTipopago =  $request->cFPago;
+        $cotizacion->pago_id = $request->nIdDescripPago;
         $cotizacion->flete =  $request->cFlete;
         $cotizacion->documentacion =  $request->Docu;
-        $cotizacion->garantia =  $request->cGarantia;
-
+        $cotizacion->garantia_id =  $request->nIdGarantia;
         $cotizacion->save();
         $detcotizacion = Session::get('products');
 
@@ -148,7 +148,7 @@ class CotizacionController extends Controller
 
     public function CotizacionCabecera(Request $request)
     {
-        $dato = Cotizacion::with('cliente', 'user', 'tipopago', 'estadopedido')->where('id', $request->nidCoti)->get();
+        $dato = Cotizacion::with('cliente', 'user', 'tipopago', 'estadopedido','pago','garantia')->where('id', $request->nidCoti)->get();
         return $dato;
     }
 
@@ -156,7 +156,7 @@ class CotizacionController extends Controller
     {
         //dd($request->get("params")['item']);
         $valor = $request->get("params")['item'];
-        $coti = Cotizacion::with('cliente', 'user', 'tipopago', 'estadopedido')->where('id', $valor)->first();
+        $coti = Cotizacion::with('cliente', 'user', 'tipopago','estadopedido','pago','garantia')->where('id', $valor)->first();
         $detcoti = DetalleCotizacion::with('unidmedida', 'producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia')->where('cotizacion_id', $valor)->get();
         $logo = asset('img/logo02.png');
         $productos01 = asset('img/banner01.png');

@@ -61,19 +61,14 @@
           <td colspan="4" align="center" style="border: 1px; background-color: lightgreen" ><h3><strong>COTIZACION Nº {{str_pad($coti->id,3,'0',STR_PAD_LEFT) }} - {{substr($coti->fecha,0,4)}}</strong></h3></td>
         </tr>
 
-        <h5 style="text-align: right">
-            @php
-
-            echo date('d-m-Y', strtotime($coti->fecha));
-            @endphp
-          </h5>
-
-
         <tr >
           <td ><strong>SEÑORES:</strong></td>
           <td> {{$coti->cliente->razonsocial}} </td>
-          <td><strong>MONEDA:</strong></td>
-          <td>SOLES</td>
+          <td ><strong>FECHA:</strong></td>
+          <td>  @php
+
+              echo date('d-m-Y', strtotime($coti->fecha));
+              @endphp </td>
         </tr>
 
         <tr>
@@ -109,8 +104,12 @@
           <tr>
             <td align="left"><strong>CELULAR:</strong></td>
             <td>{{$coti->cliente->celular}}</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
+
+
+            <td><strong>MONEDA:</strong></td>
+            <td>SOLES</td>
+
+
           </tr>
           <tr>
             <td align="left"><strong>DESTINO:</strong></td>
@@ -124,13 +123,14 @@
             <td>&nbsp;</td>
             <td>&nbsp;</td>
           </tr>
+
       </table>
 
     <h5><center>De nuestra consideración: Hacemos llegar con la presente nuestra propuesta económica, según se muestra a continuación</center></h5>
 
     <table width="100%" border="1">
         <tr>
-          <td align="center" style="background-color:rgba(238, 229, 229, 0.719)"><strong>TEM</strong></td>
+          <td align="center" style="background-color:rgba(238, 229, 229, 0.719)"><strong>Nro</strong></td>
           <td align="center" style="background-color: rgba(238, 229, 229, 0.719)"><strong>CANT</strong></td>
           <td align="center" style="background-color: rgba(238, 229, 229, 0.719)"><strong>MEDIDA</strong></td>
           <td align="center" style="background-color: rgba(238, 229, 229, 0.719)"><strong>DESCRIPCION DE MEDIDOR</strong></td>
@@ -175,7 +175,7 @@
           <td align="right">S/.{{number_format($IGV,2)}}</td>
         </tr>
         <tr>
-          <td align="center" style="background-color: rgba(238, 229, 229, 0.719)"><strong>$subtotal</strong></td>
+          <td align="center" style="background-color: rgba(238, 229, 229, 0.719)"><strong>TOTAL GENERAL</strong></td>
           <td align="right" style="background-color: rgba(238, 229, 229, 0.719)">S/. {{number_format($total,2)}}</td>
         </tr>
 
@@ -220,6 +220,10 @@
           <td> {{$coti->tipopago->nombre}}</td>
         </tr>
         <tr>
+            <td><strong>Pago :</strong></td>
+            <td> {{$coti->pago->nombre}}</td>
+          </tr>
+        <tr>
           <td><strong>Flete  :</strong></td>
           <td>{{$coti->flete}}</td>
         </tr>
@@ -229,7 +233,7 @@
         </tr>
         <tr>
           <td><strong>Garantia : </strong></td>
-          <td>{{$coti->garantia}}</td>
+          <td>{{$coti->garantia->nombre}} por defectos de fabricaciòn (no cubre los originados por mala manipulaciòn, vandalismo, golpes, mala instalaciòn POR TERCEROS, mala operaciòn, exceso de presiòn y temperaturas)</td>
         </tr>
       </table>
 

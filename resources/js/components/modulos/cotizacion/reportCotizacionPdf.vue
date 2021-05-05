@@ -36,11 +36,7 @@
                       >
                     </h6>
                   </div>
-                  <div class="col-md-12 text-right">
-                    <h5 style="text-align: right">
-                      {{ this.fillBsPpdfCoti.fecha | moment("DD - MM - Y") }}
-                    </h5>
-                  </div>
+
                 </div>
                 <div class="form-group row">
                   <div class="col-md-12">
@@ -82,6 +78,8 @@
 
                   <div class="col-md-4 border border-dark">
                     <div class="row">
+                        <div class="col-md-3"><b>FECHA :</b></div>
+                      <div class="col-md-8"> {{ this.fillBsPpdfCoti.fecha | moment("DD - MM - Y") }}</div>
                       <div class="col-md-3"><b>MONEDA :</b></div>
                       <div class="col-md-8">SOLES</div>
                       <div class="col-md-3"><b>VENDEDOR :</b></div>
@@ -110,7 +108,7 @@
                   <table class="table">
                     <thead>
                       <tr>
-                        <th scope="col" class="colorcabecera">TEM</th>
+                        <th scope="col" class="colorcabecera">Nro</th>
                         <th scope="col" class="colorcabecera">CANT</th>
                         <th scope="col" class="colorcabecera">MEDIDA</th>
                         <th scope="col" class="colorcabecera">
@@ -215,6 +213,10 @@
                       <div class="col-md-8">
                         {{ this.fillBsPpdfCoti.formaDPago }}
                       </div>
+                      <div class="col-md-3"><b>Pago: :</b></div>
+                      <div class="col-md-8">
+                        {{ this.fillBsPpdfCoti.pago }}
+                      </div>
                       <div class="col-md-3"><b>Flete :</b></div>
                       <div class="col-md-8">
                         {{ this.fillBsPpdfCoti.flete }}
@@ -226,7 +228,7 @@
                       </div>
                       <div class="col-md-3"><b>Garantia: :</b></div>
                       <div class="col-md-8">
-                        {{ this.fillBsPpdfCoti.garantia }}
+                        {{ this.fillBsPpdfCoti.garantia }}  por defectos de fabricaciòn (no cubre los originados por mala manipulaciòn, vandalismo, golpes, mala instalaciòn POR TERCEROS, mala operaciòn, exceso de presiòn y temperaturas)
                       </div>
 
                       <div class="col-md-8 mt-3">Atentamente</div>
@@ -282,6 +284,7 @@ export default {
         validezoferta: "",
         entrega: "",
         formaDPago: "",
+        pago:"",
         flete: "",
         documentacion: "",
         garantia: "",
@@ -311,6 +314,7 @@ export default {
           },
         })
         .then((response) => {
+            console.log(response.data);
           this.fillBsPpdfCoti.razonsocial =
             response.data[0].cliente.razonsocial;
           this.fillBsPpdfCoti.direccion = response.data[0].cliente.direccion;
@@ -323,9 +327,11 @@ export default {
           this.fillBsPpdfCoti.validezoferta = response.data[0].validezoferta;
           this.fillBsPpdfCoti.entrega = response.data[0].Entrega;
           this.fillBsPpdfCoti.formaDPago = response.data[0].tipopago.nombre;
+          this.fillBsPpdfCoti.pago = response.data[0].pago.nombre;
+
           this.fillBsPpdfCoti.flete = response.data[0].flete;
           this.fillBsPpdfCoti.documentacion = response.data[0].documentacion;
-          this.fillBsPpdfCoti.garantia = response.data[0].garantia;
+          this.fillBsPpdfCoti.garantia = response.data[0].garantia.nombre;
           this.fillBsPpdfCoti.fecha = response.data[0].fecha;
           this.fillBsPpdfCoti.anioCoti = response.data[0].fecha;
           this.fillBsPpdfCoti.IdString= response.data[0].id;
