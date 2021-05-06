@@ -164,6 +164,7 @@ export default {
       fillBsqProveedor: {
         cNombre: "",
         cRuc: "",
+        nIdUser: sessionStorage.getItem("iduser"),
       },
       listCliente: [],
       pageNumber: 0,
@@ -212,6 +213,7 @@ export default {
           params: {
             cNombre: this.fillBsqProveedor.cNombre,
             cRuc: this.fillBsqProveedor.cRuc,
+            nIdUser: this.fillBsqProveedor.nIdUser,
           },
         })
         .then((response) => {

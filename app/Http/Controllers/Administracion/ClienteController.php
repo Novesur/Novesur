@@ -40,6 +40,7 @@ class ClienteController extends Controller
             $cliente->telefono = $request->cTelefono;
             $cliente->celular = $request->cCelular;
             $cliente->email = $request->cEmail;
+            $cliente->usuario_id = $request->nIdUser;
             $cliente->save();
             return response()->json(['message' => 'Nuevo Cliente agregado', 'icon' => 'success'], 200);
 
@@ -58,6 +59,7 @@ class ClienteController extends Controller
         $cNombre = $request->cNombre;
         $cNombre = ($cNombre == NULL) ? ($cNombre = '') : $cNombre;
         $dato = Cliente::where('razonsocial', 'like', '%' . $cNombre . '%')
+        ->where('usuario_id', $request->nIdUser)
         ->orWhere('ruc',$request->cRuc)->get();
         return $dato;
     }
@@ -93,6 +95,7 @@ class ClienteController extends Controller
             $cliente->telefono = $request->cTelefono;
             $cliente->celular = $request->cCelular;
             $cliente->email = $request->cEmail;
+            $cliente->usuario_id = $cliente->usuario_id;
             $cliente->save();
         }
 
@@ -105,9 +108,9 @@ class ClienteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function getListarCliente()
+    public function getListarCliente(Request $request)
     {
-        $dato = Cliente::all();
+        $dato = Cliente::where('usuario_id', $request->nIdVendedor)->get();
         return $dato;
     }
 

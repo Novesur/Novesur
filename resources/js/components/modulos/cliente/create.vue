@@ -196,6 +196,7 @@ export default {
         cTelefono: "",
         cCelular: "",
         cEmail: "",
+         nIdUser: sessionStorage.getItem("iduser"),
       },
       modalShow: false,
       mostrarModal: {
@@ -243,6 +244,7 @@ export default {
           cTelefono: this.fillRegistrarCliente.cTelefono,
           cCelular: this.fillRegistrarCliente.cCelular,
           cEmail: this.fillRegistrarCliente.cEmail,
+          nIdUser : this.fillRegistrarCliente.nIdUser,
         })
         .then((response) => {
           Swal.fire({

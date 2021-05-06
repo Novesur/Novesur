@@ -22,7 +22,7 @@ class DetalleCotizacionController extends Controller
 
     public function listDetCotizacionBy(Request $request)
     {
-        $dato = DetalleCotizacion::with('unidmedida','producto','producto.marca','producto.familia','producto.material','producto.modelotipo','producto.subfamilia')->where('cotizacion_id', $request->item)->get();
+        $dato = DetalleCotizacion::with('unidmedida','producto','producto.marca','producto.familia','producto.material','producto.modelotipo','producto.subfamilia','producto.homologacion')->where('cotizacion_id', $request->item)->get();
         return $dato;
     }
 

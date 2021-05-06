@@ -22,6 +22,8 @@ class CreateClienteTable extends Migration
             $table->string('telefono',50)->nullable();
             $table->string('celular',50)->nullable();
             $table->string('email',50)->nullable();
+            $table->foreign('usuario_id')->references('id')->on('users');
+            $table->unsignedBigInteger('usuario_id');
             $table->timestamps();
         });
     }

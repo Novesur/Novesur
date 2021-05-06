@@ -44,6 +44,7 @@
                                 filterable
                                 placeholder="Seleccione una Vendedor"
                                 :style="{ width: '350px' }"
+                                  @change="getlistCliente"
                                 clearable
                               >
                                 <el-option
@@ -78,6 +79,7 @@
                                 placeholder="Seleccione una Vendedor"
                                 :style="{ width: '350px' }"
                                 default-value="2010-10-01"
+                                @change="getlistCliente"
                               >
                                 <el-option
                                   v-for="item in listVendedorUser"
@@ -475,7 +477,6 @@ export default {
     this.getlistVendedorAdmin();
     //this.cargaFechaActual();
     this.getlistVendedorxUsu();
-    this.getlistCliente();
     this.getlistEstadoPedido();
     this.getlistEstadoPedidoTodos();
   },
@@ -506,6 +507,8 @@ export default {
     },
   },
   methods: {
+
+
     cargaFechaActual() {
       this.fillBsqCotizacion.dFecha = new Date();
     },
@@ -547,6 +550,7 @@ export default {
       var url = "/administracion/usuario/getListarUsusarios";
       axios.get(url).then((response) => {
         this.listVendedorAdmin = response.data;
+          this.getlistCliente();
       });
     },
     getlistVendedorxUsu() {
@@ -560,6 +564,7 @@ export default {
         .then((response) => {
           this.listVendedorUser = response.data;
           this.fillBsqCotizacion.nIdVendedor = this.listVendedorUser[0].id;
+            this.getlistCliente();
         });
     },
 
@@ -589,7 +594,11 @@ export default {
 
     getlistCliente() {
       var url = "/administracion/cliente/getListarCliente";
-      axios.get(url).then((response) => {
+      axios.get(url,{params:{
+          nIdVendedor : this.fillBsqCotizacion.nIdVendedor,
+
+      }}).then((response) => {
+        this.fillBsqCotizacion.nIdCliente='',
         this.listCliente = response.data;
       });
     },

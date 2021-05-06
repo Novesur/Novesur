@@ -94,7 +94,7 @@
                       <div class="col-md-3"><b>CENTRAL :</b></div>
                       <div class="col-md-8">01-282-2376</div>
                       <div class="col-md-3"><b>EMAIL :</b></div>
-                      <div class="col-md-8">aortiz@novesur.com.pe</div>
+                      <div class="col-md-8">{{ this.fillBsPpdfCoti.email }}</div>
                     </div>
                   </div>
 
@@ -133,7 +133,7 @@
                             ', MATERIAL :' +
                             item.producto.material.nombre +
                             ', MARCA :' +
-                            item.producto.marca.nombre
+                            item.producto.marca.nombre + '- '+ item.producto.homologacion.nombre
                           "
                         ></td>
                         <td>{{item.punit | currency }}</td>
@@ -314,7 +314,7 @@ export default {
           },
         })
         .then((response) => {
-            console.log(response.data);
+
           this.fillBsPpdfCoti.razonsocial =
             response.data[0].cliente.razonsocial;
           this.fillBsPpdfCoti.direccion = response.data[0].cliente.direccion;
@@ -350,6 +350,7 @@ export default {
           },
         })
         .then((response) => {
+            console.log(response.data);
           let data = response.data.map(function (item) {
             const total = item.cantidad * Number(item.punit);
             return { ...item, total: total };
@@ -367,7 +368,7 @@ export default {
 
 
           (this.varTotal = response.data.cantidad * response.data.punit)
-               console.log(this.varTotal)
+
 
 
         });
@@ -387,7 +388,7 @@ export default {
           config
         )
         .then((response) => {
-          console.log(response.data);
+
           var oMyBlob = new Blob([response.data], { type: "application/pdf" });
           var url = URL.createObjectURL(oMyBlob);
           window.open(url);

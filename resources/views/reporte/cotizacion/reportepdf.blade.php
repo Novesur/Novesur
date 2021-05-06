@@ -149,7 +149,7 @@
         </td>
           <td align="center">{{$data->cantidad}}</td>
           <td align="center">{{$data->unidmedida->nombre}}</td>
-          <td align="center">{{$data->producto->familia->nombre .' '. $data->producto->subfamilia->nombre .', MODELO '. $data->producto->modelotipo->nombre .', MATERIAL '. $data->producto->material->nombre .', MARCA '. $data->producto->marca->nombre}}</td>
+          <td align="center">{{$data->producto->familia->nombre .' '. $data->producto->subfamilia->nombre .', MODELO '. $data->producto->modelotipo->nombre .', MATERIAL '. $data->producto->material->nombre .', MARCA '. $data->producto->marca->nombre.', - '. $data->producto->homologacion->nombre}}</td>
           <td align="center">S/. {{number_format($data->punit,2)  }}</td>
 
           <td align="right">S/. {{number_format($data->cantidad * $data->punit,2)}}</td>
