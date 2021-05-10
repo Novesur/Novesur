@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Administracion;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Cliente;
+use App\Cotizacion;
 
 class ClienteController extends Controller
 {
@@ -76,6 +77,13 @@ class ClienteController extends Controller
         $dato = Cliente::where('id', $request->nIdCliente  )
         ->orWhere('ruc',$request->cRuc)->first();
         return $dato;
+    }
+
+    public function listGetClienteVendedor(Request $request)
+    {
+
+      $dato = Cotizacion::with('cliente','user')->where('id',$request->nIdCotizacion)->first();
+      return $dato;
     }
 
     /**

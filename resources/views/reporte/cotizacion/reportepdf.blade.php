@@ -119,7 +119,7 @@
           </tr>
           <tr>
             <td align="left"><strong>CORREO:</strong></td>
-            <td>{{$coti->cliente->correo}}</td>
+            <td>{{$coti->cliente->email}}</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
           </tr>
@@ -203,7 +203,7 @@
         </tr>
       </table>
       <br>
-      <table width="60%" border="0">
+      <table width="100%" border="0">
         <tr>
           <td colspan="2"><strong>Condiciones Comerciales :</strong></td>
         </tr>
@@ -240,7 +240,7 @@
    <h6 style="font-weight:normal; margin-bottom: 0px">Atentamente</h6>
 
    <h6 style="margin-top: 0px;font-weight:normal; margin-left: 40px" >
-    Lic. {{$coti->user->firstname .' '.$coti->user->secondname }}<br />
+     {{$coti->user->firstname .' '.$coti->user->secondname }}<br />
     Coordinador Comercial
    </h6>
    <footer style=" position: absolute;bottom: 0;">

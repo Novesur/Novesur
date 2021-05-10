@@ -3,14 +3,23 @@
     <div class="content container-fluid">
       <div class="card-body">
         <form role="form">
-          <div class="form-group row float-right">
+          <div class="form-group row float-right" style="display: inline-block;display: inline-block;">
             <button
               @click.prevent="getPdfCotizacion"
               class="btn btn-danger btn-lg"
             >
               <span><i class="far fa-file-pdf"></i></span> PDF
             </button>
+
+             <button
+              @click.prevent="getAtras"
+              class="btn btn-primary btn-lg"
+            >
+              <span><i class="fas fa-angle-double-left"></i></span> Atras
+            </button>
           </div>
+
+
           <div class="form-group row justify-content-around">
             <div class="col-md-6" style="margin-left: 0 !important">
               <img src="/img/logo02.png" alt="" />
@@ -94,7 +103,7 @@
                       <div class="col-md-3"><b>CENTRAL :</b></div>
                       <div class="col-md-8">01-282-2376</div>
                       <div class="col-md-3"><b>EMAIL :</b></div>
-                      <div class="col-md-8">{{ this.fillBsPpdfCoti.email }}</div>
+                      <div class="col-md-8">{{ this.fillBsPpdfCoti.emailvendedor }}</div>
                     </div>
                   </div>
 
@@ -195,7 +204,7 @@
                     </tbody>
                   </table>
 
-                  <div class="col-md-6">
+                  <div class="col-md-12">
                     <div class="row">
                       <strong>Condiciones Comerciales:</strong>
                     </div>
@@ -226,8 +235,8 @@
                       <div class="col-md-8">
                         {{ this.fillBsPpdfCoti.documentacion }}
                       </div>
-                      <div class="col-md-3"><b>Garantia: :</b></div>
-                      <div class="col-md-8">
+                      <div class="col-md-3"><b>Garantia: </b></div>
+                      <div class="col-md-12">
                         {{ this.fillBsPpdfCoti.garantia }}  por defectos de fabricaciòn (no cubre los originados por mala manipulaciòn, vandalismo, golpes, mala instalaciòn POR TERCEROS, mala operaciòn, exceso de presiòn y temperaturas)
                       </div>
 
@@ -238,14 +247,14 @@
                       <div class="col-md-12">
                         <div class="col-md-6"></div>
                         <div class="col-md-5 ml-5">
-                          Lic. {{ this.fillBsPpdfCoti.nombreVendedor }}
+                           {{ this.fillBsPpdfCoti.nombreVendedor }}
                         </div>
 
                         <div class="col-md-5 ml-5">coordinador Comercial</div>
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-md-9 offset-6">
+                      <div class="col-md-6 offset-3">
                         <div class="col-md-12">
                           Jr. Monte Abeto 376 Urb. Monterrico Sur - santiago de
                           Surco
@@ -292,6 +301,7 @@ export default {
         nroCoti:"",
         anioCoti:"",
         IdString:"",
+        emailvendedor:"",
       },
       listdetalleCoti: [],
       SubTotal: 0,
@@ -305,6 +315,9 @@ export default {
     this.getGeneraCotizacion();
   },
   methods: {
+      getAtras(){
+            history.back()
+      },
     getGeneraCotizacion() {
       var url = "/administracion/cotizacion/CotizacionCabecera";
       axios
@@ -314,7 +327,7 @@ export default {
           },
         })
         .then((response) => {
-
+            console.log(response.data)
           this.fillBsPpdfCoti.razonsocial =
             response.data[0].cliente.razonsocial;
           this.fillBsPpdfCoti.direccion = response.data[0].cliente.direccion;
@@ -335,6 +348,7 @@ export default {
           this.fillBsPpdfCoti.fecha = response.data[0].fecha;
           this.fillBsPpdfCoti.anioCoti = response.data[0].fecha;
           this.fillBsPpdfCoti.IdString= response.data[0].id;
+          this.fillBsPpdfCoti.emailvendedor = response.data[0].user.email;
 
           this.fillBsPpdfCoti.nroCoti = this.fillBsPpdfCoti.IdString.toString().padStart(3,'0') +'-'+ this.fillBsPpdfCoti.fecha.substring(0,4)
 

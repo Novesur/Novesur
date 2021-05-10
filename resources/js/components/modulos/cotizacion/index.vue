@@ -44,7 +44,7 @@
                                 filterable
                                 placeholder="Seleccione una Vendedor"
                                 :style="{ width: '350px' }"
-                                  @change="getlistCliente"
+                                @change="getlistCliente"
                                 clearable
                               >
                                 <el-option
@@ -200,30 +200,35 @@
                 >
                   <thead>
                     <tr>
+                      <th>Nro</th>
                       <th>Fecha</th>
                       <th>Cliente</th>
-                      <th>Validez de oferta</th>
+                      <!-- <th>Validez de oferta</th>
                       <th>Entrega</th>
                       <th>Tipo de pago</th>
                       <th>Descripcion</th>
                       <th>Flete</th>
                       <th>Documentacion</th>
-                      <th>Garantia</th>
+                      <th>Garantia</th> -->
                       <th>Estado</th>
                       <th>Accion</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="(item, index) in listPaginacion" :key="index">
+                      <td>
+                        {{ item.id | fourchar }} -
+                        {{ item.fecha | moment("YYYY") }}
+                      </td>
                       <td>{{ item.fecha | moment("DD - MM - Y") }}</td>
                       <td v-text="item.razonsocial"></td>
-                      <td v-text="item.validezoferta"></td>
+                      <!--    <td v-text="item.validezoferta"></td>
                       <td v-text="item.Entrega"></td>
                       <td v-text="item.tipopago"></td>
                       <td v-text="item.pago"></td>
                       <td v-text="item.flete"></td>
                       <td v-text="item.documentacion"></td>
-                      <td v-text="item.garantia"></td>
+                      <td v-text="item.garantia"></td> -->
                       <td v-text="item.estadopedido"></td>
 
                       <td>
@@ -233,18 +238,14 @@
                         >
                           <i class="far fa-calendar-check"></i> Estado
                         </button>
-                      </td>
 
-                      <td>
                         <button
                           class="btn btn-primary btn-sm"
                           @click="abrirModal(item.id)"
                         >
-                          <i class="fas fa-pencil-alt"></i> Detalle
+                          <i class="far fa-eye"></i> Detalle
                         </button>
-                      </td>
 
-                      <td>
                         <router-link
                           class="btn btn-success btn-sm"
                           :to="{
@@ -254,7 +255,22 @@
                         >
                           <i class="far fa-file-pdf"></i> Reporte
                         </router-link>
+
+
+
+                     <!--    <router-link
+                          class="btn btn-secondary btn-sm"
+                          :to="{
+                            name: 'cotizacion.editar',
+                            params: { id: item.id },
+                          }"
+                        >
+                          <i class="far fa-edit"></i> Editar
+                        </router-link> -->
                       </td>
+
+
+
                     </tr>
                   </tbody>
                 </table>
@@ -338,7 +354,7 @@
 
                     <td v-text="item.cantidad"></td>
                     <td v-text="item.punit"></td>
-                    <td v-text="item.cantidad * item.punit"></td>
+                    <td>{{item.cantidad * item.punit |formatPrice}}</td>
                     <td v-text="item.unidmedida.nombre"></td>
                   </tr>
                 </tbody>
@@ -507,8 +523,6 @@ export default {
     },
   },
   methods: {
-
-
     cargaFechaActual() {
       this.fillBsqCotizacion.dFecha = new Date();
     },
@@ -550,7 +564,7 @@ export default {
       var url = "/administracion/usuario/getListarUsusarios";
       axios.get(url).then((response) => {
         this.listVendedorAdmin = response.data;
-          this.getlistCliente();
+        this.getlistCliente();
       });
     },
     getlistVendedorxUsu() {
@@ -564,7 +578,7 @@ export default {
         .then((response) => {
           this.listVendedorUser = response.data;
           this.fillBsqCotizacion.nIdVendedor = this.listVendedorUser[0].id;
-            this.getlistCliente();
+          this.getlistCliente();
         });
     },
 
@@ -585,8 +599,6 @@ export default {
           },
         })
         .then((response) => {
-
-
           this.listPaginacion = response.data;
           //console.log(response.data);
         });
@@ -594,13 +606,16 @@ export default {
 
     getlistCliente() {
       var url = "/administracion/cliente/getListarCliente";
-      axios.get(url,{params:{
-          nIdVendedor : this.fillBsqCotizacion.nIdVendedor,
-
-      }}).then((response) => {
-        this.fillBsqCotizacion.nIdCliente='',
-        this.listCliente = response.data;
-      });
+      axios
+        .get(url, {
+          params: {
+            nIdVendedor: this.fillBsqCotizacion.nIdVendedor,
+          },
+        })
+        .then((response) => {
+          (this.fillBsqCotizacion.nIdCliente = ""),
+            (this.listCliente = response.data);
+        });
     },
 
     BuscaCotizacionList(item) {

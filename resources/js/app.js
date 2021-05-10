@@ -23,6 +23,15 @@ window.Vue.use(VueCurrencyFilter,
       symbolSpacing: true
     })
 
+    window.Vue.filter('fourchar',function(value){
+        return value.toString().padStart(3,"0000")
+    })
+    window.Vue.filter('formatPrice',function(value) {
+        let val = (value/1).toFixed(2).replace('.', ',')
+        return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+
+    })
+
 import Swal from 'sweetalert2'
 window.Swal = Swal;
 

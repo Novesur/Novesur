@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Producto;
 use App\Familia;
-use phpDocumentor\Reflection\PseudoTypes\True_;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ProductsExport;
 
 class ProductoController extends Controller
 {
@@ -106,5 +107,12 @@ class ProductoController extends Controller
 
             $Producto->save();
         }
+    }
+
+    public function setGenerarExcel(Request $request){
+
+
+        $listproductos = json_decode($request->listProductos);
+        return (new ProductsExport)->setGenerarExcel($listproductos)->download('invoices.xlsx');
     }
 }

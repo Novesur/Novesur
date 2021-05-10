@@ -39,6 +39,7 @@ export default new Router({
 
 
 
+
         {
             path: '/',
             name: 'dashboard.index',
@@ -349,7 +350,7 @@ export default new Router({
                 props: true
             },
 
-
+            /// COTIZACION
 
             {
                 path: '/cotizacion/create/:id',
@@ -363,6 +364,15 @@ export default new Router({
                 name: 'cotizacion.index',
                 component: require('./components/modulos/cotizacion/index').default
             },
+
+            {
+                path: '/cotizacion/editar/:id',
+                name: 'cotizacion.editar',
+                component: require('./components/modulos/cotizacion/edit').default,
+                props: true
+            },
+
+
 
              /// REPORTE DE COTIZACION EN PDF
 

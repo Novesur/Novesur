@@ -12,6 +12,9 @@
       <div class="card">
         <div class="card-header">
           <div class="card-tools">
+            <button class="btn btn-success btn-sm" @click.prevent="setGenerarExcelProducto">
+              <i class="far fa-file-excel"></i> Reporte
+            </button>
             <template
               v-if="listRolPermisoByUsuario.includes('productos.crear')"
             >
@@ -422,6 +425,7 @@ export default {
     },
   },
   methods: {
+
     LimpiarProductoBsq() {
       this.fillBsqProducto.nIdFamilia = "";
       this.fillBsqProducto.nIdSubFamilia = "";
@@ -489,8 +493,28 @@ export default {
         .then((response) => {
           this.inicializarPaginacion();
           this.listProductos = response.data;
+           console.log(this.listProductos)
+
         });
     },
+
+         setGenerarExcelProducto(){
+
+           var url = "/operacion/producto/setGenerarExcel";
+      axios.post(url,{
+      responseType:'blob',
+      params:{
+        'listProductos' : JSON.stringify(this.listProductos)
+      }
+      }).then((response) => {
+          var oMyBlob = new Blob([response.data],{type:'application/vnd.ms-excel'});
+          var url = document.createElement('a')
+          url.href = URL.createObjectURL(oMyBlob);
+          url.download='productos.xlsx'
+          url.click()
+      });
+
+      },
 
     limpiarBandejaProductos() {
       this.listProductos = [];

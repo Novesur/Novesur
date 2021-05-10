@@ -44,6 +44,10 @@ class CotizacionController extends Controller
         endif;
     }
 
+    public function addTempEditCotizacion(Request $request){
+
+    }
+
     public function create(Request $request)
     {
 

@@ -16,10 +16,10 @@ class Cotizacion extends Model
         'validezoferta',
         'Entrega',
         'tipopago_id',
-        'descripcionTipopago',
+        'pago_id',
         'flete',
         'documentacion',
-        'garantia',
+        'garantia_id',
     ];
 
 

@@ -95,13 +95,13 @@ class UsuarioController extends Controller
     }
 
     public function getListarUsusarios(){
-        $dato = User::all();
+        $dato = User::where('roles_id',3)->Orwhere('roles_id',1)->get();
         return $dato;
     }
 
     public function getListarUsusariosbyId(Request $request){
 
-        $dato = User::where('id', $request->nIdUsuario)->get();
+        $dato = User::where('id', $request->nIdUsuario)->where('roles_id',3)->get();
         return $dato;
     }
 }

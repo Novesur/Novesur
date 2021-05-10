@@ -172,11 +172,17 @@
                       class="page-item"
                       v-for="(page, index) in pagesList"
                       :key="index"
-                      :class="[page == pageNumber ? 'active' : '']"
+                       :class="page == pageNumber ? 'active' : ''"
                     >
-                      <a href="" class="page-link">{{ page + 1 }}</a>
+                       <a
+                              href="#"
+                              class="page-link"
+                              @click.prevent="SelectPage(page)"
+                              >{{ page + 1 }}</a
+                            >
                     </li>
                     <li class="page-item" v-if="pageNumber < pageCount - 1">
+
                       <a href="" class="page-link" @click.prevent="nextPage"
                         >Post</a
                       >
@@ -265,6 +271,9 @@ export default {
     },
     prevPage() {
       this.pageNumber--;
+    },
+     SelectPage(page) {
+      this.pageNumber = page;
     },
     inicializarPaginacion() {
       this.pageNumber = 0;
