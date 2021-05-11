@@ -463,7 +463,7 @@
                           v-for="(item, index) in listarProductosPaginated"
                           :key="index"
                         >
-                          <td v-text="index + 1"></td>
+                          <td v-text="Number(index)"></td>
                           <td v-text="item.cantidad"></td>
                           <td v-text="item.unidmedNombre"></td>
                           <td v-text="item.codigo"></td>
@@ -826,12 +826,13 @@ export default {
         .then((response) => {
           Swal.fire({
             position: "center",
-            icon: "success",
-            title: "El pedido ha sido grabado",
+            icon: response.data.icon,
+            title: response.data.message,
             showConfirmButton: false,
             timer: 1500,
           });
           this.eliminarTempitemCoti();
+          this.fillregistrarCotizacion.nIdprod=''
         });
     },
 
@@ -869,6 +870,8 @@ export default {
         })
         .then((response) => {
           this.listarProductosPaginated = response.data.datos;
+       // this.fillregistrarCotizacion.nIdprod = '';
+
           //console.log(item);
         });
     },

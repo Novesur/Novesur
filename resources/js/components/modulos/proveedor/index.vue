@@ -91,12 +91,12 @@
                       <th>Ruc</th>
                       <th>Direccion</th>
                       <th>Telefono</th>
-                      <th>Email</th>
+                      <!-- <th>Email</th>
                       <th>Contacto</th>
                       <th>Nro Cuenta 1 Soles</th>
                       <th>Nro Cuenta 2 Soles</th>
                       <th>Nro Cuenta 3 Soles</th>
-                      <th>Acciones</th>
+                      <th>Acciones</th> -->
                     </tr>
                   </thead>
                   <tbody>
@@ -105,11 +105,11 @@
                       <td v-text="item.ruc"></td>
                       <td v-text="item.direccion"></td>
                       <td v-text="item.telefono"></td>
-                      <td v-text="item.email"></td>
+                     <!--  <td v-text="item.email"></td>
                       <td v-text="item.contacto"></td>
                       <td v-text="item.nrocuenta1"></td>
                       <td v-text="item.nrocuenta2"></td>
-                      <td v-text="item.nrocuenta3"></td>
+                      <td v-text="item.nrocuenta3"></td> -->
                       <td>
                         <router-link class="btn btn-info btn-sm" :to="{name:'proveedor.editar', params:{id:item.id}}">
                           <i class="fas fa-pencil-alt"></i> Editar

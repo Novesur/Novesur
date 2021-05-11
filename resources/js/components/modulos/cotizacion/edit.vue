@@ -416,7 +416,7 @@
                     <div class="col-md-4 offset-4">
                       <button
                         class="btn btn-flat btn-info btnWidth"
-                        @click.prevent="setRegistrarCotizacion"
+                        @click.prevent="setAddTempCotizacion"
                       >
                         Agregar
                       </button>
@@ -449,7 +449,7 @@
                           <th>HOMOLOGADO</th>
                           <th>P/UNIT</th>
                           <th>TOTAL S/IGV</th>
-                          <th>Acciones</th>
+                          <!-- <th>Acciones</th> -->
                         </tr>
                       </thead>
                       <tbody>
@@ -476,15 +476,17 @@
                           ></td>
                           <td v-text="item.producto.homologacion.nombre"></td>
                           <td v-text="item.punit"></td>
-                          <td >{{item.cantidad * item.punit | formatPrice}}</td>
                           <td>
+                            {{ (item.cantidad * item.punit) | formatPrice }}
+                          </td>
+                      <!--     <td>
                             <button
                               class="btn btn-info btn-sm"
-                              @click.prevent="borradoItems(item.producto_id)"
+                              @click.prevent="borradoItems(item.id)"
                             >
                               Eliminar
                             </button>
-                          </td>
+                          </td> -->
                         </tr>
                       </tbody>
                     </table>
@@ -588,9 +590,9 @@ export default {
       listProd: [],
       listDescripPago: [],
       listGarantia: [],
-      listDetCotizacion:[],
+      listDetCotizacion: [],
 
-      listarProductosPaginated: [],
+      listEditProductosPaginated: [],
 
       modalShow: false,
       mostrarModal: {
@@ -620,7 +622,6 @@ export default {
   },
 
   methods: {
-
     getlistDescricionPago() {
       var url = "/administracion/pago/index";
       axios.get(url).then((response) => {
@@ -647,7 +648,6 @@ export default {
           },
         })
         .then((response) => {
-
           this.fillEditarProducto.cNomClient =
             response.data.cliente.razonsocial;
           this.fillEditarProducto.cDirClient = response.data.cliente.direccion;
@@ -661,16 +661,16 @@ export default {
           this.fillEditarProducto.cCeluVendedor = response.data.user.celular;
           this.fillEditarProducto.cValidez = response.data.validezoferta;
           this.fillEditarProducto.cEntrega = response.data.Entrega;
-          this.fillEditarProducto.nIdTipoPago = response.data.tipopago_id
-          this.fillEditarProducto.nIdDescripPago = response.data.pago_id
-          this.fillEditarProducto.cFlete = response.data.flete
-          this.fillEditarProducto.Docu = response.data.documentacion
-        this.fillEditarProducto.nIdGarantia = response.data.garantia_id
+          this.fillEditarProducto.nIdTipoPago = response.data.tipopago_id;
+          this.fillEditarProducto.nIdDescripPago = response.data.pago_id;
+          this.fillEditarProducto.cFlete = response.data.flete;
+          this.fillEditarProducto.Docu = response.data.documentacion;
+          this.fillEditarProducto.nIdGarantia = response.data.garantia_id;
         });
     },
 
-    getCargaCotizacionByCotizacion(){
-    var url = "/administracion/detallecotizancion/listDetCotizacionBy";
+    getCargaCotizacionByCotizacion() {
+      var url = "/administracion/detallecotizancion/listDetCotizacionBy";
       axios
         .get(url, {
           params: {
@@ -678,14 +678,8 @@ export default {
           },
         })
         .then((response) => {
-            this.listDetCotizacion = response.data
-
-
-          console.log(response.data);
+          this.listDetCotizacion = response.data;
         });
-
-
-
     },
 
     limpiarCotizacionBsq() {
@@ -783,29 +777,28 @@ export default {
       var url = "/administracion/cotizacion/addTempEditCotizacion";
       axios
         .post(url, {
+          item: this.fillEditarProducto.nIdCotizacion,
+          cValidez: this.fillEditarProducto.cValidez,
+          cEntrega: this.fillEditarProducto.cEntrega,
+          nIdTipoPago: this.fillEditarProducto.nIdTipoPago,
+          nIdDescripPago: this.fillEditarProducto.nIdDescripPago,
+          cFlete: this.fillEditarProducto.cFlete,
+          Docu: this.fillEditarProducto.Docu,
+          nIdGarantia: this.fillEditarProducto.nIdGarantia,
           cCantidad: this.fillEditarProducto.cCantidad,
           nIdUnidMed: this.fillEditarProducto.nIdUnidMed,
           nIdprod: this.fillEditarProducto.nIdprod,
           cPUnit: this.fillEditarProducto.cPUnit,
-          cTotal: this.fillEditarProducto.cTotal,
         })
         .then((response) => {
-  /*         this.listarProductosPaginated = response.data.datos;
-          this.limpiaItems();
-
-          if (response.data.message == "Ya fue agregado anteriormente") {
-            Swal.fire({
-              position: "center",
-              icon: response.data.icon,
-              title: response.data.message,
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          } */
+          this.getCargaCotizacionByCotizacion();
+          this.fillEditarProducto.cCantidad = '',
+          this.fillEditarProducto.nIdprod = '',
+          this.fillEditarProducto.cPUnit = ''
         });
     },
     setGrabarCotizacion() {
-      var url = "/administracion/tempcotizacion/grabaCotizacion";
+  /*     var url = "/administracion/tempcotizacion/grabaCotizacion";
       axios
         .post(url, {
           nIdCotizacion: this.fillEditarProducto.nIdCotizacion,
@@ -830,17 +823,15 @@ export default {
             timer: 1500,
           });
           this.eliminarTempitemCoti();
-        });
+        }); */
     },
 
-    setCargaDetalleCotizacionByCoti(){
-
-    },
+    setCargaDetalleCotizacionByCoti() {},
 
     setListtempCotizacion() {
       var url = "/administracion/tempcotizacion/ListtempCotizacion";
       axios.get(url, {}).then((response) => {
-        this.listarProductosPaginated = response.data.datos;
+        this.listEditProductosPaginated = response.data.datos;
       });
     },
     eliminarTempitemCoti() {
@@ -864,15 +855,31 @@ export default {
     },
 
     borradoItems(item) {
-      var url = "/administracion/tempcotizacion/reorder";
+
+      Swal.fire({
+        title: "Esta usted seguro?",
+        text: "Se elimanara del item",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, Eliminalo!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+
+          Swal.fire("Deleted!", "Your file has been deleted.", "success");
+
+        var url = "/administracion/cotizacion/dellTempEditCotizacion";
       axios
         .post(url, {
           item: item,
         })
         .then((response) => {
-          this.listarProductosPaginated = response.data.datos;
+          this.getCargaCotizacionByCotizacion();
           //console.log(item);
         });
+        }
+      });
     },
 
     cargaDatosPredeterminados() {
