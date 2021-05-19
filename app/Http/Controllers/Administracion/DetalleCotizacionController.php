@@ -38,4 +38,6 @@ class DetalleCotizacionController extends Controller
         return $request;
 
     }
+
+
 }

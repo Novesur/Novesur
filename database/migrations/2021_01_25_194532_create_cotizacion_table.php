@@ -32,7 +32,11 @@ class CreateCotizacionTable extends Migration
             $table->string('documentacion',50);
             $table->unsignedBigInteger('garantia_id');
             $table->foreign('garantia_id')->references('id')->on('garantia');
+            $table->string('punto_llegada',100)->nullable();
+            $table->string('transporte',100)->nullable();
             $table->timestamps();
+            $table->softDeletes();
+
         });
     }
 

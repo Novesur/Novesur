@@ -61,7 +61,7 @@ Route::post('/administracion/producto/setRegistrarProducto', 'Administracion\Pro
 Route::get('/administracion/producto/getListarProductoById', 'Administracion\ProductoController@ListarProductoById');
 Route::get('/administracion/producto/ListarProductoByIdKardex', 'Administracion\ProductoController@ListarProductoByIdKardex');
 Route::post('/administracion/producto/setEditarProductos', 'Administracion\ProductoController@edit');
-Route::post('/operacion/producto/setGenerarExcel', 'Administracion\ProductoController@setGenerarExcel');
+Route::post('/operacion/producto/export', 'Administracion\ProductoController@export');
 
 ////////  Proveedor
 Route::get('/administracion/proveedor/getListarProveedor', 'Administracion\ProveedorController@index');
@@ -157,6 +157,11 @@ Route::get('/administracion/cotizacion/ListCotizacionesby', 'Administracion\Coti
 Route::get('/administracion/cotizacion/ListCotizacionbyId', 'Administracion\CotizacionController@ListCotizacionbyId');
 Route::post('/administracion/cotizacion/addTempEditCotizacion', 'Administracion\CotizacionController@addTempEditCotizacion');
 Route::post('/administracion/cotizacion/dellTempEditCotizacion', 'Administracion\CotizacionController@dellTempEditCotizacion');
+Route::get('/administracion/cotizacion/listCotizacionList', 'Administracion\CotizacionController@listCotizacionList');
+Route::get('/administracion/cotizacion/listCotizacionListByDate', 'Administracion\CotizacionController@listCotizacionListByDate');
+
+
+
 
 
 /// COTIZACION A PDF

@@ -59,7 +59,7 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group row">
-                        <label class="col-md-2 col-form-label">Ruc</label>
+                        <label class="col-md-2 col-form-label">RUC / DNI</label>
                         <div class="col-md-5">
                           <input
                             type="text"
@@ -68,7 +68,7 @@
                             v-int
                             :maxlength="11"
                           />
-                        </div>
+                        </div><div class="text-center"><span style="color: red;text-align: end;">{{this.fillRegistrarCliente.cRuc.length +'  '+ 'Caracteres'}}</span></div>
                       </div>
                     </div>
 

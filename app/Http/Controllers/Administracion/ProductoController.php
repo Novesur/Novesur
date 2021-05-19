@@ -109,10 +109,14 @@ class ProductoController extends Controller
         }
     }
 
-    public function setGenerarExcel(Request $request){
+    public function export(Request $request){
 
 
-        $listproductos = json_decode($request->listProductos);
+       // dd($request->params['listProductos']);
+        $listproductos = json_decode($request->params['listProductos']);
+
+
+
         return (new ProductsExport)->setGenerarExcel($listproductos)->download('invoices.xlsx');
     }
 }

@@ -197,6 +197,14 @@
          </router-link>
               </li>
 
+                   <li class="nav-item">
+                       <template v-if="listPermisos.includes('consulta.ventas')">
+         <router-link class="nav-link" :to="'/cotizacion/list'">                  <i class="far fa-circle nav-icon"></i>
+                  <p>Consultas</p>
+         </router-link>
+         </template>
+              </li>
+
               <li class="nav-item">
                   <template v-if="listPermisos.includes('listadoCotizaciones')">
                 <router-link class="nav-link" :to="'/cotizacion/index'">

@@ -364,6 +364,7 @@
 </template>
 
 <script>
+import FileSaver from 'file-saver';
 export default {
   data() {
     return {
@@ -493,25 +494,19 @@ export default {
         .then((response) => {
           this.inicializarPaginacion();
           this.listProductos = response.data;
-           console.log(this.listProductos)
+
 
         });
     },
 
          setGenerarExcelProducto(){
 
-           var url = "/operacion/producto/setGenerarExcel";
+           var url = "/operacion/producto/export";
       axios.post(url,{
-      responseType:'blob',
-      params:{
-        'listProductos' : JSON.stringify(this.listProductos)
-      }
-      }).then((response) => {
-          var oMyBlob = new Blob([response.data],{type:'application/vnd.ms-excel'});
-          var url = document.createElement('a')
-          url.href = URL.createObjectURL(oMyBlob);
-          url.download='productos.xlsx'
-          url.click()
+      params:{'listProductos' : JSON.stringify(this.listProductos)}
+      },
+      {responseType:'blob',}).then((response) => {
+        FileSaver.saveAs(response.data,'Productos.xlsx');
       });
 
       },

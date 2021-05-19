@@ -20,12 +20,19 @@
         </tr>
         </thead>
         <tbody>
-
+    @foreach($productos as $data)
             <tr>
-                <td>Hola</td>
+                <td>{{$data->codigo}}</td>
+                <td>{{$data->familia->nombre}}</td>
+                <td>{{$data->modelotipo->nombre}}</td>
+                <td>{{$data->marca->nombre}}</td>
+                <td>{{$data->material->nombre}}</td>
+                <td>{{$data->subfamilia->nombre}}</td>
+                <td>{{$data->homologacion->nombre}}</td>
+
 
             </tr>
-
+            @endforeach
         </tbody>
     </table>
 

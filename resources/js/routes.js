@@ -372,6 +372,12 @@ export default new Router({
                 props: true
             },
 
+            {
+                path: '/cotizacion/list',
+                name: 'cotizacion.list',
+                component: require('./components/modulos/cotizacion/list').default
+            },
+
 
 
              /// REPORTE DE COTIZACION EN PDF

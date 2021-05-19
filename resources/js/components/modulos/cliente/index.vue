@@ -217,6 +217,7 @@ export default {
           },
         })
         .then((response) => {
+
            this.inicializarPAginacion();
           this.listCliente = response.data;
 

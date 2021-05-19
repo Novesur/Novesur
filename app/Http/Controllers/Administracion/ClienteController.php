@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Cliente;
 use App\Cotizacion;
+use App\User;
 
 class ClienteController extends Controller
 {
@@ -57,11 +58,38 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        $cNombre = $request->cNombre;
-        $cNombre = ($cNombre == NULL) ? ($cNombre = '') : $cNombre;
-        $dato = Cliente::where('razonsocial', 'like', '%' . $cNombre . '%')
-        ->where('usuario_id', $request->nIdUser)
-        ->orWhere('ruc',$request->cRuc)->get();
+
+       $roluser = User::where('id',$request->nIdUser)->first();
+
+       if($roluser->roles_id == 1){
+        if ($request->cNombre == null and $request->cRuc == null){
+            $dato = Cliente::all();
+        }
+        if ($request->cNombre == null){
+            $dato = Cliente::where('ruc',$request->cRuc)->get();
+        }
+        if ($request->cRuc == null){
+            $dato = Cliente::where('razonsocial', 'like', '%' . $request->cNombre . '%')->get();
+        }
+
+       }else{
+
+        if ($request->cNombre == null and $request->cRuc == null){
+            $dato = Cliente::where('usuario_id',$request->nIdUser)->get();
+        }
+        if ($request->cNombre == null){
+            $dato = Cliente::where('ruc',$request->cRuc)->where('usuario_id',$request->nIdUser)->get();
+        }
+        if ($request->cRuc == null){
+            $dato = Cliente::where('razonsocial', 'like', '%' . $request->cNombre . '%')->where('usuario_id',$request->nIdUser)->get();
+        }
+
+
+       }
+
+
+
+
         return $dato;
     }
 

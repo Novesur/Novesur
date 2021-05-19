@@ -297,6 +297,34 @@
                         </div>
 
 
+                              <div class="form-group row">
+                          <label class="col-md-2 col-form-label"
+                            >PUNTO DE LLEGADA CONSIGNADO :</label
+                          >
+                          <div class="col-md-8">
+                            <input
+                              type="text"
+                              class="form-control"
+                              v-model="fillregistrarCotizacion.cPuntoLlegada"
+                            />
+                          </div>
+                        </div>
+
+                            <div class="form-group row">
+                          <label class="col-md-2 col-form-label"
+                            >EMP. DE TRANSPORTE</label
+                          >
+                          <div class="col-md-8">
+                            <input
+                              type="text"
+                              class="form-control"
+                              v-model="fillregistrarCotizacion.cTransporte"
+                            />
+                          </div>
+                        </div>
+
+
+
                       </div>
                     </div>
                   </div>
@@ -588,6 +616,8 @@ export default {
         cGarantia: "",
         cTotal: "",
         cEstado: "",
+        cPuntoLlegada:"",
+        cTransporte:""
       },
 
       listUnidMed: [],
@@ -822,6 +852,8 @@ export default {
           Docu: this.fillregistrarCotizacion.Docu,
           nIdGarantia: this.fillregistrarCotizacion.nIdGarantia,
           cGarantia: this.fillregistrarCotizacion.cGarantia,
+         cPuntoLlegada: this.fillregistrarCotizacion.cPuntoLlegada,
+          cTransporte: this.fillregistrarCotizacion.cTransporte,
         })
         .then((response) => {
           Swal.fire({

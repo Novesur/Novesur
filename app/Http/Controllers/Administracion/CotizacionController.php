@@ -33,7 +33,6 @@ class CotizacionController extends Controller
         else :
             $articulo = $product;
             $unidmed = UnidMedida::where(['id' => $request->nIdUnidMed])->first();
-            $tipopago = Tipopago::where(['id' => $request->nIdTipoPago])->first();
             $tempcotizacion = new TempCotizacion;
             $tempcotizacion->fill(['cantidad' => $request->cCantidad, 'unidmedida_id' => $request->nIdUnidMed, 'codigo' => $product->codigo, 'producto_id' => $request->nIdprod, 'punit' => $request->cPUnit, 'total' => $request->cTotal, 'productoFamilia' => $articulo->familia->nombre, 'productoSubfamilia' => $articulo->subfamilia->nombre, 'productoModelotipo' => $articulo->modelotipo->nombre, 'productoMarca' => $articulo->marca->nombre, 'unidmedNombre' => $unidmed->nombre, 'material' => $product->material->nombre, 'homologacion' => $product->homologacion->nombre]);
             $products->push($tempcotizacion);
@@ -46,6 +45,12 @@ class CotizacionController extends Controller
 
     public function addTempEditCotizacion(Request $request){
 
+
+
+        $datos[]=array("cotizacion_id" => $request->item, "cantidad" => $request->cCantidad,"unidmedida_id"=> $request->nIdUnidMed,"producto_id"=>$request->nIdprod,"punit"=> $request->cPUnit);
+       $datos = json_encode($datos);
+        var_dump($datos);
+/*
         $datcotizacion = Cotizacion::where('id',$request->item)->first();
 
         $searchProd = DetalleCotizacion::where('producto_id',$request->nIdprod)->first();
@@ -72,7 +77,7 @@ class CotizacionController extends Controller
             $detcotizacion->punit = $request->cPUnit;
             $detcotizacion->save();
         }
-
+ */
 
 
     }
@@ -103,6 +108,8 @@ class CotizacionController extends Controller
             $cotizacion->flete =  $request->cFlete;
             $cotizacion->documentacion =  $request->Docu;
             $cotizacion->garantia_id =  $request->nIdGarantia;
+            $cotizacion->punto_llegada =  $request->cPuntoLlegada;
+            $cotizacion->transporte =  $request->cTransporte;
             $cotizacion->save();
             $detcotizacion = Session::get('products');
 
@@ -224,5 +231,17 @@ class CotizacionController extends Controller
             'detcoti' => $detcoti,
         ]);
         return $pdf->download('invoice.pdf');
+    }
+
+    public function listCotizacionList(Request $request){
+
+    $dato = DetalleCotizacion::with('cotizacion','cotizacion.cliente','cotizacion.estadopedido','cotizacion.user')->where('producto_id',$request->nIdprod)->get();
+        return $dato;
+    }
+
+    public function listCotizacionListByDate(Request $request){
+
+     $dato = Cotizacion::with('cliente','estadopedido','user')->whereBetween('fecha',[$request->fecha1,$request->fecha2])->get();
+        return $dato;
     }
 }

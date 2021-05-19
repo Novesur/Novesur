@@ -3,9 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Cotizacion extends Model
+
 {
+    use SoftDeletes;
+
     protected $table = 'cotizacion';
 
     protected $fillable =[
@@ -21,7 +25,7 @@ class Cotizacion extends Model
         'documentacion',
         'garantia_id',
     ];
-
+    protected $dates = ['deleted_at'];
 
     public function cliente()
     {
