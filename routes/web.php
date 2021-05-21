@@ -104,6 +104,10 @@ Route::get('/administracion/usuario/getListarPermisosByRol', 'Administracion\Usu
 Route::get('/administracion/usuario/getListarRolPermisosByUsuario', 'Administracion\UsuarioController@ListarRolPermisosByUsuario');
 Route::get('/administracion/usuario/getListarUsusarios', 'Administracion\UsuarioController@getListarUsusarios');
 Route::get('/administracion/usuario/getListarUsusariosbyId', 'Administracion\UsuarioController@getListarUsusariosbyId');
+Route::get('/administracion/usuario/getListarVendedores', 'Administracion\UsuarioController@getListarVendedores');
+
+
+
 
 /// Roles
 Route::get('/administracion/rol/listRoles', 'Administracion\RolController@index');
@@ -159,6 +163,7 @@ Route::post('/administracion/cotizacion/addTempEditCotizacion', 'Administracion\
 Route::post('/administracion/cotizacion/dellTempEditCotizacion', 'Administracion\CotizacionController@dellTempEditCotizacion');
 Route::get('/administracion/cotizacion/listCotizacionList', 'Administracion\CotizacionController@listCotizacionList');
 Route::get('/administracion/cotizacion/listCotizacionListByDate', 'Administracion\CotizacionController@listCotizacionListByDate');
+Route::get('/administracion/cotizacion/listCotizacionListByVendedor', 'Administracion\CotizacionController@listCotizacionListByVendedor');
 
 
 

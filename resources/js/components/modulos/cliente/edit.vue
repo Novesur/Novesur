@@ -65,7 +65,7 @@
                             type="text"
                             class="form-control"
                             v-model="fillEditarCliente.cRuc"
-                            v-int
+
                             :maxlength="11"
                           />
                         </div>

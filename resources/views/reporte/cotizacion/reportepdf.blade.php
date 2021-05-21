@@ -113,7 +113,13 @@
           </tr>
           <tr>
             <td align="left"><strong>DESTINO:</strong></td>
-            <td></td>
+            <td>{{$coti->punto_llegada}}</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="left"><strong>TRANSPORTE:</strong></td>
+            <td>{{$coti->transporte}}</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
           </tr>

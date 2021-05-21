@@ -63,25 +63,25 @@ class ClienteController extends Controller
 
        if($roluser->roles_id == 1){
         if ($request->cNombre == null and $request->cRuc == null){
-            $dato = Cliente::all();
+            $dato = Cliente::with('user')->get();
         }
         if ($request->cNombre == null){
-            $dato = Cliente::where('ruc',$request->cRuc)->get();
+            $dato = Cliente::with('user')->where('ruc',$request->cRuc)->get();
         }
         if ($request->cRuc == null){
-            $dato = Cliente::where('razonsocial', 'like', '%' . $request->cNombre . '%')->get();
+            $dato = Cliente::with('user')->where('razonsocial', 'like', '%' . $request->cNombre . '%')->get();
         }
 
        }else{
 
         if ($request->cNombre == null and $request->cRuc == null){
-            $dato = Cliente::where('usuario_id',$request->nIdUser)->get();
+            $dato = Cliente::with('user')->where('usuario_id',$request->nIdUser)->get();
         }
         if ($request->cNombre == null){
-            $dato = Cliente::where('ruc',$request->cRuc)->where('usuario_id',$request->nIdUser)->get();
+            $dato = Cliente::with('user')->where('ruc',$request->cRuc)->where('usuario_id',$request->nIdUser)->get();
         }
         if ($request->cRuc == null){
-            $dato = Cliente::where('razonsocial', 'like', '%' . $request->cNombre . '%')->where('usuario_id',$request->nIdUser)->get();
+            $dato = Cliente::with('user')->where('razonsocial', 'like', '%' . $request->cNombre . '%')->where('usuario_id',$request->nIdUser)->get();
         }
 
 

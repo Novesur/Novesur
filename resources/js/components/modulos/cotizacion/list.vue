@@ -77,6 +77,8 @@
                                 </div>
                               </div>
                             </div>
+
+
                           </template>
                         </div>
 
@@ -121,7 +123,7 @@
                           </thead>
                           <tbody>
                             <tr
-                              v-for="(item, index) in listCotizacion"
+                              v-for="(item, index) in listCotizacionPaginated"
                               :key="index"
                             >
                               <td>
@@ -188,7 +190,7 @@
 
                   <!-- BUSCAR POR FECHA -->
 
-                  <el-tab-pane label="Por Fecha" name="second">
+                  <el-tab-pane label="Por Fecha - Vendedor" name="second">
 
                          <form role="form">
                       <div class="col-md-12">
@@ -219,34 +221,48 @@
                                   end-placeholder="End date"
                                   value-format="yyyy-MM-dd"
                                   clearable
-                                  :style="{ width: '530px', height: '38px' }"
+                                  :style="{ width: '630px', height: '38px' }"
                                 >
                                 </el-date-picker>
                               </div>
-                            </div>
+                            </div><span><button class="btn btn-flat btn-info"  @click.prevent="getlistCotizacionListByDate">Buscar</button></span>
                           </div>
                         </div>
+
+                            <div class="col-md-12">
+                              <div class="form-group row">
+                                <label class="col-md-1 col-form-label"
+                                  >Vendedor</label
+                                >
+                                <div class="col-md-9">
+                                  <el-select
+                                    v-model="fillListCotizacion.nIdVendedor"
+                                    style="width: 100%"
+                                    filterable
+                                    placeholder="Select"
+                                    clearable
+                                  >
+                                     <el-option
+                                  v-for="item in listVendedorUser"
+                                  :key="item.id"
+                                  :label="
+                                    item.firstname +
+                                    ' ' +
+                                    item.secondname +
+                                    ' ' +
+                                    item.lastname
+                                  "
+                                  :value="item.id"
+                                >
+                                </el-option>
+                                  </el-select>
+
+                                </div><span><button class="btn btn-flat btn-info" @click.prevent="getlistCotizacionListByVendedor">Buscar</button></span>
+                              </div>
+                            </div>
                       </div>
                     </form>
 
-                    <div class="card-footer">
-                      <div class="row">
-                        <div class="col-md-4 offset-4">
-                          <button
-                            class="btn btn-flat btn-info btnWidth"
-                            @click.prevent="getlistCotizacionListByDate"
-                          >
-                            Buscar
-                          </button>
-                          <button
-                            class="btn btn-flat btn-default btnWidth"
-                            @click.prevent="limpiarCriteriosBsq"
-                          >
-                            Limpiar
-                          </button>
-                        </div>
-                      </div>
-                    </div>
 
                     <div class="card card-info">
                       <div class="card-header">
@@ -267,7 +283,7 @@
                           </thead>
                           <tbody>
                             <tr
-                              v-for="(item, index) in listCotizacionByDate"
+                              v-for="(item, index) in listCotizacionPaginatedbyDate"
                               :key="index"
                             >
                               <td>
@@ -399,6 +415,8 @@ export default {
         itemid: "",
         dFecha: "",
         nIdtEstadoCoti: "",
+         nIdVendedor: "",
+
 
         nIdUser: sessionStorage.getItem("iduser"),
         nIdprod: "",
@@ -467,7 +485,7 @@ export default {
     //this.cargaFechaActual();
     this.getlistVendedorxUsu();
     this.getlistEstadoPedido();
-
+    this.getlistVendedorAdmin();
     this.getListarproductosByName();
   },
 
@@ -491,6 +509,13 @@ export default {
         fin = inicio + this.perPage;
       return this.listCotizacion.slice(inicio, fin);
     },
+
+        listCotizacionPaginatedbyDate() {
+      let inicio = this.pageNumber * this.perPage,
+        fin = inicio + this.perPage;
+      return this.listCotizacionByDate.slice(inicio, fin);
+    },
+
     pagesList() {
       let a = this.listCotizacion.length,
         b = this.perPage;
@@ -525,6 +550,14 @@ export default {
 
 
   methods: {
+
+
+          getlistVendedorAdmin() {
+      var url = "/administracion/usuario/getListarVendedores";
+      axios.get(url).then((response) => {
+        this.listVendedorUser = response.data;
+      });
+    },
     handleClick(tab, event) {
       console.log(tab, event);
     },
@@ -556,6 +589,22 @@ export default {
           console.log(this.listCotizacionByDate);
         });
     },
+
+            getlistCotizacionListByVendedor() {
+      var url = "/administracion/cotizacion/listCotizacionListByVendedor";
+      axios
+        .get(url, {
+          params: {
+             nIdVendedor:this.fillListCotizacion.nIdVendedor,
+          },
+        })
+        .then((response) => {
+
+          this.listCotizacionByDate = response.data;
+          console.log(this.listCotizacionByDate);
+        });
+    },
+
 
     getListarproductosByName() {
       var url = "/administracion/detallecotizancion/listProdByName";

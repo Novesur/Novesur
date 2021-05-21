@@ -29,7 +29,7 @@ class CreateCotizacionTable extends Migration
             $table->foreign('pago_id')->references('id')->on('pago');
             $table->unsignedBigInteger('pago_id');
             $table->string('flete',20);
-            $table->string('documentacion',50);
+            $table->string('documentacion',150);
             $table->unsignedBigInteger('garantia_id');
             $table->foreign('garantia_id')->references('id')->on('garantia');
             $table->string('punto_llegada',100)->nullable();

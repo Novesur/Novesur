@@ -76,8 +76,16 @@
                       </div>
                       <div class="col-md-3"><b>CELULAR :</b></div>
                       <div class="col-md-8"></div>
+
                       <div class="col-md-3"><b>DESTINO :</b></div>
-                      <div class="col-md-8"></div>
+                       <div class="col-md-8">
+                       {{this.fillBsPpdfCoti.puntollegada}}
+                       </div>
+
+                      <div class="col-md-3"><b>TRANSPORTE :</b></div>
+                      <div class="col-md-8">
+                        {{this.fillBsPpdfCoti.transporte}}
+                        </div>
                       <div class="col-md-3"><b>CORREO :</b></div>
                       <div class="col-md-8">
                         {{ this.fillBsPpdfCoti.email }}
@@ -302,6 +310,8 @@ export default {
         anioCoti:"",
         IdString:"",
         emailvendedor:"",
+        puntollegada:"",
+        transporte:"",
       },
       listdetalleCoti: [],
       SubTotal: 0,
@@ -327,7 +337,6 @@ export default {
           },
         })
         .then((response) => {
-            console.log(response.data)
           this.fillBsPpdfCoti.razonsocial =
             response.data[0].cliente.razonsocial;
           this.fillBsPpdfCoti.direccion = response.data[0].cliente.direccion;
@@ -349,6 +358,10 @@ export default {
           this.fillBsPpdfCoti.anioCoti = response.data[0].fecha;
           this.fillBsPpdfCoti.IdString= response.data[0].id;
           this.fillBsPpdfCoti.emailvendedor = response.data[0].user.email;
+          this.fillBsPpdfCoti.puntollegada = response.data[0].punto_llegada;
+          this.fillBsPpdfCoti.transporte = response.data[0].transporte;
+
+
 
           this.fillBsPpdfCoti.nroCoti = this.fillBsPpdfCoti.IdString.toString().padStart(3,'0') +'-'+ this.fillBsPpdfCoti.fecha.substring(0,4)
 
@@ -364,7 +377,7 @@ export default {
           },
         })
         .then((response) => {
-            console.log(response.data);
+
           let data = response.data.map(function (item) {
             const total = item.cantidad * Number(item.punit);
             return { ...item, total: total };

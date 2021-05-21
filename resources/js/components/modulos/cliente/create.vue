@@ -65,7 +65,7 @@
                             type="text"
                             class="form-control"
                             v-model="fillRegistrarCliente.cRuc"
-                            v-int
+
                             :maxlength="11"
                           />
                         </div><div class="text-center"><span style="color: red;text-align: end;">{{this.fillRegistrarCliente.cRuc.length +'  '+ 'Caracteres'}}</span></div>

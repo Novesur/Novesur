@@ -104,4 +104,10 @@ class UsuarioController extends Controller
         $dato = User::where('id', $request->nIdUsuario)->where('roles_id',3)->get();
         return $dato;
     }
+
+    public function getListarVendedores(Request $request){
+        $dato = User::where('roles_id',3)->orderBy('firstname')->get();
+        return $dato;
+    }
+
 }

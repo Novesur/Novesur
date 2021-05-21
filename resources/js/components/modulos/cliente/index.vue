@@ -87,8 +87,8 @@
                 >
                   <thead>
                     <tr>
+                      <th>Vendedor</th>
                       <th>Razon Social</th>
-
                       <th>Ruc</th>
                       <th>Atencion</th>
                       <th>Telefono</th>
@@ -100,8 +100,9 @@
                   </thead>
                   <tbody>
                     <tr v-for="(item, index) in listarClientesPaginated" :key="index">
-                      <td v-text="item.razonsocial"></td>
 
+                      <td v-text="item.user.fullname"></td>
+                      <td v-text="item.razonsocial"></td>
                       <td v-text="item.ruc"></td>
                       <td v-text="item.atencion"></td>
                       <td v-text="item.telefono"></td>
@@ -219,6 +220,8 @@ export default {
         .then((response) => {
 
            this.inicializarPAginacion();
+           console.log(response.data);
+
           this.listCliente = response.data;
 
         });

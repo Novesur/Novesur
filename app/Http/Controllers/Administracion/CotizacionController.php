@@ -43,14 +43,15 @@ class CotizacionController extends Controller
         endif;
     }
 
-    public function addTempEditCotizacion(Request $request){
+    public function addTempEditCotizacion(Request $request)
+    {
 
 
 
-        $datos[]=array("cotizacion_id" => $request->item, "cantidad" => $request->cCantidad,"unidmedida_id"=> $request->nIdUnidMed,"producto_id"=>$request->nIdprod,"punit"=> $request->cPUnit);
-       $datos = json_encode($datos);
+        $datos[] = array("cotizacion_id" => $request->item, "cantidad" => $request->cCantidad, "unidmedida_id" => $request->nIdUnidMed, "producto_id" => $request->nIdprod, "punit" => $request->cPUnit);
+        $datos = json_encode($datos);
         var_dump($datos);
-/*
+        /*
         $datcotizacion = Cotizacion::where('id',$request->item)->first();
 
         $searchProd = DetalleCotizacion::where('producto_id',$request->nIdprod)->first();
@@ -78,14 +79,12 @@ class CotizacionController extends Controller
             $detcotizacion->save();
         }
  */
-
-
     }
 
-    public function dellTempEditCotizacion(Request $request){
+    public function dellTempEditCotizacion(Request $request)
+    {
 
         DetalleCotizacion::where('id', $request->item)->delete();
-
     }
 
     public function create(Request $request)
@@ -124,18 +123,10 @@ class CotizacionController extends Controller
             });
             DetalleCotizacion::insert($allProducts->toArray());
             Session::put('products', collect([]));
-            return response()->json(['message' => 'Grabado', 'icon'=>'success'], 200);
-
-        }else{
-            return response()->json(['message' => 'El item no existe', 'icon'=>'warning'], 200);
+            return response()->json(['message' => 'Grabado', 'icon' => 'success'], 200);
+        } else {
+            return response()->json(['message' => 'El item no existe', 'icon' => 'warning'], 200);
         }
-
-
-
-
-
-
-
     }
 
     public  function ListtempCotizacion(Request $request)
@@ -175,7 +166,7 @@ class CotizacionController extends Controller
     {
         $nIdCliente   =    $request->nIdCliente;
         $nIdVendedor    =   $request->nIdVendedor;
-        $nIdtEstadoCoti2=   $request->nIdtEstadoCoti2;
+        $nIdtEstadoCoti2 =   $request->nIdtEstadoCoti2;
         $dFechaInicio   =   $request->dFechainicio;
         $dFechaFin      =   $request->dFechafin;
 
@@ -210,7 +201,7 @@ class CotizacionController extends Controller
 
     public function CotizacionCabecera(Request $request)
     {
-        $dato = Cotizacion::with('cliente', 'user', 'tipopago', 'estadopedido','pago','garantia')->where('id', $request->nidCoti)->get();
+        $dato = Cotizacion::with('cliente', 'user', 'tipopago', 'estadopedido', 'pago', 'garantia')->where('id', $request->nidCoti)->get();
         return $dato;
     }
 
@@ -218,7 +209,7 @@ class CotizacionController extends Controller
     {
         //dd($request->get("params")['item']);
         $valor = $request->get("params")['item'];
-        $coti = Cotizacion::with('cliente', 'user', 'tipopago','estadopedido','pago','garantia')->where('id', $valor)->first();
+        $coti = Cotizacion::with('cliente', 'user', 'tipopago', 'estadopedido', 'pago', 'garantia')->where('id', $valor)->first();
         $detcoti = DetalleCotizacion::with('unidmedida', 'producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia')->where('cotizacion_id', $valor)->get();
         $logo = asset('img/logo02.png');
         $productos01 = asset('img/banner01.png');
@@ -233,15 +224,24 @@ class CotizacionController extends Controller
         return $pdf->download('invoice.pdf');
     }
 
-    public function listCotizacionList(Request $request){
-
-    $dato = DetalleCotizacion::with('cotizacion','cotizacion.cliente','cotizacion.estadopedido','cotizacion.user')->where('producto_id',$request->nIdprod)->get();
+    public function listCotizacionList(Request $request)
+    {
+        $dato = DetalleCotizacion::with('cotizacion', 'cotizacion.cliente', 'cotizacion.estadopedido', 'cotizacion.user')->where('producto_id', $request->nIdprod)->get();
         return $dato;
     }
 
-    public function listCotizacionListByDate(Request $request){
+    public function listCotizacionListByDate(Request $request)
 
-     $dato = Cotizacion::with('cliente','estadopedido','user')->whereBetween('fecha',[$request->fecha1,$request->fecha2])->get();
+    {
+        $dato = Cotizacion::with('cliente', 'estadopedido', 'user')->whereBetween('fecha', [$request->fecha1, $request->fecha2])->get();
+        return $dato;
+    }
+
+
+    public function listCotizacionListByVendedor(Request $request)
+
+    {
+        $dato = Cotizacion::with('cliente', 'estadopedido', 'user')->where('user_id', $request->nIdVendedor)->get();
         return $dato;
     }
 }
