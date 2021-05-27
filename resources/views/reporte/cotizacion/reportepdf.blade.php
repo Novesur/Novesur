@@ -176,7 +176,7 @@
           <td align="center" style="background-color: rgba(238, 229, 229, 0.719)"><strong>SUBTOTAL</strong></td>
           <td align="right">S/. {{number_format($subtotal,2)}}</td>
         </tr>
-        <tr>
+
           <td align="center" style="background-color: rgba(238, 229, 229, 0.719)"><strong>IGV 18%</strong></td>
           <td align="right">S/.{{number_format($IGV,2)}}</td>
         </tr>

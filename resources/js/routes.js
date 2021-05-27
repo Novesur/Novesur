@@ -447,6 +447,14 @@ export default new Router({
                 component: require('./components/modulos/parte_ingreso/list').default
             },
 
+               // PARTE DE INGRESO
+               {
+                path: '/orden/create/:id',
+                name: 'orden.create',
+                component: require('./components/modulos/orden/create').default,
+                props: true
+            },
+
 
 
     ],

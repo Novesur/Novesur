@@ -258,7 +258,7 @@
 
 
 
-                 <!--     <router-link
+                     <router-link
                           class="btn btn-secondary btn-sm"
                           :to="{
                             name: 'cotizacion.editar',
@@ -266,7 +266,7 @@
                           }"
                         >
                           <i class="far fa-edit"></i> Editar
-                        </router-link> -->
+                        </router-link>
                       </td>
 
 

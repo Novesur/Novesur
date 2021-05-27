@@ -160,6 +160,7 @@ Route::post('/administracion/cotizacion/addTempCotizacion', 'Administracion\Coti
 Route::get('/administracion/cotizacion/ListCotizacionesby', 'Administracion\CotizacionController@ListCotizacionesby');
 Route::get('/administracion/cotizacion/ListCotizacionbyId', 'Administracion\CotizacionController@ListCotizacionbyId');
 Route::post('/administracion/cotizacion/addTempEditCotizacion', 'Administracion\CotizacionController@addTempEditCotizacion');
+Route::post('/administracion/cotizacion/EditCotizacion', 'Administracion\CotizacionController@edit');
 Route::post('/administracion/cotizacion/dellTempEditCotizacion', 'Administracion\CotizacionController@dellTempEditCotizacion');
 Route::get('/administracion/cotizacion/listCotizacionList', 'Administracion\CotizacionController@listCotizacionList');
 Route::get('/administracion/cotizacion/listCotizacionListByDate', 'Administracion\CotizacionController@listCotizacionListByDate');

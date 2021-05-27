@@ -410,8 +410,6 @@ export default {
     return {
       fillListCotizacion: {
         cNombre: "",
-
-        nIdVendedor: "",
         itemid: "",
         dFecha: "",
         nIdtEstadoCoti: "",

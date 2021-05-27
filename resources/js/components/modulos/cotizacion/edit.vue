@@ -479,14 +479,14 @@
                           <td>
                             {{ (item.cantidad * item.punit) | formatPrice }}
                           </td>
-                      <!--     <td>
+                         <td>
                             <button
-                              class="btn btn-info btn-sm"
+                              class="btn btn-danger btn-sm"
                               @click.prevent="borradoItems(item.id)"
                             >
                               Eliminar
                             </button>
-                          </td> -->
+                          </td>
                         </tr>
                       </tbody>
                     </table>
@@ -497,7 +497,7 @@
                       <div class="col-md-4 offset-4">
                         <button
                           class="btn btn-flat btn-info btnWidth"
-                          @click.prevent="setGrabarCotizacion"
+                          @click.prevent="setEditCotizacion"
                         >
                           Guardar
                         </button>
@@ -778,32 +778,33 @@ export default {
       axios
         .post(url, {
           item: this.fillEditarProducto.nIdCotizacion,
-          cValidez: this.fillEditarProducto.cValidez,
+        /*   cValidez: this.fillEditarProducto.cValidez,
           cEntrega: this.fillEditarProducto.cEntrega,
           nIdTipoPago: this.fillEditarProducto.nIdTipoPago,
           nIdDescripPago: this.fillEditarProducto.nIdDescripPago,
           cFlete: this.fillEditarProducto.cFlete,
           Docu: this.fillEditarProducto.Docu,
-          nIdGarantia: this.fillEditarProducto.nIdGarantia,
+          nIdGarantia: this.fillEditarProducto.nIdGarantia, */
           cCantidad: this.fillEditarProducto.cCantidad,
           nIdUnidMed: this.fillEditarProducto.nIdUnidMed,
           nIdprod: this.fillEditarProducto.nIdprod,
           cPUnit: this.fillEditarProducto.cPUnit,
         })
         .then((response) => {
+
           this.getCargaCotizacionByCotizacion();
           this.fillEditarProducto.cCantidad = '',
           this.fillEditarProducto.nIdprod = '',
           this.fillEditarProducto.cPUnit = ''
+
         });
     },
-    setGrabarCotizacion() {
-  /*     var url = "/administracion/tempcotizacion/grabaCotizacion";
+    setEditCotizacion() {
+      var url = "/administracion/cotizacion/EditCotizacion";
       axios
         .post(url, {
           nIdCotizacion: this.fillEditarProducto.nIdCotizacion,
           nIdUsuario: this.fillEditarProducto.vidUSer,
-          cEstado: "3",
           cValidez: this.fillEditarProducto.cValidez,
           cEntrega: this.fillEditarProducto.cEntrega,
           nIdTipoPago: this.fillEditarProducto.nIdTipoPago,
@@ -823,7 +824,7 @@ export default {
             timer: 1500,
           });
           this.eliminarTempitemCoti();
-        }); */
+        });
     },
 
     setCargaDetalleCotizacionByCoti() {},
@@ -876,7 +877,8 @@ export default {
         })
         .then((response) => {
           this.getCargaCotizacionByCotizacion();
-          //console.log(item);
+
+          console.log(response.data);
         });
         }
       });

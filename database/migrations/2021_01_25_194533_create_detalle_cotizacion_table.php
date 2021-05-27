@@ -20,7 +20,7 @@ class CreateDetalleCotizacionTable extends Migration
             $table->integer('cantidad')->required();
             $table->unsignedBigInteger('unidmedida_id');
             $table->foreign('unidmedida_id')->references('id')->on('unidmedida');
-            $table->unsignedBigInteger('producto_id');
+            $table->unsignedBigInteger('producto_id')->required();
             $table->foreign('producto_id')->references('id')->on('producto');
             $table->decimal('punit', 8, 2)->required();
         });

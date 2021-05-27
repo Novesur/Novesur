@@ -59,11 +59,13 @@ class ClienteController extends Controller
     public function store(Request $request)
     {
 
+
        $roluser = User::where('id',$request->nIdUser)->first();
 
        if($roluser->roles_id == 1){
-        if ($request->cNombre == null and $request->cRuc == null){
+        if ($request->cNombre == null and $request->cRuc == null and $request->nIdVendedor == null){
             $dato = Cliente::with('user')->get();
+            return $dato;
         }
         if ($request->cNombre == null){
             $dato = Cliente::with('user')->where('ruc',$request->cRuc)->get();
@@ -72,9 +74,13 @@ class ClienteController extends Controller
             $dato = Cliente::with('user')->where('razonsocial', 'like', '%' . $request->cNombre . '%')->get();
         }
 
+        if($request->cNombre == null && $request->cRuc == null){
+            $dato = Cliente::with('user')->where('usuario_id',  $request->nIdVendedor )->get();
+        }
+
        }else{
 
-        if ($request->cNombre == null and $request->cRuc == null){
+        if ($request->cNombre == null and $request->cRuc == null  && $request->nIdVendedor == null){
             $dato = Cliente::with('user')->where('usuario_id',$request->nIdUser)->get();
         }
         if ($request->cNombre == null){

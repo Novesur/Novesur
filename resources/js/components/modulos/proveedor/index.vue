@@ -116,8 +116,8 @@
                         </router-link>
                       </td>
                       <td>
-                        <router-link class="btn btn-success btn-sm" :to="{name:'parteingreso.create', params:{id:item.id}}">
-                          <i class="fas fa-file-invoice-dollar"></i> Entrada
+                        <router-link class="btn btn-success btn-sm" :to="{name:'orden.create', params:{id:item.id}}">
+                          <i class="fas fa-cart-plus"></i> Orden
                         </router-link>
                       </td>
                     </tr>

@@ -54,6 +54,40 @@
                         </div>
                       </div>
                     </div>
+ <template v-if="listRolPermisoByUsuario.includes('consulta.ventas')">
+                          <div class="col-md-12">
+                              <div class="form-group row">
+                                <label class="col-md-1 col-form-label"
+                                  >Vendedor</label
+                                >
+                                <div class="col-md-9">
+                                  <el-select
+                                    v-model="fillBsqProveedor.nIdVendedor"
+                                    style="width: 100%"
+                                    filterable
+                                    placeholder="Select"
+                                    clearable
+                                  >
+                                     <el-option
+                                  v-for="item in listVendedorUser"
+                                  :key="item.id"
+                                  :label="
+                                    item.firstname +
+                                    ' ' +
+                                    item.secondname +
+                                    ' ' +
+                                    item.lastname
+                                  "
+                                  :value="item.id"
+                                >
+                                </el-option>
+                                  </el-select>
+
+                                </div>
+                              </div>
+                            </div>
+ </template>
+
                   </div>
                 </form>
               </div>
@@ -160,14 +194,20 @@
 
 <script>
 export default {
+
   data() {
     return {
       fillBsqProveedor: {
         cNombre: "",
         cRuc: "",
         nIdUser: sessionStorage.getItem("iduser"),
+         nIdVendedor: "",
       },
       listCliente: [],
+    listVendedorUser: [],
+      listRolPermisoByUsuario: JSON.parse(
+        sessionStorage.getItem("listRolPermisosByUsuario")
+      ),
       pageNumber: 0,
       perPage: 10,
         listRolPermisoByUsuario: JSON.parse(
@@ -175,6 +215,10 @@ export default {
       ),
     };
   },
+  mounted() {
+          this.getlistVendedorAdmin();
+  },
+
   computed: {
     pageCount() {
       let a = this.listCliente.length,
@@ -200,6 +244,13 @@ export default {
     },
   },
   methods: {
+
+             getlistVendedorAdmin() {
+      var url = "/administracion/usuario/getListarVendedores";
+      axios.get(url).then((response) => {
+        this.listVendedorUser = response.data;
+      });
+    },
     limpiarProveedorBsq() {
       this.fillBsqProveedor.cNombre = "";
       this.fillBsqProveedor.cRuc = "";
@@ -215,13 +266,12 @@ export default {
             cNombre: this.fillBsqProveedor.cNombre,
             cRuc: this.fillBsqProveedor.cRuc,
             nIdUser: this.fillBsqProveedor.nIdUser,
+            nIdVendedor : this.fillBsqProveedor.nIdVendedor
           },
         })
         .then((response) => {
 
            this.inicializarPAginacion();
-           console.log(response.data);
-
           this.listCliente = response.data;
 
         });

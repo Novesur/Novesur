@@ -48,28 +48,16 @@ class CotizacionController extends Controller
 
 
 
-        $datos[] = array("cotizacion_id" => $request->item, "cantidad" => $request->cCantidad, "unidmedida_id" => $request->nIdUnidMed, "producto_id" => $request->nIdprod, "punit" => $request->cPUnit);
+        /*    $datos[] = array("cotizacion_id" => $request->item, "cantidad" => $request->cCantidad, "unidmedida_id" => $request->nIdUnidMed, "producto_id" => $request->nIdprod, "punit" => $request->cPUnit);
         $datos = json_encode($datos);
-        var_dump($datos);
-        /*
-        $datcotizacion = Cotizacion::where('id',$request->item)->first();
+        var_dump($datos); */
 
-        $searchProd = DetalleCotizacion::where('producto_id',$request->nIdprod)->first();
-        if(!$searchProd){
-            $cotizacion = new Cotizacion;
-            $cotizacion->fecha =  $datcotizacion->fecha;
-            $cotizacion->cliente_id = $datcotizacion->cliente_id;
-            $cotizacion->user_id = $datcotizacion->user_id;
-            $cotizacion->estadopedido_id = $datcotizacion->estadopedido_id;
-            $cotizacion->validezoferta = $request->cValidez;
-            $cotizacion->Entrega= $request->cEntrega;
-            $cotizacion->tipopago_id = $request->nIdTipoPago;
-            $cotizacion->pago_id = $request->nIdDescripPago;
-            $cotizacion->flete = $request->cFlete;
-            $cotizacion->documentacion = $request->Docu;
-            $cotizacion->garantia_id = $request->nIdGarantia;
-            $cotizacion->save();
 
+
+        $searchProd = DetalleCotizacion::where('producto_id', $request->nIdprod)
+        ->where('cotizacion_id', $request->item)->exists();
+
+       if ($searchProd != 1) {
             $detcotizacion =  new DetalleCotizacion;
             $detcotizacion->cotizacion_id = $request->item;
             $detcotizacion->cantidad = $request->cCantidad;
@@ -78,11 +66,16 @@ class CotizacionController extends Controller
             $detcotizacion->punit = $request->cPUnit;
             $detcotizacion->save();
         }
- */
     }
 
     public function dellTempEditCotizacion(Request $request)
     {
+    /*     $cant = DetalleCotizacion::where('id', $request->item)->get();
+        $count = $cant->count();
+
+        if ($count >= 2) {
+            DetalleCotizacion::where('id', $request->item)->delete();
+        } */
 
         DetalleCotizacion::where('id', $request->item)->delete();
     }
@@ -129,6 +122,24 @@ class CotizacionController extends Controller
         }
     }
 
+    public function edit(Request $request){
+       $cotizacion = Cotizacion::where('id', $request->nIdCotizacion)->first();
+       $cotizacion->fecha =  $cotizacion->fecha;
+       $cotizacion->cliente_id =  $cotizacion->cliente_id;
+       $cotizacion->user_id =  $cotizacion->user_id;
+       $cotizacion->estadopedido_id =   $cotizacion->estadopedido_id;
+       $cotizacion->validezoferta =  $request->cValidez;
+       $cotizacion->Entrega =  mb_strtoupper($request->cEntrega);
+       $cotizacion->tipopago_id =  $request->nIdTipoPago;
+       $cotizacion->pago_id = $request->nIdDescripPago;
+       $cotizacion->flete =  $request->cFlete;
+       $cotizacion->documentacion =  $request->Docu;
+       $cotizacion->garantia_id =  $request->nIdGarantia;
+       $cotizacion->punto_llegada =  $request->cPuntoLlegada;
+       $cotizacion->transporte =  $request->cTransporte;
+       $cotizacion->save();
+
+    }
     public  function ListtempCotizacion(Request $request)
     {
         $dato = session()->get('products') ?? collect([]);
@@ -244,4 +255,5 @@ class CotizacionController extends Controller
         $dato = Cotizacion::with('cliente', 'estadopedido', 'user')->where('user_id', $request->nIdVendedor)->get();
         return $dato;
     }
+
 }
