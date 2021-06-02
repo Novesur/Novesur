@@ -4,7 +4,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Parte de Ingreso</h1>
+            <h1 class="m-0 text-dark">Orden de Pedido</h1>
           </div>
         </div>
       </div>
@@ -13,7 +13,7 @@
       <div class="card">
         <div class="card-header">
           <div class="card-tools">
-            <router-link class="btn btn-info btn-sm" :to="'/material'">
+            <router-link class="btn btn-info btn-sm" :to="'/proveedor'">
               <i class="fas fa-arrow-left"></i>Regresar
             </router-link>
           </div>
@@ -22,7 +22,7 @@
           <div class="container-fluid">
             <div class="card card-info">
               <div class="card-header">
-                <h3 class="card-title">Formulario Parte de Ingreso</h3>
+                <h3 class="card-title">Formulario Orden de Pedido</h3>
               </div>
               <div class="card-body">
                 <form role="form">
@@ -37,9 +37,10 @@
                             <input
                               type="text"
                               class="form-control"
-                              v-model="fillCrearPIngreso.cProveedor"
+                              v-model="fillCrearOrden.cProveedor"
                               @keypress.prevent.enter="setRegistrarPIngreso"
                               style="width: 300px"
+                              readonly
                             />
                           </div>
                         </div>
@@ -48,13 +49,13 @@
                       <div class="col-md-6">
                         <div class="form-group row">
                           <label class="col-md-3 col-form-label"
-                            >Orden de Compra</label
+                            >Referencia</label
                           >
                           <div class="col-md-9">
                             <input
                               type="text"
                               class="form-control"
-                              v-model="fillCrearPIngreso.cOrdenComPra"
+                              v-model="fillCrearOrden.cReferencia"
                               @keypress.prevent.enter="setRegistrarPIngreso"
                               style="width: 300px"
                             />
@@ -69,26 +70,29 @@
                       <div class="col-md-6">
                         <div class="form-group row">
                           <label class="col-md-3 col-form-label"
-                            >Documento</label
+                            >Fecha Emision</label
                           >
                           <div class="col-md-9">
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="fillCrearPIngreso.cDocumento"
-                              @keypress.prevent.enter="setRegistrarPIngreso"
-                              style="width: 300px"
-                            />
+                            <el-date-picker
+                              v-model="fillCrearOrden.cFechaEmision"
+                              type="date"
+                              placeholder="Ingrese una Fecha"
+                              format="dd/MM/yyyy"
+                              value-format="yyyy-MM-dd"
+                            >
+                            </el-date-picker>
                           </div>
                         </div>
                       </div>
 
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-md-3 col-form-label">Fecha</label>
+                          <label class="col-md-3 col-form-label"
+                            >Fecha Entrega</label
+                          >
                           <div class="col-md-9">
                             <el-date-picker
-                              v-model="fillCrearPIngreso.cFecha"
+                              v-model="fillCrearOrden.cFechaEntrega"
                               type="date"
                               placeholder="Ingrese una Fecha"
                               format="dd/MM/yyyy"
@@ -106,13 +110,30 @@
                       <div class="col-md-6">
                         <div class="form-group row">
                           <label class="col-md-3 col-form-label"
-                            >Nro Factura</label
+                            >Observacion</label
                           >
                           <div class="col-md-9">
                             <input
                               type="text"
                               class="form-control"
-                              v-model="fillCrearPIngreso.cNumFactura"
+                              v-model="fillCrearOrden.cObservacion"
+                              @keypress.prevent.enter="setRegistrarPIngreso"
+
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-md-3 col-form-label"
+                            >Lugar de Entrega</label
+                          >
+                          <div class="col-md-9">
+                            <input
+                              type="text"
+                              class="form-control"
+                              v-model="fillCrearOrden.cLEntrega"
                               @keypress.prevent.enter="setRegistrarPIngreso"
                               style="width: 300px"
                             />
@@ -123,16 +144,22 @@
                       <div class="col-md-6">
                         <div class="form-group row">
                           <label class="col-md-3 col-form-label"
-                            >Nro Guia</label
+                            >Preferencias de Pago</label
                           >
                           <div class="col-md-9">
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="fillCrearPIngreso.cNumGuia"
-                              @keypress.prevent.enter="setRegistrarPIngreso"
-                              style="width: 300px"
-                            />
+                           <el-select
+                              v-model="fillCrearOrden.nIdDescripPago"
+                              placeholder="Select"
+                              style="width: 70%"
+                            >
+                              <el-option
+                                v-for="item in listDescripPago"
+                                :key="item.id"
+                                :label="item.nombre"
+                                :value="item.id"
+                              >
+                              </el-option>
+                            </el-select>
                           </div>
                         </div>
                       </div>
@@ -155,7 +182,7 @@
 
                                 <div class="col-md-10">
                                   <el-select
-                                    v-model="fillCrearPIngreso.nIdprod"
+                                    v-model="fillCrearOrden.nIdprod"
                                     style="width: 90%"
                                     filterable
                                     placeholder="Select"
@@ -192,7 +219,7 @@
                                   <input
                                     type="text"
                                     class="form-control"
-                                    v-model="fillCrearPIngreso.cCantidad"
+                                    v-model="fillCrearOrden.cCantidad"
                                     v-int
                                   />
                                 </div>
@@ -202,7 +229,7 @@
                                 >
                                 <div class="col-md-3">
                                   <el-select
-                                    v-model="fillCrearPIngreso.nIdUnidMed"
+                                    v-model="fillCrearOrden.nIdUnidMed"
                                     placeholder="Select"
                                     style="width: 70%"
                                   >
@@ -223,7 +250,7 @@
                                   <input
                                     type="text"
                                     class="form-control"
-                                    v-model="fillCrearPIngreso.cPrecio"
+                                    v-model="fillCrearOrden.cPrecio"
                                   />
                                 </div>
                               </div>
@@ -359,14 +386,15 @@
 export default {
   data() {
     return {
-      fillCrearPIngreso: {
+      fillCrearOrden: {
         nIdProveedor: this.$attrs.id,
         cProveedor: "",
-        cOrdenComPra: "",
+        cReferencia: "",
         cDocumento: "",
-        cFecha: "",
-        cNumFactura: "",
-        cNumGuia: "",
+        cFechaEntrega: "",
+        cFechaEmision: "",
+        cObservacion: "",
+        cLEntrega: "",
         nIdUnidMed: "",
         nIdprod: "",
         cPrecio: "",
@@ -376,6 +404,7 @@ export default {
       listUnidMed: [],
       listProd: [],
       listartempPIngreso: [],
+       listDescripPago:[],
       modalShow: false,
       mostrarModal: {
         display: "block",
@@ -393,7 +422,9 @@ export default {
     this.getListarUnidadMedida();
     this.getListarproductosByName();
     this.setListtempPIngreso();
-    this.fillCrearPIngreso.cFecha = new Date();
+    this.getlistDescricionPago();
+    this.fillCrearOrden.cFechaEntrega = new Date();
+    this.fillCrearOrden.cFechaEmision = new Date();
   },
   computed: {},
   methods: {
@@ -402,20 +433,30 @@ export default {
       axios
         .get(url, {
           params: {
-            nIdProveedor: this.fillCrearPIngreso.nIdProveedor,
+            nIdProveedor: this.fillCrearOrden.nIdProveedor,
           },
         })
         .then((response) => {
-          this.fillCrearPIngreso.cProveedor = response.data.nombre;
+          this.fillCrearOrden.cProveedor = response.data.nombre;
         });
     },
+
+          getlistDescricionPago(){
+     var url = "/administracion/pago/index";
+      axios
+        .get(url)
+        .then((response) => {
+          this.listDescripPago = response.data;
+              this.fillCrearOrden.nIdDescripPago = this.listDescripPago[0].id;
+        });
+},
 
     getListarproductosByName() {
       var url = "/administracion/detallecotizancion/listProdByName";
       axios
         .get(url, {
           params: {
-            nIdprod: this.fillCrearPIngreso.nIdprod,
+            nIdprod: this.fillCrearOrden.nIdprod,
           },
         })
         .then((response) => {
@@ -427,11 +468,11 @@ export default {
       var url = "/administracion/KardexDetalle/listUnidMed";
       axios.get(url).then((response) => {
         this.listUnidMed = response.data;
-        this.fillCrearPIngreso.nIdUnidMed = this.listUnidMed[0].id;
+        this.fillCrearOrden.nIdUnidMed = this.listUnidMed[0].id;
       });
     },
     limpiarCriteriosBsq() {
-      this.fillCrearPIngreso.cProveedor = "";
+      this.fillCrearOrden.cProveedor = "";
     },
     setRegistrarPIngreso() {
       if (this.validaPIngreso()) {
@@ -445,14 +486,14 @@ export default {
       var url = "/administracion/parte_ingreso/setGrabarPIngreso";
       axios
         .post(url, {
-          cFecha: this.fillCrearPIngreso.cFecha,
-          cNumFactura: this.fillCrearPIngreso.cNumFactura,
-          cNumGuia: this.fillCrearPIngreso.cNumGuia,
-          nIdProveedor: this.fillCrearPIngreso.nIdProveedor,
-          nIdUser: this.fillCrearPIngreso.nIdUser,
-          nIdUnidMed: this.fillCrearPIngreso.nIdUnidMed,
-          cCantidad: this.fillCrearPIngreso.cCantidad,
-          cPrecio:this.fillCrearPIngreso.cPrecio,
+          cFecha: this.fillCrearOrden.cFecha,
+          cObservacion: this.fillCrearOrden.cObservacion,
+          cLEntrega: this.fillCrearOrden.cLEntrega,
+          nIdProveedor: this.fillCrearOrden.nIdProveedor,
+          nIdUser: this.fillCrearOrden.nIdUser,
+          nIdUnidMed: this.fillCrearOrden.nIdUnidMed,
+          cCantidad: this.fillCrearOrden.cCantidad,
+          cPrecio: this.fillCrearOrden.cPrecio,
         })
         .then((response) => {
           Swal.fire({
@@ -464,7 +505,7 @@ export default {
           });
           this.setResetCampos();
           this.setLimpiaCampos();
-         this.eliminarTempitemPIngreso();
+          this.eliminarTempitemPIngreso();
         });
     },
     abrirModal() {
@@ -474,7 +515,7 @@ export default {
       this.error = 0;
       this.mensajeError = [];
 
-      if (!this.fillCrearPIngreso.cProveedor) {
+      if (!this.fillCrearOrden.cProveedor) {
         this.mensajeError.push("El campo nombre es obligatorio");
       }
 
@@ -488,13 +529,13 @@ export default {
       var url = "/administracion/parte_ingreso/create";
       axios
         .post(url, {
-          nIdprod: this.fillCrearPIngreso.nIdprod,
-          nIdUnidMed: this.fillCrearPIngreso.nIdUnidMed,
-          cCantidad: this.fillCrearPIngreso.cCantidad,
-          cPrecio: this.fillCrearPIngreso.cPrecio,
+          nIdprod: this.fillCrearOrden.nIdprod,
+          nIdUnidMed: this.fillCrearOrden.nIdUnidMed,
+          cCantidad: this.fillCrearOrden.cCantidad,
+          cPrecio: this.fillCrearOrden.cPrecio,
         })
         .then((response) => {
-          if (response.data.icon == 'error') {
+          if (response.data.icon == "error") {
             Swal.fire({
               position: "center",
               icon: response.data.icon,
@@ -503,7 +544,7 @@ export default {
               timer: 1500,
             });
           }
-          if (response.data.icon == 'success') {
+          if (response.data.icon == "success") {
             this.setListtempPIngreso();
             this.setLimpiaCampos();
           }
@@ -511,19 +552,19 @@ export default {
     },
 
     setLimpiaCampos() {
-      this.fillCrearPIngreso.nIdprod = null;
-      this.fillCrearPIngreso.cCantidad = "";
-      this.fillCrearPIngreso.cPrecio = "";
+      this.fillCrearOrden.nIdprod = null;
+      this.fillCrearOrden.cCantidad = "";
+      this.fillCrearOrden.cPrecio = "";
     },
 
     setResetCampos() {
-      this.fillCrearPIngreso.nIdprod = null;
-      this.fillCrearPIngreso.cCantidad = "";
-      this.fillCrearPIngreso.cPrecio = "";
-      this.fillCrearPIngreso.cOrdenComPra = "";
-      this.fillCrearPIngreso.cDocumento = "";
-      this.fillCrearPIngreso.cNumFactura = "";
-      this.fillCrearPIngreso.cNumGuia = "";
+      this.fillCrearOrden.nIdprod = null;
+      this.fillCrearOrden.cCantidad = "";
+      this.fillCrearOrden.cPrecio = "";
+      this.fillCrearOrden.cReferencia = "";
+      this.fillCrearOrden.cDocumento = "";
+      this.fillCrearOrden.cObservacion = "";
+      this.fillCrearOrden.cLEntrega = "";
     },
 
     setListtempPIngreso() {

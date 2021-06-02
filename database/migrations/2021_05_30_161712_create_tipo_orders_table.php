@@ -13,7 +13,7 @@ class CreateTipoOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::create('tipoorders', function (Blueprint $table) {
+        Schema::create('tipo_orders', function (Blueprint $table) {
             $table->id();
             $table->string('nombre', 200)->unique()->required();
             $table->timestamps();
@@ -27,6 +27,6 @@ class CreateTipoOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tipoorders');
+        Schema::dropIfExists('tipo_orders');
     }
 }

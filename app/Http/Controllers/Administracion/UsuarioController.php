@@ -106,7 +106,7 @@ class UsuarioController extends Controller
     }
 
     public function getListarVendedores(Request $request){
-        $dato = User::where('roles_id',3)->orderBy('firstname')->get();
+        $dato = User::orderBy('firstname')->get();
         return $dato;
     }
 

@@ -25,7 +25,9 @@ class CreateOrdersTable extends Migration
             $table->date('Fentrega');
             $table->string('LugarEntrega',150);
             $table->unsignedBigInteger('tipoorders_id');
-            $table->foreign('tipoorders_id')->references('id')->on('tipoorders');
+            $table->foreign('tipoorders_id')->references('id')->on('tipo_orders');
+            $table->unsignedBigInteger('pago_id');
+            $table->foreign('pago_id')->references('id')->on('pago');
             $table->timestamps();
         });
     }

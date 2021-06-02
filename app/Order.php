@@ -8,4 +8,5 @@ class Order extends Model
 {
     const ATENDIDO = 1;
     const PENDIENTE = 2;
+    protected $table = 'orders';
 }
