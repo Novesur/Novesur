@@ -37,7 +37,7 @@
                             <input
                               type="text"
                               class="form-control"
-                              v-model="fillCrearOrden.cProveedor"
+                              v-model="fillCrearOrdenCompra.cProveedor"
                               @keypress.prevent.enter="setRegistrarPIngreso"
                               style="width: 300px"
                               readonly
@@ -55,7 +55,7 @@
                             <input
                               type="text"
                               class="form-control"
-                              v-model="fillCrearOrden.cReferencia"
+                              v-model="fillCrearOrdenCompra.cReferencia"
                               @keypress.prevent.enter="setRegistrarPIngreso"
                               style="width: 300px"
                             />
@@ -74,7 +74,7 @@
                           >
                           <div class="col-md-9">
                             <el-date-picker
-                              v-model="fillCrearOrden.cFechaEmision"
+                              v-model="fillCrearOrdenCompra.cFechaEmision"
                               type="date"
                               placeholder="Ingrese una Fecha"
                               format="dd/MM/yyyy"
@@ -92,7 +92,7 @@
                           >
                           <div class="col-md-9">
                             <el-date-picker
-                              v-model="fillCrearOrden.cFechaEntrega"
+                              v-model="fillCrearOrdenCompra.cFechaEntrega"
                               type="date"
                               placeholder="Ingrese una Fecha"
                               format="dd/MM/yyyy"
@@ -116,7 +116,7 @@
                             <input
                               type="text"
                               class="form-control"
-                              v-model="fillCrearOrden.cObservacion"
+                              v-model="fillCrearOrdenCompra.cObservacion"
                               @keypress.prevent.enter="setRegistrarPIngreso"
                             />
                           </div>
@@ -132,7 +132,7 @@
                             <input
                               type="text"
                               class="form-control"
-                              v-model="fillCrearOrden.cLEntrega"
+                              v-model="fillCrearOrdenCompra.cLEntrega"
                               @keypress.prevent.enter="setRegistrarPIngreso"
                               style="width: 300px"
                             />
@@ -147,7 +147,7 @@
                           >
                           <div class="col-md-9">
                             <el-select
-                              v-model="fillCrearOrden.nIdDescripPago"
+                              v-model="fillCrearOrdenCompra.nIdDescripPago"
                               placeholder="Select"
                               style="width: 70%"
                             >
@@ -181,7 +181,7 @@
 
                                 <div class="col-md-10">
                                   <el-select
-                                    v-model="fillCrearOrden.nIdprod"
+                                    v-model="fillCrearOrdenCompra.nIdprod"
                                     style="width: 90%"
                                     filterable
                                     placeholder="Select"
@@ -218,7 +218,7 @@
                                   <input
                                     type="text"
                                     class="form-control"
-                                    v-model="fillCrearOrden.cCantidad"
+                                    v-model="fillCrearOrdenCompra.cCantidad"
                                     v-int
                                   />
                                 </div>
@@ -228,7 +228,7 @@
                                 >
                                 <div class="col-md-3">
                                   <el-select
-                                    v-model="fillCrearOrden.nIdUnidMed"
+                                    v-model="fillCrearOrdenCompra.nIdUnidMed"
                                     placeholder="Select"
                                     style="width: 70%"
                                   >
@@ -249,7 +249,7 @@
                                   <input
                                     type="text"
                                     class="form-control"
-                                    v-model="fillCrearOrden.cPrecio"
+                                    v-model="fillCrearOrdenCompra.cPrecio"
                                   />
                                 </div>
                               </div>
@@ -339,7 +339,7 @@
                   <div class="col-md-4 offset-4">
                     <button
                       class="btn btn-flat btn-info btnWidth"
-                      @click.prevent="setGrabarOrders"
+                      @click.prevent="setGrabarOrderCompra"
                     >
                       Guardar
                     </button>
@@ -393,7 +393,7 @@
 export default {
   data() {
     return {
-      fillCrearOrden: {
+      fillCrearOrdenCompra: {
         nIdProveedor: this.$attrs.id,
         cProveedor: "",
         cReferencia: "",
@@ -432,8 +432,8 @@ export default {
     this.getListarproductosByName();
    // this.setListtemOrders();
     this.getlistDescricionPago();
-    this.fillCrearOrden.cFechaEntrega = new Date();
-    this.fillCrearOrden.cFechaEmision = new Date();
+    this.fillCrearOrdenCompra.cFechaEntrega = new Date();
+    this.fillCrearOrdenCompra.cFechaEmision = new Date();
 
   },
   computed: {},
@@ -443,11 +443,11 @@ export default {
       axios
         .get(url, {
           params: {
-            nIdProveedor: this.fillCrearOrden.nIdProveedor,
+            nIdProveedor: this.fillCrearOrdenCompra.nIdProveedor,
           },
         })
         .then((response) => {
-          this.fillCrearOrden.cProveedor = response.data.nombre;
+          this.fillCrearOrdenCompra.cProveedor = response.data.nombre;
         });
     },
 
@@ -455,7 +455,7 @@ export default {
       var url = "/administracion/pago/index";
       axios.get(url).then((response) => {
         this.listDescripPago = response.data;
-        this.fillCrearOrden.nIdDescripPago = this.listDescripPago[0].id;
+        this.fillCrearOrdenCompra.nIdDescripPago = this.listDescripPago[0].id;
       });
     },
 
@@ -464,7 +464,7 @@ export default {
       axios
         .get(url, {
           params: {
-            nIdprod: this.fillCrearOrden.nIdprod,
+            nIdprod: this.fillCrearOrdenCompra.nIdprod,
           },
         })
         .then((response) => {
@@ -476,11 +476,11 @@ export default {
       var url = "/administracion/KardexDetalle/listUnidMed";
       axios.get(url).then((response) => {
         this.listUnidMed = response.data;
-        this.fillCrearOrden.nIdUnidMed = this.listUnidMed[0].id;
+        this.fillCrearOrdenCompra.nIdUnidMed = this.listUnidMed[0].id;
       });
     },
     limpiarCriteriosBsq() {
-      this.fillCrearOrden.cProveedor = "";
+      this.fillCrearOrdenCompra.cProveedor = "";
     },
     setRegistrarPIngreso() {
       if (this.validaPIngreso()) {
@@ -490,18 +490,12 @@ export default {
       this.setAddPMaterial();
     },
 
-    setGrabarOrders() {
-      var url = "/administracion/parte_ingreso/setGrabarOrders";
+    setGrabarOrderCompra() {
+      var url = "/administracion/ordenCompra/setGrabarOrderCompra";
       axios
         .post(url, {
-          cFecha: this.fillCrearOrden.cFecha,
-          cObservacion: this.fillCrearOrden.cObservacion,
-          cLEntrega: this.fillCrearOrden.cLEntrega,
-          nIdOrder: this.fillCrearOrden.nIdOrder,
-          nIdUser: this.fillCrearOrden.nIdUser,
-          nIdUnidMed: this.fillCrearOrden.nIdUnidMed,
-          cCantidad: this.fillCrearOrden.cCantidad,
-          cPrecio: this.fillCrearOrden.cPrecio,
+
+            cFechaEmision : this.fillCrearOrdenCompra.cFechaEmision
         })
         .then((response) => {
           Swal.fire({
@@ -523,7 +517,7 @@ export default {
       this.error = 0;
       this.mensajeError = [];
 
-      if (!this.fillCrearOrden.cProveedor) {
+      if (!this.fillCrearOrdenCompra.cProveedor) {
         this.mensajeError.push("El campo nombre es obligatorio");
       }
 
@@ -534,51 +528,57 @@ export default {
       return this.error;
     },
     setAddPMaterial() {
-      var url = "/administracion/orden/addOrden";
+      var url = "/administracion/ordenCompra/addOrden";
       axios
         .post(url, {
-          nIdprod: this.fillCrearOrden.nIdprod,
-          nIdUnidMed: this.fillCrearOrden.nIdUnidMed,
-          cCantidad: this.fillCrearOrden.cCantidad,
-          cPrecio: this.fillCrearOrden.cPrecio,
-          CestadoDet:this.fillCrearOrden.CestadoDet,
-          cPUnit : this.fillCrearOrden.cPUnit,
+          nIdprod: this.fillCrearOrdenCompra.nIdprod,
+          nIdUnidMed: this.fillCrearOrdenCompra.nIdUnidMed,
+          cCantidad: this.fillCrearOrdenCompra.cCantidad,
+          cPrecio: this.fillCrearOrdenCompra.cPrecio,
+          CestadoDet:this.fillCrearOrdenCompra.CestadoDet,
+          cPUnit : this.fillCrearOrdenCompra.cPUnit,
         })
         .then((response) => {
-
-
      this.listartempOrder = response.data.datos
      this.setLimpiaCampos();
 
-
+        if (response.data.message == "Ya fue agregado anteriormente") {
+            Swal.fire({
+              position: "center",
+              icon: response.data.icon,
+              title: response.data.message,
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
         });
     },
 
     setLimpiaCampos() {
-      this.fillCrearOrden.nIdprod = null;
-      this.fillCrearOrden.cCantidad = "";
-      this.fillCrearOrden.cPrecio = "";
+      this.fillCrearOrdenCompra.nIdprod = null;
+      this.fillCrearOrdenCompra.cCantidad = "";
+      this.fillCrearOrdenCompra.cPrecio = "";
     },
 
     setResetCampos() {
-      this.fillCrearOrden.nIdprod = null;
-      this.fillCrearOrden.cCantidad = "";
-      this.fillCrearOrden.cPrecio = "";
-      this.fillCrearOrden.cReferencia = "";
-      this.fillCrearOrden.cDocumento = "";
-      this.fillCrearOrden.cObservacion = "";
-      this.fillCrearOrden.cLEntrega = "";
+      this.fillCrearOrdenCompra.nIdprod = null;
+      this.fillCrearOrdenCompra.cCantidad = "";
+      this.fillCrearOrdenCompra.cPrecio = "";
+      this.fillCrearOrdenCompra.cReferencia = "";
+      this.fillCrearOrdenCompra.cDocumento = "";
+      this.fillCrearOrdenCompra.cObservacion = "";
+      this.fillCrearOrdenCompra.cLEntrega = "";
     },
 
     setListtemOrders() {
-      var url = "/administracion/orden/ListtempOrden";
+      var url = "/administracion/ordenCompra/ListtempOrden";
       axios.get(url, {}).then((response) => {
         this.listartempOrder = response.data.datos;
       });
     },
 
     eliminarTempitemOrders() {
-      var url = "/administracion/OrdenController/eliminarTemporder";
+      var url = "/administracion/ordenCompra/eliminarTemporder";
       axios.post(url).then((response) => {
         this.setListtemOrders();
       });

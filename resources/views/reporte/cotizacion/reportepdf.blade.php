@@ -76,7 +76,7 @@
             <td> {{$coti->cliente->direccion}}</td>
 
             <td><strong>VENDEDOR:</strong></td>
-            <td>{{$coti->user->firstname .' '. $coti->user->secondname}}</td>
+            <td>    {{ $coti->user->gradousers->cod .' ' .  $coti->user->firstname .' '. $coti->user->secondname}}</td>
           </tr>
         <tr>
             <td align="left"><strong>RUC:</strong></td>
@@ -123,6 +123,14 @@
             <td>&nbsp;</td>
             <td>&nbsp;</td>
           </tr>
+
+          <tr>
+            <td align="left"><strong>CONSIGNADO:</strong></td>
+            <td>{{$coti->consignado}}</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+
           <tr>
             <td align="left"><strong>CORREO:</strong></td>
             <td>{{$coti->cliente->email}}</td>
@@ -241,10 +249,7 @@
           <td><strong>Garantia : </strong></td>
           <td>{{$coti->garantia->nombre}} por defectos de fabricaciòn (no cubre los originados por mala manipulaciòn, vandalismo, golpes, mala instalaciòn POR TERCEROS, mala operaciòn, exceso de presiòn y temperaturas)</td>
         </tr>
-        <tr>
-            <td><strong>Consignado : </strong></td>
-            <td>{{$coti->consignado}} </td>
-          </tr>
+
       </table>
 
    <h6 style="font-weight:normal; margin-bottom: 0px">Atentamente</h6>

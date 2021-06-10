@@ -213,12 +213,11 @@ Route::post('/administracion/parte_ingreso/setGrabaPIngreso', 'Administracion\Pa
 /// Garantia
 Route::get('/administracion/garantia/index', 'Administracion\GarantiaController@index');
 
-/// Orden
-Route::post('/administracion/orden/addOrden', 'Administracion\OrdenController@addOrden');
-Route::get('/administracion/orden/ListtempOrden', 'Administracion\OrdenController@ListtempOrden');
-Route::post('/administracion/OrdenController/eliminarTemporder', 'Administracion\OrdenController@eliminarTemporder');
-
-
+/// Orden de Compra
+Route::post('/administracion/ordenCompra/addOrden', 'Administracion\OrdencompraController@addOrden');
+Route::get('/administracion/ordenCompra/ListtempOrden', 'Administracion\OrdencompraController@ListtempOrden');
+Route::post('/administracion/ordenCompra/eliminarTemporder', 'Administracion\OrdencompraController@eliminarTemporder');
+Route::post('/administracion/ordenCompra/create', 'Administracion\OrdencompraController@create');
 
 
 

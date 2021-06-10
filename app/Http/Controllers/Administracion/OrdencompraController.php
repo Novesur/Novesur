@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers\Administracion;
 
+use App\Detalleordencompra;
 use App\Http\Controllers\Controller;
+use App\Ordencompra;
 use App\Producto;
 use App\TempOrdenCompra;
 use App\UnidMedida;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
-class OrdenController extends Controller
+class OrdencompraController extends Controller
 {
     public function addOrden(Request $request){
-
-
-
         $product = Producto::where(['id' => $request->nIdprod])->with('familia', 'marca', 'material', 'modelotipo', 'subfamilia', 'homologacion')->first();
         $products = Session::get('products');
         $products = ($products != null) ? collect($products) : collect([]);
@@ -49,6 +48,50 @@ class OrdenController extends Controller
         return response()->json(['datos' => $dato]);
     }
 
+    public function create(Request $request)
+    {
 
+
+
+   /*      if ($request->session()->has('products')) {
+
+
+
+            $formatreq = date("Y-m-d");
+            $ordenCompra = new Ordencompra();
+            $ordenCompra->fecha =  $formatreq;
+            $ordenCompra->cliente_id =  $request->nIdCliente;
+            $ordenCompra->user_id =  $request->nIdUsuario;
+            $ordenCompra->estadopedido_id =  $request->cEstado;
+            $ordenCompra->validezoferta =  $request->cValidez;
+            $ordenCompra->Entrega =  mb_strtoupper($request->cEntrega);
+            $ordenCompra->tipopago_id =  $request->nIdTipoPago;
+            $ordenCompra->pago_id = $request->nIdDescripPago;
+            $ordenCompra->flete =  $request->cFlete;
+            $ordenCompra->documentacion =  $request->Docu;
+            $ordenCompra->garantia_id =  $request->nIdGarantia;
+            $ordenCompra->punto_llegada =  $request->cPuntoLlegada;
+            $ordenCompra->transporte =  $request->cTransporte;
+            $ordenCompra->consignado =  $request->Cconsignado;
+
+            $ordenCompra->save();
+            $detordenCompra = Session::get('products');
+
+            $allProducts = $detordenCompra->map(function ($product) use ($ordenCompra) {
+                return [
+                    'ordenCompra_id' => $ordenCompra->id,
+                    'cantidad'      => $product->cantidad,
+                    'unidmedida_id' => $product->unidmedida_id,
+                    'producto_id'   => $product->producto_id,
+                    'punit'         => $product->punit,
+                ];
+            });
+            Detalleordencompra::insert($allProducts->toArray());
+            Session::put('products', collect([]));
+            return response()->json(['message' => 'Grabado', 'icon' => 'success'], 200);
+        } else {
+            return response()->json(['message' => 'El item no existe', 'icon' => 'warning'], 200);
+        } */
     }
 
+}

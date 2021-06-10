@@ -116,7 +116,7 @@
                         </router-link>
                       </td>
                       <td>
-                        <router-link class="btn btn-success btn-sm" :to="{name:'orden.create', params:{id:item.id}}">
+                        <router-link class="btn btn-success btn-sm" :to="{name:'ordenCompra.create', params:{id:item.id}}">
                           <i class="fas fa-cart-plus"></i> Orden
                         </router-link>
                       </td>
