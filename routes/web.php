@@ -166,21 +166,15 @@ Route::get('/administracion/cotizacion/listCotizacionList', 'Administracion\Coti
 Route::get('/administracion/cotizacion/listCotizacionListByDate', 'Administracion\CotizacionController@listCotizacionListByDate');
 Route::get('/administracion/cotizacion/listCotizacionListByVendedor', 'Administracion\CotizacionController@listCotizacionListByVendedor');
 
-
-
-
-
 /// COTIZACION A PDF
 Route::get('/administracion/cotizacion/CotizacionCabecera', 'Administracion\CotizacionController@CotizacionCabecera');
 Route::post('/administracion/cotizacion/CotizacionPdf', 'Administracion\CotizacionController@CotizacionPdf');
-
 
 //Tipo de pago
 Route::get('/administracion/cotizacion/listTipoPago', 'Administracion\CotizacionController@listTipoPago');
 
 //Listado de dias de Pago
 Route::get('/administracion/pago/index', 'Administracion\PagoController@index');
-
 
 //TempCotizacion
 Route::get('/administracion/tempcotizacion/ListtempCotizacion', 'Administracion\CotizacionController@ListtempCotizacion');
@@ -218,6 +212,14 @@ Route::post('/administracion/parte_ingreso/setGrabaPIngreso', 'Administracion\Pa
 
 /// Garantia
 Route::get('/administracion/garantia/index', 'Administracion\GarantiaController@index');
+
+/// Orden
+Route::post('/administracion/orden/addOrden', 'Administracion\OrdenController@addOrden');
+Route::get('/administracion/orden/ListtempOrden', 'Administracion\OrdenController@ListtempOrden');
+Route::post('/administracion/OrdenController/eliminarTemporder', 'Administracion\OrdenController@eliminarTemporder');
+
+
+
 
 
 

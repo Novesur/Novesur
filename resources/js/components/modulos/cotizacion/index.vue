@@ -215,7 +215,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="(item, index) in listPaginacion" :key="index">
+                    <tr v-for="(item, index) in listCotizacionPaginated" :key="index">
                       <td>
                         {{ item.id | fourchar }} -
                         {{ item.fecha | moment("YYYY") }}
@@ -285,7 +285,7 @@
                       class="page-item"
                       v-for="(page, index) in pagesList"
                       :key="index"
-                      :class="page == pageNumber ? 'active' : ''"
+                      :class="[page == pageNumber ? 'active' : '']"
                     >
                       <a
                         href="#"
@@ -599,7 +599,9 @@ export default {
           },
         })
         .then((response) => {
+
           this.listPaginacion = response.data;
+          this.inicializarPaginacion();
           //console.log(response.data);
         });
     },
@@ -673,6 +675,7 @@ export default {
     selectPage(page) {
       this.pageNumber = page;
     },
+
     inicializarPaginacion() {
       this.pageNumber = 0;
     },

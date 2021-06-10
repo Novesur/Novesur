@@ -58,7 +58,7 @@
 
       <table width="100%" border="0">
         <tr>
-          <td colspan="4" align="center" style="border: 1px; background-color: lightgreen" ><h3><strong>COTIZACION Nº {{str_pad($coti->id,3,'0',STR_PAD_LEFT) }} - {{substr($coti->fecha,0,4)}}</strong></h3></td>
+          <td colspan="4" align="center" style="border: 1px; background-color: rgb(109, 172, 243)" ><h3><strong>COTIZACION Nº {{str_pad($coti->id,3,'0',STR_PAD_LEFT) }} - {{substr($coti->fecha,0,4)}}</strong></h3></td>
         </tr>
 
         <tr >
@@ -134,11 +134,11 @@
 
     <h5><center>De nuestra consideración: Hacemos llegar con la presente nuestra propuesta económica, según se muestra a continuación</center></h5>
 
-    <table width="100%" border="1">
+    <table width="100%" border="1" >
         <tr>
           <td align="center" style="background-color:rgba(238, 229, 229, 0.719)"><strong>Nro</strong></td>
           <td align="center" style="background-color: rgba(238, 229, 229, 0.719)"><strong>CANT</strong></td>
-          <td align="center" style="background-color: rgba(238, 229, 229, 0.719)"><strong>MEDIDA</strong></td>
+          <td align="center" style="background-color: rgba(238, 229, 229, 0.719)"><strong>CODIGO</strong></td>
           <td align="center" style="background-color: rgba(238, 229, 229, 0.719)"><strong>DESCRIPCION DE MEDIDOR</strong></td>
           <td align="center" style="background-color: rgba(238, 229, 229, 0.719)"> <strong>P/UNIT</strong></td>
           <td align="center" style="background-color: rgba(238, 229, 229, 0.719)"><strong>Total S/IGV</strong></td>
@@ -149,16 +149,16 @@
 @endphp
         @if($detcoti) @foreach ($detcoti as $data)
         <tr>
-          <td align="center">@php
+          <td align="center" style="font-size:1em">@php
               echo $i = $i +1 ;
           @endphp</td>
         </td>
-          <td align="center">{{$data->cantidad}}</td>
-          <td align="center">{{$data->unidmedida->nombre}}</td>
-          <td align="center">{{$data->producto->familia->nombre .' '. $data->producto->subfamilia->nombre .', MODELO '. $data->producto->modelotipo->nombre .', MATERIAL '. $data->producto->material->nombre .', MARCA '. $data->producto->marca->nombre.', - '. $data->producto->homologacion->nombre}}</td>
-          <td align="center">S/. {{number_format($data->punit,2)  }}</td>
+          <td align="center" style="font-size:1em">{{$data->cantidad}}</td>
+          <td align="center" style="font-size:1em">{{$data->producto->codigo}}</td>
+          <td align="center" style="font-size:1em">  {{$data->producto->familia->nombre .' '. $data->producto->subfamilia->nombre .', MODELO '. $data->producto->modelotipo->nombre .', MATERIAL '. $data->producto->material->nombre .', MARCA '. $data->producto->marca->nombre.', - '. $data->producto->homologacion->nombre}}</td>
+          <td align="center" style="font-size:1em">S/. {{number_format($data->punit,2)  }}</td>
 
-          <td align="right">S/. {{number_format($data->cantidad * $data->punit,2)}}</td>
+          <td align="right" style="font-size:1em">S/. {{number_format($data->cantidad * $data->punit,2)}}</td>
 
         </tr>
         @endforeach @endif
@@ -174,15 +174,15 @@
         <tr>
           <td colspan="4" rowspan="3" align="center">&nbsp;</td>
           <td align="center" style="background-color: rgba(238, 229, 229, 0.719)"><strong>SUBTOTAL</strong></td>
-          <td align="right">S/. {{number_format($subtotal,2)}}</td>
+          <td align="right" style="font-size:1em">S/. {{number_format($subtotal,2)}}</td>
         </tr>
 
           <td align="center" style="background-color: rgba(238, 229, 229, 0.719)"><strong>IGV 18%</strong></td>
-          <td align="right">S/.{{number_format($IGV,2)}}</td>
+          <td align="right" style="font-size:1em">S/.{{number_format($IGV,2)}}</td>
         </tr>
         <tr>
           <td align="center" style="background-color: rgba(238, 229, 229, 0.719)"><strong>TOTAL GENERAL</strong></td>
-          <td align="right" style="background-color: rgba(238, 229, 229, 0.719)">S/. {{number_format($total,2)}}</td>
+          <td align="right" style="background-color: rgba(238, 229, 229, 0.719,font-size:0.8em)">S/. {{number_format($total,2)}}</td>
         </tr>
 
       </table>
@@ -241,12 +241,16 @@
           <td><strong>Garantia : </strong></td>
           <td>{{$coti->garantia->nombre}} por defectos de fabricaciòn (no cubre los originados por mala manipulaciòn, vandalismo, golpes, mala instalaciòn POR TERCEROS, mala operaciòn, exceso de presiòn y temperaturas)</td>
         </tr>
+        <tr>
+            <td><strong>Consignado : </strong></td>
+            <td>{{$coti->consignado}} </td>
+          </tr>
       </table>
 
    <h6 style="font-weight:normal; margin-bottom: 0px">Atentamente</h6>
 
    <h6 style="margin-top: 0px;font-weight:normal; margin-left: 40px" >
-     {{$coti->user->firstname .' '.$coti->user->secondname }}<br />
+     {{   $coti->user->gradousers->cod .'.  '. $coti->user->firstname .' '.$coti->user->secondname }}<br />
     Coordinador Comercial
    </h6>
    <footer style=" position: absolute;bottom: 0;">

@@ -18,7 +18,7 @@ class CreateProveedorTable extends Migration
             $table->string('nombre')-> required();
             $table->char('ruc',11)-> required()->unique();
             $table->string('direccion')-> required();
-            $table->string('telefono',50)-> required();
+            $table->string('telefono',150)-> required();
             $table->string('email')-> required();
             $table->string('contacto',50)-> required();
             $table->string('nrocuenta1',50);

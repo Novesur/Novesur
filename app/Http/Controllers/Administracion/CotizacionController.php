@@ -102,6 +102,8 @@ class CotizacionController extends Controller
             $cotizacion->garantia_id =  $request->nIdGarantia;
             $cotizacion->punto_llegada =  $request->cPuntoLlegada;
             $cotizacion->transporte =  $request->cTransporte;
+            $cotizacion->consignado =  $request->Cconsignado;
+
             $cotizacion->save();
             $detcotizacion = Session::get('products');
 
@@ -137,6 +139,7 @@ class CotizacionController extends Controller
        $cotizacion->garantia_id =  $request->nIdGarantia;
        $cotizacion->punto_llegada =  $request->cPuntoLlegada;
        $cotizacion->transporte =  $request->cTransporte;
+       $cotizacion->consignado =  $request->Cconsignado;
        $cotizacion->save();
 
     }

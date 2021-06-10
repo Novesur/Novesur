@@ -11,7 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User  extends Authenticatable
 {
     use Notifiable;
-    protected $fillable = ['firstanme','secondname','lastname','username','email','roles_id','almacen_id','password'];
+    protected $fillable = ['firstanme', 'secondname', 'lastname', 'username', 'email', 'roles_id', 'almacen_id', 'password'];
     use SoftDeletes;
     protected $table = 'users';
     protected $dates = ['deleted_at']; //Registramos la nueva columna
@@ -28,17 +28,17 @@ class User  extends Authenticatable
 
     public function rolespermission()
     {
-        return $this->belongsToMany(Rol::class,'permission_user');
+        return $this->belongsToMany(Rol::class, 'permission_user');
     }
 
     protected $appends = ['fullname'];
 
     public function getFullNameAttribute()
-{
-    return "{$this->firstname}  {$this->secondname}  ";
-}
-
-
-
-
+    {
+        return "{$this->firstname}  {$this->secondname}  ";
+    }
+    public function gradousers()
+    {
+        return $this->belongsTo(Gradouser::class);
+    }
 }

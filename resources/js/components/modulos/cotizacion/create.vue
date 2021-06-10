@@ -87,17 +87,7 @@
                     </div>
                   </div>
 
-                  <div class="form-group row">
-                    <label class="col-md-2 col-form-label">CELULAR</label>
-                    <div class="col-md-8">
-                      <input
-                        type="text"
-                        class="form-control"
-                        v-model="fillregistrarCotizacion.cCeluClient"
-                        :readonly="true"
-                      />
-                    </div>
-                  </div>
+
 
                   <div class="form-group row">
                     <label class="col-md-2 col-form-label">EMAIL</label>
@@ -110,6 +100,8 @@
                       />
                     </div>
                   </div>
+
+
                 </div>
               </div>
             </div>
@@ -319,6 +311,19 @@
                               type="text"
                               class="form-control"
                               v-model="fillregistrarCotizacion.cTransporte"
+                            />
+                          </div>
+                        </div>
+
+                                 <div class="form-group row">
+                          <label class="col-md-2 col-form-label"
+                            >CONSIGNADO</label
+                          >
+                          <div class="col-md-8">
+                            <input
+                              type="text"
+                              class="form-control"
+                              v-model="fillregistrarCotizacion.Cconsignado"
                             />
                           </div>
                         </div>
@@ -597,7 +602,6 @@ export default {
         cAtencion: "",
         cFonoClient: "",
         cCantidad: "",
-        cCeluClient: "",
         cEmail: "",
         cVendedor: "",
         cEmailVendedor: "",
@@ -617,7 +621,8 @@ export default {
         cTotal: "",
         cEstado: "",
         cPuntoLlegada:"",
-        cTransporte:""
+        cTransporte:"",
+        Cconsignado: ""
       },
 
       listUnidMed: [],
@@ -691,7 +696,6 @@ export default {
           this.fillregistrarCotizacion.cRucClient = response.data.ruc;
           this.fillregistrarCotizacion.cAtencion = response.data.atencion;
           this.fillregistrarCotizacion.cFonoClient = response.data.telefono;
-          this.fillregistrarCotizacion.cCeluClient = response.data.celular;
           this.fillregistrarCotizacion.cEmail = response.data.email;
 
           this.fillregistrarCotizacion.vidUSer = JSON.parse(
@@ -854,6 +858,7 @@ export default {
           cGarantia: this.fillregistrarCotizacion.cGarantia,
          cPuntoLlegada: this.fillregistrarCotizacion.cPuntoLlegada,
           cTransporte: this.fillregistrarCotizacion.cTransporte,
+          Cconsignado : this.fillregistrarCotizacion.Cconsignado,
         })
         .then((response) => {
           Swal.fire({

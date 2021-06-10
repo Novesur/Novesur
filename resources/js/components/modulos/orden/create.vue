@@ -4,7 +4,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Orden de Pedido</h1>
+            <h1 class="m-0 text-dark">Orden de Compra</h1>
           </div>
         </div>
       </div>
@@ -118,7 +118,6 @@
                               class="form-control"
                               v-model="fillCrearOrden.cObservacion"
                               @keypress.prevent.enter="setRegistrarPIngreso"
-
                             />
                           </div>
                         </div>
@@ -147,7 +146,7 @@
                             >Preferencias de Pago</label
                           >
                           <div class="col-md-9">
-                           <el-select
+                            <el-select
                               v-model="fillCrearOrden.nIdDescripPago"
                               placeholder="Select"
                               style="width: 70%"
@@ -254,6 +253,7 @@
                                   />
                                 </div>
                               </div>
+
                             </div>
                           </div>
                         </div>
@@ -295,17 +295,20 @@
                       <tr>
                         <th>Codigo</th>
                         <th>Cantidad</th>
+                         <th>Precio</th>
                         <th>Unid. Medida</th>
                         <th>Descripcion</th>
+
                       </tr>
                     </thead>
                     <tbody>
                       <tr
-                        v-for="(item, index) in listartempPIngreso"
+                        v-for="(item, index) in listartempOrder"
                         :key="index"
                       >
                         <td v-text="item.codigo"></td>
                         <td v-text="item.cantidad"></td>
+                         <td v-text="item.punit"></td>
                         <td v-text="item.unidmedNombre"></td>
 
                         <td
@@ -321,7 +324,11 @@
                             item.material
                           "
                         ></td>
+
+
                       </tr>
+
+
                     </tbody>
                   </table>
                 </div>
@@ -332,13 +339,13 @@
                   <div class="col-md-4 offset-4">
                     <button
                       class="btn btn-flat btn-info btnWidth"
-                      @click.prevent="setGrabarPIngreso"
+                      @click.prevent="setGrabarOrders"
                     >
                       Guardar
                     </button>
                     <button
                       class="btn btn-flat btn-default btnWidth"
-                      @click.prevent="eliminarTempitemPIngreso"
+                      @click.prevent="eliminarTempitemOrders"
                     >
                       Limpiar
                     </button>
@@ -401,10 +408,12 @@ export default {
         cCantidad: "",
         nIdUser: sessionStorage.getItem("iduser"),
       },
+
       listUnidMed: [],
       listProd: [],
-      listartempPIngreso: [],
-       listDescripPago:[],
+      listartempOrder: [],
+      listDescripPago: [],
+
       modalShow: false,
       mostrarModal: {
         display: "block",
@@ -421,10 +430,11 @@ export default {
     this.getListarByProveedor();
     this.getListarUnidadMedida();
     this.getListarproductosByName();
-    this.setListtempPIngreso();
+   // this.setListtemOrders();
     this.getlistDescricionPago();
     this.fillCrearOrden.cFechaEntrega = new Date();
     this.fillCrearOrden.cFechaEmision = new Date();
+
   },
   computed: {},
   methods: {
@@ -441,15 +451,13 @@ export default {
         });
     },
 
-          getlistDescricionPago(){
-     var url = "/administracion/pago/index";
-      axios
-        .get(url)
-        .then((response) => {
-          this.listDescripPago = response.data;
-              this.fillCrearOrden.nIdDescripPago = this.listDescripPago[0].id;
-        });
-},
+    getlistDescricionPago() {
+      var url = "/administracion/pago/index";
+      axios.get(url).then((response) => {
+        this.listDescripPago = response.data;
+        this.fillCrearOrden.nIdDescripPago = this.listDescripPago[0].id;
+      });
+    },
 
     getListarproductosByName() {
       var url = "/administracion/detallecotizancion/listProdByName";
@@ -482,14 +490,14 @@ export default {
       this.setAddPMaterial();
     },
 
-    setGrabarPIngreso() {
-      var url = "/administracion/parte_ingreso/setGrabarPIngreso";
+    setGrabarOrders() {
+      var url = "/administracion/parte_ingreso/setGrabarOrders";
       axios
         .post(url, {
           cFecha: this.fillCrearOrden.cFecha,
           cObservacion: this.fillCrearOrden.cObservacion,
           cLEntrega: this.fillCrearOrden.cLEntrega,
-          nIdProveedor: this.fillCrearOrden.nIdProveedor,
+          nIdOrder: this.fillCrearOrden.nIdOrder,
           nIdUser: this.fillCrearOrden.nIdUser,
           nIdUnidMed: this.fillCrearOrden.nIdUnidMed,
           cCantidad: this.fillCrearOrden.cCantidad,
@@ -505,7 +513,7 @@ export default {
           });
           this.setResetCampos();
           this.setLimpiaCampos();
-          this.eliminarTempitemPIngreso();
+          this.eliminarTempitemOrders();
         });
     },
     abrirModal() {
@@ -526,28 +534,23 @@ export default {
       return this.error;
     },
     setAddPMaterial() {
-      var url = "/administracion/parte_ingreso/create";
+      var url = "/administracion/orden/addOrden";
       axios
         .post(url, {
           nIdprod: this.fillCrearOrden.nIdprod,
           nIdUnidMed: this.fillCrearOrden.nIdUnidMed,
           cCantidad: this.fillCrearOrden.cCantidad,
           cPrecio: this.fillCrearOrden.cPrecio,
+          CestadoDet:this.fillCrearOrden.CestadoDet,
+          cPUnit : this.fillCrearOrden.cPUnit,
         })
         .then((response) => {
-          if (response.data.icon == "error") {
-            Swal.fire({
-              position: "center",
-              icon: response.data.icon,
-              title: response.data.message,
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          }
-          if (response.data.icon == "success") {
-            this.setListtempPIngreso();
-            this.setLimpiaCampos();
-          }
+
+
+     this.listartempOrder = response.data.datos
+     this.setLimpiaCampos();
+
+
         });
     },
 
@@ -567,17 +570,17 @@ export default {
       this.fillCrearOrden.cLEntrega = "";
     },
 
-    setListtempPIngreso() {
-      var url = "/administracion/parte_ingreso/ListtempParteIngreso";
+    setListtemOrders() {
+      var url = "/administracion/orden/ListtempOrden";
       axios.get(url, {}).then((response) => {
-        this.listartempPIngreso = response.data.datos;
+        this.listartempOrder = response.data.datos;
       });
     },
 
-    eliminarTempitemPIngreso() {
-      var url = "/administracion/parte_ingreso/eliminarTempitemPIngreso";
+    eliminarTempitemOrders() {
+      var url = "/administracion/OrdenController/eliminarTemporder";
       axios.post(url).then((response) => {
-        this.setListtempPIngreso();
+        this.setListtemOrders();
       });
     },
   },

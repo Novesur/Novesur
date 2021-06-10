@@ -34,6 +34,7 @@ class CreateCotizacionTable extends Migration
             $table->foreign('garantia_id')->references('id')->on('garantia');
             $table->string('punto_llegada',100)->nullable();
             $table->string('transporte',100)->nullable();
+            $table->string('consignado',100)->nullable();
             $table->timestamps();
             $table->softDeletes();
 

@@ -84,17 +84,7 @@
                     </div>
                   </div>
 
-                  <div class="form-group row">
-                    <label class="col-md-2 col-form-label">CELULAR</label>
-                    <div class="col-md-8">
-                      <input
-                        type="text"
-                        class="form-control"
-                        v-model="fillEditarProducto.cCeluClient"
-                        :readonly="true"
-                      />
-                    </div>
-                  </div>
+
 
                   <div class="form-group row">
                     <label class="col-md-2 col-form-label">EMAIL</label>
@@ -291,6 +281,47 @@
                             </el-select>
                           </div>
                         </div>
+
+                                <div class="form-group row">
+                          <label class="col-md-2 col-form-label"
+                            >PUNTO DE LLEGADA CONSIGNADO :</label
+                          >
+                          <div class="col-md-8">
+                            <input
+                              type="text"
+                              class="form-control"
+                              v-model="fillEditarProducto.cPuntoLlegada"
+                            />
+                          </div>
+                        </div>
+
+                            <div class="form-group row">
+                          <label class="col-md-2 col-form-label"
+                            >EMP. DE TRANSPORTE</label
+                          >
+                          <div class="col-md-8">
+                            <input
+                              type="text"
+                              class="form-control"
+                              v-model="fillEditarProducto.cTransporte"
+                            />
+                          </div>
+                        </div>
+
+                                 <div class="form-group row">
+                          <label class="col-md-2 col-form-label"
+                            >CONSIGNADO</label
+                          >
+                          <div class="col-md-8">
+                            <input
+                              type="text"
+                              class="form-control"
+                              v-model="fillEditarProducto.Cconsignado"
+                            />
+                          </div>
+                        </div>
+
+
                       </div>
                     </div>
                   </div>
@@ -564,7 +595,8 @@ export default {
         cAtencion: "",
         cFonoClient: "",
         cCantidad: "",
-        cCeluClient: "",
+        cPuntoLlegada:"",
+        cTransporte:"",
         cEmail: "",
         cVendedor: "",
         cEmailVendedor: "",
@@ -583,6 +615,7 @@ export default {
         cGarantia: "",
         cTotal: "",
         cEstado: "",
+        Cconsignado:"",
       },
 
       listUnidMed: [],
@@ -654,7 +687,7 @@ export default {
           this.fillEditarProducto.cRucClient = response.data.cliente.ruc;
           this.fillEditarProducto.cAtencion = response.data.cliente.atencion;
           this.fillEditarProducto.cFonoClient = response.data.cliente.telefono;
-          this.fillEditarProducto.cCeluClient = response.data.cliente.celular;
+
           this.fillEditarProducto.cEmail = response.data.cliente.email;
           this.fillEditarProducto.cVendedor = response.data.user.fullname;
           this.fillEditarProducto.cEmailVendedor = response.data.user.email;
@@ -666,6 +699,9 @@ export default {
           this.fillEditarProducto.cFlete = response.data.flete;
           this.fillEditarProducto.Docu = response.data.documentacion;
           this.fillEditarProducto.nIdGarantia = response.data.garantia_id;
+          this.fillEditarProducto.cPuntoLlegada = response.data.punto_llegada;
+          this.fillEditarProducto.Cconsignado = response.data.consignado;
+          this.fillEditarProducto.cTransporte = response.data.transporte;
         });
     },
 
@@ -814,6 +850,10 @@ export default {
           Docu: this.fillEditarProducto.Docu,
           nIdGarantia: this.fillEditarProducto.nIdGarantia,
           cGarantia: this.fillEditarProducto.cGarantia,
+        cPuntoLlegada : this.fillEditarProducto.cPuntoLlegada,
+        Cconsignado : this.fillEditarProducto.Cconsignado,
+        cTransporte : this.fillEditarProducto.cTransporte
+
         })
         .then((response) => {
           Swal.fire({

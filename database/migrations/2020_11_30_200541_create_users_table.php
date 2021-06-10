@@ -26,6 +26,8 @@ class CreateUsersTable extends Migration
             $table->unsignedBigInteger('almacen_id');
             $table->foreign('almacen_id')->references('id')->on('almacen');
             $table->string('password');
+            $table->unsignedBigInteger('gradousers_id');
+            $table->foreign('gradousers_id')->references('id')->on('gradousers');
             $table->timestamps();
             $table->softDeletes();
 
