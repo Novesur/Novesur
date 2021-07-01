@@ -16,7 +16,6 @@ class ProductoController extends Controller
 
     {
 
-
         if ($request->nIdFamilia == null && $request->nIdSubFamilia == null && $request->nIdMarca == null && $request->nIdMaterial == null && $request->nIdEstado == null && $request->nIdHomologado == null && $request->nIdCodigo == null) {
             $dato = Producto::with('familia', 'marca', 'material', 'modelotipo', 'subfamilia', 'homologacion', 'estado')->orderBy('codigo', 'ASC')->get();
         } else {
@@ -34,14 +33,7 @@ class ProductoController extends Controller
 
     public function create(Request $request)
     {
-<<<<<<< HEAD
-        //dd($request->codiprod);
-=======
-       //dd($request->codiprod);
->>>>>>> e13b52c293a5435ea2f200e222abc51461517d5d
-        if (!$request->ajax()) return redirect('/');
         $producto = new Producto;
-
         if ($request->nIdHomologado == 2) {
             $codiprod = $request->codiprodcert;
         } else {
@@ -51,11 +43,7 @@ class ProductoController extends Controller
         if ($cons) {
             return response()->json(['message' => 'Ya fue agregado anteriormente', 'icon' => 'error'], 200);
         } else {
-<<<<<<< HEAD
             $producto->codigo = mb_strtoupper($request->nIdCodigo);
-=======
-            $producto->codigo = $request->nIdCodigo;
->>>>>>> e13b52c293a5435ea2f200e222abc51461517d5d
             $producto->familia_id = $request->nIdFamilia;
             $producto->subfamilia_id = $request->nIdSubFamilia;
             $producto->modelotipo_id = $request->nIdModeloTipo;
@@ -68,6 +56,8 @@ class ProductoController extends Controller
             return response()->json(['message' => 'Producto grabado', 'icon' => 'success'], 200);
         }
     }
+
+
 
     public function ListarProductoById(Request $request)
     {
@@ -93,29 +83,12 @@ class ProductoController extends Controller
 
     public function edit(Request $request)
     {
-
-
-
         if (!$request->ajax()) return redirect('/');
         $nIdProducto = $request->nIdProducto;
-<<<<<<< HEAD
-=======
-        $Producto = Producto::where('id', $nIdProducto)->first();
-
-    /*     if ($request->nIdHomologado == '2') {
-            $codiprod = $request->codiprodcert;
-        } else {
-            $codiprod = $request->codiprod;
-        } */
->>>>>>> e13b52c293a5435ea2f200e222abc51461517d5d
 
         $Producto = Producto::where('id', $nIdProducto)->first();
         if ($Producto) {
-<<<<<<< HEAD
             $Producto->codigo = mb_strtoupper($request->nIdCodigo);
-=======
-            $Producto->codigo = $request->nIdCodigo;
->>>>>>> e13b52c293a5435ea2f200e222abc51461517d5d
             $Producto->familia_id = $request->nIdFamilia;
             $Producto->subfamilia_id = $request->nIdSubFamilia;
             $Producto->modelotipo_id = $request->nIdModeloTipo;
@@ -126,7 +99,9 @@ class ProductoController extends Controller
             $Producto->homologacion_id = $request->nIdHomologado;
             $Producto->save();
         }
+
     }
+
 
     public function BuscaCodigoProducto(Request $request)
     {

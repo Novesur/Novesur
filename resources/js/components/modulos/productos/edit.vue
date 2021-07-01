@@ -39,7 +39,6 @@
                             maxlength="20"
                           />
                         </div>
-<<<<<<< HEAD
 
                         <div>  <button
                       class="btn btn-flat btn-success"
@@ -51,13 +50,6 @@
                           caracteres</span>
                       </div>
 
-=======
-                        <span style="color: #ff0000">
-                          {{ this.fillEditarProducto.nIdCodigo.length }}
-                          caracteres</span
-                        >
-                      </div>
->>>>>>> e13b52c293a5435ea2f200e222abc51461517d5d
                     </div>
 
                     <div class="col-md-6">
@@ -222,8 +214,10 @@
                       </div>
                     </div>
                   </div>
+
                 </form>
               </div>
+
 
               <div class="card-footer">
                 <div class="row">
@@ -348,10 +342,7 @@ export default {
           this.fillEditarProducto.nIdEstado = response.data.estado_id;
           this.fillEditarProducto.nIdSubFamilia = response.data.subfamilia_id;
           this.fillEditarProducto.nIdHomologado = response.data.homologacion_id;
-<<<<<<< HEAD
           this.fillEditarProducto.nIdCodigo = response.data.codigo;
-=======
->>>>>>> e13b52c293a5435ea2f200e222abc51461517d5d
         });
     },
 
@@ -362,7 +353,6 @@ export default {
       });
     },
 
-<<<<<<< HEAD
     setValidarcodigoProductos(){
           var url = "/administracion/producto/BuscaCodigoProducto";
       axios.get(url, {
@@ -380,8 +370,6 @@ export default {
       });
     },
 
-=======
->>>>>>> e13b52c293a5435ea2f200e222abc51461517d5d
     getListarHomologacion() {
       var url = "/administracion/tempcotizacion/getListarHomologacion";
       axios.get(url).then((response) => {
