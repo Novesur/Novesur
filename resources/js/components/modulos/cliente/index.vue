@@ -35,6 +35,7 @@
                             type="text"
                             class="form-control"
                             v-model="fillBsqProveedor.cNombre"
+                              @keyup.enter="getListarCliente"
                           />
                         </div>
                       </div>
@@ -50,6 +51,7 @@
                             v-model="fillBsqProveedor.cRuc"
                             v-int
                             :maxlength="11"
+                            @keyup.enter="getListarCliente"
                           />
                         </div>
                       </div>

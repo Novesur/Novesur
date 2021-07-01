@@ -15,7 +15,7 @@ class CreateTipordercompraTable extends Migration
     {
         Schema::create('tipordercompra', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre', 200)->unique()->required();
+            $table->string('nombre', 50)->unique()->required();
         });
     }
 

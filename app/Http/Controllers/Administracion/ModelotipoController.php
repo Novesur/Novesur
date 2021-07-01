@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Administracion;
 
+use App\Exports\ModelotipoExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Modelotipo;
@@ -43,5 +44,12 @@ class ModelotipoController extends Controller
             $Modelotipo->nombre = $request->cNombre;
             $Modelotipo->save();
         }
+    }
+
+    public function export(Request $request)
+    {
+        // dd($request->params['listProductos']);
+        $listModelotipo = json_decode($request->params['listModelotipo']);
+        return (new ModelotipoExport)->setGenerarExcel($listModelotipo)->download('invoices.xlsx');
     }
 }

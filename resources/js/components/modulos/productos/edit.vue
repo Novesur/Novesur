@@ -30,6 +30,30 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Codigo</label>
+                        <div class="col-md-3">
+                          <input
+                            type="text"
+                            class="form-control"
+                            v-model="fillEditarProducto.nIdCodigo"
+                            maxlength="20"
+                          />
+                        </div>
+
+                        <div>  <button
+                      class="btn btn-flat btn-success"
+                      @click.prevent="setValidarcodigoProductos"
+                    >
+                        <span><i class="fas fa-search"></i></span>
+                    </button></div> <span style="color: #ff0000; padding: 0.5px;">
+                          {{ this.fillEditarProducto.nIdCodigo.length }}
+                          caracteres</span>
+                      </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group row">
                         <label class="col-md-3 col-form-label">Familia</label>
                         <div class="col-md-8">
                           <el-select
@@ -50,7 +74,9 @@
                         </div>
                       </div>
                     </div>
+                  </div>
 
+                  <div class="row">
                     <div class="col-md-6">
                       <div class="form-group row">
                         <label class="col-md-3 col-form-label"
@@ -74,9 +100,7 @@
                         </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div class="row">
                     <div class="col-md-6">
                       <div class="form-group row">
                         <label class="col-md-3 col-form-label">Marca</label>
@@ -97,7 +121,9 @@
                         </div>
                       </div>
                     </div>
+                  </div>
 
+                  <div class="row">
                     <div class="col-md-6">
                       <div class="form-group row">
                         <label class="col-md-3 col-form-label">Material</label>
@@ -118,9 +144,7 @@
                         </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div class="row">
                     <div class="col-md-6">
                       <div class="form-group row">
                         <label class="col-md-3 col-form-label"
@@ -143,7 +167,8 @@
                         </div>
                       </div>
                     </div>
-
+                  </div>
+                  <div class="row">
                     <div class="col-md-6">
                       <div class="form-group row">
                         <label class="col-md-3 col-form-label">Estado</label>
@@ -164,9 +189,6 @@
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="row">
-
 
                     <div class="col-md-6">
                       <div class="form-group row">
@@ -264,7 +286,7 @@ export default {
         nIdModeloTipo: "",
         nIdHomologado: "",
         nIdUser: sessionStorage.getItem("iduser"),
-
+        nIdCodigo: "",
       },
       listFamilia: [],
       listSubFamilia: [],
@@ -310,7 +332,6 @@ export default {
           },
         })
         .then((response) => {
-
           this.fillEditarProducto.nIdFamilia = response.data.familia_id;
           this.getListarSubFamilia();
           this.fillEditarProducto.nIdMarca = response.data.marca_id;
@@ -318,7 +339,8 @@ export default {
           this.fillEditarProducto.nIdModeloTipo = response.data.modelotipo_id;
           this.fillEditarProducto.nIdEstado = response.data.estado_id;
           this.fillEditarProducto.nIdSubFamilia = response.data.subfamilia_id;
-          this.fillEditarProducto.nIdHomologado= response.data.homologacion_id;
+          this.fillEditarProducto.nIdHomologado = response.data.homologacion_id;
+          this.fillEditarProducto.nIdCodigo = response.data.codigo;
         });
     },
 
@@ -329,7 +351,24 @@ export default {
       });
     },
 
-      getListarHomologacion() {
+    setValidarcodigoProductos(){
+          var url = "/administracion/producto/BuscaCodigoProducto";
+      axios.get(url, {
+          params:{
+       nIdCodigo: this.fillEditarProducto.nIdCodigo,
+
+          },
+      }).then((response) => {
+        Swal.fire({
+            icon: response.data.icon,
+            title: response.data.message,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+      });
+    },
+
+    getListarHomologacion() {
       var url = "/administracion/tempcotizacion/getListarHomologacion";
       axios.get(url).then((response) => {
         this.listHomologado = response.data;
@@ -422,7 +461,7 @@ export default {
       var url = "/administracion/producto/setEditarProductos";
       axios
         .post(url, {
-       codiprod:
+          /*    codiprod:
             String("0" + this.fillEditarProducto.nIdFamilia).slice(-2) +
             String("0" + this.fillEditarProducto.nIdSubFamilia).slice(-2) +
             String("0" + this.fillEditarProducto.nIdModeloTipo).slice(-2) +
@@ -433,8 +472,8 @@ export default {
             String("0" + this.fillEditarProducto.nIdSubFamilia).slice(-2) +
             String("0" + this.fillEditarProducto.nIdModeloTipo).slice(-2) +
             String("0" + this.fillEditarProducto.nIdMarca).slice(-2) +
-            String("0" + this.fillEditarProducto.nIdMaterial).slice(-2),
-
+            String("0" + this.fillEditarProducto.nIdMaterial).slice(-2), */
+          nIdCodigo: this.fillEditarProducto.nIdCodigo,
           nIdProducto: this.fillEditarProducto.nIdProducto,
           nIdFamilia: this.fillEditarProducto.nIdFamilia,
           nIdSubFamilia: this.fillEditarProducto.nIdSubFamilia,
@@ -443,9 +482,7 @@ export default {
           nIdModeloTipo: this.fillEditarProducto.nIdModeloTipo,
           nIdEstado: this.fillEditarProducto.nIdEstado,
           nIdUser: this.fillEditarProducto.nIdUser,
-          nIdHomologado : this.fillEditarProducto.nIdHomologado,
-
-
+          nIdHomologado: this.fillEditarProducto.nIdHomologado,
         })
         .then((response) => {
           Swal.fire({

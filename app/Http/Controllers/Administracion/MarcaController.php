@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Administracion;
 
+use App\Exports\MarcaExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Marca;
@@ -48,5 +49,12 @@ class MarcaController extends Controller
             $Marca->nombre = $request->cNombre;
             $Marca->save();
         }
+    }
+
+    public function export(Request $request)
+    {
+        // dd($request->params['listProductos']);
+        $listMarca = json_decode($request->params['listMarca']);
+        return (new MarcaExport)->setGenerarExcel($listMarca)->download('invoices.xlsx');
     }
 }

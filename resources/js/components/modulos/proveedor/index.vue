@@ -35,6 +35,7 @@
                             type="text"
                             class="form-control"
                             v-model="fillBsqProveedor.cNombre"
+                            @keyup.enter="getListarProveedor"
                           />
                         </div>
                       </div>
@@ -50,6 +51,7 @@
                             v-model="fillBsqProveedor.cRuc"
                             v-int
                             :maxlength="11"
+                            @keyup.enter="getListarProveedor"
                           />
                         </div>
                       </div>
@@ -201,6 +203,7 @@ export default {
     limpiarProveedorBsq() {
       this.fillBsqProveedor.cNombre = "";
       this.fillBsqProveedor.cRuc = "";
+      this.limpiarBandejaProveedor();
     },
     limpiarBandejaProveedor() {
       this.listProveedor = [];

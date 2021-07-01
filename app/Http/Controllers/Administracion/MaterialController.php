@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Administracion;
 
+use App\Exports\MaterialExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Material;
@@ -45,5 +46,12 @@ class MaterialController extends Controller
             $Material->nombre = $request->cNombre;
             $Material->save();
         }
+    }
+
+    public function export(Request $request)
+    {
+        // dd($request->params['listProductos']);
+        $listMaterial = json_decode($request->params['listMaterial']);
+        return (new MaterialExport)->setGenerarExcel($listMaterial)->download('invoices.xlsx');
     }
 }

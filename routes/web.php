@@ -23,6 +23,7 @@ Route::get('/administracion/familia/getListarFamilias', 'Administracion\FamiliaC
 Route::post('/administracion/familia/setRegistrarfamilias', 'Administracion\FamiliaController@create');
 Route::get('/administracion/familia/listByIdFamilia', 'Administracion\FamiliaController@listByIdFamilia');
 Route::post('/administracion/familia/setEditarfamilias', 'Administracion\FamiliaController@edit');
+Route::post('/operacion/familia/export', 'Administracion\FamiliaController@export');
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 /////////// Marcas
@@ -30,6 +31,7 @@ Route::get('/administracion/marcas/getListarMarcas', 'Administracion\MarcaContro
 Route::post('/administracion/marcas/setRegistrarMarcas', 'Administracion\MarcaController@create');
 Route::get('/administracion/marcas/listByIdMarcas', 'Administracion\MarcaController@listByIdMarcas');
 Route::post('/administracion/marcas/setEditarMarca', 'Administracion\MarcaController@edit');
+Route::post('/operacion/marcas/export', 'Administracion\MarcaController@export');
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /////////// Material
@@ -37,6 +39,7 @@ Route::get('/administracion/material/getListarMaterial', 'Administracion\Materia
 Route::post('/administracion/material/setRegistrarMaterial', 'Administracion\MaterialController@create');
 Route::get('/administracion/material/listByIdMaterial', 'Administracion\MaterialController@listByIdMaterial');
 Route::post('/administracion/material/setEditarMaterial', 'Administracion\MaterialController@edit');
+Route::post('/operacion/material/export', 'Administracion\MaterialController@export');
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /////////// SubFamilia
@@ -45,12 +48,14 @@ Route::post('/administracion/subfamilia/setRegistrarSubfamilia', 'Administracion
 Route::get('/administracion/subfamilia/listByIdSubfamilia', 'Administracion\SubfamiliaController@listByIdSubfamilia');
 Route::post('/administracion/subfamilia/setEditarSubfamilia', 'Administracion\SubfamiliaController@edit');
 Route::get('/administracion/subfamilia/listSubFamiliabyFamilia', 'Administracion\SubfamiliaController@listSubFamiliabyFamilia');
+Route::post('/operacion/subfamilia/export', 'Administracion\SubfamiliaController@export');
 
 /////////// Modelo/Tipo
 Route::get('/administracion/modelotipo/getListarModelotipo', 'Administracion\ModelotipoController@store');
 Route::post('/administracion/modelotipo/setRegistrarModelotipo', 'Administracion\ModelotipoController@create');
 Route::get('/administracion/modelotipo/listByIdModelotipo', 'Administracion\ModelotipoController@listByIdModelotipo');
 Route::post('/administracion/modelotipo/setEditarModelotipo', 'Administracion\ModelotipoController@edit');
+Route::post('/operacion/modelotipo/export', 'Administracion\ModelotipoController@export');
 
 /////////// Estado del Producto
 Route::get('/administracion/estadoprod/getListarEstadoprod', 'Administracion\EstadoProdController@index');
@@ -62,6 +67,7 @@ Route::get('/administracion/producto/getListarProductoById', 'Administracion\Pro
 Route::get('/administracion/producto/ListarProductoByIdKardex', 'Administracion\ProductoController@ListarProductoByIdKardex');
 Route::post('/administracion/producto/setEditarProductos', 'Administracion\ProductoController@edit');
 Route::post('/operacion/producto/export', 'Administracion\ProductoController@export');
+Route::get('/administracion/producto/BuscaCodigoProducto', 'Administracion\ProductoController@BuscaCodigoProducto');
 
 ////////  Proveedor
 Route::get('/administracion/proveedor/getListarProveedor', 'Administracion\ProveedorController@index');
@@ -70,6 +76,7 @@ Route::get('/administracion/proveedor/getListarProveedorById', 'Administracion\P
 Route::post('/administracion/proveedor/setEditarProveedor', 'Administracion\ProveedorController@edit');
 Route::get('/administracion/KardexDetalle/listProveedor', 'Administracion\KardexDetalleController@listProveedor');
 Route::get('/administracion/proveedor/ListarProveedorByRuc', 'Administracion\ProveedorController@ListarProveedorByRuc');
+Route::get('/administracion/proveedor/ListProveedor', 'Administracion\ProveedorController@ListProveedor');
 
 /////  Kardex
 Route::get('/administracion/kardex/getListarKardexByProduct', 'Administracion\KardexController@index');
@@ -165,6 +172,10 @@ Route::post('/administracion/cotizacion/dellTempEditCotizacion', 'Administracion
 Route::get('/administracion/cotizacion/listCotizacionList', 'Administracion\CotizacionController@listCotizacionList');
 Route::get('/administracion/cotizacion/listCotizacionListByDate', 'Administracion\CotizacionController@listCotizacionListByDate');
 Route::get('/administracion/cotizacion/listCotizacionListByVendedor', 'Administracion\CotizacionController@listCotizacionListByVendedor');
+Route::post('/administracion/cotizacion/CantidadDiasCotizacion', 'Administracion\CotizacionController@CantidadDiasCotizacion');
+
+
+
 
 /// COTIZACION A PDF
 Route::get('/administracion/cotizacion/CotizacionCabecera', 'Administracion\CotizacionController@CotizacionCabecera');
@@ -217,7 +228,20 @@ Route::get('/administracion/garantia/index', 'Administracion\GarantiaController@
 Route::post('/administracion/ordenCompra/addOrden', 'Administracion\OrdencompraController@addOrden');
 Route::get('/administracion/ordenCompra/ListtempOrden', 'Administracion\OrdencompraController@ListtempOrden');
 Route::post('/administracion/ordenCompra/eliminarTemporder', 'Administracion\OrdencompraController@eliminarTemporder');
-Route::post('/administracion/ordenCompra/create', 'Administracion\OrdencompraController@create');
+Route::post('/administracion/ordenCompra/setGrabarOrderCompra', 'Administracion\OrdencompraController@create');
+Route::get('/administracion/ordenCompra/ListtempOrden', 'Administracion\OrdencompraController@ListtempOrden');
+Route::get('/administracion/ordenCompra/ListXProduct', 'Administracion\OrdencompraController@ListXProduct');
+Route::get('/administracion/ordenCompra/ListXProveedor', 'Administracion\OrdencompraController@ListXProveedor');
+Route::post('/administracion/ordenCompra/setGenerarOrderPedidoPdf', 'Administracion\OrdencompraController@setGenerarOrderPedidoPdf');
+
+
+/// Detalle de Orden de Compra
+Route::get('/administracion/DetalleordenCompra/view', 'Administracion\DetalleOrdenCompraController@view');
+
+
+/// Tipo de orden de Compra
+Route::get('/administracion/ordenCompra/TipoOrderCompra', 'Administracion\OrdencompraController@TipoOrderCompra');
+
 
 
 

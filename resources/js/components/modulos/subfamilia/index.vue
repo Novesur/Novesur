@@ -18,6 +18,13 @@
                 >
                   <i class="fa fa-plus-square"></i>Nuevo
                 </router-link>
+
+                  <button
+                      class="btn  btn-success btn-sm "
+                      @click.prevent="getExcelSubfamilia"
+                    >
+                    <span><i class="fas fa-file-excel"></i> EXCEL</span>
+                    </button>
               </div>
             </div>
 
@@ -153,6 +160,7 @@
 </template>
 
 <script>
+import FileSaver from "file-saver";
 export default {
   data() {
     return {
@@ -210,6 +218,21 @@ export default {
           this.listSubfamilia = response.data;
 
         });
+    },
+    getExcelSubfamilia(){
+            var url = "/operacion/subfamilia/export";
+      axios
+        .post(
+          url,
+          {
+            params: { listSubfamilia: JSON.stringify(this.listSubfamilia) },
+          },
+          { responseType: "blob" }
+        )
+        .then((response) => {
+          FileSaver.saveAs(response.data, "subfamilia.xlsx");
+        });
+
     },
 
     nextPage() {

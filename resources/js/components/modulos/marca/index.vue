@@ -17,6 +17,13 @@
             <router-link class="btn btn-info btn-sm" :to="'/marca/crear'">
               <i class="fas fa-plus-square"></i>Nuevo
             </router-link>
+
+               <button
+                      class="btn  btn-success btn-sm "
+                      @click.prevent="getExcelMarca"
+                    >
+                    <span><i class="fas fa-file-excel"></i> EXCEL</span>
+                    </button>
           </div>
         </div>
 
@@ -130,6 +137,7 @@
 </template>
 
 <script>
+import FileSaver from "file-saver";
 export default {
   data() {
     return {
@@ -184,6 +192,20 @@ export default {
         .then((response) => {
             this.inicializarPaginacion();
           this.listMarca = response.data;
+        });
+    },
+    getExcelMarca(){
+          var url = "/operacion/marcas/export";
+      axios
+        .post(
+          url,
+          {
+            params: { listMarca: JSON.stringify(this.listMarca) },
+          },
+          { responseType: "blob" }
+        )
+        .then((response) => {
+          FileSaver.saveAs(response.data, "Marcas.xlsx");
         });
     },
     nextPage() {

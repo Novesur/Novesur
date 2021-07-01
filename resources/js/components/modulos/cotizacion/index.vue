@@ -222,13 +222,6 @@
                       </td>
                       <td>{{ item.fecha | moment("DD - MM - Y") }}</td>
                       <td v-text="item.razonsocial"></td>
-                      <!--    <td v-text="item.validezoferta"></td>
-                      <td v-text="item.Entrega"></td>
-                      <td v-text="item.tipopago"></td>
-                      <td v-text="item.pago"></td>
-                      <td v-text="item.flete"></td>
-                      <td v-text="item.documentacion"></td>
-                      <td v-text="item.garantia"></td> -->
                       <td v-text="item.estadopedido"></td>
 
                       <td>
@@ -256,8 +249,7 @@
                           <i class="far fa-file-pdf"></i> Reporte
                         </router-link>
 
-
-
+                        <template v-if = "item.estadodias <= 5">
                      <router-link
                           class="btn btn-secondary btn-sm"
                           :to="{
@@ -267,6 +259,7 @@
                         >
                           <i class="far fa-edit"></i> Editar
                         </router-link>
+                        </template>
                       </td>
 
 
@@ -539,7 +532,10 @@ export default {
     },
 
     limpiarCriteriosBsq() {
-      this.fillBsqCotizacion.cNombre = "";
+      this.fillBsqCotizacion.nIdVendedor="";
+      this.fillBsqCotizacion.nIdCliente="";
+      this.fillBsqCotizacion.nIdtEstadoCoti2="";
+      this.fillBsqCotizacion.dFecha="";
     },
     limpiarBandejaMaterial() {
       this.listDetPedido = [];
@@ -602,7 +598,7 @@ export default {
 
           this.listPaginacion = response.data;
           this.inicializarPaginacion();
-          //console.log(response.data);
+          console.log(response.data);
         });
     },
 

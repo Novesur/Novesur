@@ -16,6 +16,12 @@
             <router-link class="btn btn-info btn-sm" :to="'/material/crear'">
               <i class="fas fa-plus-square"></i>Nuevo
             </router-link>
+             <button
+                      class="btn  btn-success btn-sm "
+                      @click.prevent="getExcelMaterial"
+                    >
+                    <span><i class="fas fa-file-excel"></i> EXCEL</span>
+                    </button>
           </div>
         </div>
         <div class="card-body">
@@ -105,6 +111,7 @@
 </template>
 
 <script>
+import FileSaver from "file-saver";
 export default {
     data(){
         return{
@@ -162,6 +169,21 @@ export default {
             })
 
         },
+
+            getExcelMaterial(){
+          var url = "/operacion/material/export";
+      axios
+        .post(
+          url,
+          {
+            params: { listMaterial: JSON.stringify(this.listMaterial) },
+          },
+          { responseType: "blob" }
+        )
+        .then((response) => {
+          FileSaver.saveAs(response.data, "Material.xlsx");
+        });
+    },
         nextPage(){
             this.pageNumber++;
         },

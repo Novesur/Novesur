@@ -146,7 +146,7 @@
         <tr>
           <td align="center" style="background-color:rgba(238, 229, 229, 0.719)"><strong>Nro</strong></td>
           <td align="center" style="background-color: rgba(238, 229, 229, 0.719)"><strong>CANT</strong></td>
-          <td align="center" style="background-color: rgba(238, 229, 229, 0.719)"><strong>CODIGO</strong></td>
+          <td align="center" style="background-color: rgba(238, 229, 229, 0.719)"><strong>UNID MEDIDA</strong></td>
           <td align="center" style="background-color: rgba(238, 229, 229, 0.719)"><strong>DESCRIPCION DE MEDIDOR</strong></td>
           <td align="center" style="background-color: rgba(238, 229, 229, 0.719)"> <strong>P/UNIT</strong></td>
           <td align="center" style="background-color: rgba(238, 229, 229, 0.719)"><strong>Total S/IGV</strong></td>
@@ -162,7 +162,7 @@
           @endphp</td>
         </td>
           <td align="center" style="font-size:1em">{{$data->cantidad}}</td>
-          <td align="center" style="font-size:1em">{{$data->producto->codigo}}</td>
+          <td align="center" style="font-size:1em">{{$data->unidmedida->nombre}}</td>
           <td align="center" style="font-size:1em">  {{$data->producto->familia->nombre .' '. $data->producto->subfamilia->nombre .', MODELO '. $data->producto->modelotipo->nombre .', MATERIAL '. $data->producto->material->nombre .', MARCA '. $data->producto->marca->nombre.', - '. $data->producto->homologacion->nombre}}</td>
           <td align="center" style="font-size:1em">S/. {{number_format($data->punit,2)  }}</td>
 
@@ -255,7 +255,7 @@
    <h6 style="font-weight:normal; margin-bottom: 0px">Atentamente</h6>
 
    <h6 style="margin-top: 0px;font-weight:normal; margin-left: 40px" >
-     {{   $coti->user->gradousers->cod .'.  '. $coti->user->firstname .' '.$coti->user->secondname }}<br />
+     {{$coti->user->gradousers->cod .' '. $coti->user->firstname .' '.$coti->user->secondname }}<br />
     Coordinador Comercial
    </h6>
    <footer style=" position: absolute;bottom: 0;">

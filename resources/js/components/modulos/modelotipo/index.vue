@@ -12,9 +12,18 @@
           <div class="card">
             <div class="card-header">
               <div class="card-tools">
-                <router-link class="btn btn-info btn-sm" :to="'/modelotipo/crear'">
+                <router-link
+                  class="btn btn-info btn-sm"
+                  :to="'/modelotipo/crear'"
+                >
                   <i class="fa fa-plus-square"></i>Nuevo
                 </router-link>
+                <button
+                  class="btn btn-success btn-sm"
+                  @click.prevent="getExcelModelotipo"
+                >
+                  <span><i class="fas fa-file-excel"></i> EXCEL</span>
+                </button>
               </div>
             </div>
 
@@ -37,7 +46,9 @@
                               <div class="col-md-10">
                                 <input
                                   type="text"
-                                  class="form control" style="width:410px;"  @keydown.enter.prevent="getListarModelotipo"
+                                  class="form control"
+                                  style="width: 410px"
+                                  @keydown.enter.prevent="getListarModelotipo"
                                   v-model="fillBsqModelotipo.cNombre"
                                 />
                               </div>
@@ -72,7 +83,11 @@
                     </div>
                     <div class="card-body table-responsive">
                       <table
-                        class="table table-hover table-head-fixed text-nowrap projects"
+                        class="
+                          table table-hover table-head-fixed
+                          text-nowrap
+                          projects
+                        "
                       >
                         <thead>
                           <th>Nombre</th>
@@ -85,7 +100,13 @@
                           >
                             <td v-text="item.nombre"></td>
                             <td>
-                              <router-link class="btn btn-info btn-sm" :to="{name:'modelotipo.editar', params:{id:item.id}}">
+                              <router-link
+                                class="btn btn-info btn-sm"
+                                :to="{
+                                  name: 'modelotipo.editar',
+                                  params: { id: item.id },
+                                }"
+                              >
                                 <i class="fas fa-pencil-alt"></i>Editar
                               </router-link>
                             </td>
@@ -142,6 +163,7 @@
 </template>
 
 <script>
+import FileSaver from "file-saver";
 export default {
   data() {
     return {
@@ -198,6 +220,20 @@ export default {
           this.listModelotipo = response.data;
         });
     },
+    getExcelModelotipo(){
+    var url = "/operacion/modelotipo/export";
+      axios
+        .post(
+          url,
+          {
+            params: { listModelotipo: JSON.stringify(this.listModelotipo) },
+          },
+          { responseType: "blob" }
+        )
+        .then((response) => {
+          FileSaver.saveAs(response.data, "ModeloTipo.xlsx");
+        });
+    },
     nextPage() {
       this.pageNumber++;
     },
@@ -207,10 +243,9 @@ export default {
     SelectPage(page) {
       this.pageNumber = page;
     },
-    InicializarPaginacion(){
+    InicializarPaginacion() {
       this.pageNumber = 0;
-    }
-
+    },
   },
 };
 </script>

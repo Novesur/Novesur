@@ -25,7 +25,7 @@ class CreateDetalleordencomprasTable extends Migration
             $table->foreign('unidmedida_id')->references('id')->on('unidmedida');
             $table->decimal('punit', 8, 2)->required();
             $table->enum('estado',[Ordencompra::ATENDIDO,Ordencompra::PENDIENTE])->default(Ordencompra::ATENDIDO);
-            $table->timestamps();
+
         });
     }
 

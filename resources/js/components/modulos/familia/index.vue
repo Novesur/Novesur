@@ -16,6 +16,13 @@
             <router-link class="btn btn-info btn-sm" :to="'/familia/crear'">
               <i class="fas fa-plus-square"></i>Nuevo
             </router-link>
+
+             <button
+                      class="btn  btn-success btn-sm "
+                      @click.prevent="getExcelFamilia"
+                    >
+                    <span><i class="fas fa-file-excel"></i> EXCEL</span>
+                    </button>
           </div>
         </div>
         <div class="card-body">
@@ -105,6 +112,7 @@
 </template>
 
 <script>
+import FileSaver from "file-saver";
 export default {
     data(){
         return{
@@ -160,6 +168,21 @@ export default {
               this.inicializarPaginacion();
                this.listFamilia =  response.data;
             })
+
+        },
+        getExcelFamilia(){
+      var url = "/operacion/familia/export";
+      axios
+        .post(
+          url,
+          {
+            params: { listFamilia: JSON.stringify(this.listFamilia) },
+          },
+          { responseType: "blob" }
+        )
+        .then((response) => {
+          FileSaver.saveAs(response.data, "Familia.xlsx");
+        });
 
         },
         nextPage(){

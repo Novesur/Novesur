@@ -15,7 +15,7 @@ class CreateModelotipoTable extends Migration
     {
         Schema::create('modelotipo', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre',100)->unique()->required();
+            $table->string('nombre',200)->unique()->required();
             $table->timestamps();
         });
     }

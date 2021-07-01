@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Administracion;
 
+use App\Exports\FamiliaExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Familia;
@@ -34,5 +35,11 @@ class FamiliaController extends Controller
             $Familia->nombre = $request->cNombre;
             $Familia->save();
         }
+    }
+    public function export(Request $request)
+    {
+        // dd($request->params['listProductos']);
+        $listFamilia = json_decode($request->params['listFamilia']);
+        return (new FamiliaExport)->setGenerarExcel($listFamilia)->download('invoices.xlsx');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Administracion;
 
+use App\Exports\SubfamiliaExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -60,5 +61,12 @@ class SubfamiliaController extends Controller
             $Subfamilia->nombre = $request->cNombre;
             $Subfamilia->save();
         }
+    }
+
+    public function export(Request $request)
+    {
+        // dd($request->params['listProductos']);
+        $listSubfamilia = json_decode($request->params['listSubfamilia']);
+        return (new SubfamiliaExport)->setGenerarExcel($listSubfamilia)->download('invoices.xlsx');
     }
 }

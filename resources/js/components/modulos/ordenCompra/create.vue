@@ -22,7 +22,7 @@
           <div class="container-fluid">
             <div class="card card-info">
               <div class="card-header">
-                <h3 class="card-title">Formulario Orden de Pedido</h3>
+                <h3 class="card-title">Formulario Orden de Compra</h3>
               </div>
               <div class="card-body">
                 <form role="form">
@@ -110,15 +110,22 @@
                       <div class="col-md-6">
                         <div class="form-group row">
                           <label class="col-md-3 col-form-label"
-                            >Observacion</label
+                            >Tipo de Orden</label
                           >
                           <div class="col-md-9">
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="fillCrearOrdenCompra.cObservacion"
-                              @keypress.prevent.enter="setRegistrarPIngreso"
-                            />
+                          <el-select
+                              v-model="fillCrearOrdenCompra.nIdTipoOrdenCompra"
+                              placeholder="Select"
+                              style="width: 70%"
+                            >
+                              <el-option
+                                v-for="item in listTipoOrdenCompra"
+                                :key="item.id"
+                                :label="item.nombre"
+                                :value="item.id"
+                              >
+                              </el-option>
+                            </el-select>
                           </div>
                         </div>
                       </div>
@@ -147,7 +154,7 @@
                           >
                           <div class="col-md-9">
                             <el-select
-                              v-model="fillCrearOrdenCompra.nIdDescripPago"
+                              v-model="fillCrearOrdenCompra.nIdTipoPago"
                               placeholder="Select"
                               style="width: 70%"
                             >
@@ -400,12 +407,13 @@ export default {
         cDocumento: "",
         cFechaEntrega: "",
         cFechaEmision: "",
-        cObservacion: "",
         cLEntrega: "",
         nIdUnidMed: "",
         nIdprod: "",
         cPrecio: "",
         cCantidad: "",
+        nIdTipoPago:"",
+        nIdTipoOrdenCompra:"",
         nIdUser: sessionStorage.getItem("iduser"),
       },
 
@@ -413,6 +421,7 @@ export default {
       listProd: [],
       listartempOrder: [],
       listDescripPago: [],
+      listTipoOrdenCompra : [],
 
       modalShow: false,
       mostrarModal: {
@@ -432,6 +441,7 @@ export default {
     this.getListarproductosByName();
    // this.setListtemOrders();
     this.getlistDescricionPago();
+    this.getlistTipoOrdenCompra()
     this.fillCrearOrdenCompra.cFechaEntrega = new Date();
     this.fillCrearOrdenCompra.cFechaEmision = new Date();
 
@@ -456,6 +466,14 @@ export default {
       axios.get(url).then((response) => {
         this.listDescripPago = response.data;
         this.fillCrearOrdenCompra.nIdDescripPago = this.listDescripPago[0].id;
+      });
+    },
+
+        getlistTipoOrdenCompra() {
+      var url = "/administracion/ordenCompra/TipoOrderCompra";
+      axios.get(url).then((response) => {
+        this.listTipoOrdenCompra = response.data;
+        this.fillCrearOrdenCompra.nIdTipoOrdenCompra = this.listTipoOrdenCompra[0].id;
       });
     },
 
@@ -495,19 +513,29 @@ export default {
       axios
         .post(url, {
 
-            cFechaEmision : this.fillCrearOrdenCompra.cFechaEmision
+            cFechaEmision : this.fillCrearOrdenCompra.cFechaEmision,
+            cReferencia : this.fillCrearOrdenCompra.cReferencia,
+            nIdProveedor : this.fillCrearOrdenCompra.nIdProveedor,
+            cFechaEntrega : this.fillCrearOrdenCompra.cFechaEntrega,
+            cLEntrega: this.fillCrearOrdenCompra.cLEntrega,
+            nIdTipoPago : this.fillCrearOrdenCompra.nIdTipoPago,
+            nIdTipoOrdenCompra : this.fillCrearOrdenCompra.nIdTipoOrdenCompra,
+            nIdUser : this.fillCrearOrdenCompra.nIdUser,
+
         })
         .then((response) => {
-          Swal.fire({
+
+           Swal.fire({
             position: "center",
             icon: response.data.icon,
             title: response.data.message,
             showConfirmButton: false,
             timer: 1500,
           });
+
           this.setResetCampos();
-          this.setLimpiaCampos();
           this.eliminarTempitemOrders();
+
         });
     },
     abrirModal() {
@@ -566,7 +594,6 @@ export default {
       this.fillCrearOrdenCompra.cPrecio = "";
       this.fillCrearOrdenCompra.cReferencia = "";
       this.fillCrearOrdenCompra.cDocumento = "";
-      this.fillCrearOrdenCompra.cObservacion = "";
       this.fillCrearOrdenCompra.cLEntrega = "";
     },
 

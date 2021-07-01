@@ -448,6 +448,13 @@ export default new Router({
             },
 
                // PARTE DE COMPRA
+
+               {
+                path: '/ordenCompra/list',
+                name: 'ordenCompra.list',
+                component: require('./components/modulos/ordenCompra/list').default
+            },
+
                {
                 path: '/ordenCompra/create/:id',
                 name: 'ordenCompra.create',
