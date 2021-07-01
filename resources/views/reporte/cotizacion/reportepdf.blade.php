@@ -255,7 +255,7 @@
    <h6 style="font-weight:normal; margin-bottom: 0px">Atentamente</h6>
 
    <h6 style="margin-top: 0px;font-weight:normal; margin-left: 40px" >
-     {{   $coti->user->gradousers->cod .'.  '. $coti->user->firstname .' '.$coti->user->secondname }}<br />
+     {{$coti->user->gradousers->cod .' '. $coti->user->firstname .' '.$coti->user->secondname }}<br />
     Coordinador Comercial
    </h6>
    <footer style=" position: absolute;bottom: 0;">

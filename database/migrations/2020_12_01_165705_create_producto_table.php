@@ -16,7 +16,7 @@ class CreateProductoTable extends Migration
         Schema::create('producto', function (Blueprint $table) {
             $table->id();
 
-            $table->char('codigo',11)->unique();
+            $table->char('codigo',20)->unique()-> required();
 
             $table->unsignedBigInteger('familia_id');
             $table->foreign('familia_id')->references('id')->on('familia');

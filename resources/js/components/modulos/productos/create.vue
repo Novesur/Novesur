@@ -30,6 +30,50 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Codigo</label>
+                        <div class="col-md-3">
+                          <input
+                            type="text"
+                            class="form-control"
+                            v-model="fillCrearProducto.nIdCodigo"
+                            maxlength="20"
+                          />
+                        </div>
+                        <span style="color: #ff0000">
+                          {{
+                            this.fillCrearProducto.nIdCodigo.length
+                          }}
+                          caracteres</span
+                        >
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-md-3 col-form-label"
+                          >Diametro/Longitud</label
+                        >
+                        <div class="col-md-8">
+                          <el-select
+                            v-model="fillCrearProducto.nIdSubFamilia"
+                            filterable
+                            placeholder="Seleccione una SubFamilia"
+                            :style="{ width: '350px' }"
+                          >
+                            <el-option
+                              v-for="item in listSubFamilia"
+                              :key="item.id"
+                              :label="item.nombre"
+                              :value="item.id"
+                            >
+                            </el-option>
+                          </el-select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group row">
                         <label class="col-md-3 col-form-label">Familia</label>
                         <div class="col-md-8">
                           <el-select
@@ -54,17 +98,17 @@
                     <div class="col-md-6">
                       <div class="form-group row">
                         <label class="col-md-3 col-form-label"
-                          >Diametro/Longitud</label
+                          >Homologado</label
                         >
                         <div class="col-md-8">
                           <el-select
-                            v-model="fillCrearProducto.nIdSubFamilia"
+                            v-model="fillCrearProducto.nIdHomologado"
                             filterable
-                            placeholder="Seleccione una SubFamilia"
-                            :style="{ width: '350px' }"
+                            placeholder="Seleccione el tipo"
+                            clearable
                           >
                             <el-option
-                              v-for="item in listSubFamilia"
+                              v-for="item in listHomologado"
                               :key="item.id"
                               :label="item.nombre"
                               :value="item.id"
@@ -165,32 +209,6 @@
                       </div>
                     </div>
                   </div>
-
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-md-3 col-form-label"
-                          >Homologado</label
-                        >
-                        <div class="col-md-8">
-                          <el-select
-                            v-model="fillCrearProducto.nIdHomologado"
-                            filterable
-                            placeholder="Seleccione el tipo"
-                            clearable
-                          >
-                            <el-option
-                              v-for="item in listHomologado"
-                              :key="item.id"
-                              :label="item.nombre"
-                              :value="item.id"
-                            >
-                            </el-option>
-                          </el-select>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </form>
               </div>
 
@@ -262,6 +280,7 @@ export default {
         nIdModeloTipo: "",
         nIdHomologado: "",
         nIdUser: sessionStorage.getItem("iduser"),
+        nIdCodigo: "",
       },
       listFamilia: [],
       listSubFamilia: [],
@@ -400,7 +419,7 @@ export default {
       var url = "/administracion/producto/setRegistrarProducto";
       axios
         .post(url, {
-          codiprod:
+          /*          codiprod:
             String("0" + this.fillCrearProducto.nIdFamilia).slice(-2) +
             String("0" + this.fillCrearProducto.nIdSubFamilia).slice(-2) +
             String("0" + this.fillCrearProducto.nIdModeloTipo).slice(-2) +
@@ -411,8 +430,9 @@ export default {
             String("0" + this.fillCrearProducto.nIdSubFamilia).slice(-2) +
             String("0" + this.fillCrearProducto.nIdModeloTipo).slice(-2) +
             String("0" + this.fillCrearProducto.nIdMarca).slice(-2) +
-            String("0" + this.fillCrearProducto.nIdMaterial).slice(-2),
+            String("0" + this.fillCrearProducto.nIdMaterial).slice(-2), */
 
+          nIdCodigo: this.fillCrearProducto.nIdCodigo,
           nIdFamilia: this.fillCrearProducto.nIdFamilia,
           nIdSubFamilia: this.fillCrearProducto.nIdSubFamilia,
           nIdMarca: this.fillCrearProducto.nIdMarca,
@@ -423,7 +443,7 @@ export default {
           nIdHomologado: this.fillCrearProducto.nIdHomologado,
         })
         .then((response) => {
-            Swal.fire({
+          Swal.fire({
             position: "center",
             icon: response.data.icon,
             title: response.data.message,

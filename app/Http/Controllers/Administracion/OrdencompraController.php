@@ -7,13 +7,17 @@ use App\Http\Controllers\Controller;
 use App\Ordencompra;
 use App\Producto;
 use App\TempOrdenCompra;
+use App\TipOrdencompra;
 use App\UnidMedida;
 use Illuminate\Http\Request;
+use PDF;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Database\Eloquent\Builder;
 
 class OrdencompraController extends Controller
 {
-    public function addOrden(Request $request){
+    public function addOrden(Request $request)
+    {
         $product = Producto::where(['id' => $request->nIdprod])->with('familia', 'marca', 'material', 'modelotipo', 'subfamilia', 'homologacion')->first();
         $products = Session::get('products');
         $products = ($products != null) ? collect($products) : collect([]);
@@ -52,38 +56,30 @@ class OrdencompraController extends Controller
     {
 
 
+        $femision = date("Y-m-d", strtotime($request->cFechaEmision));
+        $fentrega = date("Y-m-d", strtotime($request->cFechaEntrega));
 
-   /*      if ($request->session()->has('products')) {
-
-
-
-            $formatreq = date("Y-m-d");
+        if ($request->session()->has('products')) {
             $ordenCompra = new Ordencompra();
-            $ordenCompra->fecha =  $formatreq;
-            $ordenCompra->cliente_id =  $request->nIdCliente;
-            $ordenCompra->user_id =  $request->nIdUsuario;
-            $ordenCompra->estadopedido_id =  $request->cEstado;
-            $ordenCompra->validezoferta =  $request->cValidez;
-            $ordenCompra->Entrega =  mb_strtoupper($request->cEntrega);
-            $ordenCompra->tipopago_id =  $request->nIdTipoPago;
-            $ordenCompra->pago_id = $request->nIdDescripPago;
-            $ordenCompra->flete =  $request->cFlete;
-            $ordenCompra->documentacion =  $request->Docu;
-            $ordenCompra->garantia_id =  $request->nIdGarantia;
-            $ordenCompra->punto_llegada =  $request->cPuntoLlegada;
-            $ordenCompra->transporte =  $request->cTransporte;
-            $ordenCompra->consignado =  $request->Cconsignado;
-
+            $ordenCompra->Femision =  $femision;
+            $ordenCompra->Referencia =  mb_strtoupper($request->cReferencia);
+            $ordenCompra->proveedor_id =  $request->nIdProveedor;
+            $ordenCompra->Fentrega =  $fentrega;
+            $ordenCompra->LugarEntrega =  mb_strtoupper($request->cLEntrega);
+            $ordenCompra->tipordercompra_id =  $request->nIdTipoOrdenCompra;
+            $ordenCompra->pago_id =  $request->nIdTipoPago;
+            $ordenCompra->user_id =  $request->nIdUser;
+            $ordenCompra->estadoordencompra_id = 1;
             $ordenCompra->save();
             $detordenCompra = Session::get('products');
-
             $allProducts = $detordenCompra->map(function ($product) use ($ordenCompra) {
                 return [
-                    'ordenCompra_id' => $ordenCompra->id,
+                    'ordencompras_id' => $ordenCompra->id,
+                    'producto_id'   => $product->producto_id,
                     'cantidad'      => $product->cantidad,
                     'unidmedida_id' => $product->unidmedida_id,
-                    'producto_id'   => $product->producto_id,
                     'punit'         => $product->punit,
+                    'estado'         => 1,
                 ];
             });
             Detalleordencompra::insert($allProducts->toArray());
@@ -91,7 +87,60 @@ class OrdencompraController extends Controller
             return response()->json(['message' => 'Grabado', 'icon' => 'success'], 200);
         } else {
             return response()->json(['message' => 'El item no existe', 'icon' => 'warning'], 200);
-        } */
+        }
     }
 
+    public function TipoOrderCompra()
+    {
+        $data = TipOrdencompra::all();
+        return $data;
+    }
+
+    public function ListXProduct(Request $request)
+    {
+
+        if ($request->nIdprod == null) {
+
+          $dato =  Detalleordencompra::with('ordencompras','unidmedida','producto','ordencompras.proveedor')
+                   ->whereHas('ordencompras')->distinct()->select('ordencompras_id')->get();
+                   return $dato;
+        }else{
+
+
+
+               $nIdprod = $request->nIdprod;
+               $dato =  Detalleordencompra::with('ordencompras','unidmedida','producto','ordencompras.proveedor')
+                   ->whereHas('ordencompras', function (Builder $query) use ($nIdprod) {$query->where('producto_id', $nIdprod);
+                   })->get();
+                   return $dato;
+                }
+
+    }
+
+    public function ListXProveedor(Request $request)
+    {
+        if ($request->nidProveedor == null) {
+            $dato = Ordencompra::with('proveedor', 'tipordercompra', 'user', 'estadoOrderCompra', 'pago')->get();
+            return $dato;
+        }else{
+            $dato = Ordencompra::with('proveedor', 'tipordercompra', 'user', 'estadoOrderCompra', 'pago')->where('proveedor_id', $request->nidProveedor)->get();
+            return $dato;
+        }
+    }
+
+    public function setGenerarOrderPedidoPdf(Request $request)
+    {
+
+        $valor = $request->get("params")['idOrderPedido'];
+        $orderCompra = Ordencompra::with('proveedor', 'tipordercompra', 'user', 'estadoOrderCompra', 'pago')->where('id', $valor)->first();
+        $DetalleOrderCompra = Detalleordencompra::with('ordencompras', 'unidmedida', 'producto')->where('ordencompras_id', $valor)->get();
+
+        $logo = asset('img/logo02.png');
+        $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('reporte.cotizacion.ordencomprapdf', [
+            'logo' => $logo,
+            'orderCompra' => $orderCompra,
+            'DetalleOrderCompra' => $DetalleOrderCompra,
+        ]);
+        return $pdf->download('invoice.pdf');;
+    }
 }

@@ -12,7 +12,10 @@
       <div class="card">
         <div class="card-header">
           <div class="card-tools">
-            <button class="btn btn-success btn-sm" @click.prevent="setGenerarExcelProducto">
+            <button
+              class="btn btn-success btn-sm"
+              @click.prevent="setGenerarExcelProducto"
+            >
               <i class="far fa-file-excel"></i> Reporte
             </button>
             <template
@@ -202,6 +205,19 @@
                         </div>
                       </div>
                     </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Codigo</label>
+                        <div class="col-md-5">
+                          <input
+                            type="text"
+                            class="form-control"
+                            v-model="fillBsqProducto.nIdCodigo"
+                          />
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </form>
               </div>
@@ -260,7 +276,11 @@
 
                 <div class="card-body table-responsive">
                   <table
-                    class="table table-hover table-head-fixed text-nowrap projects"
+                    class="
+                      table table-hover table-head-fixed
+                      text-nowrap
+                      projects
+                    "
                   >
                     <thead>
                       <tr>
@@ -297,16 +317,23 @@
                           </template>
                         </td>
                         <td>
-                          <router-link
-                            class="btn btn-info btn-sm"
-                            :to="{
-                              name: 'productos.editar',
-                              params: { id: item.id },
-                            }"
+                          <template
+                            v-if="
+                              listRolPermisoByUsuario.includes(
+                                'productos.edit'
+                              )
+                            "
                           >
-                            <i class="fas fa-pencil-alt"></i> Editar
-                          </router-link>
-
+                            <router-link
+                              class="btn btn-info btn-sm"
+                              :to="{
+                                name: 'productos.editar',
+                                params: { id: item.id },
+                              }"
+                            >
+                              <i class="fas fa-pencil-alt"></i> Editar
+                            </router-link>
+                          </template>
                           <template
                             v-if="
                               listRolPermisoByUsuario.includes('kardex.index')
@@ -364,7 +391,7 @@
 </template>
 
 <script>
-import FileSaver from 'file-saver';
+import FileSaver from "file-saver";
 export default {
   data() {
     return {
@@ -376,6 +403,7 @@ export default {
         nIdEstado: "",
         nIdModeloTipo: "",
         nIdHomologado: "",
+        nIdCodigo: "",
       },
       pageNumber: 0,
       perPage: 10,
@@ -426,7 +454,6 @@ export default {
     },
   },
   methods: {
-
     LimpiarProductoBsq() {
       this.fillBsqProducto.nIdFamilia = "";
       this.fillBsqProducto.nIdSubFamilia = "";
@@ -489,27 +516,29 @@ export default {
             nIdMaterial: this.fillBsqProducto.nIdMaterial,
             nIdEstado: this.fillBsqProducto.nIdEstado,
             nIdHomologado: this.fillBsqProducto.nIdHomologado,
+            nIdCodigo: this.fillBsqProducto.nIdCodigo,
           },
         })
         .then((response) => {
           this.inicializarPaginacion();
           this.listProductos = response.data;
-
-
         });
     },
 
-         setGenerarExcelProducto(){
-
-           var url = "/operacion/producto/export";
-      axios.post(url,{
-      params:{'listProductos' : JSON.stringify(this.listProductos)}
-      },
-      {responseType:'blob',}).then((response) => {
-        FileSaver.saveAs(response.data,'Productos.xlsx');
-      });
-
-      },
+    setGenerarExcelProducto() {
+      var url = "/operacion/producto/export";
+      axios
+        .post(
+          url,
+          {
+            params: { listProductos: JSON.stringify(this.listProductos) },
+          },
+          { responseType: "blob" }
+        )
+        .then((response) => {
+          FileSaver.saveAs(response.data, "Productos.xlsx");
+        });
+    },
 
     limpiarBandejaProductos() {
       this.listProductos = [];

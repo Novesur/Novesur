@@ -23,7 +23,6 @@ class ProductsExport implements FromView,ShouldAutoSize
 
     public function view(): View
     {
-
         return view('excel.productos', [
             'productos' => $this->listProductos
         ]);

@@ -16,7 +16,7 @@ class CreateGradousersTable extends Migration
         Schema::create('gradousers', function (Blueprint $table) {
             $table->id();
             $table->string('cod', 5)->unique()->required();
-            $table->string('nombre', 100)->unique()->required();
+            $table->string('nombre', 50)->unique()->nullable();
         });
     }
 

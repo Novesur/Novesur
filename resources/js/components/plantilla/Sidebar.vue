@@ -123,18 +123,16 @@
                   </router-link>
                 </template>
               </li>
-        <!--       <li class="nav-item">
-                <router-link class="nav-link" :to="'/parteingreso/list'">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Listado P.Ingresos</p>
-                </router-link>
-              </li> -->
-          <!--     <li class="nav-item">
-                <a href="pages/mailbox/read-mail.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Read</p>
-                </a>
-              </li> -->
+
+                 <li class="nav-item">
+
+                  <router-link class="nav-link" :to="'/ordenCompra/list'">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Lista Orden de Compra</p>
+                  </router-link>
+
+              </li>
+
             </ul>
           </li>
 

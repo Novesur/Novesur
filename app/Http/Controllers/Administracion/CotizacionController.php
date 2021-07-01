@@ -84,9 +84,6 @@ class CotizacionController extends Controller
     {
 
         if ($request->session()->has('products')) {
-
-
-
             $formatreq = date("Y-m-d");
             $cotizacion = new Cotizacion();
             $cotizacion->fecha =  $formatreq;
@@ -224,11 +221,10 @@ class CotizacionController extends Controller
         //dd($request->get("params")['item']);
         $valor = $request->get("params")['item'];
         $coti = Cotizacion::with('cliente', 'user', 'tipopago', 'estadopedido', 'pago', 'garantia')->where('id', $valor)->first();
+
         $detcoti = DetalleCotizacion::with('unidmedida', 'producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia')->where('cotizacion_id', $valor)->get();
         $logo = asset('img/logo02.png');
         $productos01 = asset('img/banner01.png');
-        //dd($coti);
-
         $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('reporte.cotizacion.reportepdf', [
             'logo' => $logo,
             'productos01' => $productos01,
@@ -236,6 +232,7 @@ class CotizacionController extends Controller
             'detcoti' => $detcoti,
         ]);
         return $pdf->download('invoice.pdf');
+
     }
 
     public function listCotizacionList(Request $request)
@@ -253,7 +250,6 @@ class CotizacionController extends Controller
 
 
     public function listCotizacionListByVendedor(Request $request)
-
     {
         $dato = Cotizacion::with('cliente', 'estadopedido', 'user')->where('user_id', $request->nIdVendedor)->get();
         return $dato;

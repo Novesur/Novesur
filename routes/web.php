@@ -70,6 +70,7 @@ Route::get('/administracion/proveedor/getListarProveedorById', 'Administracion\P
 Route::post('/administracion/proveedor/setEditarProveedor', 'Administracion\ProveedorController@edit');
 Route::get('/administracion/KardexDetalle/listProveedor', 'Administracion\KardexDetalleController@listProveedor');
 Route::get('/administracion/proveedor/ListarProveedorByRuc', 'Administracion\ProveedorController@ListarProveedorByRuc');
+Route::get('/administracion/proveedor/ListProveedor', 'Administracion\ProveedorController@ListProveedor');
 
 /////  Kardex
 Route::get('/administracion/kardex/getListarKardexByProduct', 'Administracion\KardexController@index');
@@ -165,6 +166,10 @@ Route::post('/administracion/cotizacion/dellTempEditCotizacion', 'Administracion
 Route::get('/administracion/cotizacion/listCotizacionList', 'Administracion\CotizacionController@listCotizacionList');
 Route::get('/administracion/cotizacion/listCotizacionListByDate', 'Administracion\CotizacionController@listCotizacionListByDate');
 Route::get('/administracion/cotizacion/listCotizacionListByVendedor', 'Administracion\CotizacionController@listCotizacionListByVendedor');
+Route::post('/administracion/cotizacion/CantidadDiasCotizacion', 'Administracion\CotizacionController@CantidadDiasCotizacion');
+
+
+
 
 /// COTIZACION A PDF
 Route::get('/administracion/cotizacion/CotizacionCabecera', 'Administracion\CotizacionController@CotizacionCabecera');
@@ -217,7 +222,20 @@ Route::get('/administracion/garantia/index', 'Administracion\GarantiaController@
 Route::post('/administracion/ordenCompra/addOrden', 'Administracion\OrdencompraController@addOrden');
 Route::get('/administracion/ordenCompra/ListtempOrden', 'Administracion\OrdencompraController@ListtempOrden');
 Route::post('/administracion/ordenCompra/eliminarTemporder', 'Administracion\OrdencompraController@eliminarTemporder');
-Route::post('/administracion/ordenCompra/create', 'Administracion\OrdencompraController@create');
+Route::post('/administracion/ordenCompra/setGrabarOrderCompra', 'Administracion\OrdencompraController@create');
+Route::get('/administracion/ordenCompra/ListtempOrden', 'Administracion\OrdencompraController@ListtempOrden');
+Route::get('/administracion/ordenCompra/ListXProduct', 'Administracion\OrdencompraController@ListXProduct');
+Route::get('/administracion/ordenCompra/ListXProveedor', 'Administracion\OrdencompraController@ListXProveedor');
+Route::post('/administracion/ordenCompra/setGenerarOrderPedidoPdf', 'Administracion\OrdencompraController@setGenerarOrderPedidoPdf');
+
+
+/// Detalle de Orden de Compra
+Route::get('/administracion/DetalleordenCompra/view', 'Administracion\DetalleOrdenCompraController@view');
+
+
+/// Tipo de orden de Compra
+Route::get('/administracion/ordenCompra/TipoOrderCompra', 'Administracion\OrdencompraController@TipoOrderCompra');
+
 
 
 

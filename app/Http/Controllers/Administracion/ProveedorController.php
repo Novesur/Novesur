@@ -98,4 +98,9 @@ class ProveedorController extends Controller
         return $dato;
     }
 
+    public function ListProveedor(){
+        $dato = Proveedor::orderBy('nombre','ASC')->get();
+        return $dato;
+    }
+
 }
