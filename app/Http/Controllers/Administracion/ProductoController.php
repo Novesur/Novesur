@@ -110,7 +110,7 @@ class ProductoController extends Controller
         if (Producto::where('codigo', $nIdCodigo)->exists()) {
             return response()->json(['message' => 'El codigo del producto ya existe', 'icon' => 'info'], 200);
         } else {
-            return response()->json(['message' => 'Producto disponible', 'icon' => 'success'], 200);
+            return response()->json(['message' => 'Codigo de producto no usado', 'icon' => 'success'], 200);
         }
     }
 

@@ -112,6 +112,7 @@ Route::get('/administracion/usuario/getListarRolPermisosByUsuario', 'Administrac
 Route::get('/administracion/usuario/getListarUsusarios', 'Administracion\UsuarioController@getListarUsusarios');
 Route::get('/administracion/usuario/getListarUsusariosbyId', 'Administracion\UsuarioController@getListarUsusariosbyId');
 Route::get('/administracion/usuario/getListarVendedores', 'Administracion\UsuarioController@getListarVendedores');
+Route::get('/administracion/usuario/getListarGradoAcad', 'Administracion\UsuarioController@getListarGradoAcad');
 
 
 

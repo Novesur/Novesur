@@ -167,6 +167,27 @@
                         </div>
                       </div>
                     </div>
+
+                            <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Grado Academico</label>
+                        <div class="col-md-9">
+                          <el-select
+                            v-model="fillCrearUsuario.nIdGradoAcad"
+                            placeholder="Seleccione un Grado"
+                            clearable
+                          >
+                            <el-option
+                              v-for="item in listGradoAcad"
+                              :key="item.id"
+                              :label="item.nombre"
+                              :value="item.id"
+                            >
+                            </el-option>
+                          </el-select>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </form>
               </div>
@@ -239,9 +260,11 @@ export default {
         cPassword: "",
         nIdRol: "",
         nIdAlmacen: "",
+        nIdGradoAcad:"",
       },
       listRoles: [],
       listAlmacen: [],
+      listGradoAcad:[],
       modalShow: false,
       mostrarModal: {
         display: "block",
@@ -257,6 +280,7 @@ export default {
   mounted() {
     this.getListarRoles();
     this.getListarAlmacen();
+    this.getListarGradoAcad();
   },
   methods: {
     abrirModal() {
@@ -275,6 +299,14 @@ export default {
         this.listAlmacen = response.data;
       });
     },
+
+        getListarGradoAcad() {
+      var url = "/administracion/usuario/getListarGradoAcad";
+      axios.get(url).then((response) => {
+        this.listGradoAcad = response.data;
+      });
+    },
+
 
     validarRegistrarUsuario() {
       this.error = 0;
@@ -318,6 +350,7 @@ export default {
       this.fillCrearUsuario.cEmail = "";
       this.fillCrearUsuario.cPassword = "";
      this.fillCrearUsuario.cCelular = "";
+
     },
 
     setValidarUsuarios() {
@@ -341,6 +374,8 @@ export default {
           nIdRol: this.fillCrearUsuario.nIdRol,
           nIdAlmacen: this.fillCrearUsuario.nIdAlmacen,
           cCelular : this.fillCrearUsuario.cCelular,
+          nIdGradoAcad : this.fillCrearUsuario.nIdGradoAcad,
+
         })
         .then((response) => {
           console.log("Usuario guardado");

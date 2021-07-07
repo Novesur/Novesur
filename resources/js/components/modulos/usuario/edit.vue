@@ -143,6 +143,24 @@
 
                     </div>
 
+
+                              <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Grado Academico</label>
+                            <div class="col-md-9">
+                                <el-select v-model="fillEditarUsuario.nIdGradoAcad" placeholder="Seleccione un Grado" clearable>
+                                    <el-option v-for="item in listGradoAcad" :key="item.id" :label="item.nombre" :value="item.id">
+
+                                    </el-option>
+
+                                </el-select>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
                   </div>
                 </form>
               </div>
@@ -215,9 +233,11 @@ export default {
         cCelular:"",
         cPassword: "",
         nIdRol:'',
+        nIdGradoAcad:'',
       },
       listRoles:[],
       listPermisosByUser:[],
+      listGradoAcad:[],
       modalShow: false,
       mostrarModal: {
         display: "block",
@@ -233,6 +253,7 @@ export default {
   mounted() {
     this.getUsuarioById();
     this.getListarRoles();
+    this.getListarGradoAcad();
   },
   methods: {
 
@@ -259,7 +280,8 @@ export default {
             this.fillEditarUsuario.cUsername = response.data.username,
             this.fillEditarUsuario.cEmail = response.data.email,
             this.fillEditarUsuario.cCelular = response.data.celular,
-            this.fillEditarUsuario.nIdRol = response.data.roles_id
+            this.fillEditarUsuario.nIdRol = response.data.roles_id,
+            this.fillEditarUsuario.nIdGradoAcad = response.data.gradousers_id
 
         });
     },
@@ -340,6 +362,7 @@ getListarPermisosByUser(){
           cPassword: this.fillEditarUsuario.cPassword,
           nIdRol : this.fillEditarUsuario.nIdRol,
           cCelular : this.fillEditarUsuario.cCelular,
+          nIdGradoAcad : this.fillEditarUsuario.nIdGradoAcad
         })
         .then((response) => {
           Swal.fire({
@@ -351,6 +374,13 @@ getListarPermisosByUser(){
           });
           this.$router.push("/usuario");
         });
+    },
+
+      getListarGradoAcad() {
+      var url = "/administracion/usuario/getListarGradoAcad";
+      axios.get(url).then((response) => {
+        this.listGradoAcad = response.data;
+      });
     },
   },
 };

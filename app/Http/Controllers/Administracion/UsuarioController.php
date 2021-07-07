@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Administracion;
 
+use App\Gradouser;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
@@ -33,6 +34,7 @@ class UsuarioController extends Controller
         $user->roles_id = $request->nIdRol;
         $user->almacen_id = $request->nIdAlmacen;
         $user->password = Hash::make($request->cPassword);
+        $user->gradousers_id = $request->nIdGradoAcad;
         $user->save();
     }
 
@@ -66,6 +68,7 @@ class UsuarioController extends Controller
             if ($request->cPassword != NULL) {
                 $Usuario->password = Hash::make($request->cPassword);
             }
+            $Usuario->gradousers_id = $request->nIdGradoAcad;
             $Usuario->save();
         }
     }
@@ -105,8 +108,13 @@ class UsuarioController extends Controller
         return $dato;
     }
 
-    public function getListarVendedores(Request $request){
+    public function getListarVendedores(){
         $dato = User::orderBy('firstname')->get();
+        return $dato;
+    }
+
+    public function getListarGradoAcad(){
+        $dato = Gradouser::orderBy('nombre')->get();
         return $dato;
     }
 

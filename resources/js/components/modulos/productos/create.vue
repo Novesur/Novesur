@@ -36,7 +36,7 @@
                             type="text"
                             class="form-control"
                             v-model="fillCrearProducto.nIdCodigo"
-                            maxlength="20"
+                            maxlength="30"
                           />
                         </div>
                         <span style="color: #ff0000">
