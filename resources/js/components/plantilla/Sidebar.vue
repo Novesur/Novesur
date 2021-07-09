@@ -124,12 +124,14 @@
                 </template>
               </li>
 
-                 <li class="nav-item">
 
+                 <li class="nav-item">
+                     <template v-if="listPermisos.includes('ordenCompras.list')">
                   <router-link class="nav-link" :to="'/ordenCompra/list'">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Lista Orden de Compra</p>
                   </router-link>
+                     </template>
 
               </li>
 

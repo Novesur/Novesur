@@ -460,6 +460,8 @@ export default {
       this.fillBsqProducto.nIdMarca = "";
       this.fillBsqProducto.nIdMaterial = "";
       this.fillBsqProducto.nIdEstado = "";
+      this.fillBsqProducto.nIdCodigo= "";
+
     },
     getListarHomologacion() {
       var url = "/administracion/tempcotizacion/getListarHomologacion";
