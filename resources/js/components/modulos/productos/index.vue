@@ -406,7 +406,7 @@ export default {
         nIdCodigo: "",
       },
       pageNumber: 0,
-      perPage: 10,
+      perPage: 20,
       listFamilia: [],
       listSubFamilia: [],
       listMarca: [],
