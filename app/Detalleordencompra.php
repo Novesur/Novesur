@@ -31,4 +31,5 @@ class Detalleordencompra extends Model
         return $this->belongsTo(Producto::class);
     }
 
+
 }

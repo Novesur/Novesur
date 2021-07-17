@@ -235,9 +235,16 @@ Route::get('/administracion/ordenCompra/ListXProduct', 'Administracion\Ordencomp
 Route::get('/administracion/ordenCompra/ListXProveedor', 'Administracion\OrdencompraController@ListXProveedor');
 Route::post('/administracion/ordenCompra/setGenerarOrderPedidoPdf', 'Administracion\OrdencompraController@setGenerarOrderPedidoPdf');
 
+Route::post('/administracion/ordenCompra/ListarDatosOrdenCompraXId', 'Administracion\OrdencompraController@ListarDatosOrdenCompraXId');
+
 
 /// Detalle de Orden de Compra
 Route::get('/administracion/DetalleordenCompra/view', 'Administracion\DetalleOrdenCompraController@view');
+Route::post('/administracion/DetalleordenCompra/CambiarEstadoDetalleOC', 'Administracion\DetalleOrdenCompraController@CambiarEstadoDetalleOC');
+
+
+
+
 
 
 /// Tipo de orden de Compra

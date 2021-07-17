@@ -48,92 +48,92 @@
 
     <table width="100%" border="0">
         <tr>
-          <td>  <img src="{{$logo}}" alt="" /></td>
-          <td>  <img src="{{$productos01}}" alt="" style=" width: 430px; height: 60px; padding-left: 25px"/></td>
+          <td>  <img src="{{$logo}}" alt="" alt="" style=" width: 200px; height: 70px; padding-left: 25px"/></td>
+          <td>  <img src="{{$productos01}}" alt="" style=" width: 400px; height: 40px; padding-left: 25px"/></td>
         </tr>
         <tr>
-            <td colspan="2" align="center"><strong>VENTA DE MEDIDORES, ACCESORIOS Y INSUMOS PARA AGUA POTABLE SERVICIO DE INSTALACION, CONTRASTACION Y REPARACION DE MEDIDORES DE AGUA</strong></td>
+            <td colspan="2" align="center" style="font-size: 11px"><strong>VENTA DE MEDIDORES, ACCESORIOS Y INSUMOS PARA AGUA POTABLE SERVICIO DE INSTALACION, CONTRASTACION Y REPARACION DE MEDIDORES DE AGUA</strong></td>
           </tr>
     </table>
 
       <table width="100%" border="0">
         <tr>
-          <td colspan="4" align="center" style="border: 1px; background-color: rgb(109, 172, 243)" ><h3><strong>COTIZACION Nº {{str_pad($coti->id,3,'0',STR_PAD_LEFT) }} - {{substr($coti->fecha,0,4)}}</strong></h3></td>
+          <td colspan="4" align="center" style="border: 1px; background-color: rgb(109, 172, 243);width: -10px;padding-top: 0rem" ><h3><strong>COTIZACION Nº {{str_pad($coti->id,3,'0',STR_PAD_LEFT) }} - {{substr($coti->fecha,0,4)}}</strong></h3></td>
         </tr>
 
         <tr >
-          <td ><strong>SEÑORES:</strong></td>
-          <td> {{$coti->cliente->razonsocial}} </td>
-          <td ><strong>FECHA:</strong></td>
-          <td>  @php
+          <td style="font-size: 11px"><strong>SEÑORES:</strong></td>
+          <td style="font-size: 10px"> {{$coti->cliente->razonsocial}} </td>
+          <td style="font-size: 11px"><strong>FECHA:</strong></td>
+          <td style="font-size: 10px">  @php
 
               echo date('d-m-Y', strtotime($coti->fecha));
               @endphp </td>
         </tr>
 
         <tr>
-            <td align="left"><strong>DIRECCION:</strong></td>
-            <td> {{$coti->cliente->direccion}}</td>
+            <td align="left" style="font-size: 11px"><strong>DIRECCION:</strong></td>
+            <td style="font-size: 10px"> {{$coti->cliente->direccion}}</td>
 
-            <td><strong>VENDEDOR:</strong></td>
-            <td>    {{ $coti->user->gradousers->cod .' ' .  $coti->user->firstname .' '. $coti->user->secondname}}</td>
+            <td style="font-size: 11px"><strong>VENDEDOR:</strong></td>
+            <td style="font-size: 10px">    {{ $coti->user->gradousers->cod .' ' .  $coti->user->firstname .' '. $coti->user->secondname}}</td>
           </tr>
         <tr>
-            <td align="left"><strong>RUC:</strong></td>
-            <td>{{$coti->cliente->ruc}}</td>
-            <td><strong>CELULAR:</strong></td>
-            <td>{{$coti->user->celular}}</td>
+            <td align="left" style="font-size: 11px"><strong>RUC:</strong></td>
+            <td style="font-size: 10px">{{$coti->cliente->ruc}}</td>
+            <td style="font-size: 11px"><strong>CELULAR:</strong></td>
+            <td style="font-size: 10px">{{$coti->user->celular}}</td>
           </tr>
 
 
           <tr>
-            <td align="left"><strong>ATENCION:</strong></td>
-            <td>{{$coti->cliente->atencion}}</td>
+            <td align="left" style="font-size: 11px"><strong>ATENCION:</strong></td>
+            <td style="font-size: 10px">{{$coti->cliente->atencion}}</td>
             <td><strong>CENTRAL:</strong></td>
             <td>01-282-2376</td>
           </tr>
 
           <tr>
-            <td align="left"><strong>TELEFONO:</strong></td>
-            <td>{{$coti->cliente->telefono}}</td>
-            <td><strong>EMAIL:</strong></td>
-            <td>{{$coti->user->email}}</td>
+            <td align="left" style="font-size: 11px"><strong>TELEFONO:</strong></td>
+            <td style="font-size: 10px">{{$coti->cliente->telefono}}</td>
+            <td style="font-size: 11px"><strong>EMAIL:</strong></td>
+            <td style="font-size: 10px">{{$coti->user->email}}</td>
 
           </tr>
 
           <tr>
-            <td align="left"><strong>CELULAR:</strong></td>
-            <td>{{$coti->cliente->celular}}</td>
+            <td align="left" style="font-size: 11px"><strong>CELULAR:</strong></td>
+            <td style="font-size: 10px">{{$coti->cliente->celular}}</td>
 
 
-            <td><strong>MONEDA:</strong></td>
-            <td>SOLES</td>
+            <td style="font-size: 11px"><strong>MONEDA:</strong></td>
+            <td style="font-size: 10px">SOLES</td>
 
 
           </tr>
           <tr>
-            <td align="left"><strong>DESTINO:</strong></td>
-            <td>{{$coti->punto_llegada}}</td>
+            <td align="left" style="font-size: 11px"><strong>DESTINO:</strong></td>
+            <td style="font-size: 10px">{{$coti->punto_llegada}}</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
           </tr>
           <tr>
-            <td align="left"><strong>TRANSPORTE:</strong></td>
-            <td>{{$coti->transporte}}</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          </tr>
-
-          <tr>
-            <td align="left"><strong>CONSIGNADO:</strong></td>
-            <td>{{$coti->consignado}}</td>
+            <td align="left" style="font-size: 11px"><strong>TRANSPORTE:</strong></td>
+            <td style="font-size: 10px">{{$coti->transporte}}</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
           </tr>
 
           <tr>
-            <td align="left"><strong>CORREO:</strong></td>
-            <td>{{$coti->cliente->email}}</td>
+            <td align="left" style="font-size: 11px"><strong>CONSIGNADO:</strong></td>
+            <td style="font-size: 10px">{{$coti->consignado}}</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+
+          <tr>
+            <td align="left" style="font-size: 11px"><strong>CORREO:</strong></td>
+            <td style="font-size: 10px">{{$coti->cliente->email}}</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
           </tr>
@@ -144,12 +144,12 @@
 
     <table width="100%" border="1" >
         <tr>
-          <td align="center" style="background-color:rgba(238, 229, 229, 0.719)"><strong>Nro</strong></td>
-          <td align="center" style="background-color: rgba(238, 229, 229, 0.719)"><strong>CANT</strong></td>
-          <td align="center" style="background-color: rgba(238, 229, 229, 0.719)"><strong>UNID MEDIDA</strong></td>
-          <td align="center" style="background-color: rgba(238, 229, 229, 0.719)"><strong>DESCRIPCION DE MEDIDOR</strong></td>
-          <td align="center" style="background-color: rgba(238, 229, 229, 0.719)"> <strong>P/UNIT</strong></td>
-          <td align="center" style="background-color: rgba(238, 229, 229, 0.719)"><strong>Total S/IGV</strong></td>
+          <td align="center" style="background-color:rgba(238, 229, 229, 0.719); font-size: 12px"><strong>Nro</strong></td>
+          <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 12px"><strong>CANT</strong></td>
+          <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 12px"><strong>UNID MEDIDA</strong></td>
+          <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 12px"><strong>DESCRIPCION DE MEDIDOR</strong></td>
+          <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 12px"> <strong>P/UNIT</strong></td>
+          <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 12px"><strong>Total S/IGV</strong></td>
         </tr>
 
 @php
@@ -161,12 +161,12 @@
               echo $i = $i +1 ;
           @endphp</td>
         </td>
-          <td align="center" style="font-size:1em">{{$data->cantidad}}</td>
-          <td align="center" style="font-size:1em">{{$data->unidmedida->nombre}}</td>
-          <td align="center" style="font-size:1em">  {{$data->producto->familia->nombre .' '. $data->producto->subfamilia->nombre .', MODELO '. $data->producto->modelotipo->nombre .', MATERIAL '. $data->producto->material->nombre .', MARCA '. $data->producto->marca->nombre.', - '. $data->producto->homologacion->nombre}}</td>
-          <td align="center" style="font-size:1em">S/. {{number_format($data->punit,2)  }}</td>
+          <td align="center" style="font-size: 10px">{{$data->cantidad}}</td>
+          <td align="center" style="font-size: 10px">{{$data->unidmedida->nombre}}</td>
+          <td align="center" style="font-size: 9px">  {{$data->producto->familia->nombre .' '. $data->producto->subfamilia->nombre .', MODELO '. $data->producto->modelotipo->nombre .', MATERIAL '. $data->producto->material->nombre .', MARCA '. $data->producto->marca->nombre.', - '. $data->producto->homologacion->nombre}}</td>
+          <td align="center" style="font-size: 10px">S/. {{number_format($data->punit,2)  }}</td>
 
-          <td align="right" style="font-size:1em">S/. {{number_format($data->cantidad * $data->punit,2)}}</td>
+          <td align="right" style="font-size: 10px">S/. {{number_format($data->cantidad * $data->punit,2)}}</td>
 
         </tr>
         @endforeach @endif
@@ -181,16 +181,16 @@
         @endphp
         <tr>
           <td colspan="4" rowspan="3" align="center">&nbsp;</td>
-          <td align="center" style="background-color: rgba(238, 229, 229, 0.719)"><strong>SUBTOTAL</strong></td>
-          <td align="right" style="font-size:1em">S/. {{number_format($subtotal,2)}}</td>
+          <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 10px"><strong>SUBTOTAL</strong></td>
+          <td align="right" style="font-size: 10px">S/. {{number_format($subtotal,2)}}</td>
         </tr>
 
-          <td align="center" style="background-color: rgba(238, 229, 229, 0.719)"><strong>IGV 18%</strong></td>
-          <td align="right" style="font-size:1em">S/.{{number_format($IGV,2)}}</td>
+          <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 10px"><strong>IGV 18%</strong></td>
+          <td align="right" style="font-size: 10px">S/.{{number_format($IGV,2)}}</td>
         </tr>
         <tr>
-          <td align="center" style="background-color: rgba(238, 229, 229, 0.719)"><strong>TOTAL GENERAL</strong></td>
-          <td align="right" style="background-color: rgba(238, 229, 229, 0.719,font-size:0.8em)">S/. {{number_format($total,2)}}</td>
+          <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 10px"><strong>TOTAL GENERAL</strong></td>
+          <td align="right" style="background-color: rgba(238, 229, 229, 0.719,font-size:0.8em);font-size: 10px"font-size: 10px">S/. {{number_format($total,2)}}</td>
         </tr>
 
       </table>
@@ -198,12 +198,12 @@
       <table width="100%" border="1" align="center" style="margin-top: 5px" >
 
         <tr>
-          <td colspan="3" align="center"><strong>CUENTAS CORRIENTES INVERSIONES NOVESUR</strong></td>
+          <td colspan="3" align="center" style="font-size: 12px"><strong>CUENTAS CORRIENTES INVERSIONES NOVESUR</strong></td>
         </tr>
         <tr>
-          <td align="center" style="background-color: lightgreen"><strong>BANCO</strong></td>
-          <td align="center" style="background-color: lightgreen"><strong>CTE. SOLES</strong></td>
-          <td align="center" style="background-color: lightgreen"><strong>CTA. INTERBANCARIO CCI</strong></td>
+          <td align="center" style="background-color: lightgreen ;font-size: 11px"><strong>BANCO</strong></td>
+          <td align="center" style="background-color: lightgreen;font-size: 11px"><strong>CTE. SOLES</strong></td>
+          <td align="center" style="background-color: lightgreen;font-size: 11px"><strong>CTA. INTERBANCARIO CCI</strong></td>
         </tr>
         <tr>
           <td align="center"  ><strong style="color: red">BCP</strong></td>
@@ -222,32 +222,32 @@
           <td colspan="2"><strong>Condiciones Comerciales :</strong></td>
         </tr>
         <tr>
-          <td><strong>Validez de Oferta  :</strong></td>
-          <td>{{$coti->validezoferta}}</td>
+          <td style="font-size: 11px"><strong>Validez de Oferta  :</strong></td>
+          <td style="font-size: 10px">{{$coti->validezoferta}}</td>
         </tr>
         <tr>
-          <td><strong>Entrega :</strong></td>
-          <td>{{$coti->Entrega}}</td>
+          <td style="font-size: 11px"><strong>Entrega :</strong></td>
+          <td style="font-size: 10px">{{$coti->Entrega}}</td>
         </tr>
         <tr>
-          <td><strong>Forma de pago :</strong></td>
-          <td> {{$coti->tipopago->nombre}}</td>
+          <td style="font-size: 11px"><strong>Forma de pago :</strong></td>
+          <td style="font-size: 10px"> {{$coti->tipopago->nombre}}</td>
         </tr>
         <tr>
-            <td><strong>Pago :</strong></td>
-            <td> {{$coti->pago->nombre}}</td>
+            <td style="font-size: 11px"><strong>Pago :</strong></td>
+            <td style="font-size: 10px"> {{$coti->pago->nombre}}</td>
           </tr>
         <tr>
-          <td><strong>Flete  :</strong></td>
-          <td>{{$coti->flete}}</td>
+          <td style="font-size: 11px"><strong>Flete  :</strong></td>
+          <td style="font-size: 10px">{{$coti->flete}}</td>
         </tr>
         <tr>
-          <td><strong>Documentacion :</strong></td>
-          <td>{{$coti->documentacion}}</td>
+          <td style="font-size: 11px"><strong>Documentacion :</strong></td>
+          <td style="font-size: 10px">{{$coti->documentacion}}</td>
         </tr>
         <tr>
-          <td><strong>Garantia : </strong></td>
-          <td>{{$coti->garantia->nombre}} por defectos de fabricaciòn (no cubre los originados por mala manipulaciòn, vandalismo, golpes, mala instalaciòn POR TERCEROS, mala operaciòn, exceso de presiòn y temperaturas)</td>
+          <td style="font-size: 11px"><strong>Garantia : </strong></td>
+          <td style="font-size: 10px">{{$coti->garantia->nombre}} por defectos de fabricaciòn (no cubre los originados por mala manipulaciòn, vandalismo, golpes, mala instalaciòn POR TERCEROS, mala operaciòn, exceso de presiòn y temperaturas)</td>
         </tr>
 
       </table>

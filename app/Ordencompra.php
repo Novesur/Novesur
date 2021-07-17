@@ -37,7 +37,7 @@ class Ordencompra extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function estadoOrderCompra()
+    public function estadoordercompra()
     {
         return $this->belongsTo(EstadoOrderCompra::class);
     }

@@ -239,15 +239,23 @@
                           <i class="far fa-eye"></i> Detalle
                         </button>
 
-                        <router-link
-                          class="btn btn-success btn-sm"
+
+                        <button
+              @click.prevent="getPdfCotizacion(item.id)"
+              class="btn btn-danger btn-sm"
+            >
+              <span><i class="far fa-file-pdf"></i></span> PDF
+            </button>
+
+                     <!--    <router-link
+                          class="btn btn-danger btn-sm"
                           :to="{
                             name: 'cotizacion.reportCotizacionPdf',
                             params: { id: item.id },
                           }"
                         >
-                          <i class="far fa-file-pdf"></i> Reporte
-                        </router-link>
+                          <i class="far fa-file-pdf"></i> PDF
+                        </router-link> -->
 
                         <template v-if = "item.estadodias <= 5">
                      <router-link
@@ -659,6 +667,28 @@ export default {
           this.listDetPedido = response.data;
           this.getlistCotizacionBy();
           this.abrirEstado();
+        });
+    },
+
+        getPdfCotizacion(item) {
+      var config = { responseType: "blob" };
+      var url = "/administracion/cotizacion/CotizacionPdf";
+      axios
+        .post(
+          url,
+          {
+            params: {
+              item: item,
+            },
+          },
+          config
+        )
+        .then((response) => {
+
+          var oMyBlob = new Blob([response.data], { type: "application/pdf" });
+          var url = URL.createObjectURL(oMyBlob);
+          window.open(url);
+          //window.print();
         });
     },
 

@@ -12,7 +12,7 @@
       <div class="card">
         <div class="card-header">
           <div class="card-tools">
-            <router-link class="btn btn-info btn-sm" :to="'/proveedor'">
+            <router-link class="btn btn-info btn-sm" :to="'ordenCompra.list'">
               <i class="fas fa-plus-square"></i> Nuevo Orden de Compras
             </router-link>
           </div>
@@ -27,6 +27,160 @@
 
 
 <el-tabs type="border-card">
+
+      <el-tab-pane label="Buscar por Proveedor">
+
+
+
+    <!-- FORMULARIO  DE  BUSCAR  DE PROVEEDOR -->
+ <div class="card-body">
+                <form role="form">
+                  <div class="row">
+
+
+                    <div class="col-md-12">
+                      <div class="form-group row">
+                        <label class="col-md-1 col-form-label">Proveedor</label>
+                        <div class="col-md-9">
+                          <el-select
+                            v-model="fillBsqListOrdenCompra.nidProveedor"
+                            style="width: 50%"
+                            filterable
+                            placeholder="Select"
+                            clearable
+                          >
+                            <el-option
+                              v-for="item in listProveedor"
+                              :key="item.id"
+                              :label="item.nombre"
+                              :value="item.id"
+                            >
+                            </el-option>
+                          </el-select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+                      <div class="card-footer">
+                <div class="row">
+                  <div class="col-md-4 offset-4">
+                    <button
+                      class="btn btn-flat btn-info btnWidth"
+                      @click.prevent="getListarOrdenCompraxProveedor"
+                    >
+                      Buscar
+                    </button>
+                    <button
+                      class="btn btn-flat btn-default btnWidth"
+                      @click.prevent="limpiarProveedorBsq"
+                    >
+                      Limpiar
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card card-info">
+              <div class="card-header">
+                <h3 class="card-title">Bandeja de Resultados</h3>
+              </div>
+              <div class="card-body table-responsive">
+                <table
+                  class="
+                    table table-hover table-head-fixed
+                    text-nowrap
+                    projects
+                  "
+                >
+                  <thead>
+                    <tr>
+                      <th>CODIGO</th>
+                      <th>F. EMISIOM</th>
+                      <th>PROVEEDOR</th>
+                      <th>ACCION</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      v-for="(item, index) in listarOrdenCompraxProveedorPaginated"
+                      :key="index"
+                    >
+                      <td>
+                        {{ item.id | fourchar }} -
+                        {{ item.Femision | moment("YYYY") }}
+                      </td>
+                      <td>{{ item.Femision | moment("DD - MM - Y") }}</td>
+
+                      <td v-text="item.proveedor.nombre"></td>
+                      <td>
+                        <button
+                          class="btn btn-info btn-sm"
+                          @click="abrirDetalle(item.id)"
+                        >
+                          <i class="fas fa-eye"></i> Detalle
+                        </button>
+
+                        <button
+                          class="btn btn-danger btn-sm"
+                          @click.prevent="SetGenerarOrdenPedidoPDF(item.id)"
+                        >
+                          <i class="fas fa-file-pdf"></i> PDF
+                        </button>
+                        <template
+                          v-if="
+                            listRolPermisoByUsuario.includes(
+                              'cotizacion.create'
+                            )
+                          "
+                        >
+                          <router-link
+                            class="btn btn-success btn-sm"
+                            :to="{
+                              name: 'parteingreso.create',
+                              params: { id: item.id },
+                            }"
+                          >
+                            <i class="far fa-clipboard"></i> Parte de Ingreso
+                          </router-link>
+                        </template>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="card-footer clearfix">
+                  <ul class="pagination pagination-sm m-0 float-right">
+                    <li class="page-item" v-if="pageNumber > 0">
+                      <a href="" class="page-link" @click.prevent="prevPage"
+                        >Ant</a
+                      >
+                    </li>
+                    <li
+                      class="page-item"
+                      v-for="(page, index) in pagesListxProvedor"
+                      :key="index"
+                      :class="[page == pageNumber ? 'active' : '']"
+                    >
+                      <a
+                        href=""
+                        class="page-link"
+                        @click.prevent="selectPage(page)"
+                        >{{ page + 1 }}</a
+                      >
+                    </li>
+                    <li class="page-item" v-if="pageNumber < pageCountProveedor - 1">
+                      <a href="" class="page-link" @click.prevent="nextPage"
+                        >Post</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+    <!--FIN  DE  FORMULARIO  DE  BUSCAR  DE PROVEEDOR -->
+  </el-tab-pane>
   <el-tab-pane>
     <span slot="label"><i class="el-icon-date"></i> Buscar por Producto</span>
 
@@ -194,162 +348,7 @@
     <!--FIN  DE  FORMULARIO  DE  BUSCAR  DE PRODUCTO -->
 
   </el-tab-pane>
-  <el-tab-pane label="Buscar por Proveedor">
 
-
-
-    <!-- FORMULARIO  DE  BUSCAR  DE PROVEEDOR -->
- <div class="card-body">
-                <form role="form">
-                  <div class="row">
-
-
-                    <div class="col-md-12">
-                      <div class="form-group row">
-                        <label class="col-md-1 col-form-label">Proveedor</label>
-                        <div class="col-md-9">
-                          <el-select
-                            v-model="fillBsqListOrdenCompra.nidProveedor"
-                            style="width: 50%"
-                            filterable
-                            placeholder="Select"
-                            clearable
-                          >
-                            <el-option
-                              v-for="item in listProveedor"
-                              :key="item.id"
-                              :label="item.nombre"
-                              :value="item.id"
-                            >
-                            </el-option>
-                          </el-select>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </div>
-                      <div class="card-footer">
-                <div class="row">
-                  <div class="col-md-4 offset-4">
-                    <button
-                      class="btn btn-flat btn-info btnWidth"
-                      @click.prevent="getListarOrdenCompraxProveedor"
-                    >
-                      Buscar
-                    </button>
-                    <button
-                      class="btn btn-flat btn-default btnWidth"
-                      @click.prevent="limpiarProveedorBsq"
-                    >
-                      Limpiar
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="card card-info">
-              <div class="card-header">
-                <h3 class="card-title">Bandeja de Resultados</h3>
-              </div>
-              <div class="card-body table-responsive">
-                <table
-                  class="
-                    table table-hover table-head-fixed
-                    text-nowrap
-                    projects
-                  "
-                >
-                  <thead>
-                    <tr>
-                      <th>CODIGO</th>
-                      <th>F. EMISIOM</th>
-                      <th>PROVEEDOR</th>
-                      <th>ACCION</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr
-                      v-for="(item, index) in listarOrdenCompraxProveedorPaginated"
-                      :key="index"
-                    >
-                      <td>
-                        {{ item.id | fourchar }} -
-                        {{ item.Femision | moment("YYYY") }}
-                      </td>
-                      <td>{{ item.Femision | moment("DD - MM - Y") }}</td>
-
-                      <td v-text="item.proveedor.nombre"></td>
-                      <td>
-                        <button
-                          class="btn btn-info btn-sm"
-                          @click="abrirDetalle(item.id)"
-                        >
-                          <i class="fas fa-eye"></i> Detalle
-                        </button>
-
-                        <button
-                          class="btn btn-danger btn-sm"
-                          @click.prevent="SetGenerarOrdenPedidoPDF(item.id)"
-                        >
-                          <i class="fas fa-file-pdf"></i> PDF
-                        </button>
-                        <template
-                          v-if="
-                            listRolPermisoByUsuario.includes(
-                              'cotizacion.create'
-                            )
-                          "
-                        >
-                          <router-link
-                            class="btn btn-success btn-sm"
-                            :to="{
-                              name: 'cotizacion.create',
-                              params: { id: item.id },
-                            }"
-                          >
-                            <i class="far fa-clipboard"></i> Parte de Ingreso
-                          </router-link>
-                        </template>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <div class="card-footer clearfix">
-                  <ul class="pagination pagination-sm m-0 float-right">
-                    <li class="page-item" v-if="pageNumber > 0">
-                      <a href="" class="page-link" @click.prevent="prevPage"
-                        >Ant</a
-                      >
-                    </li>
-                    <li
-                      class="page-item"
-                      v-for="(page, index) in pagesListxProvedor"
-                      :key="index"
-                      :class="[page == pageNumber ? 'active' : '']"
-                    >
-                      <a
-                        href=""
-                        class="page-link"
-                        @click.prevent="selectPage(page)"
-                        >{{ page + 1 }}</a
-                      >
-                    </li>
-                    <li class="page-item" v-if="pageNumber < pageCountProveedor - 1">
-                      <a href="" class="page-link" @click.prevent="nextPage"
-                        >Post</a
-                      >
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-    <!--FIN  DE  FORMULARIO  DE  BUSCAR  DE PROVEEDOR -->
-
-
-
-  </el-tab-pane>
 
 </el-tabs>
 

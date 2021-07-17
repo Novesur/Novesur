@@ -291,6 +291,7 @@
                               type="text"
                               class="form-control"
                               v-model="fillEditarProducto.cPuntoLlegada"
+                               :maxlength= "100"
                             />
                           </div>
                         </div>
@@ -736,7 +737,7 @@ export default {
       var url = "/administracion/KardexDetalle/listUnidMed";
       axios.get(url).then((response) => {
         this.listUnidMed = response.data;
-        this.fillEditarProducto.nIdUnidMed = this.listUnidMed[0].id;
+        this.fillEditarProducto.nIdUnidMed = this.listUnidMed[3].id;
       });
     },
 

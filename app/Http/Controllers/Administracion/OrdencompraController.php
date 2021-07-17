@@ -98,23 +98,11 @@ class OrdencompraController extends Controller
 
     public function ListXProduct(Request $request)
     {
-
-        if ($request->nIdprod == null) {
-
-          $dato =  Detalleordencompra::with('ordencompras','unidmedida','producto','ordencompras.proveedor')
-                   ->whereHas('ordencompras')->distinct()->select('ordencompras_id')->get();
-                   return $dato;
-        }else{
-
-
-
                $nIdprod = $request->nIdprod;
                $dato =  Detalleordencompra::with('ordencompras','unidmedida','producto','ordencompras.proveedor')
                    ->whereHas('ordencompras', function (Builder $query) use ($nIdprod) {$query->where('producto_id', $nIdprod);
                    })->get();
                    return $dato;
-                }
-
     }
 
     public function ListXProveedor(Request $request)
@@ -142,5 +130,12 @@ class OrdencompraController extends Controller
             'DetalleOrderCompra' => $DetalleOrderCompra,
         ]);
         return $pdf->download('invoice.pdf');;
+    }
+
+    public function ListarDatosOrdenCompraXId(Request $request){
+
+        $dato = Ordencompra::with('proveedor', 'tipordercompra', 'user', 'estadoOrderCompra', 'pago')->where('id', $request->nIdOrdenCompra)->first();
+     return $dato;
+
     }
 }

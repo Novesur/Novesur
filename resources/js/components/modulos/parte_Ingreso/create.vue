@@ -13,7 +13,7 @@
       <div class="card">
         <div class="card-header">
           <div class="card-tools">
-            <router-link class="btn btn-info btn-sm" :to="'/material'">
+            <router-link class="btn btn-info btn-sm" :to="'/ordenCompra/list'">
               <i class="fas fa-arrow-left"></i>Regresar
             </router-link>
           </div>
@@ -37,9 +37,10 @@
                             <input
                               type="text"
                               class="form-control"
-                              v-model="fillCrearPIngreso.cProveedor"
+                              v-model="fillPIngreso.cProveedor"
                               @keypress.prevent.enter="setRegistrarPIngreso"
                               style="width: 300px"
+                              readonly="true"
                             />
                           </div>
                         </div>
@@ -54,9 +55,9 @@
                             <input
                               type="text"
                               class="form-control"
-                              v-model="fillCrearPIngreso.cOrdenComPra"
-                              @keypress.prevent.enter="setRegistrarPIngreso"
+                              v-model="fillPIngreso.cOrdenComPra"
                               style="width: 300px"
+                              readonly="true"
                             />
                           </div>
                         </div>
@@ -75,7 +76,7 @@
                             <input
                               type="text"
                               class="form-control"
-                              v-model="fillCrearPIngreso.cDocumento"
+                              v-model="fillPIngreso.cDocumento"
                               @keypress.prevent.enter="setRegistrarPIngreso"
                               style="width: 300px"
                             />
@@ -88,7 +89,7 @@
                           <label class="col-md-3 col-form-label">Fecha</label>
                           <div class="col-md-9">
                             <el-date-picker
-                              v-model="fillCrearPIngreso.cFecha"
+                              v-model="fillPIngreso.cFecha"
                               type="date"
                               placeholder="Ingrese una Fecha"
                               format="dd/MM/yyyy"
@@ -103,155 +104,24 @@
 
                   <div class="col-md-12">
                     <div class="row">
-                      <div class="col-md-6">
+                      <div class="col-md-9">
                         <div class="form-group row">
-                          <label class="col-md-3 col-form-label"
-                            >Nro Factura</label
+                          <label class="col-md-2 col-form-label"
+                            >Observación</label
                           >
-                          <div class="col-md-9">
+                          <div class="col-md-10">
                             <input
                               type="text"
                               class="form-control"
-                              v-model="fillCrearPIngreso.cNumFactura"
+                              v-model="fillPIngreso.cObservacion"
                               @keypress.prevent.enter="setRegistrarPIngreso"
-                              style="width: 300px"
-                            />
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-md-3 col-form-label"
-                            >Nro Guia</label
-                          >
-                          <div class="col-md-9">
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="fillCrearPIngreso.cNumGuia"
-                              @keypress.prevent.enter="setRegistrarPIngreso"
-                              style="width: 300px"
                             />
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-
-                  <div class="container-fluid">
-                    <form role="form">
-                      <div class="row">
-                        <div class="col-md-12">
-                          <div class="card card-primary">
-                            <div class="card-header">
-                              <h3 class="card-title">DETALLE DEL PRODUCTO</h3>
-                            </div>
-                            <div class="card-body">
-                              <div class="form-group row">
-                                <label class="col-md-2 col-form-label"
-                                  >DESCRIPCION DEL MEDIDOR</label
-                                >
-
-                                <div class="col-md-10">
-                                  <el-select
-                                    v-model="fillCrearPIngreso.nIdprod"
-                                    style="width: 90%"
-                                    filterable
-                                    placeholder="Select"
-                                  >
-                                    <el-option
-                                      v-for="item in listProd"
-                                      :key="item.id"
-                                      :label="
-                                        item.codigo +
-                                        ' - ' +
-                                        item.familia.nombre +
-                                        ' , ' +
-                                        item.subfamilia.nombre +
-                                        ' , Modelo: ' +
-                                        item.modelotipo.nombre +
-                                        ' , Marca : ' +
-                                        item.marca.nombre +
-                                        ' , Material : ' +
-                                        item.material.nombre +
-                                        ' ,' +
-                                        item.homologacion.nombre
-                                      "
-                                      :value="item.id"
-                                    >
-                                    </el-option>
-                                  </el-select>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label class="col-md-1 col-form-label"
-                                  >CANTIDAD</label
-                                >
-                                <div class="col-md-3">
-                                  <input
-                                    type="text"
-                                    class="form-control"
-                                    v-model="fillCrearPIngreso.cCantidad"
-                                    v-int
-                                  />
-                                </div>
-
-                                <label class="col-md-1 col-form-label"
-                                  >MEDIDA</label
-                                >
-                                <div class="col-md-3">
-                                  <el-select
-                                    v-model="fillCrearPIngreso.nIdUnidMed"
-                                    placeholder="Select"
-                                    style="width: 70%"
-                                  >
-                                    <el-option
-                                      v-for="item in listUnidMed"
-                                      :key="item.id"
-                                      :label="item.nombre"
-                                      :value="item.id"
-                                    >
-                                    </el-option>
-                                  </el-select>
-                                </div>
-
-                                <label class="col-md-1 col-form-label"
-                                  >PRECIO</label
-                                >
-                                <div class="col-md-3">
-                                  <input
-                                    type="text"
-                                    class="form-control"
-                                    v-model="fillCrearPIngreso.cPrecio"
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
                 </form>
-              </div>
-              <div class="card-footer">
-                <div class="row">
-                  <div class="col-md-4 offset-4">
-                    <button
-                      class="btn btn-flat btn-info btnWidth"
-                      @click.prevent="setAddPMaterial"
-                    >
-                      Agregar
-                    </button>
-                    <button
-                      class="btn btn-flat btn-default btnWidth"
-                      @click.prevent="setResetCampos"
-                    >
-                      Limpiar
-                    </button>
-                  </div>
-                </div>
               </div>
 
               <!--  Bandeja de Resultados -->
@@ -262,7 +132,11 @@
 
                 <div class="card-body table-responsive">
                   <table
-                    class="table table-hover table-head-fixed text-nowrap projects"
+                    class="
+                      table table-hover table-head-fixed
+                      text-nowrap
+                      projects
+                    "
                   >
                     <thead>
                       <tr>
@@ -270,30 +144,50 @@
                         <th>Cantidad</th>
                         <th>Unid. Medida</th>
                         <th>Descripcion</th>
+                        <th>Estado</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr
-                        v-for="(item, index) in listartempPIngreso"
+                        v-for="(item, index) in listarDetalleOrdeCompra"
                         :key="index"
                       >
-                        <td v-text="item.codigo"></td>
+                        <td v-text="item.producto.codigo"></td>
                         <td v-text="item.cantidad"></td>
-                        <td v-text="item.unidmedNombre"></td>
+                        <td v-text="item.unidmedida.nombre"></td>
 
                         <td
                           v-text="
-                            item.productoFamilia +
+                            item.producto.familia.nombre +
                             ' ' +
-                            item.productoSubfamilia +
+                            item.producto.subfamilia.nombre +
                             ', MARCA :' +
-                            item.productoMarca +
+                            item.producto.marca.nombre +
                             ', MODELO/TIPO :' +
-                            item.productoModelotipo +
+                            item.producto.modelotipo.nombre +
                             ', MATERIAL :' +
-                            item.material
+                            item.producto.material.nombre
                           "
                         ></td>
+                        <template v-if="item.estado == '2'">
+                          <button
+                            class="btn btn-flat btn-danger btn-sm"
+                            @click.prevent="setCambiarEstadoDetalleOC(1, item.id)"
+                          >
+                            <i class="far fa-bell-slash"></i> Pendiente
+                          </button>
+                        </template>
+                        <template v-else>
+                              <button
+                            class="btn btn-flat btn-success btn-sm"
+                            @click.prevent="setCambiarEstadoDetalleOC(2, item.id)"
+                          >
+                           <i class="far fa-bell"></i> Atendido
+                          </button>
+
+                        </template>
+
+                        <!--  <td v-text="item.estado"></td> -->
                       </tr>
                     </tbody>
                   </table>
@@ -359,23 +253,17 @@
 export default {
   data() {
     return {
-      fillCrearPIngreso: {
-        nIdProveedor: this.$attrs.id,
+      fillPIngreso: {
+        nIdOrdenCompra: this.$attrs.id,
         cProveedor: "",
         cOrdenComPra: "",
         cDocumento: "",
         cFecha: "",
-        cNumFactura: "",
-        cNumGuia: "",
-        nIdUnidMed: "",
-        nIdprod: "",
-        cPrecio: "",
-        cCantidad: "",
+        cObservacion: "",
         nIdUser: sessionStorage.getItem("iduser"),
       },
-      listUnidMed: [],
-      listProd: [],
-      listartempPIngreso: [],
+
+      listarDetalleOrdeCompra: [],
       modalShow: false,
       mostrarModal: {
         display: "block",
@@ -390,10 +278,11 @@ export default {
   },
   mounted() {
     this.getListarByProveedor();
-    this.getListarUnidadMedida();
-    this.getListarproductosByName();
+    this.setListarDatosOrdenCompraXId();
+    this.setListarDetalleOrdenCompraxId();
+
     this.setListtempPIngreso();
-    this.fillCrearPIngreso.cFecha = new Date();
+    this.fillPIngreso.cFecha = new Date();
   },
   computed: {},
   methods: {
@@ -402,36 +291,16 @@ export default {
       axios
         .get(url, {
           params: {
-            nIdProveedor: this.fillCrearPIngreso.nIdProveedor,
+            nIdOrdenCompra: this.fillPIngreso.nIdOrdenCompra,
           },
         })
         .then((response) => {
-          this.fillCrearPIngreso.cProveedor = response.data.nombre;
+          this.fillPIngreso.cProveedor = response.data.nombre;
         });
     },
 
-    getListarproductosByName() {
-      var url = "/administracion/detallecotizancion/listProdByName";
-      axios
-        .get(url, {
-          params: {
-            nIdprod: this.fillCrearPIngreso.nIdprod,
-          },
-        })
-        .then((response) => {
-          this.listProd = response.data;
-        });
-    },
-
-    getListarUnidadMedida() {
-      var url = "/administracion/KardexDetalle/listUnidMed";
-      axios.get(url).then((response) => {
-        this.listUnidMed = response.data;
-        this.fillCrearPIngreso.nIdUnidMed = this.listUnidMed[0].id;
-      });
-    },
     limpiarCriteriosBsq() {
-      this.fillCrearPIngreso.cProveedor = "";
+      this.fillPIngreso.cProveedor = "";
     },
     setRegistrarPIngreso() {
       if (this.validaPIngreso()) {
@@ -445,14 +314,11 @@ export default {
       var url = "/administracion/parte_ingreso/setGrabarPIngreso";
       axios
         .post(url, {
-          cFecha: this.fillCrearPIngreso.cFecha,
-          cNumFactura: this.fillCrearPIngreso.cNumFactura,
-          cNumGuia: this.fillCrearPIngreso.cNumGuia,
-          nIdProveedor: this.fillCrearPIngreso.nIdProveedor,
-          nIdUser: this.fillCrearPIngreso.nIdUser,
-          nIdUnidMed: this.fillCrearPIngreso.nIdUnidMed,
-          cCantidad: this.fillCrearPIngreso.cCantidad,
-          cPrecio:this.fillCrearPIngreso.cPrecio,
+          cFecha: this.fillPIngreso.cFecha,
+          cObservacion: this.fillPIngreso.cObservacion,
+
+          nIdOrdenCompra: this.fillPIngreso.nIdOrdenCompra,
+          nIdUser: this.fillPIngreso.nIdUser,
         })
         .then((response) => {
           Swal.fire({
@@ -464,7 +330,7 @@ export default {
           });
           this.setResetCampos();
           this.setLimpiaCampos();
-         this.eliminarTempitemPIngreso();
+          this.eliminarTempitemPIngreso();
         });
     },
     abrirModal() {
@@ -474,7 +340,7 @@ export default {
       this.error = 0;
       this.mensajeError = [];
 
-      if (!this.fillCrearPIngreso.cProveedor) {
+      if (!this.fillPIngreso.cProveedor) {
         this.mensajeError.push("El campo nombre es obligatorio");
       }
 
@@ -484,46 +350,11 @@ export default {
 
       return this.error;
     },
-    setAddPMaterial() {
-      var url = "/administracion/parte_ingreso/create";
-      axios
-        .post(url, {
-          nIdprod: this.fillCrearPIngreso.nIdprod,
-          nIdUnidMed: this.fillCrearPIngreso.nIdUnidMed,
-          cCantidad: this.fillCrearPIngreso.cCantidad,
-          cPrecio: this.fillCrearPIngreso.cPrecio,
-        })
-        .then((response) => {
-          if (response.data.icon == 'error') {
-            Swal.fire({
-              position: "center",
-              icon: response.data.icon,
-              title: response.data.message,
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          }
-          if (response.data.icon == 'success') {
-            this.setListtempPIngreso();
-            this.setLimpiaCampos();
-          }
-        });
-    },
-
-    setLimpiaCampos() {
-      this.fillCrearPIngreso.nIdprod = null;
-      this.fillCrearPIngreso.cCantidad = "";
-      this.fillCrearPIngreso.cPrecio = "";
-    },
 
     setResetCampos() {
-      this.fillCrearPIngreso.nIdprod = null;
-      this.fillCrearPIngreso.cCantidad = "";
-      this.fillCrearPIngreso.cPrecio = "";
-      this.fillCrearPIngreso.cOrdenComPra = "";
-      this.fillCrearPIngreso.cDocumento = "";
-      this.fillCrearPIngreso.cNumFactura = "";
-      this.fillCrearPIngreso.cNumGuia = "";
+      this.fillPIngreso.cOrdenComPra = "";
+      this.fillPIngreso.cDocumento = "";
+      this.fillPIngreso.cObservacion = "";
     },
 
     setListtempPIngreso() {
@@ -539,6 +370,66 @@ export default {
         this.setListtempPIngreso();
       });
     },
+    setListarDatosOrdenCompraXId() {
+      var url = "/administracion/ordenCompra/ListarDatosOrdenCompraXId";
+      axios
+        .post(url, {
+          nIdOrdenCompra: this.fillPIngreso.nIdOrdenCompra,
+        })
+        .then((response) => {
+          (this.fillPIngreso.cProveedor = response.data.proveedor.nombre),
+            (this.fillPIngreso.cOrdenComPra =
+              this.fillPIngreso.nIdOrdenCompra
+                .toString()
+                .padStart(response.data.id, "000") +
+              "-" +
+              response.data.Femision.substr(0, 4));
+        });
+    },
+
+    setListarDetalleOrdenCompraxId() {
+      var url = "/administracion/DetalleordenCompra/view";
+      axios
+        .get(url, {
+          params: {
+            item: this.fillPIngreso.nIdOrdenCompra,
+          },
+        })
+        .then((response) => {
+          this.listarDetalleOrdeCompra = response.data;
+          console.log(response.data);
+        });
+    },
+    setCambiarEstadoDetalleOC(op, id){
+        Swal.fire({
+  title: 'Estas seguro de' + ((op ==2 ) ? 'Poner Pendiente' : 'Poner Atendido'),
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: ((op == 2 ) ? 'Si, Poner Pendiente' : 'Si, Poner Atendido'),
+}).then((result) => {
+
+  if (result.isConfirmed) {
+      var url = "/administracion/DetalleordenCompra/CambiarEstadoDetalleOC";
+      axios.post(url,{
+          nIdDetalleOC : id,
+          cEstado : op
+      }).then(response =>{
+          Swal.fire({
+  position: 'center',
+  icon: 'success',
+  title: 'Se edito el cambio',
+  showConfirmButton: false,
+  timer: 1500
+})
+
+this.setListarDetalleOrdenCompraxId();
+      })
+  }
+})
+
+    }
   },
 };
 </script>

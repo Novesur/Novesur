@@ -298,6 +298,7 @@
                               type="text"
                               class="form-control"
                               v-model="fillregistrarCotizacion.cPuntoLlegada"
+                              :maxlength= "100"
                             />
                           </div>
                         </div>

@@ -42,6 +42,8 @@ class CreateProductoTable extends Migration
             $table->unsignedBigInteger('homologacion_id');
             $table->foreign('homologacion_id')->references('id')->on('homologacion');
 
+            $table->decimal('precioSugerido', 8, 3)->nullable();
+
             $table->timestamps();
         });
     }
