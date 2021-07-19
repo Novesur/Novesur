@@ -384,6 +384,8 @@
                           style="width: 90%"
                           filterable
                           placeholder="Select"
+
+                        @change="setBuscaPrecioXProducto()"
                         >
                           <el-option
                             v-for="item in listProd"
@@ -930,6 +932,18 @@ export default {
       this.fillEditarProducto.Docu = "Factura, guía y carta de Garantía";
       this.fillEditarProducto.cFlete = "NOVESUR";
     },
+
+      setBuscaPrecioXProducto(){
+     var url = "/administracion/producto/getListarProductoById";
+     axios.get(url,{params:{
+          nIdProducto:this.fillEditarProducto.nIdprod
+          },
+     }).then((response)=>{
+         console.log(response.data)
+         this.fillEditarProducto.cPUnit = response.data.precioSugerido;
+
+     })
+    }
   },
 };
 </script>

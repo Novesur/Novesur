@@ -40,9 +40,7 @@
                           />
                         </div>
                         <span style="color: #ff0000">
-                          {{
-                            this.fillCrearProducto.nIdCodigo.length
-                          }}
+                          {{ this.fillCrearProducto.nIdCodigo.length }}
                           caracteres</span
                         >
                       </div>
@@ -188,7 +186,26 @@
                       </div>
                     </div>
 
+
                     <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Precio Sugerido S/.</label>
+                        <div class="col-md-3">
+                          <input
+                            type="text"
+                            class="form-control"
+                            v-model="fillCrearProducto.cPrecioSugerido"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+
+
+                  </div>
+
+                <div class="row">
+                       <div class="col-md-6">
                       <div class="form-group row">
                         <label class="col-md-3 col-form-label">Estado</label>
                         <div class="col-md-8">
@@ -208,7 +225,8 @@
                         </div>
                       </div>
                     </div>
-                  </div>
+                </div>
+
                 </form>
               </div>
 
@@ -281,6 +299,7 @@ export default {
         nIdHomologado: "",
         nIdUser: sessionStorage.getItem("iduser"),
         nIdCodigo: "",
+        cPrecioSugerido:"",
       },
       listFamilia: [],
       listSubFamilia: [],
@@ -441,6 +460,7 @@ export default {
           nIdModeloTipo: this.fillCrearProducto.nIdModeloTipo,
           nIdUser: this.fillCrearProducto.nIdUser,
           nIdHomologado: this.fillCrearProducto.nIdHomologado,
+          cPrecioSugerido : this.fillCrearProducto.cPrecioSugerido,
         })
         .then((response) => {
           Swal.fire({

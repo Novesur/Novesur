@@ -52,6 +52,7 @@ class ProductoController extends Controller
             $producto->estado_id = $request->nIdEstado;
             $producto->user_id = $request->nIdUser;
             $producto->homologacion_id = $request->nIdHomologado;
+            $producto->precioSugerido = $request->cPrecioSugerido;
             $producto->save();
             return response()->json(['message' => 'Producto grabado', 'icon' => 'success'], 200);
         }
@@ -61,7 +62,7 @@ class ProductoController extends Controller
 
     public function ListarProductoById(Request $request)
     {
-        $dato = Producto::where('id', '=', $request->nIdProducto)->first();
+        $dato = Producto::where('id', '=', $request->nIdProducto)->where('estado_id',1)->first();
         return $dato;
     }
 
@@ -97,6 +98,7 @@ class ProductoController extends Controller
             $Producto->estado_id = $request->nIdEstado;
             $Producto->user_id = $request->nIdUser;
             $Producto->homologacion_id = $request->nIdHomologado;
+            $Producto->precioSugerido = $request->cPrecioSugerido;
             $Producto->save();
         }
 

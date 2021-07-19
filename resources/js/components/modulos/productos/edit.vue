@@ -40,16 +40,19 @@
                           />
                         </div>
 
-                        <div>  <button
-                      class="btn btn-flat btn-success"
-                      @click.prevent="setValidarcodigoProductos"
-                    >
-                        <span><i class="fas fa-search"></i></span>
-                    </button></div> <span style="color: #ff0000; padding: 0.5px;">
+                        <div>
+                          <button
+                            class="btn btn-flat btn-success"
+                            @click.prevent="setValidarcodigoProductos"
+                          >
+                            <span><i class="fas fa-search"></i></span>
+                          </button>
+                        </div>
+                        <span style="color: #ff0000; padding: 0.5px">
                           {{ this.fillEditarProducto.nIdCodigo.length }}
-                          caracteres</span>
+                          caracteres</span
+                        >
                       </div>
-
                     </div>
 
                     <div class="col-md-6">
@@ -171,27 +174,6 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group row">
-                        <label class="col-md-3 col-form-label">Estado</label>
-                        <div class="col-md-8">
-                          <el-select
-                            v-model="fillEditarProducto.nIdEstado"
-                            filterable
-                            placeholder="Seleccione una Estado"
-                          >
-                            <el-option
-                              v-for="item in listEstadoProd"
-                              :key="item.id"
-                              :label="item.nombre"
-                              :value="item.id"
-                            >
-                            </el-option>
-                          </el-select>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="col-md-6">
-                      <div class="form-group row">
                         <label class="col-md-3 col-form-label"
                           >Homologado</label
                         >
@@ -213,11 +195,46 @@
                         </div>
                       </div>
                     </div>
-                  </div>
 
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-md-3 col-form-label"
+                          >Precio Sugerido S/.</label
+                        >
+                        <div class="col-md-3">
+                          <input
+                            type="text"
+                            class="form-control"
+                            v-model="fillEditarProducto.cPrecioSugerido"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Estado</label>
+                        <div class="col-md-8">
+                          <el-select
+                            v-model="fillEditarProducto.nIdEstado"
+                            filterable
+                            placeholder="Seleccione una Estado"
+                          >
+                            <el-option
+                              v-for="item in listEstadoProd"
+                              :key="item.id"
+                              :label="item.nombre"
+                              :value="item.id"
+                            >
+                            </el-option>
+                          </el-select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </form>
               </div>
-
 
               <div class="card-footer">
                 <div class="row">
@@ -289,6 +306,7 @@ export default {
         nIdHomologado: "",
         nIdUser: sessionStorage.getItem("iduser"),
         nIdCodigo: "",
+        cPrecioSugerido:"",
       },
       listFamilia: [],
       listSubFamilia: [],
@@ -343,6 +361,7 @@ export default {
           this.fillEditarProducto.nIdSubFamilia = response.data.subfamilia_id;
           this.fillEditarProducto.nIdHomologado = response.data.homologacion_id;
           this.fillEditarProducto.nIdCodigo = response.data.codigo;
+        this.fillEditarProducto.cPrecioSugerido = response.data.precioSugerido;
         });
     },
 
@@ -353,21 +372,22 @@ export default {
       });
     },
 
-    setValidarcodigoProductos(){
-          var url = "/administracion/producto/BuscaCodigoProducto";
-      axios.get(url, {
-          params:{
-       nIdCodigo: this.fillEditarProducto.nIdCodigo,
-
+    setValidarcodigoProductos() {
+      var url = "/administracion/producto/BuscaCodigoProducto";
+      axios
+        .get(url, {
+          params: {
+            nIdCodigo: this.fillEditarProducto.nIdCodigo,
           },
-      }).then((response) => {
-        Swal.fire({
+        })
+        .then((response) => {
+          Swal.fire({
             icon: response.data.icon,
             title: response.data.message,
             showConfirmButton: false,
             timer: 1500,
           });
-      });
+        });
     },
 
     getListarHomologacion() {
@@ -485,6 +505,7 @@ export default {
           nIdEstado: this.fillEditarProducto.nIdEstado,
           nIdUser: this.fillEditarProducto.nIdUser,
           nIdHomologado: this.fillEditarProducto.nIdHomologado,
+          cPrecioSugerido: this.fillEditarProducto.cPrecioSugerido,
         })
         .then((response) => {
           Swal.fire({

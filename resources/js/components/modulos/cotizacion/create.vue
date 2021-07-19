@@ -230,6 +230,7 @@
                               v-model="fillregistrarCotizacion.nIdDescripPago"
                               placeholder="Select"
                               style="width: 70%"
+
                             >
                               <el-option
                                 v-for="item in listDescripPago"
@@ -392,6 +393,7 @@
                           style="width: 90%"
                           filterable
                           placeholder="Select"
+                        @change="setBuscaPrecioXProducto()"
                         >
                           <el-option
                             v-for="item in listProd"
@@ -919,6 +921,17 @@ export default {
       this.fillregistrarCotizacion.Docu = "Factura, guía y carta de Garantía";
       this.fillregistrarCotizacion.cFlete = "NOVESUR";
     },
+
+    setBuscaPrecioXProducto(){
+     var url = "/administracion/producto/getListarProductoById";
+     axios.get(url,{params:{
+          nIdProducto:this.fillregistrarCotizacion.nIdprod
+          },
+     }).then((response)=>{
+         this.fillregistrarCotizacion.cPUnit = response.data.precioSugerido;
+
+     })
+    }
   },
 };
 </script>
