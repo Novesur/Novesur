@@ -314,12 +314,16 @@
       class="modal fade"
       :class="{ show: modalShow }"
       :style="modalShow ? mostrarModal : ocultarModal"
+
+
+
+
     >
-      <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-dialog modal-lg" role="document" >
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Detalle de cotizacion</h5>
-            <button class="close" @click="abrirModal(item.id)"></button>
+            <button class="close" @click="abrirModal(item.id) " ></button>
           </div>
           <div class="modal-body">
             <!-- Listado de Detalle de Cotizaciones -->
@@ -377,9 +381,11 @@
       class="modal fade"
       :class="{ show: modalEstado }"
       :style="modalEstado ? mostrarModal : ocultarModal"
+
+      @keydown.esc="dialog = false"
     >
       <div
-        class="modal-dialog modal-dialog-center"
+        class="modal-dialog modal-dialog-center modal-dialog-scrollable d-flex align-items-center"
         role="document"
         style="top: 40% !important"
       >
@@ -433,6 +439,7 @@ export default {
         nIdtEstadoCoti: "",
         nIdtEstadoCoti2: "",
         nIdUser: sessionStorage.getItem("iduser"),
+
       },
       listDetPedido: [],
       listVendedorAdmin: [],
@@ -446,6 +453,8 @@ export default {
       mostrarModal: {
         display: "block",
         background: "#0000006b",
+        position: "fixed",
+
       },
       ocultarModal: {
         display: "none",
@@ -488,6 +497,8 @@ export default {
       },
     };
   },
+
+
 
   mounted() {
     this.getListDetCotizacion();
@@ -532,6 +543,7 @@ export default {
       this.modalShow = !this.modalShow;
       this.getListDetCotizacion(item);
     },
+
 
     abrirEstado(item) {
       this.modalEstado = !this.modalEstado;
@@ -705,6 +717,7 @@ export default {
     inicializarPaginacion() {
       this.pageNumber = 0;
     },
+
   },
 };
 </script>

@@ -30,7 +30,7 @@
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-md-3 col-form-label"
+                          <label class="col-md-2 col-form-label"
                             >Proveedor</label
                           >
                           <div class="col-md-9">
@@ -48,7 +48,7 @@
 
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-md-3 col-form-label"
+                          <label class="col-md-2 col-form-label"
                             >Orden de Compra</label
                           >
                           <div class="col-md-9">
@@ -67,16 +67,16 @@
 
                   <div class="col-md-12">
                     <div class="row">
-                      <div class="col-md-6">
+                      <div class="col-md-4">
                         <div class="form-group row">
                           <label class="col-md-3 col-form-label"
-                            >Documento</label
+                            >Nro Factura</label
                           >
-                          <div class="col-md-9">
+                          <div class="col-md-4">
                             <input
                               type="text"
                               class="form-control"
-                              v-model="fillPIngreso.cDocumento"
+                              v-model="fillPIngreso.nroFactura"
                               @keypress.prevent.enter="setRegistrarPIngreso"
                               style="width: 300px"
                             />
@@ -84,9 +84,26 @@
                         </div>
                       </div>
 
-                      <div class="col-md-6">
+                      <div class="col-md-4">
                         <div class="form-group row">
-                          <label class="col-md-3 col-form-label">Fecha</label>
+                          <label class="col-md-2 col-form-label"
+                            >Nro Guia</label
+                          >
+                          <div class="col-md-9">
+                            <input
+                              type="text"
+                              class="form-control"
+                              v-model="fillPIngreso.cNroGuia"
+                              @keypress.prevent.enter="setRegistrarPIngreso"
+                              style="width: 300px"
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label class="col-md-2 col-form-label">Fecha</label>
                           <div class="col-md-9">
                             <el-date-picker
                               v-model="fillPIngreso.cFecha"
@@ -104,9 +121,9 @@
 
                   <div class="col-md-12">
                     <div class="row">
-                      <div class="col-md-9">
+                      <div class="col-md-12">
                         <div class="form-group row">
-                          <label class="col-md-2 col-form-label"
+                          <label class="col-md-1 col-form-label"
                             >Observación</label
                           >
                           <div class="col-md-10">
@@ -257,7 +274,8 @@ export default {
         nIdOrdenCompra: this.$attrs.id,
         cProveedor: "",
         cOrdenComPra: "",
-        cDocumento: "",
+        cNroGuia: "",
+        nroFactura:"",
         cFecha: "",
         cObservacion: "",
         nIdUser: sessionStorage.getItem("iduser"),
@@ -353,7 +371,7 @@ export default {
 
     setResetCampos() {
       this.fillPIngreso.cOrdenComPra = "";
-      this.fillPIngreso.cDocumento = "";
+      this.fillPIngreso.cNroGuia = "";
       this.fillPIngreso.cObservacion = "";
     },
 

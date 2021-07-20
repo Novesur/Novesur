@@ -849,7 +849,7 @@ export default {
         .post(url, {
           nIdCliente: this.fillregistrarCotizacion.nIdCliente,
           nIdUsuario: this.fillregistrarCotizacion.vidUSer,
-          cEstado: "3",
+          cEstado: 4,
           cValidez: this.fillregistrarCotizacion.cValidez,
           cEntrega: this.fillregistrarCotizacion.cEntrega,
           nIdTipoPago: this.fillregistrarCotizacion.nIdTipoPago,

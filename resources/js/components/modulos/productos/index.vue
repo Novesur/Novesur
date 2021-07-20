@@ -519,6 +519,7 @@ export default {
             nIdEstado: this.fillBsqProducto.nIdEstado,
             nIdHomologado: this.fillBsqProducto.nIdHomologado,
             nIdCodigo: this.fillBsqProducto.nIdCodigo,
+            nIdModeloTipo : this.fillBsqProducto.nIdModeloTipo
           },
         })
         .then((response) => {

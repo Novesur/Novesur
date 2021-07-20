@@ -16,19 +16,60 @@ class ProductoController extends Controller
 
     {
 
-        if ($request->nIdFamilia == null && $request->nIdSubFamilia == null && $request->nIdMarca == null && $request->nIdMaterial == null && $request->nIdEstado == null && $request->nIdHomologado == null && $request->nIdCodigo == null) {
+
+   /*      if ($request->nIdFamilia == null && $request->nIdSubFamilia == null && $request->nIdMarca == null && $request->nIdMaterial == null && $request->nIdEstado == null && $request->nIdHomologado == null && $request->nIdCodigo == null) {
             $dato = Producto::with('familia', 'marca', 'material', 'modelotipo', 'subfamilia', 'homologacion', 'estado')->orderBy('codigo', 'ASC')->get();
         } else {
             $dato = Producto::with('familia', 'marca', 'material', 'modelotipo', 'subfamilia', 'homologacion', 'estado')
                 ->orWhere('familia_id', $request->nIdFamilia)
                 ->orWhere('subfamilia_id', $request->nIdSubFamilia)
+                ->orWhere('modelotipo_id', $request->nIdModeloTipo)
                 ->orWhere('marca_id', $request->nIdMarca)
                 ->orWhere('material_id', $request->nIdMaterial)
                 ->orWhere('estado_id', $request->nIdEstado)
-                ->orWhere('codigo', $request->nIdCodigo)
+                ->orWhere('codigo', 'like', '%' . $request->nIdCodigo . '%')
                 ->orWhere('homologacion_id', $request->nIdHomologado)->orderBy('codigo', 'DESC')->get();
         }
+        return $dato; */
+
+        if ($request->nIdFamilia == $request->nIdFamilia && $request->nIdSubFamilia == null && $request->nIdMarca == null && $request->nIdMaterial == null && $request->nIdEstado == null && $request->nIdHomologado == null && $request->nIdCodigo == null) {
+            $dato = Producto::with('familia', 'marca', 'material', 'modelotipo', 'subfamilia', 'homologacion', 'estado')->where('familia_id', $request->nIdFamilia)->orderBy('codigo', 'ASC')->get();
+        }
+
+        if ( $request->nIdSubFamilia == $request->nIdSubFamilia &&  $request->nIdFamilia == null && $request->nIdMarca == null && $request->nIdMaterial == null && $request->nIdEstado == null && $request->nIdHomologado == null && $request->nIdCodigo == null) {
+            $dato = Producto::with('familia', 'marca', 'material', 'modelotipo', 'subfamilia', 'homologacion', 'estado')->where('subfamilia_id', $request->nIdSubFamilia)->orderBy('codigo', 'ASC')->get();
+        }
+
+        if ( $request->nIdSubFamilia == null &&  $request->nIdFamilia == null && $request->nIdMarca == $request->nIdMarca && $request->nIdMaterial == null && $request->nIdEstado == null && $request->nIdHomologado == null && $request->nIdCodigo == null) {
+            $dato = Producto::with('familia', 'marca', 'material', 'modelotipo', 'subfamilia', 'homologacion', 'estado')->where('marca_id', $request->nIdMarca)->orderBy('codigo', 'ASC')->get();
+        }
+
+        if ( $request->nIdSubFamilia == null &&  $request->nIdFamilia == null && $request->nIdMarca == null && $request->nIdMaterial == $request->nIdMaterial && $request->nIdEstado == null && $request->nIdHomologado == null && $request->nIdCodigo == null) {
+            $dato = Producto::with('familia', 'marca', 'material', 'modelotipo', 'subfamilia', 'homologacion', 'estado')->where('material_id', $request->nIdMaterial)->orderBy('codigo', 'ASC')->get();
+        }
+
+
+        if ( $request->nIdModeloTipo == $request->nIdModeloTipo && $request->nIdSubFamilia == null &&  $request->nIdFamilia == null && $request->nIdMarca == null && $request->nIdMaterial == null && $request->nIdEstado == null && $request->nIdHomologado == null && $request->nIdCodigo == null) {
+            $dato = Producto::with('familia', 'marca', 'material', 'modelotipo', 'subfamilia', 'homologacion', 'estado')->where('modelotipo_id', $request->nIdModeloTipo)->orderBy('codigo', 'ASC')->get();
+        }
+
+        if ( $request->nIdModeloTipo == null && $request->nIdSubFamilia == null &&  $request->nIdFamilia == null && $request->nIdMarca == null && $request->nIdMaterial == null && $request->nIdEstado == $request->nIdEstado && $request->nIdHomologado == null && $request->nIdCodigo == null) {
+            $dato = Producto::with('familia', 'marca', 'material', 'modelotipo', 'subfamilia', 'homologacion', 'estado')->where('estado_id', $request->nIdEstado)->orderBy('codigo', 'ASC')->get();
+        }
+
+        if ( $request->nIdModeloTipo == null && $request->nIdSubFamilia == null &&  $request->nIdFamilia == null && $request->nIdMarca == null && $request->nIdMaterial == null&& $request->nIdEstado == null && $request->nIdHomologado == $request->nIdHomologado && $request->nIdCodigo == null) {
+            $dato = Producto::with('familia', 'marca', 'material', 'modelotipo', 'subfamilia', 'homologacion', 'estado')->where('homologacion_id', $request->nIdHomologado)->orderBy('codigo', 'ASC')->get();
+        }
+
+        if ( $request->nIdModeloTipo == null && $request->nIdSubFamilia == null &&  $request->nIdFamilia == null && $request->nIdMarca == null && $request->nIdMaterial == null && $request->nIdEstado == null && $request->nIdHomologado == null && $request->nIdCodigo == $request->nIdCodigo) {
+            $dato = Producto::with('familia', 'marca', 'material', 'modelotipo', 'subfamilia', 'homologacion', 'estado')->where('codigo', 'like', '%' . $request->nIdCodigo . '%')->get();
+        }
+
+
+
         return $dato;
+
+
     }
 
     public function create(Request $request)
