@@ -1096,7 +1096,7 @@ if (
 
     setGrabarReqMateriales() {
      
-      var url = "/administracion/RequerimientoMateriales/create";  
+      var url = "/administracion/RequerimientoMateriales/create";   
       axios
         .post(url, {
           nIdproduct: this.fillCrearReqMateriales.nIdproduct,

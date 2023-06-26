@@ -30,7 +30,7 @@ class RequerimientoMaterialesController extends Controller
         $yearMaxID = date("Y");
         //$maxidOP = RequerimientosMateriales::whereRaw('id = (select max(`id`) from requerimiento_materiales)')->first();
         $countable = Countable::all();
-        $countMaxreqmateriales = $countable[0]->countProyectReqMaterial;
+        $countMaxreqmateriales = $countable[0]->countreqmateriales;
         if ($countMaxreqmateriales == 0) {
             $maxidOP = 'REQ0001'. '-' . $yearMaxID;
         } else {
@@ -340,5 +340,7 @@ class RequerimientoMaterialesController extends Controller
             $OtrosRequerimientosReqMateriales->save();
         }
      }
+
+
     
 }

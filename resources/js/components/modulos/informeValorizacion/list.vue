@@ -316,7 +316,7 @@
         this.listPInfoValorizacion = [];
       },
       getListarPReqMateriales() {
-        var url = "/administracion/InformeValorizacion/list"; 
+        var url = "/administracion/InformeValorizacion/index"; 
         axios
           .get(url, {
             params: {

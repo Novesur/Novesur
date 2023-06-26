@@ -23,6 +23,8 @@ class CreateProyectoMaterialesTable extends Migration
             $table->unsignedBigInteger('unidmedida_id');
             $table->foreign('unidmedida_id')->references('id')->on('unidmedida');
             $table->string('cantInfProd',10)->required();
+            $table->unsignedBigInteger('unidmedidaInfoProd_id');
+            $table->foreign('unidmedidaInfoProd_id')->references('id')->on('unidmedida');
             $table->date('fecha')->required();
             $table->char('estado',1)->required();
             $table->softDeletes();

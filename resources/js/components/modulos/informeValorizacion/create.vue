@@ -30,6 +30,39 @@
                             </div>
                             <div class="card-body">
                                 <form role="form">
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <div class="form-group row">
+                                                <label
+                                                    class="col-md-2 col-form-label"
+                                                    >Cod. Req.Materiales -
+                                                    Proyecto</label
+                                                >
+                                                <div
+                                                    class="col-md-3 input-group"
+                                                >
+                                                    <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        v-model="
+                                                            fillCrearInformeValorizacion.codRequMateriales
+                                                        "
+                                                    />
+                                                </div>
+                                                <span class="input-group-btn">
+                                                    <button
+                                                        class="btn btn-info btn"
+                                                        @click.prevent="
+                                                            buscaxCodRequMateriales
+                                                        "
+                                                    >
+                                                        Generar Informe
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class="col-md-12">
                                         <div class="row">
                                             <div class="col-md-6">
@@ -46,6 +79,7 @@
                                                             style="width: 90%"
                                                             filterable
                                                             placeholder="Select"
+                                                            disabled
                                                         >
                                                             <v-row>
                                                                 <el-option
@@ -82,6 +116,7 @@
                                                             v-model="
                                                                 fillCrearInformeValorizacion.nIdClient
                                                             "
+                                                             :disabled='true'
                                                         />
                                                     </div>
                                                 </div>
@@ -103,6 +138,7 @@
                                                         v-model="
                                                             fillCrearInformeValorizacion.detservicio
                                                         "
+                                                        :disabled='true'
                                                     />
                                                 </div>
                                             </div>
@@ -818,8 +854,11 @@
                                     <td v-text="item.AlquilerNombre"></td>
                                     <td v-text="item.cantidad"></td>
                                     <td v-text="item.precioOtros"></td>
-                                    <td v-text="item.cantidad * item.precioOtros"></td>
-                                   
+                                    <td
+                                        v-text="
+                                            item.cantidad * item.precioOtros
+                                        "
+                                    ></td>
 
                                     <td>
                                         <button
@@ -909,9 +948,10 @@ export default {
                 nIdDetServ: "",
                 cImporte: "",
                 nIdOS: "",
-                cCantAlq:"",
-                nIdAlquiler:"",
-                precioOtros:"",
+                cCantAlq: "",
+                nIdAlquiler: "",
+                precioOtros: "",
+                codRequMateriales:"",
 
                 cDocumento: "",
                 cFechaEmision: "",
@@ -936,7 +976,7 @@ export default {
             },
             listAlmacen: [],
             listUnidMed: [],
-            listTiempoAlquiler:[],
+            listTiempoAlquiler: [],
             listProd: [],
             listCCostos: [],
             listartempProduccion: [],
@@ -1088,8 +1128,7 @@ export default {
                     estado: "R",
                     cCantAlq: this.fillCrearInformeValorizacion.cCantAlq,
                     nIdAlquiler: this.fillCrearInformeValorizacion.nIdAlquiler,
-                    precioOtros: this.fillCrearInformeValorizacion.precioOtros
-                    
+                    precioOtros: this.fillCrearInformeValorizacion.precioOtros,
                 })
                 .then((response) => {
                     if (
@@ -1112,13 +1151,13 @@ export default {
                 });
         },
 
-        setLimpiaOtrosRequerimientos(){
-
-            this.fillCrearInformeValorizacion.cDescripcion="",
-            this.fillCrearInformeValorizacion.cCantidadReq="",
-            this.fillCrearInformeValorizacion.cCantAlq=0,
-           this.fillCrearInformeValorizacion.precioOtros=0
-           this.fillCrearInformeValorizacion.nIdAlquiler =this.listTiempoAlquiler[0].id;
+        setLimpiaOtrosRequerimientos() {
+            (this.fillCrearInformeValorizacion.cDescripcion = ""),
+                (this.fillCrearInformeValorizacion.cCantidadReq = ""),
+                (this.fillCrearInformeValorizacion.cCantAlq = 0),
+                (this.fillCrearInformeValorizacion.precioOtros = 0);
+            this.fillCrearInformeValorizacion.nIdAlquiler =
+                this.listTiempoAlquiler[0].id;
         },
 
         setLimpiaRequerimientos() {
@@ -1406,14 +1445,29 @@ export default {
                 this.listTiempoAlquiler = response.data;
                 this.fillCrearInformeValorizacion.nIdAlquiler =
                     this.listTiempoAlquiler[0].id;
-                
             });
         },
+        buscaxCodRequMateriales(){
+
+        var url = "/administracion/proyecto_ReqMateriales/listbyId";
+      axios
+        .post(url, {
+            codRequMateriales: this.fillCrearInformeValorizacion.codRequMateriales,
+       
+        })
+        .then((response) => {
+            this.fillCrearInformeValorizacion.nIdCcostos= response.data.centro_costos_id
+            this.fillCrearInformeValorizacion.nIdClient= response.data.cliente
+            this.fillCrearInformeValorizacion.detservicio= response.data.detservicio
+            this.fillCrearInformeValorizacion.FInicio= response.data.fechainicio
+            this.fillCrearInformeValorizacion.FFinal= response.data.fechafinal
+            this.fillCrearInformeValorizacion.cDuracion= response.data.duracion
+            this.fillCrearInformeValorizacion.nIdOS= response.data.ord_servicio
+
+        });
+    
+        }
     },
-
-   
-
-
 
     computed: {
         calculoFechas() {

@@ -19,7 +19,7 @@ class CreateMaterialInfoproduccion extends Migration
             $table->foreign('informeproduccion_id')->references('id')->on('informeproduccion');
             $table->unsignedBigInteger('producto_id')->required();
             $table->foreign('producto_id')->references('id')->on('producto');
-            $table->string('cantidad',4)->required();
+            $table->string('cantidad',10)->required();
             $table->unsignedBigInteger('unidmedida_id');
             $table->foreign('unidmedida_id')->references('id')->on('unidmedida');
             $table->date('fecha')->required();

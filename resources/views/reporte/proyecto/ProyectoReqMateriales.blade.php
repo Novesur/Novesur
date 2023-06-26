@@ -74,7 +74,7 @@
         </tr>
         @if($ProyectoManObra) @foreach ($ProyectoManObra as $datamaterial)
         <tr>
-            <td align="center" style="font-size: 12px">{{$datamaterial->personal}}</td>
+            <td align="center" style="font-size: 12px">{{$datamaterial->personal->nombres.' '.$datamaterial->personal->ApPaterno.' '.$datamaterial->personal->ApMaterno}}</td> 
             <td align="center" style="font-size: 12px">{{$datamaterial->horas}}</td>
             <td align="center" style="font-size: 12px">{{$datamaterial->dias}}</td>
         </tr>

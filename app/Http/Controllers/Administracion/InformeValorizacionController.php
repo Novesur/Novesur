@@ -112,7 +112,7 @@ class InformeValorizacionController extends Controller
         return response()->json(['message' => 'Nuevo Requerimiento Materiales agregado', 'icon' => 'success'], 200);
     }
 
-    public function list(Request $request){
+    public function index(Request $request){
        
 
         if($request->cServicio == null & $request->nIdProyecto == null  & $request->cFecha == null){
@@ -175,4 +175,6 @@ class InformeValorizacionController extends Controller
         ]);
         return $pdf->download('invoice.pdf');
     }
+
+
 }

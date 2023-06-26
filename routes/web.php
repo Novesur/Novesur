@@ -500,6 +500,7 @@ Route::post('administracion/RequerimientoMateriales/getDataOtrosReq', 'Administr
 Route::post('administracion/RequerimientoMateriales/EditModalOtrosReq', 'Administracion\RequerimientoMaterialesController@EditModalOtrosReq');
 
 
+
 ///// Nota de Pedido /////
 Route::post('/administracion/NotaPedido/delete', 'Administracion\NotaPedidoController@delete');
 Route::post('/administracion/NotaPedido/create', 'Administracion\NotaPedidoController@create');
@@ -512,6 +513,7 @@ Route::post('/administracion/NotaPedido/editcantDetNotaPedido', 'Administracion\
 Route::post('/administracion/proyecto_ReqMateriales/create', 'Administracion\ProyectoReqMaterialesController@create');
 Route::get('/administracion/proyecto_ReqMateriales/list', 'Administracion\ProyectoReqMaterialesController@list');
 Route::post('/operacion/proyecto_ReqMateriales/export', 'Administracion\ProyectoReqMaterialesController@export');
+Route::post('/administracion/proyecto_ReqMateriales/listbyId', 'Administracion\ProyectoReqMaterialesController@listbyId');
 Route::post('/administracion/proyecto_ReqMateriales/setGenerarPReqMaterialesPdf', 'Administracion\ProyectoReqMaterialesController@setGenerarPReqMaterialesPdf');
 
 /* Proyecto Materiales */
@@ -534,8 +536,8 @@ Route::get('/administracion/ProyectOtrosReq/CleanOtrosProyReqMateriales', 'Admin
 
 /* Informe Valorizacion */
 Route::post('/administracion/InformeValorizacion/create', 'Administracion\InformeValorizacionController@create');
-Route::get('/administracion/InformeValorizacion/list', 'Administracion\InformeValorizacionController@list');
-Route::post('/operacion/InformeValorizacion/export', 'Administracion\InformeValorizacionController@export');
+Route::get('/administracion/InformeValorizacion/index', 'Administracion\InformeValorizacionController@index');
+Route::post('/operacion/InformeValorizacion/export', 'Administracion\InformeValorizacionController@export'); 
 Route::post('/administracion/InformeValorizacion/setGenerarInfoValorizacionPdf', 'Administracion\InformeValorizacionController@setGenerarInfoValorizacionPdf');
 
 
@@ -579,52 +581,6 @@ Route::get('/administracion/cargo/index', 'Administracion\CargoController@index'
 Route::get('/administracion/cargo/listByIdCargos', 'Administracion\CargoController@listByIdCargos');
 Route::post('/administracion/cargo/edit', 'Administracion\CargoController@edit');
 Route::get('/administracion/cargo/list', 'Administracion\CargoController@list');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

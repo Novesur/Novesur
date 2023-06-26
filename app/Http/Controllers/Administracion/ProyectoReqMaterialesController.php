@@ -34,7 +34,7 @@ class ProyectoReqMaterialesController extends Controller
             $maxidPReqMat = 'PROY' . sprintf('%04d', $countMaxreqmateriales + 1) . '-' . $yearMaxID;
         }
 
-        $dateIni = Carbon::parse($request->FInicio)->format('Y-m-d');
+        $dateIni = Carbon::parse($request->FInicio)->format('Y-m-d'); 
         $dateFinal = Carbon::parse($request->FFinal)->format('Y-m-d');
         $fecha = date('Y-m-d');
 
@@ -63,6 +63,7 @@ class ProyectoReqMaterialesController extends Controller
                 'cantidad' => $MaterialOP->cantidad,
                 'unidmedida_id' =>  $MaterialOP->unidMedida_id,
                 'cantInfProd'  => $MaterialOP->cantidad,
+                'unidmedidaInfoProd_id'  => $MaterialOP->unidMedida_id,
                 'fecha' =>  $formatreq,
                 'estado' => $MaterialOP->estado
             ];
@@ -76,7 +77,7 @@ class ProyectoReqMaterialesController extends Controller
         $allRequerimientoObra = $ProyManoObra->map(function ($ProyManoObra) use ($proyectoReqMateriales) {
             return [
                 'pk_proyecto_reqmateriales' => $proyectoReqMateriales->id,
-                'personal' => $ProyManoObra->id_personal,
+                'personal_id' => $ProyManoObra->id_personal,
                 'dias' =>  $ProyManoObra->dias,
                 'horas' => $ProyManoObra->horas,
                 'personalInfoProy' => $ProyManoObra->id_personal,
@@ -97,7 +98,6 @@ class ProyectoReqMaterialesController extends Controller
                 'descripcion' => $OtrosRequerimientos->descripcion,
                 'cantidad' => $OtrosRequerimientos->cantidad,
                 'unidmedida_id'=> $OtrosRequerimientos->nIdUnidmed,
-                'pk_tiempo_alquiler'=> $OtrosRequerimientos->nIdAlquiler,
                 'descripcionInfoProy' => $OtrosRequerimientos->descripcion,
                 'cantidadInfoProy' => $OtrosRequerimientos->cantidad,
                 'unidmedida_idInfoProy' => $OtrosRequerimientos->nIdUnidmed,
@@ -162,7 +162,7 @@ class ProyectoReqMaterialesController extends Controller
       
        
       
-        $ProyectoManObra = ProyectoManObra::where('pk_proyecto_reqmateriales', $idReqMateriales)->where('estado', 'R')->get();
+        $ProyectoManObra = ProyectoManObra::with('personal')->where('pk_proyecto_reqmateriales', $idReqMateriales)->where('estado', 'R')->get();
         $ProyectOtrosReq = ProyectOtrosReq::where('pk_proyecto_reqmateriales', $idReqMateriales)->where('estado', 'R')->get();
         $logo = asset('img/logo.gif');
 
@@ -175,5 +175,11 @@ class ProyectoReqMaterialesController extends Controller
             'ProyectOtrosReq' => $ProyectOtrosReq,
         ]);
         return $pdf->download('invoice.pdf');
+    }
+
+    public function listbyId(Request $request){
+       
+        $dato = ProyectoReqMateriales::with('ccostos')->where('codigo', $request->codRequMateriales)->first();
+        return $dato;
     }
 }
