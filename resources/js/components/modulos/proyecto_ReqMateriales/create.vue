@@ -434,7 +434,7 @@
                                         </button>
                                         <button
                                             class="btn btn-flat btn-default btnWidth"
-                                            @click.prevent="setCleanMaterial"
+                                            @click.prevent="setCleanReqMateriales"
                                         >
                                             Limpiar
                                         </button>
@@ -1233,9 +1233,10 @@ export default {
                         showConfirmButton: false,
                         timer: 1500,
                     });
-                    this.setCleanMaterial();
+                    this.setCleanReqMateriales();
                     this.setCleanManoObra();
                     this.setCleanRequerimientos();
+                    this.setCleanOtrosReq();
                 });
         },
         abrirModal() {
@@ -1367,7 +1368,7 @@ export default {
             this.fillCrearReqMaterialesProy.cDocumento = "";
         },
 
-        setCleanMaterial() {
+        setCleanReqMateriales() {
             var url = "/administracion/ProyectoMateriales/eliminarTemporder";
             axios.get(url, {}).then((response) => {
                 this.listartempProduccion = response.data.datos;
@@ -1393,12 +1394,18 @@ export default {
         },
 
         setCleanRequerimientos() {
-            var url = "/administracion/ProyectoManoObra/CleanRequerimientos2";
-            axios.get(url, {}).then((response) => {
-                this.listartempRequerimientos = response.data.datos;
-                this.setLimpiaRequerimientos();
-            });
-        },
+   
+            this.fillCrearReqMaterialesProy.nIdCcostos='';
+            this.fillCrearReqMaterialesProy.nIdClient='';
+            this.fillCrearReqMaterialesProy.cRuc='';
+            this.fillCrearReqMaterialesProy.detservicio='';
+            this.fillCrearReqMaterialesProy.FInicio='';
+            this.fillCrearReqMaterialesProy.FFinal='';
+            this.fillCrearReqMaterialesProy.cDuracion='';
+            this.fillCrearReqMaterialesProy.nIdOS=''
+            
+            
+        }, 
 
         setListtemOrders() {
             var url = "/administracion/ordenCompra/ListtempOrden";

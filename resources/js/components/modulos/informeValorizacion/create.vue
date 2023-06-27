@@ -1449,7 +1449,7 @@ export default {
         },
         buscaxCodRequMateriales(){
 
-        var url = "/administracion/proyecto_ReqMateriales/listbyId";
+        var url = "/administracion/proyecto_ReqMateriales/listbyId"; 
       axios
         .post(url, {
             codRequMateriales: this.fillCrearInformeValorizacion.codRequMateriales,
@@ -1464,9 +1464,29 @@ export default {
             this.fillCrearInformeValorizacion.cDuracion= response.data.duracion
             this.fillCrearInformeValorizacion.nIdOS= response.data.ord_servicio
 
+            this.getListProyMateriales(this.fillCrearInformeValorizacion.codRequMateriales)
+
         });
     
+        },
+
+        
+        getListProyMateriales(codRequMateriales){
+
+            var url = "/administracion/ProyectoMateriales/listproyMateriales"; 
+            axios
+                .get(url, {
+                    params: {
+                        codRequMateriales
+                    },
+                })
+                .then((response) => {
+                    console.log(response.data)
+                });
+
         }
+
+
     },
 
     computed: {

@@ -101,6 +101,7 @@ class UsuarioController extends Controller
         $dato = User::where('roles_id',3)
         ->Orwhere('roles_id',1)
         ->Orwhere('roles_id',5)
+        ->Orwhere('roles_id',13)
         ->Orwhere('roles_id',7)->get();
         return $dato;
     }

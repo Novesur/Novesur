@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Administracion;
 use App\Producto;
 use App\TempProyectoMateriales;
 use App\UnidMedida;
+
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
+use App\ProyectoMateriales;
+use App\ProyectoReqMateriales;
 use Illuminate\Http\Request;
 
 class ProyectoMaterialesController extends Controller
@@ -60,5 +63,13 @@ class ProyectoMaterialesController extends Controller
             return response()->json(['datos' => $items]);
         endif;
         return response()->json(['message' => 'El item no existe'], 422);
+    }
+
+    public function listproyMateriales(Request $request){ 
+       
+        $idproyReqMateriales = ProyectoReqMateriales::where('codigo', $request->codRequMateriales)->first();
+        $dato = ProyectoMateriales::with('producto','unidmedida')->where('pk_proyecto_reqmateriales', $idproyReqMateriales->id)->get(); 
+        return $dato;
+
     }
 }

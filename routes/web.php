@@ -520,6 +520,7 @@ Route::post('/administracion/proyecto_ReqMateriales/setGenerarPReqMaterialesPdf'
 Route::post('/administracion/ProyectoMateriales/addOrden', 'Administracion\ProyectoMaterialesController@addOrden');
 Route::get('/administracion/ProyectoMateriales/eliminarTemporder', 'Administracion\ProyectoMaterialesController@eliminarTemporder');
 Route::post('/administracion/ProyectoMateriales/reorderReqMateriales', 'Administracion\ProyectoMaterialesController@reorderReqMateriales');
+Route::get('/administracion/ProyectoMateriales/listproyMateriales', 'Administracion\ProyectoMaterialesController@listproyMateriales');
 
 /* Proyecto Mano de Obra */
 Route::post('/administracion/ProyectoManoObra/addProyManObra', 'Administracion\ProyectoManoObraController@addProyManObra');

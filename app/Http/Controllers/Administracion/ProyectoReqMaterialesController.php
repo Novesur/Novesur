@@ -178,8 +178,9 @@ class ProyectoReqMaterialesController extends Controller
     }
 
     public function listbyId(Request $request){
-       
         $dato = ProyectoReqMateriales::with('ccostos')->where('codigo', $request->codRequMateriales)->first();
-        return $dato;
+        return $dato;  
     }
+    
+ 
 }

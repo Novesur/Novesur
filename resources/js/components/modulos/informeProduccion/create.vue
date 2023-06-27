@@ -1256,7 +1256,7 @@ export default {
     setAddPMaterialReqMateriales() {
 
 
-      var url = "/administracion/InformeProduccion/addMaterialReqMateriales";
+      var url = "/administracion/InformeProduccion/addMaterialReqMateriales"; 
       axios
         .post(url, {
           codRequMateriales: this.fillCrearInfoProduccion.codRequMateriales,

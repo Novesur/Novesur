@@ -186,9 +186,10 @@ class InformeProduccionController extends Controller
     $InfoProduccionManoObra->informeproduccion_id = $ordenproduc->id;
     $InfoProduccionManoObra->personal = strtoupper($request->cPersonal);
     $InfoProduccionManoObra->dias = $request->cDiasMObra;
-    $InfoProduccionManoObra->horas = $request->cHorasMObra;
-    $ManoObraReqmateriales->costunit = 0;
-    $ManoObraReqmateriales->total = 0;
+    $InfoProduccionManoObra->horas = $request->cHorasMObra; 
+    $InfoProduccionManoObra->costdias = 0; 
+    $InfoProduccionManoObra->costhoras = 0; 
+    $InfoProduccionManoObra->total = 0; 
     $InfoProduccionManoObra->save();
     }
 
