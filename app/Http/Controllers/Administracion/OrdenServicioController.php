@@ -45,25 +45,26 @@ class OrdenServicioController extends Controller
 
 
         //$countOrdenServicio = Ordenservicio::count();
-        $countable = Countable::all();
-        $countOrdenServicio = $countable[0]->countordenservicio;
-
+        
         $usuario = User::find($request->nIdUser);
-
+        
         if($usuario->almacen_id == 1){
-            if ($countOrdenServicio == 0) {
+            $countableCentral = Countable::all();
+            $countableCentralCount = $countableCentral[0]->countordenservicio;
+
+            if ($countableCentralCount == 0) {
                 $codpIngreso = 'S0001' . '-' . Carbon::parse($request->cFechaEmision)->format('Y');
             } else {
-                $codpIngreso = 'S' . sprintf('%04d', $countOrdenServicio + 1) . '-' . Carbon::parse($request->cFechaEmision)->format('Y');
+                $codpIngreso = 'S' . sprintf('%04d', $countableCentralCount + 1) . '-' . Carbon::parse($request->cFechaEmision)->format('Y');
             }
         }
         if($usuario->almacen_id == 7){
-            $countable = Countable::all();
-            $countOrdenServicio = $countable[0]->countordenservicioPiura;
+            $countablePiura = Countable::all();
+            $countordenservicioPiura = $countablePiura[0]->countordenservicioPiura;
             if ($countOrdenServicio == 0) {
                 $codpIngreso = 'SP0001' . '-' . Carbon::parse($request->cFechaEmision)->format('Y');
             } else {
-                $codpIngreso = 'SP' . sprintf('%04d', $countOrdenServicio + 1) . '-' . Carbon::parse($request->cFechaEmision)->format('Y');
+                $codpIngreso = 'SP' . sprintf('%04d', $countordenservicioPiura + 1) . '-' . Carbon::parse($request->cFechaEmision)->format('Y');
             }
 
         }
@@ -101,11 +102,11 @@ class OrdenServicioController extends Controller
             Session::put('products', collect([]));
 
             if($usuario->almacen_id == 1){
-                Countable::where('id', 1)->update(['countordenservicio' => $countOrdenServicio  +1 ]);
+                Countable::where('id', 1)->update(['countordenservicio' => $countableCentralCount  +1 ]);
             }
 
             if($usuario->almacen_id == 7){
-                Countable::where('id', 1)->update(['countordenservicioPiura' => $countOrdenServicio  +1 ]);
+                Countable::where('id', 1)->update(['countordenservicioPiura' => $countordenservicioPiura  +1 ]);
             }
 
             return response()->json(['message' => 'Grabado', 'icon' => 'success'], 200);

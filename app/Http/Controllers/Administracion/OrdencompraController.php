@@ -72,26 +72,26 @@ class OrdencompraController extends Controller
     
 
         if($usuario->almacen_id == 1){
-            $countable = Countable::all();
-            $countordencompra = $countable[0]->countordencompra;
+            $countableCentral = Countable::all();
+            $countableCentralCount = $countableCentral[0]->countordencompra;
     
-            if($countordencompra == 0){
+            if($countableCentralCount == 0){
                 $codOrdCompra = 'C0001'.'-'. Carbon::parse($request->cFechaEmision)->format('Y');
             }else{
-                $codOrdCompra = 'C'.sprintf('%04d',$countordencompra +1) .'-'. Carbon::parse($request->cFechaEmision)->format('Y');
+                $codOrdCompra = 'C'.sprintf('%04d',$countableCentralCount +1) .'-'. Carbon::parse($request->cFechaEmision)->format('Y');
             }
         }
 
         if($usuario->almacen_id == 7){
-            $countable = Countable::all();
-            $countordencompraPiura = $countable[0]->countordencompraPiura;
+            $countablePiura = Countable::all();
+            $countablePiuraCount = $countablePiura[0]->countordencompraPiura;
 
 
     
-            if($countordencompraPiura == 0){
+            if($countablePiuraCount == 0){
                 $codOrdCompra = 'CP0001'.'-'. Carbon::parse($request->cFechaEmision)->format('Y');
             }else{
-                $codOrdCompra = 'CP'.sprintf('%04d',$countordencompraPiura +1) .'-'. Carbon::parse($request->cFechaEmision)->format('Y');
+                $codOrdCompra = 'CP'.sprintf('%04d',$countablePiuraCount +1 ) .'-'. Carbon::parse($request->cFechaEmision)->format('Y');
             }
         }
 
@@ -122,18 +122,20 @@ class OrdencompraController extends Controller
                     'estado'            => 2, 
                 ];
             });
+            
             Detalleordencompra::insert($allProducts->toArray());
             Session::put('products', collect([]));
 
              /*  Si el usuario es de Sede Central */
             if($usuario->almacen_id == 1){
-            Countable::where('id', 1)->update(['countordencompra' => $countordencompra + 1]);
+            Countable::where('id', 1)->update(['countordencompra' => $countableCentralCount +1]);
             }
 
 
            /*  Si el usuario es de Piura */
             if($usuario->almacen_id == 7){
-                Countable::where('id', 1)->update(['countordencompraPiura' => $countordencompra + 1]); 
+                
+                Countable::where('id', 1)->update(['countordencompraPiura' => $countablePiuraCount +1]); 
                 }
 
             return response()->json(['message' => 'Grabado', 'icon' => 'success'], 200);
