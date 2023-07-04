@@ -15,7 +15,7 @@ class CreateInformeValorizacionTable extends Migration
     {
         Schema::create('informe_valorizacion', function (Blueprint $table) {
             $table->id();
-            $table->char('codigo',15)->required();
+            $table->char('codigo',20)->required();
             $table->date('fecha')->required();
             $table->unsignedBigInteger('centro_costos_id');
             $table->foreign('centro_costos_id')->references('id')->on('centro_costos');
@@ -28,6 +28,8 @@ class CreateInformeValorizacionTable extends Migration
             $table->decimal('importe', 8, 2)->required();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('pk_proyecto_reqmateriales');
+            $table->foreign('pk_proyecto_reqmateriales')->references('id')->on('proyecto_reqmateriales');
             $table->softDeletes();
             $table->timestamps();
         });

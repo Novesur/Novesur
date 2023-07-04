@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Administracion;
 
 use App\Http\Controllers\Controller;
+use App\InformeValorizacion;
 use App\Producto;
+use App\ProyectoReqMateriales;
 use App\TempValorizacionMateriales;
 use App\UnidMedida;
+use App\valorizacionReqMateriales;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -47,10 +50,10 @@ class InformeValorizacionMaterialesController extends Controller
         return response()->json(['datos' => $dato]);
     }
 
-    public function reorderReqMateriales(Request $request)
+    public function reorderReqMateriales(Request $request) 
     {
 
-        $id = (int)trim($request->item);
+      /*   $id = (int)trim($request->item);
         $items = session()->get('InfoValorMaterial') ?? collect([]);
         $exits = $items->firstWhere("producto_id", $id);
 
@@ -59,6 +62,26 @@ class InformeValorizacionMaterialesController extends Controller
             session()->put('InfoValorMaterial', $items);
             return response()->json(['datos' => $items]);
         endif;
-        return response()->json(['message' => 'El item no existe'], 422);
+        return response()->json(['message' => 'El item no existe'], 422); */
+
+        $infoValorMateriales = valorizacionReqMateriales::where('id',$request->item)->first();
+        $infoValorMateriales->delete();
+    }
+
+    public function listInfoValorMateriales(Request $request){ 
+
+        $idproyReqMateriales = ProyectoReqMateriales::where('codigo', $request->codRequMateriales)->first();
+     
+        $InformeValorizacion = InformeValorizacion::where('pk_proyecto_reqmateriales', $idproyReqMateriales->id)->first();
+        $dato = valorizacionReqMateriales::with('producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion','unidmedida')->where('pk_informe_valorizacion', $InformeValorizacion->id)->get(); 
+        return $dato; 
+
+    }
+
+    public function ListValorMaterialesxInfoValor(Request $request){ 
+
+        $dato = valorizacionReqMateriales::with('producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion','unidmedida')->where('id', $request->pk_informe_valorizacion)->get();
+        return $dato; 
+
     }
 }

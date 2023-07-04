@@ -520,12 +520,13 @@ Route::post('/administracion/proyecto_ReqMateriales/setGenerarPReqMaterialesPdf'
 Route::post('/administracion/ProyectoMateriales/addOrden', 'Administracion\ProyectoMaterialesController@addOrden');
 Route::get('/administracion/ProyectoMateriales/eliminarTemporder', 'Administracion\ProyectoMaterialesController@eliminarTemporder');
 Route::post('/administracion/ProyectoMateriales/reorderReqMateriales', 'Administracion\ProyectoMaterialesController@reorderReqMateriales');
-Route::get('/administracion/ProyectoMateriales/listproyMateriales', 'Administracion\ProyectoMaterialesController@listproyMateriales');
+//Route::get('/administracion/ProyectoMateriales/listproyMateriales', 'Administracion\ProyectoMaterialesController@listproyMateriales');
 
 /* Proyecto Mano de Obra */
 Route::post('/administracion/ProyectoManoObra/addProyManObra', 'Administracion\ProyectoManoObraController@addProyManObra');
 Route::get('/administracion/ProyectoManoObra/CleanProyectManObra', 'Administracion\ProyectoManoObraController@CleanProyectManObra');
 Route::post('/administracion/ProyectoManoObra/reorderProyectManObra', 'Administracion\ProyectoManoObraController@reorderProyectManObra');
+/* Route::get('/administracion/ProyectoManoObra/listproyManoObra', 'Administracion\ProyectoManoObraController@listproyManoObra'); */
 
 /* Otros Requerimientos*/
 Route::post('/administracion/ProyectOtrosReq/addOtrosReqMateriales', 'Administracion\ProyectOtrosReqController@addOtrosReqMateriales');
@@ -533,7 +534,7 @@ Route::get('/administracion/ProyectoManoObra/CleanProyectManObra', 'Administraci
 Route::post('/administracion/ProyectOtrosReq/reorderOtrosReq', 'Administracion\ProyectOtrosReqController@reorderOtrosReq');
 Route::post('/administracion/ProyectOtrosReq/addOtrosProyReqMateriales', 'Administracion\ProyectOtrosReqController@addOtrosProyReqMateriales');
 Route::get('/administracion/ProyectOtrosReq/CleanOtrosProyReqMateriales', 'Administracion\ProyectOtrosReqController@CleanOtrosProyReqMateriales');
-
+//Route::get('/administracion/ProyectOtrosReq/listproyOtrosReq', 'Administracion\ProyectOtrosReqController@listproyOtrosReq');
 
 /* Informe Valorizacion */
 Route::post('/administracion/InformeValorizacion/create', 'Administracion\InformeValorizacionController@create');
@@ -546,16 +547,23 @@ Route::post('/administracion/InformeValorizacion/setGenerarInfoValorizacionPdf',
 Route::post('/administracion/informeValorizacion/addReqMatInfoValor', 'Administracion\InformeValorizacionMaterialesController@addReqMatInfoValor');
 Route::get('/administracion/informeValorizacion/eliminarTemporder', 'Administracion\InformeValorizacionMaterialesController@eliminarTemporder');
 Route::post('/administracion/informeValorizacion/reorderReqMateriales', 'Administracion\InformeValorizacionMaterialesController@reorderReqMateriales');
+Route::get('/administracion/informeValorizacion/listInfoValorMateriales', 'Administracion\InformeValorizacionMaterialesController@listInfoValorMateriales');
+Route::get('/administracion/informeValorizacion/ListValorMaterialesxInfoValor', 'Administracion\InformeValorizacionMaterialesController@ListValorMaterialesxInfoValor');
+
+
 
 /* Mano de Obra Informe Valorizacion */
 Route::post('/administracion/informeValorizacion/addInfoValorManObra', 'Administracion\InformeValorizacionManoObraController@addInfoValorManObra');
 Route::get('/administracion/informeValorizacion/CleanProyectManObra', 'Administracion\InformeValorizacionManoObraController@CleanProyectManObra');
 Route::post('/administracion/informeValorizacion/reorderReqManObra', 'Administracion\InformeValorizacionManoObraController@reorderReqManObra');
+Route::get('/administracion/informeValorizacion/listInfoValorManoObra', 'Administracion\InformeValorizacionManoObraController@listInfoValorManoObra');
 
 /* Otros Requerimientos Informe Valorizacion */
 Route::post('/administracion/informeValorizacion/addOtrosProyInfoValor', 'Administracion\InformeValorizacionOtrosReqController@addOtrosProyInfoValor');
 Route::get('/administracion/informeValorizacion/CleanOtrosProyInfoValor', 'Administracion\InformeValorizacionOtrosReqController@CleanOtrosProyInfoValor');
 Route::post('/administracion/informeValorizacion/reorderOtrosReq', 'Administracion\InformeValorizacionOtrosReqController@reorderOtrosReq');
+Route::get('/administracion/informeValorizacion/listInfoValorOtrosReq', 'Administracion\InformeValorizacionOtrosReqController@listInfoValorOtrosReq');
+
 
 /* Centro de Costos */
 Route::post('/administracion/CentroCostos/search', 'Administracion\CentroCostosController@search');

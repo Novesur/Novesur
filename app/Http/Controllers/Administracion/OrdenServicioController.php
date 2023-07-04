@@ -61,16 +61,13 @@ class OrdenServicioController extends Controller
         if($usuario->almacen_id == 7){
             $countablePiura = Countable::all();
             $countordenservicioPiura = $countablePiura[0]->countordenservicioPiura;
-            if ($countOrdenServicio == 0) {
+            if ($countordenservicioPiura == 0) {
                 $codpIngreso = 'SP0001' . '-' . Carbon::parse($request->cFechaEmision)->format('Y');
             } else {
                 $codpIngreso = 'SP' . sprintf('%04d', $countordenservicioPiura + 1) . '-' . Carbon::parse($request->cFechaEmision)->format('Y');
             }
 
         }
-
-
-
 
         if ($request->session()->has('products')) {
             $ordenServicio = new Ordenservicio();

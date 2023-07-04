@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Administracion;
 
 use App\Http\Controllers\Controller;
+use App\ProyectoReqMateriales;
+use App\ProyectOtrosReq;
 use App\TempProyectOtrosRequerimientos;
 use App\UnidMedida;
 use Illuminate\Support\Facades\Session;
@@ -43,5 +45,15 @@ class ProyectOtrosReqController extends Controller
         endif;
         return response()->json(['message' => 'El item no existe'], 422);
 
-    }
+    } 
+
+
+/*     public function listproyOtrosReq(Request $request){ 
+       
+        $idproyReqMateriales = ProyectoReqMateriales::where('codigo', $request->codRequMateriales)->first();
+        $dato = ProyectOtrosReq::with('unidmedida_idInfoProy')->where('pk_proyecto_reqmateriales', $idproyReqMateriales->id)->get(); 
+        return $dato; 
+
+    } */
+
 }

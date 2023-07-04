@@ -20,9 +20,6 @@ class CreateValorizacionManobraTable extends Migration
             $table->string('personal',150)->nullable();
             $table->integer('dias')->required();
             $table->integer('horas')->required();
-            $table->string('personalInfoProy',150)->nullable();
-            $table->integer('diasInfoProy')->required();
-            $table->integer('horasInfoProy')->required();
             $table->char('estado',1)->required();
             $table->softDeletes();
         });

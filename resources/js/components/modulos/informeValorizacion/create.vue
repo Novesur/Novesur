@@ -467,34 +467,34 @@
                                             <tr
                                                 v-for="(
                                                     item, index
-                                                ) in listartempProduccion"
+                                                ) in listProyInfoValorMateriales"
                                                 :key="index"
                                             >
-                                                <td v-text="item.codigo"></td>
+                                                <td v-text="item.producto.codigo"></td>
                                                 <td v-text="item.cantidad"></td>
 
                                                 <td
                                                     v-text="
-                                                        item.productoFamilia +
+                                                        item.producto.familia.nombre +
                                                         ' ' +
-                                                        item.productoSubfamilia +
+                                                        item.producto.subfamilia.nombre +
                                                         ', MARCA :' +
-                                                        item.productoMarca +
+                                                        item.producto.marca.nombre +
                                                         ', MODELO/TIPO :' +
-                                                        item.productoModelotipo +
+                                                        item.producto.modelotipo.nombre +
                                                         ', MATERIAL :' +
-                                                        item.material
+                                                        item.producto.material.nombre
                                                     "
                                                 ></td>
                                                 <td
-                                                    v-text="item.unidMedida"
+                                                    v-text="item.unidmedida.nombre"
                                                 ></td>
                                                 <td>
                                                     <button
                                                         class="btn btn-danger btn-sm"
                                                         @click.prevent="
                                                             DeletListInfoValMateriales(
-                                                                item.producto_id
+                                                                item.id , item.pk_informe_valorizacion
                                                             )
                                                         "
                                                     >
@@ -663,10 +663,10 @@
                             </thead>
                             <tbody>
                                 <tr
-                                    v-for="(item, index) in listartempMobra"
+                                    v-for="(item, index) in listInfoValorManoObra"
                                     :key="index"
                                 >
-                                    <td v-text="item.personal"></td>
+                                    <td v-text="item.personal.ApPaterno  + ' ' + item.personal.ApMaterno +' ' + item.personal.nombres"></td>
                                     <td v-text="item.dias"></td>
                                     <td v-text="item.horas"></td>
                                     <td>
@@ -735,7 +735,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group row">
+                          <!--       <div class="form-group row">
                                     <label class="col-md-2 col-form-label"
                                         >PRECIO</label
                                     >
@@ -795,7 +795,34 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
+
+                                
+                                <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label
+                                                class="col-md-4 col-form-label"
+                                                >Unid Medida</label
+                                            >
+                                            <div class="col-md-4">
+                                                <el-select
+                                                    v-model="
+                                                        fillCrearInformeValorizacion.nIdUnidMedOtrosReq
+                                                    "
+                                                    placeholder="Select"
+                                                    style="width: 70%"
+                                                >
+                                                    <el-option
+                                                        v-for="item in listUnidMed"
+                                                        :key="item.id"
+                                                        :label="item.nombre"
+                                                        :value="item.id"
+                                                    >
+                                                    </el-option>
+                                                </el-select>
+                                            </div>
+                                        </div>
+                                    </div>
                             </div>
                         </div>
                     </div>
@@ -836,10 +863,8 @@
                             <thead>
                                 <tr>
                                     <th>Descripción</th>
-                                    <th>Tiempo</th>
                                     <th>Cantidad</th>
-                                    <th>Precio</th>
-                                    <th>Total</th>
+                                    <th>Unid Medida</th>
                                     <th>Acción</th>
                                 </tr>
                             </thead>
@@ -847,19 +872,13 @@
                                 <tr
                                     v-for="(
                                         item, index
-                                    ) in listartempRequerimientos"
+                                    ) in listProyOtrosReq"
                                     :key="index"
                                 >
                                     <td v-text="item.descripcion"></td>
-                                    <td v-text="item.AlquilerNombre"></td>
                                     <td v-text="item.cantidad"></td>
-                                    <td v-text="item.precioOtros"></td>
-                                    <td
-                                        v-text="
-                                            item.cantidad * item.precioOtros
-                                        "
-                                    ></td>
-
+                                    <td v-text="item.unidmedida.nombre"></td>
+                                   
                                     <td>
                                         <button
                                             class="btn btn-danger btn-sm"
@@ -970,6 +989,7 @@ export default {
                 cDescripcion: "",
                 cCantidadReq: "",
                 nIdUnidMed: "",
+                nIdUnidMedOtrosReq: "",
                 nIdUnidMedMat: "",
                 radTipoTiempo: "1",
                 estado: "",
@@ -979,6 +999,9 @@ export default {
             listTiempoAlquiler: [],
             listProd: [],
             listCCostos: [],
+            listProyInfoValorMateriales: [],
+            listInfoValorManoObra:[],
+            listProyOtrosReq:[],
             listartempProduccion: [],
             listartempMobra: [],
             listartempRequerimientos: [],
@@ -1018,6 +1041,7 @@ export default {
         this.getListarUnidadMedida();
         this.getListarCentroCostos();
         this.getListarTiempoAlquiler();
+        this.fillCrearInformeValorizacion.cImporte= 0
     },
 
     methods: {
@@ -1165,16 +1189,33 @@ export default {
                 (this.fillCrearInformeValorizacion.cCantidadReq = 0);
         },
 
-        DeletListInfoValMateriales(item) {
+        DeletListInfoValMateriales(item,pk_informe_valorizacion) {
             var url =
-                "/administracion/informeValorizacion/reorderReqMateriales";
+                "/administracion/informeValorizacion/reorderReqMateriales"; 
             axios
                 .post(url, {
                     item: item,
                 })
-                .then((response) => {
-                    this.listartempProduccion = response.data.datos;
+                .then(() => {
+                    this.getListValorMaterialesxInfoValor(pk_informe_valorizacion)
+                    
                 });
+        },
+
+        getListValorMaterialesxInfoValor(pk_informe_valorizacion){
+            var url = "/administracion/informeValorizacion/ListValorMaterialesxInfoValor";  
+            axios
+                .get(url, {
+                    params: {
+                        pk_informe_valorizacion
+                    },
+                })
+                .then((response) => {
+                    console.log(response.data)
+                    this.listProyInfoValorMateriales = response.data
+                   
+                });
+
         },
 
         DeletListReqMaNObra(item) {
@@ -1187,6 +1228,8 @@ export default {
                     this.listartempMobra = response.data.datos;
                 });
         },
+
+        
 
         DeletListOtrosReq(item) {
             var url = "/administracion/informeValorizacion/reorderOtrosReq";
@@ -1258,19 +1301,7 @@ export default {
             var url = "/administracion/InformeValorizacion/create";
             axios
                 .post(url, {
-                    nidAlmacen: this.fillCrearInformeValorizacion.nidAlmacen,
-                    cRuc: this.fillCrearInformeValorizacion.cRuc,
-                    FInicio: this.fillCrearInformeValorizacion.FInicio,
-                    FFinal: this.fillCrearInformeValorizacion.FFinal,
-                    nIdUser: this.fillCrearInformeValorizacion.nIdUser,
-                    Duracionfechas: this.fillCrearInformeValorizacion.cDuracion,
-                    nIdUnidMed: this.fillCrearInformeValorizacion.nIdUnidMed,
-                    cImporte: this.fillCrearInformeValorizacion.cImporte,
-                    nIdCcostos: this.fillCrearInformeValorizacion.nIdCcostos,
-                    nIdClient: this.fillCrearInformeValorizacion.nIdClient,
-                    detservicio: this.fillCrearInformeValorizacion.detservicio,
-                    cDuracion: this.fillCrearInformeValorizacion.cDuracion,
-                    nIdOS: this.fillCrearInformeValorizacion.nIdOS,
+           
                     cImporte: this.fillCrearInformeValorizacion.cImporte,
                 })
                 .then((response) => {
@@ -1449,10 +1480,11 @@ export default {
         },
         buscaxCodRequMateriales(){
 
-        var url = "/administracion/proyecto_ReqMateriales/listbyId"; 
+        var url = "/administracion/proyecto_ReqMateriales/listbyId";  
       axios
         .post(url, {
             codRequMateriales: this.fillCrearInformeValorizacion.codRequMateriales,
+            cImporte:this.fillCrearInformeValorizacion.cImporte
        
         })
         .then((response) => {
@@ -1464,16 +1496,18 @@ export default {
             this.fillCrearInformeValorizacion.cDuracion= response.data.duracion
             this.fillCrearInformeValorizacion.nIdOS= response.data.ord_servicio
 
-            this.getListProyMateriales(this.fillCrearInformeValorizacion.codRequMateriales)
+            this.getListInfoValorReqMateriales(this.fillCrearInformeValorizacion.codRequMateriales)
+           this.getListInfoValorManoObra(this.fillCrearInformeValorizacion.codRequMateriales)
+           this.getListInfoValorOtrosReq(this.fillCrearInformeValorizacion.codRequMateriales) 
 
         });
     
         },
 
         
-        getListProyMateriales(codRequMateriales){
+        getListInfoValorReqMateriales(codRequMateriales){
 
-            var url = "/administracion/ProyectoMateriales/listproyMateriales"; 
+            var url = "/administracion/informeValorizacion/listInfoValorMateriales";  
             axios
                 .get(url, {
                     params: {
@@ -1481,6 +1515,37 @@ export default {
                     },
                 })
                 .then((response) => {
+                    console.log(response.data)
+                    this.listProyInfoValorMateriales = response.data
+                   
+                });
+
+        },
+
+        getListInfoValorManoObra(codRequMateriales){
+            var url = "/administracion/informeValorizacion/listInfoValorManoObra"; 
+            axios
+                .get(url, {
+                    params: {
+                        codRequMateriales
+                    },
+                })
+                .then((response) => {
+                    this.listInfoValorManoObra = response.data
+                });
+
+        },
+
+        getListInfoValorOtrosReq(codRequMateriales){
+            var url = "/administracion/informeValorizacion/listInfoValorOtrosReq"; 
+            axios
+                .get(url, {
+                    params: {
+                        codRequMateriales 
+                    },
+                })
+                .then((response) => {
+                    this.listProyOtrosReq = response.data
                     console.log(response.data)
                 });
 

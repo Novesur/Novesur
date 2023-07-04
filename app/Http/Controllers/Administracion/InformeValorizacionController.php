@@ -77,9 +77,6 @@ class InformeValorizacionController extends Controller
                 'personal' => $ProyManoObra->personal,
                 'dias' =>  $ProyManoObra->dias,
                 'horas' => $ProyManoObra->horas,
-                'personalInfoProy' => $ProyManoObra->personal,
-                'diasInfoProy' => $ProyManoObra->dias,
-                'horasInfoProy' => $ProyManoObra->horas,
                 'estado' => $ProyManoObra->estado
 
             ];
@@ -97,10 +94,7 @@ class InformeValorizacionController extends Controller
                 'precio' => $OtrosRequerimientos->precioOtros,
                 'alquiler' => $OtrosRequerimientos->cCantAlq,
                 'pk_tiempo_alquiler' => $OtrosRequerimientos->idAlquiler,
-                'descripcionInfoProy' => $OtrosRequerimientos->descripcion,
-                'cantidadInfoProy' => $OtrosRequerimientos->cantidad,
-                'alquilerInfoProy' => $OtrosRequerimientos->idAlquiler,
-                'precioInfoProy' => $OtrosRequerimientos->precioOtros,
+                'unidmedida_id' => $OtrosRequerimientos->unidmedida_idInfoProy,
                 'estado' => $OtrosRequerimientos->estado
             ];
         });

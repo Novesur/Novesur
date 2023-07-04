@@ -72,7 +72,7 @@ class InformeProduccionController extends Controller
             if($countMaxinfoproduccion == 0){
                 $codreqMateriales = 'PROD0001' .'-'. $yearMaxID ;
             }else{
-                $maxidinfoProd = InformeProduccion::whereRaw('id = (select max(`id`) from informeproduccion)')->first();
+                //$maxidinfoProd = InformeProduccion::whereRaw('id = (select max(`id`) from informeproduccion)')->first();
                 //$codreqMateriales = 'PROD'. sprintf('%04d',$maxidinfoProd +1).'-'. $yearMaxID;
                 $codreqMateriales = 'PROD'. sprintf('%04d',$countMaxinfoproduccion +1).'-'. $yearMaxID;
 

@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Administracion;
 
 use App\Http\Controllers\Controller;
+use App\InformeValorizacion;
+use App\ProyectoReqMateriales;
 use App\TempValorizacionOtrosRequerimientos;
 use App\TiempoAlquiler;
+use App\valorizacionOtrosReq;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -45,4 +48,13 @@ class InformeValorizacionOtrosReqController extends Controller
         return response()->json(['message' => 'El item no existe'], 422);
 
     }
+
+    public function listInfoValorOtrosReq(Request $request){ 
+       
+        $idproyReqMateriales = ProyectoReqMateriales::where('codigo', $request->codRequMateriales)->first();
+     
+        $InformeValorizacion = InformeValorizacion::where('pk_proyecto_reqmateriales', $idproyReqMateriales->id)->first();
+        $dato = valorizacionOtrosReq::with('unidmedida')->where('pk_informe_valorizacion', $InformeValorizacion->id)->get(); 
+        return $dato;  
+}
 }

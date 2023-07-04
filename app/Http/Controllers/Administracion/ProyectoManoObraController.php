@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Administracion;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 use App\Personal;
+use App\ProyectoManObra;
+use App\ProyectoReqMateriales;
 use App\TempProyectoManObra;
 use Illuminate\Http\Request;
 
@@ -43,5 +45,11 @@ class ProyectoManoObraController extends Controller
         return response()->json(['message' => 'El item no existe'], 422);
 
     }
+
+/*     public function listproyManoObra(Request $request){
+        $idproyReqMateriales = ProyectoReqMateriales::where('codigo', $request->codRequMateriales)->first();
+        $dato = ProyectoManObra::with('personal','personalInfoProy')->where('pk_proyecto_reqmateriales', $idproyReqMateriales->id)->get(); 
+        return $dato;
+    } */
 
 }

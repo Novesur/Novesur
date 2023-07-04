@@ -12,4 +12,8 @@ class ProyectoManObra extends Model
     {
         return $this->belongsTo(Personal::class);
     }
+
+    public function personalInfoProy(){
+        return $this->belongsTo(Personal::class,'personalInfoProy'); 
+    }
 }

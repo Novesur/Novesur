@@ -65,11 +65,11 @@ class ProyectoMaterialesController extends Controller
         return response()->json(['message' => 'El item no existe'], 422);
     }
 
-    public function listproyMateriales(Request $request){ 
+/*     public function listproyMateriales(Request $request){ 
        
         $idproyReqMateriales = ProyectoReqMateriales::where('codigo', $request->codRequMateriales)->first();
-        $dato = ProyectoMateriales::with('producto','unidmedida')->where('pk_proyecto_reqmateriales', $idproyReqMateriales->id)->get(); 
-        return $dato;
+        $dato = ProyectoMateriales::with('producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion','unidmedida')->where('pk_proyecto_reqmateriales', $idproyReqMateriales->id)->get(); 
+        return $dato; 
 
-    }
+    } */
 }
