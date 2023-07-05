@@ -644,6 +644,7 @@ export default {
           },
         })
         .then((response) => {
+          
           this.listOrdenServicioXProveedor = response.data;
         });
     },

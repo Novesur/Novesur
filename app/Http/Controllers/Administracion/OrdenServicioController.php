@@ -158,10 +158,13 @@ class OrdenServicioController extends Controller
 
     public function CargaDatosOrdenServicio(Request $request)
     {
+        $nidOrdenServicio = $request->nidOrdenServicio;
+        $dato =  Detalleordenservicio::with('ordenservicio', 'unidmedida', 'producto', 'ordenservicio.proveedor')
+        ->whereHas('ordenservicio', function (Builder $query) use ($nidOrdenServicio) {
+            $query->where('codigo', $nidOrdenServicio);
+        })->get();
 
-        $codOrderServicio = Ordenservicio::where('codigo', $request->nidOrdenServicio)->first();
-        $dato = Detalleordenservicio::with('ordenservicio', 'ordenservicio.proveedor')->where('id', $codOrderServicio->id)->first();
-        return $dato;
+    return $dato;
     }
 
     public function ListXProduct(Request $request)

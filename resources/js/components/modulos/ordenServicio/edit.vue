@@ -625,27 +625,27 @@ export default {
     getCargaDatosOrdenServicio() {
 
 
-      var url = "/administracion/ordenServicio/CargaDatosOrdenServicio";
+      var url = "/administracion/ordenServicio/CargaDatosOrdenServicio"; 
       axios
         .post(url, {
           nidOrdenServicio: this.fillEditOrdenServicio.nidOrdenServicio,
         })
         .then((response) => {
-
+  
           this.fillEditOrdenServicio.cProveedor =
-            response.data.ordenservicio.proveedor.nombre;
+            response.data[0].ordenservicio.proveedor.nombre;
           this.fillEditOrdenServicio.cReferencia =
-            response.data.ordenservicio.Referencia;
+            response.data[0].ordenservicio.Referencia;
           this.fillEditOrdenServicio.cFechaEmision =
-            response.data.ordenservicio.Femision;
+            response.data[0].ordenservicio.Femision;
           this.fillEditOrdenServicio.cFechaEntrega =
-            response.data.ordenservicio.Fentrega;
+            response.data[0].ordenservicio.Fentrega;
 
           this.fillEditOrdenServicio.cLEntrega =
-            response.data.ordenservicio.LugarEntrega;
+            response.data[0].ordenservicio.LugarEntrega;
           this.fillEditOrdenServicio.nIdTipoPago =
-            response.data.ordenservicio.pago_id;
-            this.fillEditOrdenServicio.cObservacion = response.data.ordenservicio.observacion;
+            response.data[0].ordenservicio.pago_id;
+            this.fillEditOrdenServicio.cObservacion = response.data[0].ordenservicio.observacion;
 
           this.getListaDetalleOrdenServicio();
         });

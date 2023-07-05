@@ -33,15 +33,14 @@ class InformeValorizacionManoObraController extends Controller
 
     public function reorderReqManObra(Request $request)
     {
-        $id = trim($request->item);
-        $items = session()->get('InfoValorManObra') ?? collect([]);
-        $exits = $items->firstWhere("personal", $id);
-        if (!empty($exits)) :
-            $items =  $items->whereNotIn("personal", [$id]);
-            session()->put('InfoValorManObra', $items);
-            return response()->json(['datos' => $items]);
-        endif;
-        return response()->json(['message' => 'El item no existe'], 422);
+        $infoValorManoObra = valorizacionManoObra::where('id', $request->item)->first();
+        $infoValorManoObra->delete();
+    }
+    public function ListValorMaNObraxInfoValor(Request $request)
+    {
+        $dato = valorizacionManoObra::with('personal')->where('pk_informe_valorizacion', $request->pk_informe_valorizacion)->get();
+       
+        return $dato;
     }
 
     public function listInfoValorManoObra(Request $request)

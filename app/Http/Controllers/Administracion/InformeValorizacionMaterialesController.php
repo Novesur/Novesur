@@ -53,21 +53,18 @@ class InformeValorizacionMaterialesController extends Controller
     public function reorderReqMateriales(Request $request) 
     {
 
-      /*   $id = (int)trim($request->item);
-        $items = session()->get('InfoValorMaterial') ?? collect([]);
-        $exits = $items->firstWhere("producto_id", $id);
-
-        if (!empty($exits)) :
-            $items =  $items->whereNotIn("producto_id", [$id]);
-            session()->put('InfoValorMaterial', $items);
-            return response()->json(['datos' => $items]);
-        endif;
-        return response()->json(['message' => 'El item no existe'], 422); */
-
         $infoValorMateriales = valorizacionReqMateriales::where('id',$request->item)->first();
         $infoValorMateriales->delete();
-    }
+    } 
 
+    public function ListValorMaterialesxInfoValor(Request $request){ 
+        
+        $dato = valorizacionReqMateriales::with('producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion','unidmedida')->where('pk_informe_valorizacion', $request->pk_informe_valorizacion)->get();
+     
+        return $dato; 
+
+    }
+    
     public function listInfoValorMateriales(Request $request){ 
 
         $idproyReqMateriales = ProyectoReqMateriales::where('codigo', $request->codRequMateriales)->first();
@@ -78,10 +75,4 @@ class InformeValorizacionMaterialesController extends Controller
 
     }
 
-    public function ListValorMaterialesxInfoValor(Request $request){ 
-
-        $dato = valorizacionReqMateriales::with('producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion','unidmedida')->where('id', $request->pk_informe_valorizacion)->get();
-        return $dato; 
-
-    }
 }

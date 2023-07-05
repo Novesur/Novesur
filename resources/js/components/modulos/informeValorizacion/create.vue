@@ -674,7 +674,7 @@
                                             class="btn btn-danger btn-sm"
                                             @click.prevent="
                                                 DeletListReqMaNObra(
-                                                    item.personal
+                                                    item.id,item.pk_informe_valorizacion
                                                 )
                                             "
                                         >
@@ -699,8 +699,7 @@
                         <div class="card">
                             <div
                                 class="card-header"
-                                style="background-color: #9b59b6; color: white"
-                            >
+                                style="background-color: #9b59b6; color: white">
                                 <h3 class="card-title">OTROS REQUERIMIENTOS</h3>
                             </div>
                             <div class="card-body">
@@ -884,7 +883,7 @@
                                             class="btn btn-danger btn-sm"
                                             @click.prevent="
                                                 DeletListOtrosReq(
-                                                    item.descripcion
+                                                    item.id,item.pk_informe_valorizacion
                                                 )
                                             "
                                         >
@@ -1211,36 +1210,70 @@ export default {
                     },
                 })
                 .then((response) => {
-                    console.log(response.data)
+             
                     this.listProyInfoValorMateriales = response.data
                    
                 });
 
-        },
+        }, 
 
-        DeletListReqMaNObra(item) {
+        DeletListReqMaNObra(item,pk_informe_valorizacion) {
             var url = "/administracion/informeValorizacion/reorderReqManObra";
             axios
                 .post(url, {
                     item: item,
                 })
                 .then((response) => {
-                    this.listartempMobra = response.data.datos;
+                  
+                    this.getListValorMaNObraxInfoValor(pk_informe_valorizacion);
                 });
         },
 
+        getListValorMaNObraxInfoValor(pk_informe_valorizacion){
+            var url = "/administracion/informeValorizacion/ListValorMaNObraxInfoValor";   
+            axios
+                .get(url, {
+                    params: {
+                        pk_informe_valorizacion
+                    },
+                })
+                .then((response) => {
+                 
+                    this.listInfoValorManoObra = response.data
+                   
+                });
+
+        }, 
+
         
 
-        DeletListOtrosReq(item) {
+        DeletListOtrosReq(item,pk_informe_valorizacion) {
             var url = "/administracion/informeValorizacion/reorderOtrosReq";
             axios
                 .post(url, {
                     item: item,
                 })
                 .then((response) => {
-                    this.listartempRequerimientos = response.data.datos;
+                    
+                    this.getListValorOtrosReqxInfoValor(pk_informe_valorizacion)
                 });
         },
+
+        getListValorOtrosReqxInfoValor(pk_informe_valorizacion){
+            var url = "/administracion/informeValorizacion/ListValorOtrosReqxInfoValor";   
+            axios
+                .get(url, {
+                    params: {
+                        pk_informe_valorizacion
+                    },
+                })
+                .then((response) => {
+                 
+                    this.listProyOtrosReq = response.data
+                   
+                });
+
+        }, 
 
         getListarByProveedor() {
             var url = "/administracion/proveedor/getListarProveedorById";
@@ -1515,7 +1548,7 @@ export default {
                     },
                 })
                 .then((response) => {
-                    console.log(response.data)
+                    
                     this.listProyInfoValorMateriales = response.data
                    
                 });
@@ -1531,6 +1564,7 @@ export default {
                     },
                 })
                 .then((response) => {
+                  
                     this.listInfoValorManoObra = response.data
                 });
 
@@ -1546,7 +1580,7 @@ export default {
                 })
                 .then((response) => {
                     this.listProyOtrosReq = response.data
-                    console.log(response.data)
+                  
                 });
 
         }

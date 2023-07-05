@@ -557,12 +557,17 @@ Route::post('/administracion/informeValorizacion/addInfoValorManObra', 'Administ
 Route::get('/administracion/informeValorizacion/CleanProyectManObra', 'Administracion\InformeValorizacionManoObraController@CleanProyectManObra');
 Route::post('/administracion/informeValorizacion/reorderReqManObra', 'Administracion\InformeValorizacionManoObraController@reorderReqManObra');
 Route::get('/administracion/informeValorizacion/listInfoValorManoObra', 'Administracion\InformeValorizacionManoObraController@listInfoValorManoObra');
+Route::get('/administracion/informeValorizacion/ListValorMaNObraxInfoValor', 'Administracion\InformeValorizacionManoObraController@ListValorMaNObraxInfoValor');
+
+
 
 /* Otros Requerimientos Informe Valorizacion */
 Route::post('/administracion/informeValorizacion/addOtrosProyInfoValor', 'Administracion\InformeValorizacionOtrosReqController@addOtrosProyInfoValor');
 Route::get('/administracion/informeValorizacion/CleanOtrosProyInfoValor', 'Administracion\InformeValorizacionOtrosReqController@CleanOtrosProyInfoValor');
 Route::post('/administracion/informeValorizacion/reorderOtrosReq', 'Administracion\InformeValorizacionOtrosReqController@reorderOtrosReq');
 Route::get('/administracion/informeValorizacion/listInfoValorOtrosReq', 'Administracion\InformeValorizacionOtrosReqController@listInfoValorOtrosReq');
+Route::get('/administracion/informeValorizacion/ListValorOtrosReqxInfoValor', 'Administracion\InformeValorizacionOtrosReqController@ListValorOtrosReqxInfoValor');
+
 
 
 /* Centro de Costos */

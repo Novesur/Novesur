@@ -37,22 +37,22 @@ class InformeValorizacionOtrosReqController extends Controller
     }
 
     public function reorderOtrosReq(Request $request){
-        $id = trim($request->item);
-        $items = session()->get('OtrosProyInfoValor') ?? collect([]);
-        $exits = $items->firstWhere("descripcion", $id);
-        if (!empty($exits)) :
-            $items =  $items->whereNotIn("descripcion", [$id]);
-            session()->put('OtrosProyInfoValor', $items);
-            return response()->json(['datos' => $items]);
-        endif;
-        return response()->json(['message' => 'El item no existe'], 422);
+
+        $infoValorOtrosReq = valorizacionOtrosReq::where('id',$request->item)->first();
+        $infoValorOtrosReq->delete();
 
     }
 
+
+    public function ListValorOtrosReqxInfoValor(Request $request){
+        $dato = valorizacionOtrosReq::with('unidmedida')->where('pk_informe_valorizacion', $request->pk_informe_valorizacion)->get();
+        return $dato;
+    
+    }
+
     public function listInfoValorOtrosReq(Request $request){ 
-       
+
         $idproyReqMateriales = ProyectoReqMateriales::where('codigo', $request->codRequMateriales)->first();
-     
         $InformeValorizacion = InformeValorizacion::where('pk_proyecto_reqmateriales', $idproyReqMateriales->id)->first();
         $dato = valorizacionOtrosReq::with('unidmedida')->where('pk_informe_valorizacion', $InformeValorizacion->id)->get(); 
         return $dato;  
