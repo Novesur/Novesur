@@ -310,6 +310,9 @@ export default {
       if (!this.fillRegistrarCliente.cAtencion) {
         this.mensajeError.push("El Campo Atencion es un campo obligatorio");
       }
+      if (!this.fillRegistrarCliente.cCelular) {
+        this.mensajeError.push("El Nro Celular es un campo obligatorio");
+      }
 
       if (this.mensajeError.length) {
         this.error = 1;
