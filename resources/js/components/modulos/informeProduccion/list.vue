@@ -359,19 +359,19 @@
                               <td>{{ item.dias }}</td>
                               <td>{{ item.costdias }}</td>
                               <td>{{ item.costhoras }}</td>
-                              <td>{{ item.total }}</td>
+                              <td>{{ item.dias * item.costdias + item.horas * item.costhoras }}</td>
 
 
                               <td> <button class="btn btn-primary btn-sm" @click.prevent="
-                                MandarDiaMObra(item.id , item.informeproduccion_id, total = (item.dias * item.costdias ) + (item.horas * item.costhoras))
+                                MandarDiaMObra(item.id , item.informeproduccion_id,item.dias, item.costdias ,item.horas ,item.costhoras )
                               ">
                                   <i class="fas fa-comment-dollar"></i> Días
                                 </button>
-                                <button class="btn btn-primary btn-sm" @click.prevent="
-                                  MandarHoraMObra(item.id,  item.informeproduccion_id, total = (item.dias * item.costdias ) + (item.horas * item.costhoras))
+                                 <button class="btn btn-primary btn-sm" @click.prevent="
+                                  MandarHoraMObra(item.id,  item.informeproduccion_id, item.dias, item.costdias ,item.horas ,item.costhoras)
                                 ">
                                   <i class="fas fa-comment-dollar"></i> Horas
-                                </button>
+                                </button> 
 
                               </td>
 
@@ -496,6 +496,13 @@ export default {
       fillReporteInfoProduccion: {
         nIdprod: "",
         dFecha: "",
+        precio:"",
+        total:"",
+        precioDiaObra:"",
+        totalMObra:"",
+        precioHora:"",
+        totalHObra:""
+        
 
       },
       modalShowEditItem: false,
@@ -619,34 +626,32 @@ export default {
 
     MandarDatosPrecio(item, costunit, cantidad, informeproduccion_id) {
 
-      let precio = prompt("Ingrese el precio a editar", costunit);
-      let total = cantidad * precio;
+      this.fillReporteInfoProduccion.precio = prompt("Ingrese el precio a editar", costunit);
+      this.fillReporteInfoProduccion.total = cantidad * this.fillReporteInfoProduccion.precio;
 
       var url = "/administracion/InformeProduccion/editPrecioMatOdrProd";
       axios
         .post(url, {
           item,
-          precio,
-          total
+          precio:this.fillReporteInfoProduccion.precio ,
+          total : this.fillReporteInfoProduccion.total
         })
         .then((response) => {
           this.setMostrarInfo(informeproduccion_id) 
         });
 
     },
+   
 
-
-
-    MandarDiaMObra(id, informeproduccion_id, total) {
-
-    
-      let precioDia = prompt("Ingrese el precio de la Hora ");
+    MandarDiaMObra(id, informeproduccion_id, dias,costdias,horas,costhoras) {
+      this.fillReporteInfoProduccion.precioDiaObra = prompt("Ingrese el precio de la Hora ");
+      this.fillReporteInfoProduccion.totalMObra = dias * this.fillReporteInfoProduccion.precioDiaObra +( horas* costhoras)
       var url = "/administracion/InformeProduccion/editPrecioDiaOdrProd";
       axios
         .post(url, {
           id,
-          precioDia,
-          total
+          precioDia:this.fillReporteInfoProduccion.precioDiaObra,
+          total: this.fillReporteInfoProduccion.totalMObra
 
         })
         .then((response) => {
@@ -672,15 +677,19 @@ export default {
 
         });
     },
+   
 
-    MandarHoraMObra(id, informeproduccion_id, total) {
-      let precioHora = prompt("Ingrese el precio de la Hora ");
+    MandarHoraMObra(id, informeproduccion_id, dias,costdias,horas,costhoras) {
+      this.fillReporteInfoProduccion.precioHora = prompt("Ingrese el precio de la Hora ");
+      this.fillReporteInfoProduccion.totalHObra =(dias * costdias ) + (this.fillReporteInfoProduccion.precioHora * costhoras)
+      
+   
       var url = "/administracion/InformeProduccion/editPrecioHoraOdrProd";
       axios
         .post(url, {
           id,
-          precioHora,
-          total
+          precioHora : this.fillReporteInfoProduccion.precioHora,
+          total : this.fillReporteInfoProduccion.totalHObra,
         })
         .then((response) => {
           this.setMostrarInfoManObra(informeproduccion_id)

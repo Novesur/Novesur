@@ -7,9 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class ProyectOtrosReq extends Model
 {
     protected $table = 'proyecto_otrosreq';
+    public $timestamps = false;
 
-    public function unidmedida_idInfoProy()
+    public function unidmedida()
     {
-        return $this->belongsTo(UnidMedida::class,'unidmedida_idInfoProy');
+        return $this->belongsTo(UnidMedida::class,'unidmedida_id');
+    }
+
+
+    public function unidmedida_idInfoValor()
+    {
+        return $this->belongsTo(UnidMedida::class,'unidmedida_idInfoValor');
     }
 }

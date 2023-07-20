@@ -12,7 +12,34 @@ use Illuminate\Http\Request;
 
 class ProyectOtrosReqController extends Controller
 {
-    public function addOtrosProyReqMateriales(Request $request)
+
+    public function  addReqMatProyOtrosReq(Request $request){
+        
+        $ProyectoReqMateriales = ProyectoReqMateriales::where('codigo', $request->codRequMateriales)->first();
+        $ProyectOtrosReq = new ProyectOtrosReq();
+        $ProyectOtrosReq->pk_proyecto_reqmateriales = $ProyectoReqMateriales->id;
+        $ProyectOtrosReq->descripcion = $request->cDescripcion;
+        $ProyectOtrosReq->cantidad = $request->cCantidadReq;
+        $ProyectOtrosReq->unidmedida_id = $request->nIdUnidMedOtrosReq;
+        $ProyectOtrosReq->descripcionInfoValor = $request->cDescripcion;
+        $ProyectOtrosReq->cantidadInfoValor = $request->cCantidadReq;
+        $ProyectOtrosReq->unidmedida_idInfoValor = $request->nIdUnidMedOtrosReq;
+        $ProyectOtrosReq->estado = $request->estado;
+        $ProyectOtrosReq->save();
+
+
+    }
+
+    public function listproyOtrosReq(Request $request){ 
+       
+        $idproyReqMateriales = ProyectoReqMateriales::where('codigo', $request->codRequMateriales)->first();
+      
+        $dato = ProyectOtrosReq::with('unidmedida_idInfoValor','unidmedida')->where('pk_proyecto_reqmateriales', $idproyReqMateriales->id)->get(); 
+        return $dato; 
+ 
+    } 
+
+     public function addOtrosProyReqMateriales(Request $request)
     {
         $Unidmed = UnidMedida::where('id',$request->nIdUnidMedOtroReq)->first();
         $requerimientos = Session::get('OtrosProyReqMateriales');
@@ -46,14 +73,8 @@ class ProyectOtrosReqController extends Controller
         return response()->json(['message' => 'El item no existe'], 422);
 
     } 
+ 
 
-
-/*     public function listproyOtrosReq(Request $request){ 
-       
-        $idproyReqMateriales = ProyectoReqMateriales::where('codigo', $request->codRequMateriales)->first();
-        $dato = ProyectOtrosReq::with('unidmedida_idInfoProy')->where('pk_proyecto_reqmateriales', $idproyReqMateriales->id)->get(); 
-        return $dato; 
-
-    } */
+  
 
 }

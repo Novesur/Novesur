@@ -20,13 +20,14 @@ class CreateValorizacionOtrosreqTable extends Migration
             $table->string('descripcion',150)->nullable();
             $table->string('cantidad',50)->required();
             $table->decimal('precio', 8, 2)->required();
-            $table->integer('alquiler')->required();
+            $table->decimal('alquiler', 8, 2)->required();
             $table->unsignedBigInteger('pk_tiempo_alquiler');
             $table->foreign('pk_tiempo_alquiler')->references('id')->on('tiempo_alquiler');
             $table->unsignedBigInteger('unidmedida_id');
             $table->foreign('unidmedida_id')->references('id')->on('unidmedida');
-            $table->char('estado',1)->required();
-            $table->softDeletes();
+            $table->decimal('total', 8, 2)->required();
+            $table->timestamps();
+            $table->softDeletes(); 
         });
     }
 

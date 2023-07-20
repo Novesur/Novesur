@@ -349,7 +349,7 @@
   
       SetGenerarPreqMaterialesPDF(id){
         var config = { responseType: "blob" };
-      var url = "/administracion/proyecto_ReqMateriales/setGenerarPReqMaterialesPdf";
+      var url = "/administracion/proyecto_ReqMateriales/setGenerarPReqMaterialesPdf"; 
       axios
         .post(
           url,

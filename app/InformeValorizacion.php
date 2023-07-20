@@ -16,4 +16,9 @@ class InformeValorizacion extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function proyectoReqMateriales()
+    {
+        return $this->belongsTo(ProyectoReqMateriales::class,"pk_proyecto_reqmateriales");
+    }
+
 }

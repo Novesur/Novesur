@@ -428,7 +428,7 @@
                                     <div class="col-md-4 offset-4">
                                         <button
                                             class="btn btn-flat btn-primary btnWidth"
-                                            @click.prevent="setAddReqMaterial"
+                                            @click.prevent="setAddValorReqMaterial()"
                                         >
                                             Agregar
                                         </button>
@@ -553,13 +553,22 @@
                                     >
 
                                     <div class="col-md-6">
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            v-model="
-                                                fillCrearInformeValorizacion.cPersonal
-                                            "
-                                        />
+                                        <el-select
+                                            v-model="fillCrearInformeValorizacion.nIdPersonal"
+                                            placeholder="Seleccione un Personal"
+                                            clearable
+                                            filterable
+                                            :style="{ width: '350px' }"
+                                            
+                                        >
+                                            <el-option
+                                                v-for="item in listPersonal"
+                                                :key="item.id"
+                                                :label="item.nombres +' '+ item.ApPaterno+' '+ item.ApMaterno"
+                                                :value="item.id"
+                                            >
+                                            </el-option>
+                                        </el-select>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -869,21 +878,20 @@
                             </thead>
                             <tbody>
                                 <tr
-                                    v-for="(
-                                        item, index
-                                    ) in listProyOtrosReq"
+                                    v-for="(item, index) 
+                                    in listProyOtrosReq"
                                     :key="index"
                                 >
-                                    <td v-text="item.descripcion"></td>
+                                  <td v-text="item.descripcion"></td>
                                     <td v-text="item.cantidad"></td>
-                                    <td v-text="item.unidmedida.nombre"></td>
+                                    <td v-text="item.unidmedida.nombre"></td> 
                                    
                                     <td>
                                         <button
                                             class="btn btn-danger btn-sm"
                                             @click.prevent="
                                                 DeletListOtrosReq(
-                                                    item.id,item.pk_informe_valorizacion
+                                                    item.id,item.pk_proyecto_reqmateriales
                                                 )
                                             "
                                         >
@@ -902,7 +910,7 @@
                         <div class="col-md-4 offset-4">
                             <button
                                 class="btn btn-flat btn-info btnWidth"
-                                @click.prevent="setRegistrarInfValorizacion"
+                                @click.prevent="setGrabarInfValorizacion"
                             >
                                 Guardar
                             </button>
@@ -970,6 +978,7 @@ export default {
                 nIdAlquiler: "",
                 precioOtros: "",
                 codRequMateriales:"",
+                nIdPersonal:"",
 
                 cDocumento: "",
                 cFechaEmision: "",
@@ -982,7 +991,7 @@ export default {
                 nIdTipoPago: "",
                 nIdTipoMoneda: "",
                 nIdUser: sessionStorage.getItem("iduser"),
-                cPersonal: "",
+              
                 cDiasMObra: "",
                 cHorasMObra: "",
                 cDescripcion: "",
@@ -994,6 +1003,7 @@ export default {
                 estado: "",
             },
             listAlmacen: [],
+            listPersonal:[],
             listUnidMed: [],
             listTiempoAlquiler: [],
             listProd: [],
@@ -1040,6 +1050,7 @@ export default {
         this.getListarUnidadMedida();
         this.getListarCentroCostos();
         this.getListarTiempoAlquiler();
+        this.getListPersonal();
         this.fillCrearInformeValorizacion.cImporte= 0
     },
 
@@ -1090,6 +1101,14 @@ export default {
             this.fillCrearInformeValorizacion.cCantAlq = 0;
         },
 
+        getListPersonal() {
+            var url = "/administracion/personal/list";
+            axios.get(url).then((response) => {
+                this.listPersonal = response.data;
+            });
+        },
+
+
         consultaRuc() {
             var url = "/administracion/cliente/consultaRuc";
             axios
@@ -1117,60 +1136,48 @@ export default {
         },
 
         setAddMObra() {
-            var url = "/administracion/informeValorizacion/addInfoValorManObra";
+            var url = "/administracion/ProyectoManoObra/addReqMatProyManObra"; 
             axios
                 .post(url, {
-                    cPersonal: this.fillCrearInformeValorizacion.cPersonal,
+                    codRequMateriales: this.fillCrearInformeValorizacion.codRequMateriales,
+                    nIdPersonal: this.fillCrearInformeValorizacion.nIdPersonal,
                     cDiasMObra: this.fillCrearInformeValorizacion.cDiasMObra,
                     cHorasMObra: this.fillCrearInformeValorizacion.cHorasMObra,
-                    estado: "R",
+                    estado: "I",
                 })
                 .then((response) => {
-                    this.listartempMobra = response.data.datos;
-                    this.setcleanListMObra();
                     this.fillCrearInformeValorizacion.cDiasMObra = 0;
                     this.fillCrearInformeValorizacion.cHorasMObra = 0;
+                    this.getListInfoProyManoObra(this.fillCrearInformeValorizacion.codRequMateriales)
                 });
         },
 
         setcleanListMObra() {
-            (this.fillCrearInformeValorizacion.cPersonal = ""),
+            
                 (this.fillCrearInformeValorizacion.cDiasMObra = 0);
-            this.fillCrearInformeValorizacion.cHorasMObra = 0;
+            this.fillCrearInformeValorizacion.cHorasMObra = 0; 
         },
 
         setOtrosRequerimientos() {
             var url =
-                "/administracion/informeValorizacion/addOtrosProyInfoValor";
+                "/administracion/ProyectOtrosReq/addReqMatProyOtrosReq";
             axios
                 .post(url, {
+                    codRequMateriales: this.fillCrearInformeValorizacion.codRequMateriales,
                     cDescripcion:
                         this.fillCrearInformeValorizacion.cDescripcion,
                     cCantidadReq:
                         this.fillCrearInformeValorizacion.cCantidadReq,
-                    estado: "R",
+                    
+                    estado: "I",
                     cCantAlq: this.fillCrearInformeValorizacion.cCantAlq,
                     nIdAlquiler: this.fillCrearInformeValorizacion.nIdAlquiler,
                     precioOtros: this.fillCrearInformeValorizacion.precioOtros,
+                    nIdUnidMedOtrosReq: this.fillCrearInformeValorizacion.nIdUnidMedOtrosReq
                 })
                 .then((response) => {
-                    if (
-                        response.data.message ==
-                        "El valor no puede ser cero ni vacio"
-                    ) {
-                        Swal.fire({
-                            position: "center",
-                            icon: response.data.icon,
-                            title: response.data.message,
-                            showConfirmButton: false,
-                            timer: 1500,
-                        });
-                    } else {
-                        this.listartempRequerimientos = response.data.datos;
-                        this.setLimpiaRequerimientos();
                         this.fillCrearInformeValorizacion.cCantidadReq = 0;
-                        this.setLimpiaOtrosRequerimientos();
-                    }
+                        this.getListInfoProyOtrosReq(this.fillCrearInformeValorizacion.codRequMateriales) 
                 });
         },
 
@@ -1308,13 +1315,9 @@ export default {
         getListarproductosByName() {
             var url = "/administracion/detallecotizancion/listProdByName";
             axios
-                .get(url, {
-                    params: {
-                        nIdmaterial:
-                            this.fillCrearInformeValorizacion.nIdmaterial,
-                    },
-                })
+                .get(url)
                 .then((response) => {
+                   
                     this.listProd = response.data;
                 });
         },
@@ -1334,8 +1337,9 @@ export default {
             var url = "/administracion/InformeValorizacion/create";
             axios
                 .post(url, {
-           
-                    cImporte: this.fillCrearInformeValorizacion.cImporte,
+                    nIdUser : this.fillCrearInformeValorizacion.nIdUser,
+             codRequMateriales: this.fillCrearInformeValorizacion.codRequMateriales,
+                    cImporte: this.fillCrearInformeValorizacion.cImporte, 
                 })
                 .then((response) => {
                     Swal.fire({
@@ -1391,49 +1395,21 @@ export default {
 
             return this.error;
         },
-        setAddReqMaterial() {
-            var url = "/administracion/informeValorizacion/addReqMatInfoValor";
+        setAddValorReqMaterial() {
+           
+            var url = "/administracion/ProyectoMateriales/addReqMatProyReq";
 
             axios
                 .post(url, {
+                    codRequMateriales: this.fillCrearInformeValorizacion.codRequMateriales,
                     nIdmaterial: this.fillCrearInformeValorizacion.nIdmaterial,
-                    cCantMaterial:
-                        this.fillCrearInformeValorizacion.cCantMaterial,
-                    nIdUnidMedMat:
-                        this.fillCrearInformeValorizacion.nIdUnidMedMat,
-                    estado: "R",
+                    cCantMaterial:this.fillCrearInformeValorizacion.cCantMaterial,
+                    nIdUnidMedMat:this.fillCrearInformeValorizacion.nIdUnidMedMat, 
+                    estado: "I",
                 })
                 .then((response) => {
-                    if (
-                        response.data.message == "Ya fue agregado anteriormente"
-                    ) {
-                        Swal.fire({
-                            position: "center",
-                            icon: response.data.icon,
-                            title: response.data.message,
-                            showConfirmButton: false,
-                            timer: 1500,
-                        });
-                    } else {
-                        this.listartempProduccion = response.data.datos;
-                        this.setLimpiaMaterial();
-                        this.fillCrearInformeValorizacion.cCantMaterial = 0;
-                    }
-
-                    if (response.data.message == "El valor no puede ser cero") {
-                        Swal.fire({
-                            position: "center",
-                            icon: response.data.icon,
-                            title: response.data.message,
-                            showConfirmButton: false,
-                            timer: 1500,
-                        });
-                    } else {
-                        this.listartempProduccion = response.data.datos;
-                        this.setLimpiaMaterial();
-                        this.fillCrearInformeValorizacion.cCantMaterial = 0;
-                    }
-                });
+                    this.getListInfoProyMateriales(this.fillCrearInformeValorizacion.codRequMateriales)
+                }); 
         },
 
         setLimpiaMaterial() {
@@ -1513,7 +1489,7 @@ export default {
         },
         buscaxCodRequMateriales(){
 
-        var url = "/administracion/proyecto_ReqMateriales/listbyId";  
+        var url = "/administracion/proyecto_ReqMateriales/listbyId";   
       axios
         .post(url, {
             codRequMateriales: this.fillCrearInformeValorizacion.codRequMateriales,
@@ -1529,18 +1505,18 @@ export default {
             this.fillCrearInformeValorizacion.cDuracion= response.data.duracion
             this.fillCrearInformeValorizacion.nIdOS= response.data.ord_servicio
 
-            this.getListInfoValorReqMateriales(this.fillCrearInformeValorizacion.codRequMateriales)
-           this.getListInfoValorManoObra(this.fillCrearInformeValorizacion.codRequMateriales)
-           this.getListInfoValorOtrosReq(this.fillCrearInformeValorizacion.codRequMateriales) 
+            this.getListInfoProyMateriales(this.fillCrearInformeValorizacion.codRequMateriales)
+           this.getListInfoProyManoObra(this.fillCrearInformeValorizacion.codRequMateriales)
+           this.getListInfoProyOtrosReq(this.fillCrearInformeValorizacion.codRequMateriales) 
 
         });
     
         },
 
         
-        getListInfoValorReqMateriales(codRequMateriales){
+        getListInfoProyMateriales(codRequMateriales){
 
-            var url = "/administracion/informeValorizacion/listInfoValorMateriales";  
+            var url = "/administracion/ProyectoMateriales/listproyMateriales";  
             axios
                 .get(url, {
                     params: {
@@ -1555,8 +1531,8 @@ export default {
 
         },
 
-        getListInfoValorManoObra(codRequMateriales){
-            var url = "/administracion/informeValorizacion/listInfoValorManoObra"; 
+        getListInfoProyManoObra(codRequMateriales){
+            var url = "/administracion/ProyectoManoObra/listproyManoObra"; 
             axios
                 .get(url, {
                     params: {
@@ -1570,8 +1546,8 @@ export default {
 
         },
 
-        getListInfoValorOtrosReq(codRequMateriales){
-            var url = "/administracion/informeValorizacion/listInfoValorOtrosReq"; 
+        getListInfoProyOtrosReq(codRequMateriales){
+            var url = "/administracion/ProyectOtrosReq/listproyOtrosReq"; 
             axios
                 .get(url, {
                     params: {
@@ -1579,6 +1555,7 @@ export default {
                     },
                 })
                 .then((response) => {
+                    console.log(response.data)
                     this.listProyOtrosReq = response.data
                   
                 });

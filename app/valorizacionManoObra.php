@@ -9,11 +9,11 @@ class valorizacionManoObra extends Model
 {
     use SoftDeletes;
     protected $table = 'valorizacion_manobra';
-    public $timestamps = false;
+   
 
     public function personal()
     {
-        return $this->belongsTo(Personal::class,'personal');
+        return $this->belongsTo(Personal::class); 
     }
 
   

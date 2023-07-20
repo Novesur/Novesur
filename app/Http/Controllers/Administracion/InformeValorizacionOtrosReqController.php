@@ -13,7 +13,19 @@ use Illuminate\Support\Facades\Session;
 
 class InformeValorizacionOtrosReqController extends Controller
 {
-    public function addOtrosProyInfoValor(Request $request)
+
+  
+
+    public function listInfoValorOtrosReq(Request $request){ 
+
+        $idproyReqMateriales = ProyectoReqMateriales::where('codigo', $request->codRequMateriales)->first();
+        $InformeValorizacion = InformeValorizacion::where('pk_proyecto_reqmateriales', $idproyReqMateriales->id)->first();
+        $dato = valorizacionOtrosReq::with('unidmedida')->where('pk_informe_valorizacion', $InformeValorizacion->id)->get(); 
+        return $dato;  
+}
+
+
+     public function addOtrosProyInfoValor(Request $request)
     {
 
         $requerimientos = Session::get('OtrosProyInfoValor');
@@ -48,13 +60,8 @@ class InformeValorizacionOtrosReqController extends Controller
         $dato = valorizacionOtrosReq::with('unidmedida')->where('pk_informe_valorizacion', $request->pk_informe_valorizacion)->get();
         return $dato;
     
-    }
+    } 
 
-    public function listInfoValorOtrosReq(Request $request){ 
 
-        $idproyReqMateriales = ProyectoReqMateriales::where('codigo', $request->codRequMateriales)->first();
-        $InformeValorizacion = InformeValorizacion::where('pk_proyecto_reqmateriales', $idproyReqMateriales->id)->first();
-        $dato = valorizacionOtrosReq::with('unidmedida')->where('pk_informe_valorizacion', $InformeValorizacion->id)->get(); 
-        return $dato;  
-}
+
 }

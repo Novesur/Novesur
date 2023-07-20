@@ -67,8 +67,8 @@ class ProyectoReqMaterialesController extends Controller
                 'producto_id' => $MaterialOP->producto_id,
                 'cantidad' => $MaterialOP->cantidad,
                 'unidmedida_id' =>  $MaterialOP->unidMedida_id,
-                'cantInfProd'  => $MaterialOP->cantidad,
-                'unidmedidaInfoProd_id'  => $MaterialOP->unidMedida_id,
+                'cantInfoValor'  => $MaterialOP->cantidad,
+                'unidmedidaInfoValor_id'  => $MaterialOP->unidMedida_id,
                 'fecha' =>  $formatreq,
                 'estado' => $MaterialOP->estado
             ];
@@ -85,9 +85,9 @@ class ProyectoReqMaterialesController extends Controller
                 'personal_id' => $ProyManoObra->id_personal,
                 'dias' =>  $ProyManoObra->dias,
                 'horas' => $ProyManoObra->horas,
-                'personalInfoProy' => $ProyManoObra->id_personal,
-                'diasInfoProy' => $ProyManoObra->dias,
-                'horasInfoProy' => $ProyManoObra->horas,
+                'personalInfoValor' => $ProyManoObra->id_personal,
+                'diasInfoValor' => $ProyManoObra->dias,
+                'horasInfoValor' => $ProyManoObra->horas,
                 'estado' => $ProyManoObra->estado
 
             ];
@@ -103,9 +103,9 @@ class ProyectoReqMaterialesController extends Controller
                 'descripcion' => $OtrosRequerimientos->descripcion,
                 'cantidad' => $OtrosRequerimientos->cantidad,
                 'unidmedida_id' => $OtrosRequerimientos->nIdUnidmed,
-                'descripcionInfoProy' => $OtrosRequerimientos->descripcion,
-                'cantidadInfoProy' => $OtrosRequerimientos->cantidad,
-                'unidmedida_idInfoProy' => $OtrosRequerimientos->nIdUnidmed,
+                'descripcionInfoValor' => $OtrosRequerimientos->descripcion,
+                'cantidadInfoValor' => $OtrosRequerimientos->cantidad,
+                'unidmedida_idInfoValor' => $OtrosRequerimientos->nIdUnidmed,
                 'estado' => $OtrosRequerimientos->estado
 
             ];
@@ -160,10 +160,8 @@ class ProyectoReqMaterialesController extends Controller
         $ProyectoReqMateriales = ProyectoReqMateriales::with('ccostos')->where('id', $idReqMateriales)->first();
 
         $ProyectoMateriales = ProyectoMateriales::with('producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion')
-            ->where(
-                ['pk_proyecto_reqmateriales' => $idReqMateriales],
-                ['estado' => 'R']
-            )
+            ->where('pk_proyecto_reqmateriales' , $idReqMateriales )
+            ->where('estado','R')
             ->get();
 
 
@@ -191,72 +189,6 @@ class ProyectoReqMaterialesController extends Controller
         $yearMaxID = date("Y");
         $formatreq = date("Y-m-d");
         $dato = ProyectoReqMateriales::with('ccostos')->where('codigo', $request->codRequMateriales)->first();
-        if ($countMaxInformeValorizacion == 0) {
-            $codInfoVal = 'INFOVAL0001' . '-' . $yearMaxID;
-        } else {
-            $codInfoVal = 'INFOVAL' . sprintf('%04d', $countMaxInformeValorizacion + 1) . '-' . $yearMaxID;
-        }
-            $InformeValorizacion = new InformeValorizacion();
-            $InformeValorizacion->codigo = $codInfoVal;
-            $InformeValorizacion->fecha = $formatreq;
-            $InformeValorizacion->centro_costos_id = $dato->centro_costos_id;
-            $InformeValorizacion->cliente = $dato->cliente;
-            $InformeValorizacion->detservicio =  $dato->detservicio;
-            $InformeValorizacion->fechainicio = $dato->fechainicio;
-            $InformeValorizacion->fechafinal = $dato->fechafinal;
-            $InformeValorizacion->duracion = $dato->duracion;
-            $InformeValorizacion->ord_servicio = $dato->ord_servicio;
-            $InformeValorizacion->importe = $request->cImporte;
-            $InformeValorizacion->user_id = $dato->user_id;
-            $InformeValorizacion->pk_proyecto_reqmateriales = $dato->id;
-            $InformeValorizacion->save();
-
-        $ProyectoMateriales = ProyectoMateriales::where('pk_proyecto_reqmateriales', $dato->id )->get();
-
-            foreach ($ProyectoMateriales as $dataMatreqProduc) {
-
-                $valorizacionReqMateriales= new valorizacionReqMateriales();
-                $valorizacionReqMateriales->pk_informe_valorizacion = $InformeValorizacion->id;
-                $valorizacionReqMateriales->producto_id = $dataMatreqProduc->producto_id;
-                $valorizacionReqMateriales->cantidad = $dataMatreqProduc->cantInfProd;
-                $valorizacionReqMateriales->unidmedida_id = $dataMatreqProduc->unidmedida_id;
-                $valorizacionReqMateriales->cantInfProd = $dataMatreqProduc->cantInfProd;
-                $valorizacionReqMateriales->fecha = $dataMatreqProduc->fecha;
-                $valorizacionReqMateriales->estado = 'R';
-                $valorizacionReqMateriales->save();
-            }
-
-
-            $ProyectoManObra = ProyectoManObra::where('pk_proyecto_reqmateriales', $dato->id )->get();
-
-            foreach ($ProyectoManObra as $dataProyManoBra) {
-
-                $valorizacionManoObra= new valorizacionManoObra();
-                $valorizacionManoObra->pk_informe_valorizacion = $InformeValorizacion->id;
-                $valorizacionManoObra->personal = $dataProyManoBra->personal_id;
-                $valorizacionManoObra->dias = $dataProyManoBra->dias;
-                $valorizacionManoObra->horas = $dataProyManoBra->horas;
-                $valorizacionManoObra->estado = 'R';
-                $valorizacionManoObra->save();
-            }
-
-
-            $ProyectOtrosReq = ProyectOtrosReq::where('pk_proyecto_reqmateriales', $dato->id )->get();
-
-            foreach ($ProyectOtrosReq as $dataProyOtros) {
-
-                $valorizacionOtrosReq= new valorizacionOtrosReq();
-                $valorizacionOtrosReq->pk_informe_valorizacion = $InformeValorizacion->id;
-                $valorizacionOtrosReq->descripcion = $dataProyOtros->descripcion;
-                $valorizacionOtrosReq->cantidad = $dataProyOtros->cantidad;
-                $valorizacionOtrosReq->precio = 0;
-                $valorizacionOtrosReq->alquiler = 0;
-                $valorizacionOtrosReq->pk_tiempo_alquiler = 1;
-                $valorizacionOtrosReq->unidmedida_id = $dataProyOtros->unidmedida_id;
-                $valorizacionOtrosReq->estado = 'R';
-                $valorizacionOtrosReq->save();
-            }
- 
 
         return $dato;
     }

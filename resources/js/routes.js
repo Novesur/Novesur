@@ -741,6 +741,14 @@ export default new Router({
             component: require("./components/modulos/personal/index").default,
         },
 
+        {
+            path: "/personal/edit/:id", 
+            name: "personal.edit",
+            component: require("./components/modulos/personal/edit")
+                .default,
+            props: true,
+        },
+
         /* CARGO */
         {
             path: "/cargo/index",

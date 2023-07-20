@@ -17,10 +17,14 @@ class CreateValorizacionManobraTable extends Migration
             $table->id();
             $table->unsignedBigInteger('pk_informe_valorizacion');
             $table->foreign('pk_informe_valorizacion')->references('id')->on('informe_valorizacion');
-            $table->string('personal',150)->nullable();
+            $table->unsignedBigInteger('personal_id');
+            $table->foreign('personal_id')->references('id')->on('personal'); 
             $table->integer('dias')->required();
             $table->integer('horas')->required();
-            $table->char('estado',1)->required();
+            $table->decimal('costdias', 8, 2)->required();
+            $table->decimal('costhoras', 8, 2)->required();
+            $table->decimal('total', 8, 2)->required();
+            $table->timestamps();
             $table->softDeletes();
         });
     }

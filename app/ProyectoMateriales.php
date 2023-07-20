@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class ProyectoMateriales extends Model
 {
     protected $table = 'proyecto_materiales';
+    public $timestamps = false;
 
     public function producto()
     {

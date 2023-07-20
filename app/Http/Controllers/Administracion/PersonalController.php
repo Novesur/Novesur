@@ -18,6 +18,7 @@ class PersonalController extends Controller
         $personal->DNI = $request->cDni;
         $personal->zonal_id = $request->nIdZonal;
         $personal->cargo_personal_id = $request->nIdCargo;
+        $personal->estado = 'A';
         $personal->save();
     }
 
@@ -49,12 +50,42 @@ class PersonalController extends Controller
     }
 
     public function delete(Request $request){
-        Personal::find($request->nIdPersonal)->delete();
+        //Personal::find($request->nIdPersonal)->delete();
+
+        Personal::where('id', $request->nIdPersonal)->update(['estado' => 'I']);
     }
 
     public function list(){
-       $dato= Personal::all();
+       $dato= Personal::where('estado','A')->get();
        return $dato;
+    }
+
+    public function DatoPersonalById(Request $request){
+        $dato = Personal::with('cargo', 'zonal')->where('id',$request->nIdPersonal)->first();
+        return $dato;
+    }
+
+    public function edit(Request $request){
+        $personal = Personal::where('id',$request->nIdPersonal)->first();
+        if ($personal) {
+            $personal->codigo = $request->cNumPersonal;
+            $personal->nombres = $request->cNombres;
+            $personal->ApPaterno = $request->cSecondname;
+            $personal->ApMaterno = $request->cLastname;
+            $personal->DNI = $request->cDni;
+            $personal->zonal_id = $request->nIdZonal;
+            $personal->cargo_personal_id = $request->nIdCargo;
+            
+            if($request->estado = true){
+                $valorestado = 'A';
+            }else{
+                $valorestado = 'I' ;
+            }
+
+            $personal->estado = $valorestado;
+            $personal->save();
+        }
+
     }
 
 }

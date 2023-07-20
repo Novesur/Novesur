@@ -14,6 +14,29 @@ use Illuminate\Http\Request;
 
 class ProyectoMaterialesController extends Controller
 {
+
+    public function addReqMatProyReq(Request $request){
+        $formatreq = date("Y-m-d");
+        $ProyectoReqMateriales = ProyectoReqMateriales::where('codigo', $request->codRequMateriales)->first();
+        $ProyectoMateriales = new ProyectoMateriales();
+        $ProyectoMateriales->pk_proyecto_reqmateriales = $ProyectoReqMateriales->id;
+        $ProyectoMateriales->producto_id = $request->nIdmaterial;
+        $ProyectoMateriales->cantidad = $request->cCantMaterial;
+        $ProyectoMateriales->unidmedida_id = $request->nIdUnidMedMat;
+        $ProyectoMateriales->cantInfoValor = $request->cCantMaterial;
+        $ProyectoMateriales->unidmedidaInfoValor_id = $request->nIdUnidMedMat;
+        $ProyectoMateriales->fecha = $formatreq;
+        $ProyectoMateriales->estado = $request->estado;
+        $ProyectoMateriales->save();
+    }
+
+    public function listproyMateriales(Request $request){ 
+       
+        $idproyReqMateriales = ProyectoReqMateriales::where('codigo', $request->codRequMateriales)->first();
+        $dato = ProyectoMateriales::with('producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion','unidmedida')->where('pk_proyecto_reqmateriales', $idproyReqMateriales->id)->get(); 
+        return $dato; 
+
+    }
     public function addOrden(Request $request)
     {
 
@@ -41,9 +64,9 @@ class ProyectoMaterialesController extends Controller
             //return response()->json("Grabado");
             return response()->json(['datos' => $products, 'message' => NULL]);
         endif;
-    }
+    } 
 
-    public  function eliminarTemporder()
+     public  function eliminarTemporder()
     {
         Session::put('proyectoMaterial', null);
         $dato = session()->get('proyectoMaterial') ?? collect([]);
@@ -65,11 +88,5 @@ class ProyectoMaterialesController extends Controller
         return response()->json(['message' => 'El item no existe'], 422);
     }
 
-/*     public function listproyMateriales(Request $request){ 
-       
-        $idproyReqMateriales = ProyectoReqMateriales::where('codigo', $request->codRequMateriales)->first();
-        $dato = ProyectoMateriales::with('producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion','unidmedida')->where('pk_proyecto_reqmateriales', $idproyReqMateriales->id)->get(); 
-        return $dato; 
-
-    } */
+   
 }

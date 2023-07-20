@@ -4,10 +4,8 @@ namespace App\Http\Controllers\Administracion;
 
 use App\Http\Controllers\Controller;
 use App\InformeValorizacion;
-use App\Producto;
+use App\ProyectoMateriales;
 use App\ProyectoReqMateriales;
-use App\TempValorizacionMateriales;
-use App\UnidMedida;
 use App\valorizacionReqMateriales;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -16,8 +14,25 @@ class InformeValorizacionMaterialesController extends Controller
 {
     public function addReqMatInfoValor(Request $request)
     {
+        $ProyectoReqMateriales= ProyectoReqMateriales::where('codigo', $request->codRequMateriales)->first();
+        $ProyectoMateriales = ProyectoMateriales::where('pk_proyecto_reqmateriales', $ProyectoReqMateriales->id)->first();
+        $formatreq = date("Y-m-d");
 
-        $product = Producto::where(['id' => $request->nIdmaterial])->with('familia', 'marca', 'material', 'modelotipo', 'subfamilia', 'homologacion')->first();
+        $ProyectoMateriales = new ProyectoMateriales();
+        $ProyectoMateriales->pk_proyecto_reqmateriales = $ProyectoMateriales->pk_proyecto_reqmateriales;
+        $ProyectoMateriales->producto_id = $request->nIdmaterial;
+        $ProyectoMateriales->cantidad = $request->cCantMaterial;
+        $ProyectoMateriales->unidmedida_id = $request->nIdUnidMedMat;
+        $ProyectoMateriales->cantidad = $request->cantInfProd;
+        $ProyectoMateriales->fecha = $formatreq;
+        $ProyectoMateriales->costunit = 0;
+        $ProyectoMateriales->total = 0;
+        $ProyectoMateriales->save();
+
+        
+
+
+/*         $product = Producto::where(['id' => $request->nIdmaterial])->with('familia', 'marca', 'material', 'modelotipo', 'subfamilia', 'homologacion')->first();
         $products = Session::get('InfoValorMaterial');
         $products = ($products != null) ? collect($products) : collect([]);
 
@@ -40,7 +55,9 @@ class InformeValorizacionMaterialesController extends Controller
             Session::put('InfoValorMaterial', $products);
             //return response()->json("Grabado");
             return response()->json(['datos' => $products, 'message' => NULL]);
-        endif;
+        endif; */
+
+
     }
 
     public  function eliminarTemporder()
@@ -68,7 +85,6 @@ class InformeValorizacionMaterialesController extends Controller
     public function listInfoValorMateriales(Request $request){ 
 
         $idproyReqMateriales = ProyectoReqMateriales::where('codigo', $request->codRequMateriales)->first();
-     
         $InformeValorizacion = InformeValorizacion::where('pk_proyecto_reqmateriales', $idproyReqMateriales->id)->first();
         $dato = valorizacionReqMateriales::with('producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion','unidmedida')->where('pk_informe_valorizacion', $InformeValorizacion->id)->get(); 
         return $dato; 

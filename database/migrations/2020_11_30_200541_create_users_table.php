@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->char('lastname',30);
             $table->char('username',30);
             $table->char('email',50);
-            $table->string('celular',30)->unique();
+            $table->string('celular',30);
             $table->unsignedBigInteger('roles_id');
             $table->foreign('roles_id')->references('id')->on('roles');
             $table->unsignedBigInteger('almacen_id');

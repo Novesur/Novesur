@@ -1307,7 +1307,7 @@ export default {
 
             return this.error;
         },
-        setAddReqMaterial() {
+        setAddReqMaterial() { 
             var url = "/administracion/ProyectoMateriales/addOrden";
 
             axios

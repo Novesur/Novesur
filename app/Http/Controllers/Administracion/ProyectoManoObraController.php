@@ -11,6 +11,35 @@ use Illuminate\Http\Request;
 
 class ProyectoManoObraController extends Controller
 {
+
+
+    public function addReqMatProyManObra(Request $request){
+        $ProyectoReqMateriales = ProyectoReqMateriales::where('codigo', $request->codRequMateriales)->first();
+
+        $ProyectoManObra = new ProyectoManObra();
+        $ProyectoManObra->pk_proyecto_reqmateriales = $ProyectoReqMateriales->id;
+        $ProyectoManObra->personal_id = $request->nIdPersonal;
+        $ProyectoManObra->dias = $request->cDiasMObra;
+        $ProyectoManObra->horas = $request->cHorasMObra;
+        $ProyectoManObra->personalInfoValor = $request->nIdPersonal;
+        $ProyectoManObra->diasInfoValor = $request->cDiasMObra;
+        $ProyectoManObra->horasInfoValor = $request->cHorasMObra;
+        $ProyectoManObra->estado = $request->estado;
+        $ProyectoManObra->save();
+
+
+
+    }
+
+
+    public function listproyManoObra(Request $request){
+        $idproyReqMateriales = ProyectoReqMateriales::where('codigo', $request->codRequMateriales)->first();
+        
+        $dato = ProyectoManObra::with('personal','personalInfoValor')->where('pk_proyecto_reqmateriales', $idproyReqMateriales->id)->get(); 
+        return $dato;
+    } 
+
+
     public function addProyManObra(Request $request)
     {
        
@@ -44,12 +73,8 @@ class ProyectoManoObraController extends Controller
         endif;
         return response()->json(['message' => 'El item no existe'], 422);
 
-    }
+    } 
 
-/*     public function listproyManoObra(Request $request){
-        $idproyReqMateriales = ProyectoReqMateriales::where('codigo', $request->codRequMateriales)->first();
-        $dato = ProyectoManObra::with('personal','personalInfoProy')->where('pk_proyecto_reqmateriales', $idproyReqMateriales->id)->get(); 
-        return $dato;
-    } */
+
 
 }

@@ -21,9 +21,9 @@ class CreateProyectoManobraTable extends Migration
             $table->foreign('personal_id')->references('id')->on('personal');
             $table->integer('dias')->required();
             $table->integer('horas')->required();
-            $table->string('personalInfoProy',150)->nullable();
-            $table->integer('diasInfoProy')->required();
-            $table->integer('horasInfoProy')->required();
+            $table->string('personalInfoValor',150)->nullable();
+            $table->integer('diasInfoValor')->required();
+            $table->integer('horasInfoValor')->required();
             $table->char('estado',1)->required();
             $table->softDeletes();
         });

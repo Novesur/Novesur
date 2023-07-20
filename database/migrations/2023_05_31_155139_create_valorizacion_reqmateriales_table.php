@@ -22,9 +22,10 @@ class CreateValorizacionReqmaterialesTable extends Migration
             $table->string('cantidad',10)->required();
             $table->unsignedBigInteger('unidmedida_id');
             $table->foreign('unidmedida_id')->references('id')->on('unidmedida');
-            $table->string('cantInfProd',10)->required();
             $table->date('fecha')->required();
-            $table->char('estado',1)->required();
+            $table->decimal('costunit', 8, 2)->required();
+            $table->decimal('total', 8, 2)->required();
+            $table->timestamps();
             $table->softDeletes();
         });
     }

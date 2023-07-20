@@ -176,6 +176,7 @@
                                             <th>DNI</th>
                                             <th>Zona</th>
                                             <th>Cargo</th>
+                                            <th>Estado</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -191,13 +192,15 @@
                                             <td v-text="item.DNI"></td>
                                             <td v-text="item.cargo.nombre"></td>
                                             <td v-text="item.zonal.nombre"></td>
+                                            <td v-if="item.estado === 'A'">Activo</td>
+                                            <td v-else style="color: red;">Inactivo</td>
                                           
 
                                             <td>
                                                 <router-link
                                                     class="btn btn-info btn-sm"
                                                     :to="{
-                                                        name: 'usuario.editar',
+                                                        name: 'personal.edit',
                                                         params: { id: item.id },
                                                     }"
                                                 >
@@ -403,7 +406,7 @@ export default {
                 .then((result) => {
                     if (result.isConfirmed) {
                         var url =
-                            "/administracion/personal/delete";
+                            "/administracion/personal/delete"; 
                         axios
                             .post(url, {
                                 nIdPersonal: id,

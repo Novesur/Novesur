@@ -21,10 +21,10 @@ class CreateProyectoOtrosreqTable extends Migration
             $table->string('cantidad', 50)->required();
             $table->unsignedBigInteger('unidmedida_id');
             $table->foreign('unidmedida_id')->references('id')->on('unidmedida');
-            $table->string('descripcionInfoProy', 150)->nullable();
-            $table->string('cantidadInfoProy', 50)->required();
-            $table->unsignedBigInteger('unidmedida_idInfoProy');
-            $table->foreign('unidmedida_idInfoProy')->references('id')->on('unidmedida');
+            $table->string('descripcionInfoValor', 150)->nullable();
+            $table->string('cantidadInfoValor', 50)->required();
+            $table->unsignedBigInteger('unidmedida_idInfoValor');
+            $table->foreign('unidmedida_idInfoValor')->references('id')->on('unidmedida');
             $table->char('estado', 1)->required();
             $table->softDeletes();
         });

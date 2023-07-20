@@ -9,7 +9,7 @@ class valorizacionReqMateriales extends Model
 {
     use SoftDeletes;
     protected $table = 'valorizacion_reqmateriales';
-    public $timestamps = false;
+   
     
     public function producto()
     {

@@ -24,6 +24,7 @@ class CreatePersonalTable extends Migration
             $table->foreign('cargo_personal_id')->references('id')->on('cargo_personal');
             $table->unsignedBigInteger('cargo_personal_id');
             $table->foreign('zonal_id')->references('id')->on('zonal');
+            $table->char('estado',1)->required();
             $table->softDeletes();
             $table->timestamps();
         });

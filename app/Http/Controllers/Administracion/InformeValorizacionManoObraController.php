@@ -5,24 +5,13 @@ namespace App\Http\Controllers\Administracion;
 use App\Http\Controllers\Controller;
 use App\InformeValorizacion;
 use App\ProyectoReqMateriales;
-use App\TempValorizacionManObra;
 use App\valorizacionManoObra;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 class InformeValorizacionManoObraController extends Controller
 {
-    public function addInfoValorManObra(Request $request)
-    {
 
-        $materiales = Session::get('InfoValorManObra');
-        $materiales = ($materiales != null) ? collect($materiales) : collect([]);
-        $tempMatOrdenMaterial = new TempValorizacionManObra();
-        $tempMatOrdenMaterial->fill(['personal' => mb_strtoupper($request->cPersonal), 'dias' => $request->cDiasMObra, 'horas' => $request->cHorasMObra, 'estado' => $request->estado]);
-        $materiales->push($tempMatOrdenMaterial);
-        Session::put('InfoValorManObra', $materiales);
-        return response()->json(['datos' => $materiales, 'message' => NULL]);
-    }
 
     public function CleanProyectManObra()
     {

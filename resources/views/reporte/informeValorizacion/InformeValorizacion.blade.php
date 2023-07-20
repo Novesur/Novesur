@@ -72,11 +72,11 @@
             <td width="12%" align="center" bgcolor="#33CCFF" style="font-size: 14px"><strong>HORAS</strong></td>
             <td width="14%" align="center" bgcolor="#33CCFF" style="font-size: 14px"><strong>DIAS</strong></td>
         </tr>
-        @if($valorizacionManoObra) @foreach ($valorizacionManoObra as $datamaterial)
+        @if($valorizacionManoObra) @foreach ($valorizacionManoObra as $dataManObra)
         <tr>
-            <td align="center" style="font-size: 12px">{{$datamaterial->personal}}</td>
-            <td align="center" style="font-size: 12px">{{$datamaterial->horas}}</td>
-            <td align="center" style="font-size: 12px">{{$datamaterial->dias}}</td>
+            <td align="center" style="font-size: 12px">{{$dataManObra->personal->nombres}}</td>
+            <td align="center" style="font-size: 12px">{{$dataManObra->horas}}</td>
+            <td align="center" style="font-size: 12px">{{$dataManObra->dias}}</td>
         </tr>
         @endforeach @endif
     </table>
