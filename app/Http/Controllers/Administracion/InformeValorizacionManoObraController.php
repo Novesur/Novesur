@@ -39,4 +39,15 @@ class InformeValorizacionManoObraController extends Controller
         $dato = valorizacionManoObra::with('personal')->where('pk_informe_valorizacion', $InformeValorizacion->id)->get();
         return $dato;
     }
+
+    public function ListValorMaNObraxId(Request $request){
+        $dato = valorizacionManoObra::where('id', $request->item)->first();
+        return $dato;
+    }
+
+    public function EditOtrosReqPersonal(Request $request){
+        
+        valorizacionManoObra::where('id', $request->itemStorage)->update(['personal_id' => $request->nidPersonalModal]);
+
+    }
 }

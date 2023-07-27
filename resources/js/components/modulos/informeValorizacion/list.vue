@@ -512,17 +512,17 @@
                                                                 {{
                                                                     item
                                                                         .personal
-                                                                        .nombres
-                                                                }}
-                                                                {{
-                                                                    item
-                                                                        .personal
                                                                         .ApPaterno
                                                                 }}
                                                                 {{
                                                                     item
                                                                         .personal
                                                                         .ApMaterno
+                                                                }}
+                                                                {{
+                                                                    item
+                                                                        .personal
+                                                                        .nombres
                                                                 }}
                                                             </td>
                                                             <td>
@@ -583,6 +583,21 @@
                                                                         class="fas fa-comment-dollar"
                                                                     ></i>
                                                                     Horas
+                                                                </button>
+
+                                                                <button
+                                                                    class="btn btn-primary btn-sm"
+                                                                    @click.prevent="
+                                                                        abrirModalEditPersonal(
+                                                                            item.id,
+                                                                            item.pk_informe_valorizacion
+                                                                        )
+                                                                    "
+                                                                >
+                                                                    <i
+                                                                        class="fas fa-user"
+                                                                    ></i>
+                                                                    Personal
                                                                 </button>
                                                             </td>
                                                         </tr>
@@ -648,7 +663,7 @@
                                                                 Unid. Medida
                                                             </th>
                                                             <th>Alquiler</th>
-                                                          <!--   <th>
+                                                            <!--   <th>
                                                                 Unid. Alquiler
                                                             </th> -->
                                                             <th>Total</th>
@@ -684,7 +699,7 @@
                                                                         .nombre
                                                                 }}
                                                             </td>
-                                                       <!--      <td>
+                                                            <!--      <td>
                                                                 {{
                                                                     item.alquiler
                                                                 }}
@@ -795,29 +810,23 @@
                                                         >Unid. Medida</label
                                                     >
                                                     <div class="col-md-10">
-                                                      <el-select
-                                                                    v-model="
-                                                                        fillBPInfValor.nIdUnidMedAlquiler
-                                                                    "
-                                                                    placeholder="Select"
-                                                                    style="
-                                                                        width: 70%;
-                                                                    "
-                                                                >
-                                                                    <el-option
-                                                                        v-for="item in listUnidMed"
-                                                                        :key="
-                                                                            item.id
-                                                                        "
-                                                                        :label="
-                                                                            item.nombre
-                                                                        "
-                                                                        :value="
-                                                                            item.id
-                                                                        "
-                                                                    >
-                                                                    </el-option>
-                                                                </el-select>
+                                                        <el-select
+                                                            v-model="
+                                                                fillBPInfValor.nIdUnidMedAlquiler
+                                                            "
+                                                            placeholder="Select"
+                                                            style="width: 70%"
+                                                        >
+                                                            <el-option
+                                                                v-for="item in listUnidMed"
+                                                                :key="item.id"
+                                                                :label="
+                                                                    item.nombre
+                                                                "
+                                                                :value="item.id"
+                                                            >
+                                                            </el-option>
+                                                        </el-select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -880,7 +889,105 @@
                             </button>
                             <button
                                 class="btn btn-secondary"
-                                @click="abrirModalOtrosReqAlquiler(id,pk_informe_valorizacion)"
+                                @click="
+                                    abrirModalOtrosReqAlquiler(
+                                        id,
+                                        pk_informe_valorizacion
+                                    )
+                                "
+                            >
+                                Cerrar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  FIN DEL MODAL ALQUILER -->
+
+        <!--   MODAL  DEL  PERSONAL -->
+        <div
+            class="modal fade"
+            :class="{ show: modalShowEditPersonal }"
+            :style="modalShowEditPersonal ? mostrarModal : ocultarModal"
+        >
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Personal</h5>
+                        <button
+                            class="close"
+                            @click="abrirModalEditPersonal"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="content container-fluid">
+                            <form role="form">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group row">
+                                            <div class="col-md-12">
+                                                <div class="form-group row">
+                                                    <div
+                                                        class="card-body table-responsive"
+                                                    >
+                                                        <div
+                                                            class="form-group row"
+                                                        >
+                                                            <label
+                                                                class="col-md-2 col-form-label"
+                                                                >Personal</label
+                                                            >
+                                                            <div
+                                                                class="col-md-10"
+                                                            >
+                                                                <el-select
+                                                                    v-model="
+                                                                        fillBPInfValor.nidPersonalModal
+                                                                    "
+                                                                    placeholder="Select"
+                                                                    style="
+                                                                        width: 70%;
+                                                                    "
+                                                                >
+                                                                    <el-option
+                                                                        v-for="item in listPersonal"
+                                                                        :key="
+                                                                            item.id
+                                                                        "
+                                                                        :label="
+                                                                            item.ApPaterno +
+                                                                            ' ' +
+                                                                            item.ApMaterno +
+                                                                            ' ' +
+                                                                            item.nombres
+                                                                        "
+                                                                        :value="
+                                                                            item.id
+                                                                        "
+                                                                    >
+                                                                    </el-option>
+                                                                </el-select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button
+                                class="btn btn-success"
+                                @click="EditManObraPersonal()"
+                            >
+                                Editar
+                            </button>
+                            <button
+                                class="btn btn-secondary"
+                                @click="abrirModalEditPersonal()"
                             >
                                 Cerrar
                             </button>
@@ -890,7 +997,7 @@
             </div>
         </div>
 
-        <!--  FIN DEL MODAL ALQUILER -->
+        <!-- FIN DEL MODAL PERSONAL -->
     </div>
 </template>
 
@@ -908,7 +1015,8 @@ export default {
                 precioDia: "",
                 cantAlquiler: "",
                 nIdAlquiler: "",
-                nIdUnidMedAlquiler:"",
+                nIdUnidMedAlquiler: "",
+                nidPersonalModal: "",
             },
 
             modalShowEditItem: false,
@@ -935,6 +1043,12 @@ export default {
                 background: "#0000006b",
             },
 
+            modalShowEditPersonal: false,
+            mostrarModal: {
+                display: "block",
+                background: "#0000006b",
+            },
+
             ocultarModal: {
                 display: "none",
             },
@@ -947,6 +1061,7 @@ export default {
             listOtrosReq: [],
             listUnidAlquiler: [],
             listUnidMed: [],
+            listPersonal: [],
 
             pageNumber: 0,
             perPage: 10,
@@ -959,8 +1074,9 @@ export default {
         this.getlistCcostos();
         this.getlistUnidAlquiler();
         this.getListarUnidadMedida();
+        this.getListPersonal();
     },
- 
+
     computed: {
         pageCount() {
             let a = this.listPInfoValorizacion.length,
@@ -986,14 +1102,20 @@ export default {
         },
     },
     methods: {
+        getListPersonal() {
+            var url = "/administracion/personal/list";
+            axios.get(url).then((response) => {
+                this.listPersonal = response.data;
+            });
+        },
 
-      getListarUnidadMedida() {
-      var url = "/administracion/KardexDetalle/listUnidMed";
-      axios.get(url).then((response) => {
-        this.listUnidMed = response.data;
-        this.fillBPInfValor.nIdUnidMedAlquiler = this.listUnidMed[7].id;
-      });
-    },
+        getListarUnidadMedida() {
+            var url = "/administracion/KardexDetalle/listUnidMed";
+            axios.get(url).then((response) => {
+                this.listUnidMed = response.data;
+                this.fillBPInfValor.nIdUnidMedAlquiler = this.listUnidMed[7].id;
+            });
+        },
         getlistCcostos() {
             var url = "/administracion/CentroCostos/list";
             axios.get(url).then((response) => {
@@ -1018,6 +1140,11 @@ export default {
             this.setMostrarInfoManObra(item);
         },
 
+        abrirModalEditPersonal(item, pk_informe_valorizacion) {
+            this.modalShowEditPersonal = !this.modalShowEditPersonal;
+            this.MandarDatosPersonal(item, pk_informe_valorizacion);
+        },
+
         abrirModalOtrosReque(item) {
             this.modalShowEditOtrosReque = !this.modalShowEditOtrosReque;
             this.setMostrarInfOtrosReq(item);
@@ -1026,47 +1153,62 @@ export default {
         abrirModalOtrosReqAlquiler(id, pk_informe_valorizacion) {
             this.modalShowEditOtrosReqAquiler =
                 !this.modalShowEditOtrosReqAquiler;
-                
-                var url = "/administracion/InformeValorizacion/getAlquiler";
-      axios
-        .post(url, {
-          id,
-          pk_informe_valorizacion,
-        })
-        .then((response) => {
-          
-          this.fillBPInfValor.nIdUnidMedAlquiler = response.data.unidmedida_id; 
-          this.fillBPInfValor.nIdAlquiler = response.data.pk_tiempo_alquiler.id;
-          localStorage.id = response.data.id; 
-   /*        localStorage.IdAlquiler = response.data.pk_tiempo_alquiler.id; 
-          localStorage.IdUnidMed = response.data.unidmedida_id; */
-          localStorage.informe_valorizacion = pk_informe_valorizacion;
-        });
 
+            var url = "/administracion/InformeValorizacion/getAlquiler";
+            axios
+                .post(url, {
+                    id,
+                    pk_informe_valorizacion,
+                })
+                .then((response) => {
+                    this.fillBPInfValor.nIdUnidMedAlquiler =
+                        response.data.unidmedida_id;
+                    this.fillBPInfValor.nIdAlquiler =
+                        response.data.pk_tiempo_alquiler.id;
+                    localStorage.id = response.data.id;
+                    /*        localStorage.IdAlquiler = response.data.pk_tiempo_alquiler.id; 
+          localStorage.IdUnidMed = response.data.unidmedida_id; */
+                    localStorage.pk_informe_valorizacion = pk_informe_valorizacion;
+                });
         },
 
         EditOtrosReqAlquiler() {
-          
-      var url = "/administracion/InformeValorizacion/EditOtrosReqAlquiler";
-      axios
-        .post(url, {
-          id: localStorage.id,
-       /*    cantAlquiler: this.fillBPInfValor.cantAlquiler, */
-          nIdAlquiler : this.fillBPInfValor.nIdAlquiler,
-          IdUnidMed: this.fillBPInfValor.nIdUnidMedAlquiler
-        })
-        .then(() => {
-          this.fillBPInfValor.cantAlquiler = "";
-          this.setMostrarInfOtrosReq(localStorage.informe_valorizacion);
-          this.modalShowEditOtrosReqAquiler = !this.modalShowEditOtrosReqAquiler;
-          localStorage.removeItem(id);
-       /*    localStorage.removeItem(localStorage.IdAlquiler);
-          localStorage.removeItem(localStorage.IdUnidMed);
-          localStorage.removeItem(localStorage.informe_valorizacion); */
-        });
-    },
+            var url =
+                "/administracion/InformeValorizacion/EditOtrosReqAlquiler";
+            axios
+                .post(url, {
+                    id: localStorage.id,
+                    nIdAlquiler: this.fillBPInfValor.nIdAlquiler,
+                    IdUnidMed: this.fillBPInfValor.nIdUnidMedAlquiler,
+                })
+                .then(() => {
+                    this.fillBPInfValor.cantAlquiler = "";
+                    this.setMostrarInfOtrosReq(
+                        localStorage.informe_valorizacion
+                    );
+                    this.modalShowEditOtrosReqAquiler =
+                        !this.modalShowEditOtrosReqAquiler;
+                    localStorage.removeItem(id);
+                });
+        },
 
-
+        EditManObraPersonal() {
+            
+            var url =
+                "/administracion/informeValorizacion/EditOtrosReqPersonal";
+            axios
+                .post(url, {
+                    itemStorage : localStorage.itemStorage,
+                    nidPersonalModal: this.fillBPInfValor.nidPersonalModal,
+                })
+                .then(() => {
+                       this.fillBPInfValor.nidPersonalModal = "";
+          this.setMostrarInfoManObra(localStorage.pk_informe_valorizacion);
+          this.modalShowEditPersonal = !this.modalShowEditPersonal;
+          localStorage.removeItem(itemStorage);
+          localStorage.removeItem(localStorage.pk_informe_valorizacion);
+                });
+        },
 
         setMostrarInfo(item) {
             var url =
@@ -1104,6 +1246,23 @@ export default {
                 })
                 .then((response) => {
                     this.listOtrosReq = response.data;
+                });
+        },
+
+        MandarDatosPersonal(item, pk_informe_valorizacion) {
+            var url = "/administracion/informeValorizacion/ListValorMaNObraxId";
+            axios
+                .get(url, {
+                    params: {
+                        item,
+                    },
+                })
+                .then((response) => {
+                    this.fillBPInfValor.nidPersonalModal =
+                        response.data.personal_id;
+                    localStorage.itemStorage = item;
+                    localStorage.pk_informe_valorizacion = pk_informe_valorizacion;
+                   // this.setMostrarInfoManObra(pk_informe_valorizacion);
                 });
         },
 
@@ -1198,7 +1357,8 @@ export default {
         },
 
         getExcelReporte(item) {
-            var url = "/administracion/InformeValorizacion/ExcelDetalladoInfoValor"; 
+            var url =
+                "/administracion/InformeValorizacion/ExcelDetalladoInfoValor";
             axios
                 .post(
                     url,

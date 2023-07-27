@@ -161,6 +161,22 @@
 
                     </div>
 
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Nro Asistencia</label>
+                        <div class="col-md-2">
+                          <input
+                          type="text"
+                            class="form-control"
+                            v-int
+                            v-model="fillEditarUsuario.cAsistencia"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    
+
                   </div>
                 </form>
               </div>
@@ -234,6 +250,7 @@ export default {
         cPassword: "",
         nIdRol:'',
         nIdGradoAcad:'',
+        cAsistencia:'',
       },
       listRoles:[],
       listPermisosByUser:[],
@@ -282,6 +299,7 @@ export default {
             this.fillEditarUsuario.cCelular = response.data.celular,
             this.fillEditarUsuario.nIdRol = response.data.roles_id,
             this.fillEditarUsuario.nIdGradoAcad = response.data.gradousers_id
+            this.fillEditarUsuario.cAsistencia = response.data.asistencia
 
         });
     },
@@ -362,7 +380,8 @@ getListarPermisosByUser(){
           cPassword: this.fillEditarUsuario.cPassword,
           nIdRol : this.fillEditarUsuario.nIdRol,
           cCelular : this.fillEditarUsuario.cCelular,
-          nIdGradoAcad : this.fillEditarUsuario.nIdGradoAcad
+          nIdGradoAcad : this.fillEditarUsuario.nIdGradoAcad,
+          cAsistencia: this.fillEditarUsuario.cAsistencia
         })
         .then((response) => {
           Swal.fire({

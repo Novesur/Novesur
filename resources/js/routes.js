@@ -727,7 +727,7 @@ export default new Router({
                 .default,
         },
 
-        /*  ASISTENCIAS   */
+        /*  PERSONAL   */
 
         {
             path: "/personal/create",
@@ -768,6 +768,14 @@ export default new Router({
             component: require("./components/modulos/cargo/edit").default,
             props: true,
         },
+
+        /* ASISTENCIA */
+        {
+            path: "/asistencia/import",
+            name: "asistencia.import",
+            component: require("./components/modulos/asistencia/import").default,
+        },
+
     ],
 
     mode: "history",

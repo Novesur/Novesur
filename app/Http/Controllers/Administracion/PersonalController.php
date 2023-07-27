@@ -29,6 +29,12 @@ class PersonalController extends Controller
             $dato = Personal::with('cargo', 'zonal')->get();
             return $dato;
         }
+
+          //Busqueda por DNI
+          if ($request->cFirstname == null && $request->cZonal == null && $request->cCargo == null) {
+            $dato = Personal::with('cargo', 'zonal')->where('dni',$request->cDNI)->get();
+            return $dato;
+        }
         
 
         //Busqueda por Nombre

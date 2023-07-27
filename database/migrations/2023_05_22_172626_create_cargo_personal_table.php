@@ -15,7 +15,7 @@ class CreateCargoPersonalTable extends Migration
     {
         Schema::create('cargo_personal', function (Blueprint $table) {
             $table->id();
-            $table->string('nombres',200)->required();
+            $table->string('nombre',200)->required();
             $table->timestamps();
         });
     }

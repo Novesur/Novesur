@@ -35,6 +35,7 @@ class UsuarioController extends Controller
         $user->almacen_id = $request->nIdAlmacen;
         $user->password = Hash::make($request->cPassword);
         $user->gradousers_id = $request->nIdGradoAcad;
+        $user->asistencia = $request->cAsistencia;
         $user->save();
     }
 
@@ -69,6 +70,7 @@ class UsuarioController extends Controller
                 $Usuario->password = Hash::make($request->cPassword);
             }
             $Usuario->gradousers_id = $request->nIdGradoAcad;
+            $Usuario->asistencia = $request->cAsistencia;
             $Usuario->save();
         }
     }

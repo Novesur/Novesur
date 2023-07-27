@@ -559,13 +559,6 @@ Route::post('/administracion/InformeValorizacion/EditOtrosReqAlquiler', 'Adminis
 Route::post('/administracion/InformeValorizacion/editPrecioOtrosReq', 'Administracion\InformeValorizacionController@editPrecioOtrosReq');
 
 
-
-
-
-
-
-
-
 /* Proyecto Materiales  Informe Valorizacion*/
 //Route::post('/administracion/informeValorizacion/addReqMatInfoValor', 'Administracion\InformeValorizacionMaterialesController@addReqMatInfoValor');
 Route::get('/administracion/informeValorizacion/eliminarTemporder', 'Administracion\InformeValorizacionMaterialesController@eliminarTemporder');
@@ -581,6 +574,8 @@ Route::get('/administracion/informeValorizacion/CleanProyectManObra', 'Administr
 Route::post('/administracion/informeValorizacion/reorderReqManObra', 'Administracion\InformeValorizacionManoObraController@reorderReqManObra');
 //Route::get('/administracion/informeValorizacion/listInfoValorManoObra', 'Administracion\InformeValorizacionManoObraController@listInfoValorManoObra');
 Route::get('/administracion/informeValorizacion/ListValorMaNObraxInfoValor', 'Administracion\InformeValorizacionManoObraController@ListValorMaNObraxInfoValor');
+Route::get('/administracion/informeValorizacion/ListValorMaNObraxId', 'Administracion\InformeValorizacionManoObraController@ListValorMaNObraxId');
+Route::post('/administracion/informeValorizacion/EditOtrosReqPersonal', 'Administracion\InformeValorizacionManoObraController@EditOtrosReqPersonal');
 
 
 
@@ -623,6 +618,11 @@ Route::get('/administracion/cargo/index', 'Administracion\CargoController@index'
 Route::get('/administracion/cargo/listByIdCargos', 'Administracion\CargoController@listByIdCargos');
 Route::post('/administracion/cargo/edit', 'Administracion\CargoController@edit');
 Route::get('/administracion/cargo/list', 'Administracion\CargoController@list');
+
+
+/* Asistencia */
+Route::post('/administracion/asistencia/import', 'Administracion\AsistenciaController@import');
+
 
 
 

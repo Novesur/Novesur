@@ -633,15 +633,15 @@
 
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
-                            <i class="fas fa-solid fa-utensils"></i>
+                            <i class="fas fa-user-cog"></i>
                             <p>
-                                Asistencia
+                                Personal
                                 <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <template v-if="listPermisos.includes('asistencia.personal')">
+                                <template v-if="listPermisos.includes('personal.list')">
                                     <router-link class="nav-link" :to="'/personal/index'">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Personal</p>
@@ -650,7 +650,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <template v-if="listPermisos.includes('asistencia.personal')">
+                                <template v-if="listPermisos.includes('personal.cargo')">
                                     <router-link class="nav-link" :to="'/cargo/index'">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Cargo</p>
@@ -668,15 +668,8 @@
                                 </template>
                             </li>
 
-                        <!--     <li class="nav-item">
-                                <template v-if="listPermisos.includes('menu.list')">
-                                    <router-link class="nav-link" :to="'/menu/list'">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Pedido Menu</p>
-                                    </router-link>
-                                </template>
-                            </li>
-
+                    
+<!-- 
                             <li class="nav-item">
                                 <template v-if="listPermisos.includes('menu.detalle')">
                                     <router-link class="nav-link" :to="'/menu/detalle'">
@@ -708,6 +701,51 @@
  -->
                         </ul>
                     </li>
+
+
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-user-clock"></i>
+                            <p>
+                                Asistencia
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <template v-if="listPermisos.includes('asistencia.import')">
+                                    <router-link class="nav-link" :to="'/asistencia/import'">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Importar Asistencias</p>
+                                    </router-link>
+                                </template>
+                            </li>
+
+                 
+
+
+             <!--                <li class="nav-item">
+                                <template v-if="listPermisos.includes('menu.reporteTotal')">
+                                    <router-link class="nav-link" :to="'/menu/reporteTotal'">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Reporte de Totales</p>
+                                    </router-link>
+                                </template>
+                            </li>
+
+
+                            <li class="nav-item">
+                                <template v-if="listPermisos.includes('menu.reporteFechas')">
+                                    <router-link class="nav-link" :to="'/menu/list'">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Reporte por fechas</p>
+                                    </router-link>
+                                </template>
+                            </li>
+ -->
+                        </ul>
+                    </li>
+
 
                     
 

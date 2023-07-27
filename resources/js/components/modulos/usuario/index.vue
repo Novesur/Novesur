@@ -114,6 +114,7 @@
                       <th>Email</th>
                        <th>Celular</th>
                        <th>Almacen</th>
+                       <th>Nro Asistencia</th>
                       <th>Acciones</th>
                     </tr>
                   </thead>
@@ -129,6 +130,7 @@
                       <td v-text="item.email"></td>
                       <td v-text="item.celular"></td>
                       <td v-text="item.almacen.nombre"></td>
+                      <td v-text="item.asistencia"></td>
 
                       <td>
                         <router-link

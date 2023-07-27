@@ -188,6 +188,20 @@
                         </div>
                       </div>
                     </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Nro Asistencia</label>
+                        <div class="col-md-2">
+                          <input
+                          type="text"
+                            class="form-control"
+                            v-int
+                            v-model="fillCrearUsuario.cAsistencia"
+                          />
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </form>
               </div>
@@ -261,6 +275,7 @@ export default {
         nIdRol: "",
         nIdAlmacen: "",
         nIdGradoAcad:"",
+        cAsistencia:"",
       },
       listRoles: [],
       listAlmacen: [],
@@ -362,7 +377,7 @@ export default {
     },
 
     setRegistrarUsuarios() {
-      var url = "/administracion/usuario/setRegistrarUsuario";
+      var url = "/administracion/usuario/setRegistrarUsuario"; 
       axios
         .post(url, {
           cFirstname: this.fillCrearUsuario.cFirstname,
@@ -375,6 +390,7 @@ export default {
           nIdAlmacen: this.fillCrearUsuario.nIdAlmacen,
           cCelular : this.fillCrearUsuario.cCelular,
           nIdGradoAcad : this.fillCrearUsuario.nIdGradoAcad,
+          cAsistencia: this.fillCrearUsuario.cAsistencia,
 
         })
         .then((response) => {

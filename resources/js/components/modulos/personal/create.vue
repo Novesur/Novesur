@@ -16,7 +16,7 @@
                     <div class="card-tools">
                         <router-link
                             class="btn btn-info btn-sm"
-                            :to="'/usuario'"
+                            :to="'/personal/index'"
                         >
                             <i class="fas fa-plus-square"></i>Regresar
                         </router-link>
