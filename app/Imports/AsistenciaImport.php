@@ -9,15 +9,23 @@ use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 
 
-class AsistenciaImport implements ToModel, WithHeadingRow,WithBatchInserts,WithChunkReading
+class AsistenciaImport implements ToModel, WithHeadingRow, WithBatchInserts, WithChunkReading
 {
- 
+
     public function model(array $row)
     {
-        return new Asistencia([
-            'asistencia'     => $row['asistencia'],
-            'fecha_hora'    => $row['fecha_hora'], 
-        ]);
+        //dd($row['fechahora']);
+
+        if( date('Y-m-d', strtotime(substr($row['fechahora'], 0, 10))) !== '1970-01-01'){
+            return new Asistencia([
+                'asistencia'   => $row['usuario'],
+                'fecha' =>  date('Y-m-d', strtotime(substr($row['fechahora'], 0, 10))),
+                'tiempo' =>  substr($row['fechahora'], 11, 19),
+        
+            ]);
+
+        }
+ 
     }
     public function batchSize(): int
     {

@@ -795,7 +795,7 @@ export default {
 
 
     getExcelpapeletaSalida() {
-      var url = "/operacion/papeletaSalida/export";
+      var url = "/operacion/papeletaSalida/export"; 
       axios
         .post(
           url,

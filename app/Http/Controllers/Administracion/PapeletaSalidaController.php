@@ -196,20 +196,21 @@ if(empty($request->listTempClientPSalida)){
     {
         $fecha1 =  date("Y-m-d", strtotime($request->dFechainicio));
         $fecha2 =  date("Y-m-d", strtotime($request->dFechafin));
-
-
-       /*  $fecha1 = $request->dFechainicio;
+        
+        /*  $fecha1 = $request->dFechainicio;
         $fecha2 = $request->dFechafin; */
         $vendedor = $request->nIdVendedor; 
-
+       
         /*         $papeletasalida = Papeletasalida::with('user','motivopapeletasalida')->whereBetween('fecha', [$fecha1 , $fecha2] )->where('estadopapeletasalida_id',3)->get();
- */
-
+        */
+        
         if ($request->nIdMotivo == Null && $request->nIdVendedor == Null) {
             $dato = ClientsPapeletaSalida::with('papeletasalida', 'cliente', 'papeletasalida.user', 'papeletasalida.motivopapeletasalida')
-                ->whereHas('papeletasalida', function (Builder $query) use ($fecha1, $fecha2) {
-                    $query->whereBetween('fecha', [$fecha1, $fecha2])->where('estadopapeletasalida_id', 2);
-                })->get();
+            ->whereHas('papeletasalida', function (Builder $query) use ($fecha1, $fecha2) {
+                $query->whereBetween('fecha', [$fecha1, $fecha2])->where('estadopapeletasalida_id', 2);
+            })->get();
+        
+          
             return (new PapeletaExport)->setGenerarExcel($dato)->download('invoices.xlsx');
         }
 

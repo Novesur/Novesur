@@ -331,7 +331,7 @@ export default {
     },
 
     getExcelCliente() {
-      var url = "/operacion/Cliente/export";
+      var url = "/operacion/Cliente/export"; 
       axios
         .post(
           url,

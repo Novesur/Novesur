@@ -15,8 +15,8 @@ class CreateAsistenciaTable extends Migration
     {
         Schema::create('asistencia', function (Blueprint $table) {
             $table->id();
-            $table->integer('asistencia')->required();
-            $table->string('fecha_hora',30)->required();
+            $table->integer('asistencia')->nullable();
+            $table->string('fecha_hora',30)->nullable();
         
         });
     }
