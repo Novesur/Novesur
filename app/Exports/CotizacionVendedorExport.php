@@ -17,7 +17,7 @@ class CotizacionVendedorExport  implements FromView, ShouldAutoSize
         $this->listCotizacionByDate = $listCotizacionByDate;
 
         return  $this;
-    }
+    } 
 
     public function view(): View
     {

@@ -17,6 +17,7 @@
             <th><b>Cliente</b></th>
             <th><b>Estado</b></th>
             <th><b>Vendedor</b></th>
+            <th><b>Total</b></th>
 
 
         </tr>
@@ -36,7 +37,8 @@
                 <td>{{date('d-m-Y', strtotime($data->fecha))}}</td>
                 <td>{{$data->cliente->razonsocial}}</td>
                 <td>{{$data->estadopedido->nombre}}</td>
-                <td>{{$data->user->firstname}}</td>
+                <td>{{$data->user->firstname}}</td> 
+                <td>{{$data->detalle_sum}}</td>
             </tr>
             @endforeach
         </tbody>

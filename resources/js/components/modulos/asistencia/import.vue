@@ -12,7 +12,6 @@
 
         <div class="content container-fluid">
             <div class="card">
-     
                 <div class="card-body">
                     <div class="container-fluid">
                         <div class="card card-info">
@@ -21,21 +20,19 @@
                                     Criterios de Busqueda
                                 </h3>
                             </div>
-                            <div class="card-body" >
+                            <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <form id="mainFormAsist">
-                                        <div class="form-group row">
-                                          
-                                                <input type="file" name="select_file"   >
-                                                
+                                            <div class="form-group row">
+                                                <input
+                                                    type="file"
+                                                    name="select_file"
+                                                />
                                             </div>
                                         </form>
-                                        </div>
-                        
                                     </div>
-
-                            
+                                </div>
                             </div>
                             <div class="card-footer">
                                 <div class="row">
@@ -44,7 +41,8 @@
                                             class="btn btn-flat btn-success btnWidth"
                                             @click.prevent="setImportFile"
                                         >
-                                        <i class="fas fa-upload"></i> Importar
+                                            <i class="fas fa-upload"></i>
+                                            Importar
                                         </button>
                                         <button
                                             class="btn btn-flat btn-default btnWidth"
@@ -91,9 +89,12 @@
                                             <td v-text="item.DNI"></td>
                                             <td v-text="item.cargo.nombre"></td>
                                             <td v-text="item.zonal.nombre"></td>
-                                            <td v-if="item.estado === 'A'">Activo</td>
-                                            <td v-else style="color: red;">Inactivo</td>
-                                          
+                                            <td v-if="item.estado === 'A'">
+                                                Activo
+                                            </td>
+                                            <td v-else style="color: red">
+                                                Inactivo
+                                            </td>
 
                                             <td>
                                                 <router-link
@@ -108,7 +109,6 @@
                                                     ></i
                                                     >Editar
                                                 </router-link>
-                                          
 
                                                 <button
                                                     class="btn btn-danger btn-sm"
@@ -183,7 +183,6 @@
 </template>
 
 <script>
-
 export default {
     data() {
         return {
@@ -192,13 +191,10 @@ export default {
                 cruta: "",
                 cSecondname: "",
                 cLastname: "",
-               
-              
-                
             },
             listPersonal: [],
             listZonal: [],
-          
+
             listRolPermisoByUsuario: JSON.parse(
                 sessionStorage.getItem("listRolPermisosByUsuario")
             ),
@@ -206,9 +202,8 @@ export default {
             perPage: 10,
         };
     },
-    mounted(){
-      
-      this.getListarZonal();
+    mounted() {
+        this.getListarZonal();
     },
     computed: {
         pageCount() {
@@ -236,9 +231,7 @@ export default {
     },
     methods: {
         limpiarCriteriosBsq() {
-           
             this.fillBsqImportAsist.cruta = "";
-         
         },
         limpiarBandejaUsuario() {
             this.listPersonal = [];
@@ -249,8 +242,6 @@ export default {
                 this.listZonal = response.data;
             });
         },
-
-  
 
         nextPage() {
             this.pageNumber++;
@@ -284,8 +275,7 @@ export default {
                 })
                 .then((result) => {
                     if (result.isConfirmed) {
-                        var url =
-                            "/administracion/personal/delete"; 
+                        var url = "/administracion/personal/delete";
                         axios
                             .post(url, {
                                 nIdPersonal: id,
@@ -306,24 +296,25 @@ export default {
                 });
         },
 
-        setImportFile(){
-
-         
-            var data = new FormData(document.getElementById("mainFormAsist"))
-            var url ="/administracion/asistencia/import"; 
-                        axios
-                            .post(url, data,{
-                                headers: {
-                                    'Content-Type': 'multipart/form-data'
+        setImportFile() {
+            var data = new FormData(document.getElementById("mainFormAsist"));
+            var url = "/administracion/asistencia/import";
+            axios
+                .post(url, data, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                })
+                .then((response) => {
+                    Swal.fire({
+                        position: "center",
+                        icon: response.data.icon,
+                        title: response.data.message,
+                        showConfirmButton: false,
+                        timer: 3000,
+                    });
+                });
         },
-                            }
-                            )
-                            .then((response) => {
-                               
-                            });
-                    }
-                
-        
     },
 };
 </script>
