@@ -13,10 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/administracion/modelo/getListarModelos', 'Administracion\ModeloProductController@store');
-Route::get('/administracion/modelo/listByIdModelo', 'Administracion\ModeloProductController@listByIdModelo');
-Route::post('/administracion/modelo/setRegistrarModelo', 'Administracion\ModeloProductController@create');
-Route::post('/administracion/modelo/setEditarModelo', 'Administracion\ModeloProductController@edit');
+Route::get('/administracion/modelo/getListarModelos', 'Administracion\ModelotipoController@store');
+Route::get('/administracion/modelo/listByIdModelo', 'Administracion\ModelotipoController@listByIdModelo'); 
+Route::post('/administracion/modelo/setRegistrarModelo', 'Administracion\ModelotipoController@create');
+Route::post('/administracion/modelo/setEditarModelo', 'Administracion\ModelotipoController@edit');
 
 ////////////Familia
 Route::get('/administracion/familia/getListarFamilias', 'Administracion\FamiliaController@store');

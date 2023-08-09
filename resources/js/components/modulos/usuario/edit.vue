@@ -175,6 +175,38 @@
                       </div>
                     </div>
 
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Zonal</label>
+                            <div class="col-md-9">
+                                <el-select v-model="fillEditarUsuario.nIdZonal" placeholder="Seleccione un Rol" clearable>
+                                    <el-option v-for="item in listZonal" :key="item.id" :label="item.nombre" :value="item.id">
+
+                                    </el-option>
+
+                                </el-select>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-md-3 col-form-label">DNI</label>
+                        <div class="col-md-2">
+                          <input
+                          type="text"
+                            class="form-control"
+                            v-int
+                            v-model="fillEditarUsuario.cDni"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
                     
 
                   </div>
@@ -251,9 +283,12 @@ export default {
         nIdRol:'',
         nIdGradoAcad:'',
         cAsistencia:'',
+        nIdZonal:'',
+        cDni:'',
       },
       listRoles:[],
       listPermisosByUser:[],
+      listZonal:[],
       listGradoAcad:[],
       modalShow: false,
       mostrarModal: {
@@ -271,6 +306,7 @@ export default {
     this.getUsuarioById();
     this.getListarRoles();
     this.getListarGradoAcad();
+    this.getListZonal();
   },
   methods: {
 
@@ -280,6 +316,12 @@ export default {
         .get(url).then((response) => {
           this.listRoles = response.data;
         });
+    },
+    getListZonal(){
+      var url = "/administracion/zonal/list";
+      axios.get(url).then((response) => {
+        this.listZonal = response.data;
+      });
     },
 
     getUsuarioById() {
@@ -299,7 +341,10 @@ export default {
             this.fillEditarUsuario.cCelular = response.data.celular,
             this.fillEditarUsuario.nIdRol = response.data.roles_id,
             this.fillEditarUsuario.nIdGradoAcad = response.data.gradousers_id
-            this.fillEditarUsuario.cAsistencia = response.data.asistencia
+            this.fillEditarUsuario.cAsistencia = response.data.asistencia,
+            this.fillEditarUsuario.nIdZonal = response.data.zonal_id,
+            this.fillEditarUsuario.cDni = response.data.dni
+            
 
         });
     },
@@ -381,7 +426,9 @@ getListarPermisosByUser(){
           nIdRol : this.fillEditarUsuario.nIdRol,
           cCelular : this.fillEditarUsuario.cCelular,
           nIdGradoAcad : this.fillEditarUsuario.nIdGradoAcad,
-          cAsistencia: this.fillEditarUsuario.cAsistencia
+          cAsistencia: this.fillEditarUsuario.cAsistencia,
+          nIdZonal: this.fillEditarUsuario.nIdZonal,
+          cDni: this.fillEditarUsuario.cDni
         })
         .then((response) => {
           Swal.fire({

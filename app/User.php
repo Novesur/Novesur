@@ -11,7 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User  extends Authenticatable
 {
     use Notifiable;
-    protected $fillable = ['firstanme', 'secondname', 'lastname', 'username', 'email', 'roles_id', 'almacen_id', 'password'];
+    protected $fillable = ['firstanme', 'secondname', 'lastname', 'username', 'email', 'roles_id', 'almacen_id', 'password','gradousers_id','asistencia','zonal_id','dni'];
     use SoftDeletes;
     protected $table = 'users';
     protected $dates = ['deleted_at']; //Registramos la nueva columna
@@ -41,5 +41,10 @@ class User  extends Authenticatable
     public function gradousers()
     {
         return $this->belongsTo(Gradouser::class);
+    }
+
+    public function zonal()
+    {
+        return $this->belongsTo(Zonal::class);
     }
 }

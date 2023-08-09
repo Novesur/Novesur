@@ -111,10 +111,12 @@
                       <th>Apellido Paterno</th>
                       <th>Apellido Materno</th>
                       <th>Usuario</th>
+                      <th>DNI</th>
                       <th>Email</th>
                        <th>Celular</th>
                        <th>Almacen</th>
                        <th>Nro Asistencia</th>
+                       <th>Zonal</th>
                       <th>Acciones</th>
                     </tr>
                   </thead>
@@ -127,10 +129,12 @@
                       <td v-text="item.secondname"></td>
                       <td v-text="item.lastname"></td>
                       <td v-text="item.username"></td>
+                      <td v-text="item.dni"></td>
                       <td v-text="item.email"></td>
                       <td v-text="item.celular"></td>
                       <td v-text="item.almacen.nombre"></td>
                       <td v-text="item.asistencia"></td>
+                      <td v-text="item.zonal.nombre"></td>
 
                       <td>
                         <router-link
@@ -265,6 +269,7 @@ export default {
         })
         .then((response) => {
           this.inicializarPaginacion();
+          console.log(response.data);
           this.listUsuarios = response.data;
         });
     },

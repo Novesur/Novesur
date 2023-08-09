@@ -202,6 +202,47 @@
                         </div>
                       </div>
                     </div>
+
+                    
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Zonal</label>
+                        <div class="col-md-9">
+                          <el-select
+                            v-model="fillCrearUsuario.nIdZonal"
+                            placeholder="Seleccione una zona"
+                            clearable
+                          >
+                            <el-option
+                              v-for="item in listZonal"
+                              :key="item.id"
+                              :label="item.nombre"
+                              :value="item.id"
+                            >
+                            </el-option>
+                          </el-select>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-md-3 col-form-label">DNI</label>
+                        <div class="col-md-2">
+                          <input
+                          type="text"
+                            class="form-control"
+                            v-int
+                            v-model="fillCrearUsuario.cDni"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+
+
+
                   </div>
                 </form>
               </div>
@@ -276,10 +317,13 @@ export default {
         nIdAlmacen: "",
         nIdGradoAcad:"",
         cAsistencia:"",
+        nIdZonal:"",
+        cDni:"",
       },
       listRoles: [],
       listAlmacen: [],
       listGradoAcad:[],
+      listZonal:[],
       modalShow: false,
       mostrarModal: {
         display: "block",
@@ -296,6 +340,7 @@ export default {
     this.getListarRoles();
     this.getListarAlmacen();
     this.getListarGradoAcad();
+    this.getListZonal();
   },
   methods: {
     abrirModal() {
@@ -312,6 +357,13 @@ export default {
       var url = "/administracion/almacen/listAlmacen";
       axios.get(url).then((response) => {
         this.listAlmacen = response.data;
+      });
+    },
+
+    getListZonal(){
+      var url = "/administracion/zonal/list";
+      axios.get(url).then((response) => {
+        this.listZonal = response.data;
       });
     },
 
@@ -391,6 +443,9 @@ export default {
           cCelular : this.fillCrearUsuario.cCelular,
           nIdGradoAcad : this.fillCrearUsuario.nIdGradoAcad,
           cAsistencia: this.fillCrearUsuario.cAsistencia,
+          nIdZonal: this.fillCrearUsuario.nIdZonal,
+          cDni: this.fillCrearUsuario.cDni
+         
 
         })
         .then((response) => {

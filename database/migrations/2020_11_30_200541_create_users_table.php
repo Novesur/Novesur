@@ -28,6 +28,9 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->unsignedBigInteger('gradousers_id');
             $table->foreign('gradousers_id')->references('id')->on('gradousers');
+            $table->unsignedBigInteger('zonal_id');
+            $table->foreign('zonal_id')->references('id')->on('zonal');
+            $table->string('dni',11)->required();
             $table->timestamps();
             $table->softDeletes();
 

@@ -15,7 +15,7 @@ class UsuarioController extends Controller
 
     public function index(Request $request)
     {
-            $dato = User::with('almacen')->where('firstname', 'like', '%' . $request->cFirstname . '%')
+            $dato = User::with('almacen','zonal')->where('firstname', 'like', '%' . $request->cFirstname . '%')
             ->where('username', 'like', '%' . $request->cUsername . '%')
             ->where('email', 'like', '%' . $request->cEmail . '%')->get();
         return $dato;
@@ -36,6 +36,8 @@ class UsuarioController extends Controller
         $user->password = Hash::make($request->cPassword);
         $user->gradousers_id = $request->nIdGradoAcad;
         $user->asistencia = $request->cAsistencia;
+        $user->zonal_id = $request->nIdZonal;
+        $user->dni = $request->cDni;
         $user->save();
     }
 
@@ -45,7 +47,7 @@ class UsuarioController extends Controller
         if (!$request->ajax()) return redirect('/');
         $nIdUsuario = $request->nIdUsuario;
         $nIdUsuario = ($nIdUsuario == NULL) ? ($nIdUsuario = '') : $nIdUsuario;
-        $dato = User::with('roles')->where('id', $nIdUsuario)->first();
+        $dato = User::with('roles','zonal')->where('id', $nIdUsuario)->first();
         return $dato;
     }
 
@@ -71,7 +73,9 @@ class UsuarioController extends Controller
             }
             $Usuario->gradousers_id = $request->nIdGradoAcad;
             $Usuario->asistencia = $request->cAsistencia;
-            $Usuario->save();
+            $Usuario->zonal_id = $request->nIdZonal;
+            $Usuario->dni = $request->cDni;
+            $Usuario->save(); 
         }
     }
 
@@ -103,6 +107,7 @@ class UsuarioController extends Controller
         $dato = User::where('roles_id',3)
         ->Orwhere('roles_id',1)
         ->Orwhere('roles_id',5)
+        ->Orwhere('roles_id',4)
         ->Orwhere('roles_id',13)
         ->Orwhere('roles_id',7)->get();
         return $dato;
