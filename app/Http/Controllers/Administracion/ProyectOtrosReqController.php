@@ -18,7 +18,7 @@ class ProyectOtrosReqController extends Controller
         $ProyectoReqMateriales = ProyectoReqMateriales::where('codigo', $request->codRequMateriales)->first();
         $ProyectOtrosReq = new ProyectOtrosReq();
         $ProyectOtrosReq->pk_proyecto_reqmateriales = $ProyectoReqMateriales->id;
-        $ProyectOtrosReq->descripcion = $request->cDescripcion;
+        $ProyectOtrosReq->descripcion = mb_strtoupper($request->cDescripcion);
         $ProyectOtrosReq->cantidad = $request->cCantidadReq;
         $ProyectOtrosReq->unidmedida_id = $request->nIdUnidMedOtrosReq;
         $ProyectOtrosReq->descripcionInfoValor = $request->cDescripcion;
@@ -44,9 +44,9 @@ class ProyectOtrosReqController extends Controller
         $Unidmed = UnidMedida::where('id',$request->nIdUnidMedOtroReq)->first();
         $requerimientos = Session::get('OtrosProyReqMateriales');
         $requerimientos = ($requerimientos != null) ? collect($requerimientos) : collect([]);
-        if($request->cCantidadReq == 0 || null ){
+     /*    if($request->cCantidadReq == 0 || null ){
             return response()->json(['message' => 'El valor no puede ser cero ni vacio', 'icon' => 'error'], 200);
-        }
+        } */
         $tempRequerimientos = new TempProyectOtrosRequerimientos();
         $tempRequerimientos->fill(['descripcion' => mb_strtoupper($request->cDescripcion), 'cantidad' => mb_strtoupper($request->cCantidadReq),'estado'=> $request->estado,'cCantAlq'=>$request->cCantAlq,'cPrecioReq'=>$request->cPrecioReq,'nIdUnidmed'=>$request->nIdUnidMedOtroReq,'NomUnidmed'=>$Unidmed->nombre]);
         $requerimientos->push($tempRequerimientos);

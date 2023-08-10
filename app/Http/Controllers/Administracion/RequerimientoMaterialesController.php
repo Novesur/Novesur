@@ -67,7 +67,7 @@ class RequerimientoMaterialesController extends Controller
         $requerimientoMateriales->duracion = $request->Duracionfechas;
         $requerimientoMateriales->user_id = $request->nIdUser;
         $requerimientoMateriales->cantInfoProd = $request->cCantprod;
-        $requerimientoMateriales->referencia = $request->cReferencia;
+        $requerimientoMateriales->referencia = mb_strtoupper($request->cReferencia);
         $requerimientoMateriales->save();
 
         Countable::where('id', 1)->update(['countreqmateriales' => $countMaxreqmateriales +1 ]);

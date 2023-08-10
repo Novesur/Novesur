@@ -48,7 +48,7 @@ class ProyectoReqMaterialesController extends Controller
         $proyectoReqMateriales->fecha = $fecha;
         $proyectoReqMateriales->centro_costos_id = $request->nIdCcostos;
         $proyectoReqMateriales->cliente = $request->nIdClient;
-        $proyectoReqMateriales->detservicio = $request->detservicio;
+        $proyectoReqMateriales->detservicio = mb_strtoupper($request->detservicio);  
         $proyectoReqMateriales->fechainicio = $dateIni;
         $proyectoReqMateriales->fechafinal = $dateFinal;
         $proyectoReqMateriales->duracion = $request->cDuracion;
@@ -97,6 +97,9 @@ class ProyectoReqMaterialesController extends Controller
         Session::put('ProyManObra', collect([]));
 
         $OtrosRequerimientos = Session::get('OtrosProyReqMateriales');
+
+
+     
         $allOtrosReque =  $OtrosRequerimientos->map(function ($OtrosRequerimientos) use ($proyectoReqMateriales) {
             return [
                 'pk_proyecto_reqmateriales' => $proyectoReqMateriales->id,

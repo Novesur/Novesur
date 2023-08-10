@@ -257,6 +257,7 @@
                                                         <input
                                                             type="text"
                                                             class="form-control"
+                                                        
                                                             v-model="
                                                                 fillCrearReqMaterialesProy.nIdOS
                                                             "
@@ -743,6 +744,8 @@
                                         />
                                     </div>
                                 </div>
+
+                                
                                 <div class="form-group row">
                                     <label class="col-md-2 col-form-label"
                                         >Unid. Medida</label
@@ -805,7 +808,7 @@
                             <thead>
                                 <tr>
                                     <th>Descripción</th>
-                                    <th>Alquiler</th>
+                                  <!--   <th>Alquiler</th> -->
                                     <th>Cantidad</th>
                                     <th>Unid.Medida</th>
                                     <th>Acción</th>
@@ -819,7 +822,7 @@
                                     :key="index"
                                 >
                                     <td v-text="item.descripcion"></td>
-                                    <td v-text="item.NomAlquiler"></td>
+                                  <!--   <td v-text="item.NomAlquiler"></td> -->
                                     <td v-text="item.cantidad"></td>
                                     <td v-text="item.NomUnidmed"></td>
                                     <td>
@@ -1094,7 +1097,7 @@ export default {
 
                 })
                 .then((response) => {
-                    if (
+         /*            if (
                         response.data.message ==
                         "El valor no puede ser cero ni vacio"
                     ) {
@@ -1110,7 +1113,12 @@ export default {
                             response.data.datos;
                         this.setLimpiaRequerimientos();
                         this.fillCrearReqMaterialesProy.cCantidadReq = 0;
-                    }
+                    } */
+
+                    this.listartempOtrosRequerimientos =
+                            response.data.datos;
+                        this.setLimpiaRequerimientos();
+                        this.fillCrearReqMaterialesProy.cCantidadReq = 0;
                 });
         },
 

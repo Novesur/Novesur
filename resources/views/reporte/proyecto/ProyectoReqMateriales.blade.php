@@ -41,6 +41,12 @@
             <td><strong style="font-size: 14px">DURACION :</strong></td>
             <td colspan="3" style="font-size: 12px">{{$ProyectoReqMateriales->duracion}}</td>
         </tr>
+
+            <tr>
+            <td><strong style="font-size: 14px">DETALLE :</strong></td>
+            <td colspan="3" style="font-size: 12px">{{$ProyectoReqMateriales->detservicio}}</td>
+        </tr>
+   
    
         <tr>
             <td><strong style="font-size: 14px">O/S Nro :</strong></td>
