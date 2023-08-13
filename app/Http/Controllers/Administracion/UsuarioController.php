@@ -68,7 +68,7 @@ class UsuarioController extends Controller
             $Usuario->celular = $request->cCelular;
             $Usuario->roles_id = $request->nIdRol;
             $Usuario->almacen_id =  $Usuario->almacen_id;
-            if ($request->cPassword != NULL) {
+            if (trim($request->cPassword) != NULL) {
                 $Usuario->password = Hash::make($request->cPassword);
             }
             $Usuario->gradousers_id = $request->nIdGradoAcad;

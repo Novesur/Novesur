@@ -10,16 +10,23 @@ class PersonalController extends Controller
 {
     public function create(Request $request)
     {
-        $personal = new Personal;
-        $personal->codigo = $request->cNumPersonal;
-        $personal->nombres = $request->cNombres;
-        $personal->ApPaterno = $request->cSecondname;
-        $personal->ApMaterno = $request->cLastname;
-        $personal->DNI = $request->cDni;
-        $personal->zonal_id = $request->nIdZonal;
-        $personal->cargo_personal_id = $request->nIdCargo;
-        $personal->estado = 'A';
-        $personal->save();
+        $validaDNI = Personal::where('DNI',trim($request->cDni))->first();
+        $valida = isset($validaDNI);
+       if(!$valida){
+           $personal = new Personal;
+           $personal->codigo = $request->cNumPersonal;
+           $personal->nombres = strtoupper($request->cNombres);
+           $personal->ApPaterno = strtoupper($request->cSecondname);
+           $personal->ApMaterno = strtoupper($request->cLastname);
+           $personal->DNI = $request->cDni;
+           $personal->zonal_id = $request->nIdZonal;
+           $personal->cargo_personal_id = $request->nIdCargo;
+           $personal->estado = 'A';
+           $personal->save();
+           return response()->json(['message' => 'Nuevo Personal Guardado', 'icon' => 'success'], 200);
+       }else{
+        return response()->json(['message' => 'DNI ya existe, revise bien los datos', 'icon' => 'warning'], 200);
+       }
     }
 
     public function index(Request $request)

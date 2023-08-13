@@ -347,7 +347,7 @@ export default {
 
         setValidarPersonal() {
             if (this.validarRegistrarPersonal()) {
-                this.modalShow = true;
+                this.modalShow = true; 
                 return;
             }
             this.setRegistrarPersonal();
@@ -369,6 +369,14 @@ export default {
 
                 })
                 .then((response) => {
+                    
+          Swal.fire({
+            position: "center",
+            icon: response.data.icon,
+            title: response.data.message,
+            showConfirmButton: false,
+            timer: 2000,
+          });
                     this.$router.push("/personal/index");
                 });
         },

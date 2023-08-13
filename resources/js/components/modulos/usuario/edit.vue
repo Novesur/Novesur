@@ -200,7 +200,6 @@
                           <input
                           type="text"
                             class="form-control"
-                            v-int
                             v-model="fillEditarUsuario.cDni"
                           />
                         </div>

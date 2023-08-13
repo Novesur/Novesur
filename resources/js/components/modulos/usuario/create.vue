@@ -233,7 +233,6 @@
                           <input
                           type="text"
                             class="form-control"
-                            v-int
                             v-model="fillCrearUsuario.cDni"
                           />
                         </div>
