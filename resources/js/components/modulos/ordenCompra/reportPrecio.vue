@@ -616,7 +616,7 @@ export default {
     },
 
     getExcelPrecioOrdCompraxProduct() {
-      var url = "/operacion/ordenCompra/exportPrecioOcExcelxProduct";
+      var url = "/operacion/ordenCompra/exportPrecioOcExcelxProduct"; 
       axios
         .post(
           url,
@@ -626,6 +626,7 @@ export default {
           { responseType: "blob" }
         )
         .then((response) => {
+       
           FileSaver.saveAs(response.data, "PrecioxProductOC.xlsx");
         });
     },
@@ -684,7 +685,6 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response.data)
           this.listOrdenPedidoXProduct = response.data;
         });
     },
@@ -702,7 +702,6 @@ export default {
           },
         })
         .then((response) => {
-         console.log(response.data)
           this.listOrdCompraxProveedor = response.data;
         });
     },

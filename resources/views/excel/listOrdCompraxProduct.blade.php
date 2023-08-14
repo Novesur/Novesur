@@ -15,6 +15,7 @@
           <th>PROVEEDOR</th>
           <th>COD PRODUCT</th>
           <th>PRODUCTO</th>
+          <th>TIPO CAMBIO</th>
           <th>CANTIDAD</th>
             <th>PRECIO</th>
             <th>TOTAL</th>
@@ -40,6 +41,12 @@
                      ,MATERIAL {{$data->producto->material->nombre}}
                      {{$data->producto->homologacion->nombre}}
                     </td>
+                    @if ($data->ordencompras)
+                    <td>{{$data->ordencompras->tipocambio->nombre}}</td>
+                    @else
+                    <td></td>
+                    @endif
+
                 <td>{{$data->cantidad}}</td>
                 <td>{{round($data->punit,4)}}</td>
                 <td>{{round($data->cantidad * $data->punit,4) }}</td>

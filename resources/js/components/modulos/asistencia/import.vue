@@ -315,6 +315,18 @@ export default {
                     });
                 });
         },
+
+
+
+        cargaImportacion(){
+            var url = "/administracion/asistencia/list";
+      axios.get(url).then((response) => {
+        console.log(response.data)
+       /*  this.listUnidMed = response.data;
+        this.fillregistrarCotizacion.nIdUnidMed = this.listUnidMed[7].id; */
+      });
+        }
+
     },
 };
 </script>
