@@ -161,19 +161,6 @@
 
                     </div>
 
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-md-3 col-form-label">Nro Asistencia</label>
-                        <div class="col-md-2">
-                          <input
-                          type="text"
-                            class="form-control"
-                            v-int
-                            v-model="fillEditarUsuario.cAsistencia"
-                          />
-                        </div>
-                      </div>
-                    </div>
 
                     <div class="col-md-6">
                         <div class="form-group row">
@@ -193,18 +180,7 @@
                     </div>
 
 
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-md-3 col-form-label">DNI</label>
-                        <div class="col-md-2">
-                          <input
-                          type="text"
-                            class="form-control"
-                            v-model="fillEditarUsuario.cDni"
-                          />
-                        </div>
-                      </div>
-                    </div>
+       
 
                     
 
@@ -281,9 +257,8 @@ export default {
         cPassword: "",
         nIdRol:'',
         nIdGradoAcad:'',
-        cAsistencia:'',
         nIdZonal:'',
-        cDni:'',
+       
       },
       listRoles:[],
       listPermisosByUser:[],
@@ -339,12 +314,9 @@ export default {
             this.fillEditarUsuario.cEmail = response.data.email,
             this.fillEditarUsuario.cCelular = response.data.celular,
             this.fillEditarUsuario.nIdRol = response.data.roles_id,
-            this.fillEditarUsuario.nIdGradoAcad = response.data.gradousers_id
-            this.fillEditarUsuario.cAsistencia = response.data.asistencia,
-            this.fillEditarUsuario.nIdZonal = response.data.zonal_id,
-            this.fillEditarUsuario.cDni = response.data.dni
-            
-
+            this.fillEditarUsuario.nIdGradoAcad = response.data.gradousers_id,
+            this.fillEditarUsuario.nIdZonal = response.data.zonal_id
+         
         });
     },
 getListarPermisosByUser(){

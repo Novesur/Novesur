@@ -724,17 +724,17 @@
                  
 
 
-             <!--                <li class="nav-item">
-                                <template v-if="listPermisos.includes('menu.reporteTotal')">
-                                    <router-link class="nav-link" :to="'/menu/reporteTotal'">
+                  <!--          <li class="nav-item">
+                                <template v-if="listPermisos.includes('asistencia.personal')">
+                                    <router-link class="nav-link" :to="'/asistencia/personal'">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Reporte de Totales</p>
+                                        <p>Personal</p>
                                     </router-link>
                                 </template>
-                            </li>
+                            </li> -->
 
 
-                            <li class="nav-item">
+                           <!--   <li class="nav-item">
                                 <template v-if="listPermisos.includes('menu.reporteFechas')">
                                     <router-link class="nav-link" :to="'/menu/list'">
                                         <i class="far fa-circle nav-icon"></i>

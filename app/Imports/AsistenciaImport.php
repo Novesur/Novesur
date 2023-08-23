@@ -14,7 +14,7 @@ class AsistenciaImport implements ToModel, WithHeadingRow, WithBatchInserts, Wit
 
     public function model(array $row)
     {
-        //dd($row['fechahora']);
+        //dd(substr($row['fechahora'], 0, 10));
         
         if (date('Y-m-d', strtotime(substr($row['fechahora'], 0, 10))) !== '1970-01-01') {
             return new Asistencia([

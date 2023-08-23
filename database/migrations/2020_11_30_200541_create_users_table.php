@@ -30,7 +30,6 @@ class CreateUsersTable extends Migration
             $table->foreign('gradousers_id')->references('id')->on('gradousers');
             $table->unsignedBigInteger('zonal_id');
             $table->foreign('zonal_id')->references('id')->on('zonal');
-            $table->string('dni',11)->required();
             $table->timestamps();
             $table->softDeletes();
 

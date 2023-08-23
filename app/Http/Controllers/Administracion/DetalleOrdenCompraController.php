@@ -71,12 +71,12 @@ class DetalleOrdenCompraController extends Controller
             }
         } */
 
-        if($request->cCantidadModal > $detalleOc->cantidad){
+        if($request->cCantidadModal > ($detalleOc->cantidad - $detalleOc->cantidadKardex )){
             return response()->json(['message' => 'La cantidad supera a lo solicitado', 'icon' => 'error'], 200);
         }else{
             $valor =  $request->cCantidadModal;
             if ($valor >= 0) {
-                Detalleordencompra::where('id', $request->item)->update(['canting' => $valor  ]);
+                Detalleordencompra::where('id', $request->item)->update(['cantidadKardex' => $valor  ]);
                 return response()->json(['message' => 'La cantidad editada', 'icon' => 'success'], 200);
             }
         }
@@ -84,7 +84,16 @@ class DetalleOrdenCompraController extends Controller
     }
 
     public function editCantComplete(Request $request){
-        Detalleordencompra::where('id', $request->iddetalleOrdenCompra)->update(['canting' =>  $request->cantidadKardex]);
+
+        if($request->checked === true){
+            $detalle =  Detalleordencompra::where('id', $request->iddetalleOrdenCompra)->first();
+            Detalleordencompra::where('id', $request->iddetalleOrdenCompra)->update(['cantidadKardex' =>  $detalle->cantidad]);
+        
+        }
+        
+        if($request->checked === false){
+            Detalleordencompra::where('id', $request->iddetalleOrdenCompra)->update(['cantidadKardex' =>  0]);
+        }
         
     }
 

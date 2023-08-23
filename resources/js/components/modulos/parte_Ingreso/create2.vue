@@ -284,10 +284,10 @@
                                                 ></td>
 
                                                 <!--   <td v-text="item.cantidad-item.cantidadKardex"></td> -->
+                                                <td v-text="item.cantidad"></td>
                                                 <td
                                                     v-text="item.cantidadKardex"
                                                 ></td>
-                                                <td v-text="item.canting"></td>
                                                 <td
                                                     v-text="
                                                         item.unidmedida_nombre
@@ -297,10 +297,10 @@
                                                     v-text="item.producto_desc"
                                                 ></td>
 
-                                                <td v-if="item.estado == '1'">
+                                                <td v-if="item.estado == '2'">
                                                     Completo
                                                 </td>
-                                                <td v-if="item.estado == '2'">
+                                                <td v-if="item.estado == '1'">
                                                     Pendiente
                                                 </td>
 
@@ -310,8 +310,7 @@
                                                             marcarFila(
                                                                 index,
                                                                 item.iddetalleOrdenCompra,
-                                                                item.cantidadKardex,
-                                    
+                                                                item.cantidadKardex
                                                             )
                                                         "
                                                         v-model="item.checked"
@@ -485,6 +484,7 @@ export default {
                 nIdMotivo: "",
                 cCantidadModal: "",
             },
+
 
             listarDetalleOrdeCompra: [],
             listCompletFilter: [],
@@ -764,31 +764,22 @@ export default {
             });
         },
 
-        marcarFila(index, iddetalleOrdenCompra,cantidadKardex) {
-
-       
-            this.listCompletFilter.map(function(x,y){
-
-           if(x.checked == true){
-            
-              var url = "/administracion/DetalleordenCompra/editCantComplete";
-          axios.post(url,{
-            iddetalleOrdenCompra,
-            cantidadKardex
-          }
-        
-          ).then((response) => {
-   
-            
-          });
-          x.checked == false;
-          } 
-
-      })
-      this.getListarOrdenCompra();
-  
-           
-        },
+        marcarFila(index, iddetalleOrdenCompra, cantidadKardex) {
+            this.listCompletFilter.map(function (x, y) {
+                var url = "/administracion/DetalleordenCompra/editCantComplete";
+               
+                axios
+                    .post(url, {
+                        iddetalleOrdenCompra,
+                        cantidadKardex,
+                        checked: x.checked,
+                    })
+                    .then((response) => {
+                        x.checked= false
+                    });
+                });
+                this.getListarOrdenCompra();
+            },
 
         filtrarPermisoByRol() {
             let me = this;
@@ -814,7 +805,7 @@ export default {
                     estado: x.estado,
                     punit: x.punit,
                     iddetalleOrdenCompra: x.id,
-                    checked: false,
+                    //checked: false,
                 });
             });
         },
@@ -839,5 +830,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
