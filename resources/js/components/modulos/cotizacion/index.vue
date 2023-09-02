@@ -665,12 +665,8 @@ export default {
           params: {
             nIdCliente: this.fillBsqCotizacion.nIdCliente,
             nIdVendedor: this.fillBsqCotizacion.nIdVendedor,
-            dFechainicio: !this.fillBsqCotizacion.dFecha
-              ? ""
-              : this.fillBsqCotizacion.dFecha[0],
-            dFechafin: !this.fillBsqCotizacion.dFecha
-              ? ""
-              : this.fillBsqCotizacion.dFecha[1],
+            dFechainicio: !this.fillBsqCotizacion.dFecha ? "" : this.fillBsqCotizacion.dFecha[0],
+            dFechafin: !this.fillBsqCotizacion.dFecha ? "" : this.fillBsqCotizacion.dFecha[1],
             nIdtEstadoCoti2: this.fillBsqCotizacion.nIdtEstadoCoti2,
           },
         })

@@ -776,7 +776,11 @@ export default new Router({
             component: require("./components/modulos/asistencia/import").default,
         },
 
-   
+        {
+            path: "/asistencia/reporte",
+            name: "asistencia.reporte",
+            component: require("./components/modulos/asistencia/reporte").default,
+        },
 
     ],
 

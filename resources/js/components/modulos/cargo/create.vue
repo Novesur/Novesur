@@ -136,7 +136,7 @@
             this.modalShow=true;
             return;
         }
-        this.setGuardarMarca();
+        this.setGuardarCargo();
   
     },
     validarRegistrarMarca(){
@@ -151,12 +151,21 @@
         }
         return this.error;
     },
-    setGuardarMarca(){
+    setGuardarCargo(){
         var url = '/administracion/cargo/create'
         axios.post(url,{
             'cNombre' : this.fillCrearCargo.cNombre,
         }).then(response=>{
-            this.$router.push('/cargo/index');
+
+          this.$router.push('/cargo/index');
+          Swal.fire({
+              position: "center",
+              icon: response.data.icon,
+              title: response.data.message,
+              showConfirmButton: false,
+              timer: 2000,
+
+            });
         })
     }
     },

@@ -101,4 +101,9 @@ class PersonalController extends Controller
 
     }
 
+    public function personalAsistencia(){
+        $personal = Personal::whereNotNull('codigo')->get();
+        return $personal;
+    }
+
 }

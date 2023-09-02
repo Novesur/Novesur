@@ -170,6 +170,7 @@
                                 >
                                     <thead>
                                         <tr>
+                                            <th>Numero</th>
                                             <th>Nombre</th>
                                             <th>Apellido Paterno</th>
                                             <th>Apellido Materno</th>
@@ -185,13 +186,13 @@
                                                 item, index
                                             ) in listarPersonalPaginated"
                                             :key="index"
-                                        >
+                                        >   <td v-text="item.codigo"></td>
                                             <td v-text="item.nombres"></td>
                                             <td v-text="item.ApPaterno"></td>
                                             <td v-text="item.ApMaterno"></td>
                                             <td v-text="item.DNI"></td>
-                                            <td v-text="item.cargo.nombre"></td>
                                             <td v-text="item.zonal.nombre"></td>
+                                            <td v-text="item.cargo.nombre"></td>
                                             <td v-if="item.estado === 'A'">Activo</td>
                                             <td v-else style="color: red;">Inactivo</td>
                                           

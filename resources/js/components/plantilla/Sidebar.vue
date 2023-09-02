@@ -225,10 +225,12 @@
                                 </template>
                             </li>
                             <li class="nav-item">
+                                <template v-if="listPermisos.includes('cliente.index')">
                                 <router-link class="nav-link" :to="'/cliente/index'">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Clientes</p>
                                 </router-link>
+                                </template>
                             </li>
 
                             <li class="nav-item">
@@ -717,6 +719,15 @@
                                     <router-link class="nav-link" :to="'/asistencia/import'">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Importar Asistencias</p>
+                                    </router-link>
+                                </template>
+                            </li>
+
+                            <li class="nav-item">
+                                <template v-if="listPermisos.includes('asistencia.import')">
+                                    <router-link class="nav-link" :to="'/asistencia/reporte'">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Reporte Asistencias</p>
                                     </router-link>
                                 </template>
                             </li>

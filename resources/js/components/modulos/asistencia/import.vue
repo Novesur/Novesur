@@ -33,6 +33,36 @@
                                         </form>
                                     </div>
                                 </div>
+
+                 <!--                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label
+                                                class="col-md-1 col-form-label"
+                                                >Fecha
+                                            </label>
+                                            <div class="col-md-9">
+                                                <el-date-picker
+                                                    v-model="
+                                                        fillBsqImportAsist.cFecha
+                                                    "
+                                                    type="date"
+                                                    placeholder="Ingrese una Fecha"
+                                                    format="dd/MM/yyyy"
+                                                    value-format="yyyy-MM-dd"
+                                                >
+                                                </el-date-picker>
+                                                <span style="margin-left: 10px;" ><button
+                                                    class="btn btn-flat btn-primary"
+                                                    @click.prevent="setImportFile"
+                                                >
+                                                <i class="fas fa-search"></i>
+                                                    Buscar
+                                                </button></span>
+                                            </div>
+                                            </div>
+                                        </div>
+                                </div> -->
                             </div>
                             <div class="card-footer">
                                 <div class="row">
@@ -67,9 +97,9 @@
                                 >
                                     <thead>
                                         <tr>
-                                            <th>Nombre</th>
-                                            <th>Apellido Paterno</th>
-                                            <th>Apellido Materno</th>
+                                            <th>Fecha</th>
+                                            <th>Hora</th>
+                                            <th>Personal</th>
                                             <th>DNI</th>
                                             <th>Zona</th>
                                             <th>Cargo</th>
@@ -83,20 +113,16 @@
                                             ) in listarPersonalPaginated"
                                             :key="index"
                                         >
-                                            <td v-text="item.nombres"></td>
-                                            <td v-text="item.ApPaterno"></td>
-                                            <td v-text="item.ApMaterno"></td>
+                                            <td v-text="item.fecha"></td>
+                                            <td v-text="item.tiempo"></td>
+                                            <td v-text="item.personal"></td>
                                             <td v-text="item.DNI"></td>
-                                            <td v-text="item.cargo.nombre"></td>
-                                            <td v-text="item.zonal.nombre"></td>
-                                            <td v-if="item.estado === 'A'">
-                                                Activo
-                                            </td>
-                                            <td v-else style="color: red">
-                                                Inactivo
-                                            </td>
+                                            <td v-text="item.cargo"></td>
+                                            <td v-text="item.zonal"></td>
+                                            <td v-text="item.estado" ></td>
+                                            
 
-                                            <td>
+                               <!--              <td>
                                                 <router-link
                                                     class="btn btn-info btn-sm"
                                                     :to="{
@@ -121,7 +147,7 @@
                                                     <i class="fas fa-trash"></i
                                                     >Dar de Baja
                                                 </button>
-                                            </td>
+                                            </td> -->
                                         </tr>
                                     </tbody>
                                 </table>
@@ -204,6 +230,7 @@ export default {
     },
     mounted() {
         this.getListarZonal();
+       /*  this.fillBsqImportAsist.cFecha = new Date(); */
     },
     computed: {
         pageCount() {
@@ -313,20 +340,36 @@ export default {
                         showConfirmButton: false,
                         timer: 3000,
                     });
+                    this.setlistAsistNow();
+                });
+
+        },
+
+        setlistAsistNow() {
+            var f = new Date();
+            const fechaActual =
+                f.getFullYear() + "-" + (f.getMonth()+1) + "-" + f.getDate();
+
+            var url = "/administracion/asistencia/listAsistByDate";
+            axios
+                .get(url, {
+                    params: {
+                        fechaActual: fechaActual,
+                    },
+                })
+                .then((response) => {
+                    this.listPersonal= response.data
                 });
         },
 
-
-
-        cargaImportacion(){
+        cargaImportacion() {
             var url = "/administracion/asistencia/list";
-      axios.get(url).then((response) => {
-        console.log(response.data)
-       /*  this.listUnidMed = response.data;
+            axios.get(url).then((response) => {
+                console.log(response.data);
+                /*  this.listUnidMed = response.data;
         this.fillregistrarCotizacion.nIdUnidMed = this.listUnidMed[7].id; */
-      });
-        }
-
+            });
+        },
     },
 };
 </script>

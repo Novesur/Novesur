@@ -9,9 +9,16 @@ use Illuminate\Http\Request;
 class CargoController extends Controller
 {
     public function create(Request $request){
-        $cargo = new Cargo;
-        $cargo->nombre =  mb_strtoupper($request->cNombre);
-        $cargo->save();
+
+        $countCargo = Cargo::where('nombre',$request->cNombre)->count();
+        if($countCargo <=0){
+            $cargo = new Cargo;
+            $cargo->nombre =  mb_strtoupper($request->cNombre);
+            $cargo->save();
+            return response()->json(['message' => 'Nuevo Cargo agregado', 'icon' => 'success'], 200);
+        }else{
+            return response()->json(['message' => 'Ya fue agregado anteriormente', 'icon' => 'error'], 200);
+        }
     }
 
     public function index(Request $request){

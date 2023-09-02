@@ -609,6 +609,7 @@ Route::get('/administracion/personal/index', 'Administracion\PersonalController@
 Route::get('/administracion/personal/list', 'Administracion\PersonalController@list');
 Route::get('/administracion/personal/DatoPersonalById', 'Administracion\PersonalController@DatoPersonalById');
 Route::post('/administracion/personal/edit', 'Administracion\PersonalController@edit');
+Route::get('/administracion/personal/personalAsistencia', 'Administracion\PersonalController@personalAsistencia');
 
 
 
@@ -622,7 +623,8 @@ Route::get('/administracion/cargo/list', 'Administracion\CargoController@list');
 
 /* Asistencia */
 Route::post('/administracion/asistencia/import', 'Administracion\AsistenciaController@import');
-
+Route::get('/administracion/asistencia/listAsistByDate', 'Administracion\AsistenciaController@listAsistByDate');
+Route::get('/administracion/asistencia/listByDatePersonal', 'Administracion\AsistenciaController@listByDatePersonal');
 
 
 
