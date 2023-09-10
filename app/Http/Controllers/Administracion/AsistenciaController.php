@@ -8,6 +8,7 @@ use App\Personal;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 
 class AsistenciaController extends Controller
@@ -55,8 +56,7 @@ class AsistenciaController extends Controller
 
         ]);
         return $rpta;
-
-      
-
     }
+
+ 
 }

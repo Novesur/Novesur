@@ -250,7 +250,14 @@
         </tr>
         <tr>
           <td style="font-size: 11px"><strong>Condicion de pago :</strong></td>
-          <td style="font-size: 10px">TODA COMISON GENERADA POR DEPOSITOS EN AGENTES DE BANCO <strong>(PROVINCIA)</strong>, SERÁ ASUMIDA POR EL CLIENTE</td>
+          <td style="font-size: 10px">- TODA COMISON GENERADA POR DEPOSITOS EN AGENTES DE BANCO <strong>(PROVINCIA)</strong>, SERÁ ASUMIDA POR EL CLIENTE</td>
+          
+        </tr>
+        <tr>
+  <td style="font-size: 11px">&nbsp;</td>
+            <td style="font-size: 10px"><div>
+              <div>- El incumplimiento de la forma de pago formara interes a la tasa vigente del sistema Bancario</div>
+            </div></td>
         </tr>
         <tr>
             <td style="font-size: 11px"><strong>Pago :</strong></td>

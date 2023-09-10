@@ -15,12 +15,14 @@ class CreateAsistenciaTable extends Migration
     {
         Schema::create('asistencia', function (Blueprint $table) {
           
+            $table->id();
             $table->integer('asistencia')->nullable();
             $table->string('fecha',10)->nullable();
             $table->string('tiempo',10)->nullable();
             $table->unsignedBigInteger('asistencia_estado_id');
             $table->foreign('asistencia_estado_id')->references('id')->on('asistencia_estado'); 
             $table->string('estado',1)->required();
+            $table->softDeletes();
 
         });
     }

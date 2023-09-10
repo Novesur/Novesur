@@ -340,8 +340,8 @@ export default {
                         showConfirmButton: false,
                         timer: 3000,
                     });
-                    this.setlistAsistNow();
                 });
+                this.setlistAsistNow();
 
         },
 
