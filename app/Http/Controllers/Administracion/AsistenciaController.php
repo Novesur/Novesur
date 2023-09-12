@@ -28,7 +28,8 @@ class AsistenciaController extends Controller
     public function listAsistByDate(Request $request){
         
         if (!$request->ajax()) return redirect('/');
-        $fechaActual = $request->fechaActual;
+        $fechaActual = substr($request->fechaActual ,0,10);
+
 
         $fechaActual = ($fechaActual == NULL) ? ($fechaActual = 0) : $fechaActual;
         
