@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Administracion;
 
+use App\Exports\AsistenciaByDateExport;
 use App\Http\Controllers\Controller;
 use App\Imports\AsistenciaImport;
 use App\Personal;
@@ -27,14 +28,22 @@ class AsistenciaController extends Controller
 
     public function listAsistByDate(Request $request){
         
-        if (!$request->ajax()) return redirect('/');
-        $fechaActual = substr($request->fechaActual ,0,10);
-
-
-        $fechaActual = ($fechaActual == NULL) ? ($fechaActual = 0) : $fechaActual;
         
-        $rpta = DB::select('call sp_AsistenciaByDay (?)', [
-            $fechaActual
+        if (!$request->ajax()) return redirect('/');
+     /*    $fechaActual = substr($request->fechaActual ,0,10); */
+
+
+       /*  $fechaActual = ($fechaActual == NULL) ? ($fechaActual = 0) : $fechaActual; */
+
+       $dFechainicio = $request->dFechainicio;
+       $dFechainicio = ($dFechainicio == NULL) ? ($dFechainicio = 0) : $dFechainicio;
+
+       $dFechafin = $request->dFechafin;
+       $dFechafin = ($dFechafin == NULL) ? ($dFechafin = 0) : $dFechafin;
+        
+        $rpta = DB::select('call sp_AsistenciaByDay (?,?)', [
+            $dFechainicio,
+            $dFechafin,
         ]);
         return $rpta;
     }
@@ -57,6 +66,13 @@ class AsistenciaController extends Controller
 
         ]);
         return $rpta;
+    }
+
+    public function reporteByDateAsistExcel(Request $request){
+
+        $listAsistenciaByDay = json_decode($request->params['listAsistenciaByDay']);
+        return (new AsistenciaByDateExport)->setGenerarExcel($listAsistenciaByDay)->download('invoices.xlsx'); 
+
     }
 
  

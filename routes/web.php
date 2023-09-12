@@ -625,6 +625,9 @@ Route::get('/administracion/cargo/list', 'Administracion\CargoController@list');
 Route::post('/administracion/asistencia/import', 'Administracion\AsistenciaController@import');
 Route::get('/administracion/asistencia/listAsistByDate', 'Administracion\AsistenciaController@listAsistByDate');
 Route::get('/administracion/asistencia/listByDatePersonal', 'Administracion\AsistenciaController@listByDatePersonal');
+Route::post('/operacion/Asistencia/reporteByDateAsistExcel', 'Administracion\AsistenciaController@reporteByDateAsistExcel');
+
+
 
 
 

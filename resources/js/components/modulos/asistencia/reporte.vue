@@ -12,7 +12,7 @@
 
         <div class="content container-fluid">
             <div class="card">
-                <div class="card-header">
+<!--                 <div class="card-header">
                     <div class="card-tools">
                         <template
                             v-if="
@@ -21,16 +21,17 @@
                                 )
                             "
                         >
-                            <router-link
-                                class="btn btn-info btn-sm"
-                                :to="{ name: 'asistencia.import' }"
-                            >
-                                <i class="fas fa-plus-square"></i> Importar
-                                Asistencia
-                            </router-link>
+                        <button
+                class="btn btn-success btn-sm"
+                @click.prevent="getExcelCliente"
+              >
+                <span><i class="fas fa-file-excel"></i> EXCEL</span>
+              </button>
                         </template>
                     </div>
                 </div>
+ -->
+
                 <div class="card-body">
                     <div class="container-fluid">
                         <div class="card card-info">
@@ -278,7 +279,24 @@
                                                             Fecha</label
                                                         >
                                                         <div class="col-md-6">
+
                                                             <el-date-picker
+                                                                v-model="
+                                                                    fillBsqReportePersonal.dFecha2
+                                                                "
+                                                                type="daterange"
+                                                                range-separator="To"
+                                                                start-placeholder="Start date"
+                                                                end-placeholder="End date"
+                                                                value-format="yyyy-MM-dd"
+                                                                clearable
+                                                                :style="{
+                                                                    width: '530px',
+                                                                    height: '38px',
+                                                                }"
+                                                            >
+                                                            </el-date-picker>
+                                                      <!--       <el-date-picker
                                                                 v-model="
                                                                     fillBsqReportePersonal.dFecha2
                                                                 "
@@ -288,7 +306,7 @@
                                                                 value-format="yyyy-MM-dd"
                                                              
                                                             >
-                                                            </el-date-picker>
+                                                            </el-date-picker> -->
                                                         </div>
                                                     </div>
                                                 </div>
@@ -300,7 +318,7 @@
                                 <div class="row">
                                     <div class="col-md-4 offset-4">
                                         <button
-                                            class="btn btn-flat btn-info btnWidth"
+                                            class="btn btn-flat btn-info btnWidth3buttons"
                                             @click.prevent="
                                                 getListReporteAsistenciaByDate
                                             "
@@ -308,11 +326,21 @@
                                             Buscar
                                         </button>
                                         <button
-                                            class="btn btn-flat btn-default btnWidth"
+                                            class="btn btn-flat btn-default btnWidth3buttons"
                                             @click.prevent="limpiarCriteriosBsq"
                                         >
                                             Limpiar
                                         </button>
+
+                                        <button
+                                            class="btn btn-flat btn-success btnWidth3buttons"
+                                            @click.prevent="reporteByDateAsistExcel"
+                                        >
+                                        <span><i class="fas fa-file-excel"></i> EXCEL</span>                                      
+                                      </button>
+
+
+
                                     </div>
                                 </div>
                             </div>
@@ -453,6 +481,7 @@
 </template>
 
 <script>
+import FileSaver from "file-saver";
 export default {
     data() {
         return {
@@ -552,12 +581,34 @@ export default {
             axios
                 .get(url, {
                     params: {
-                        fechaActual: this.fillBsqReportePersonal.dFecha2,
+                       /*  fechaActual: this.fillBsqReportePersonal.dFecha2, */
+                       dFechainicio: !this.fillBsqReportePersonal.dFecha2
+                            ? ""
+                            : this.fillBsqReportePersonal.dFecha2[0],
+                        dFechafin: !this.fillBsqReportePersonal.dFecha2
+                            ? ""
+                            : this.fillBsqReportePersonal.dFecha2[1],
                     },
                 })
                 .then((response) => {
                     this.listAsistenciaByDay= response.data
                 });
+        },
+
+        reporteByDateAsistExcel(){
+            var url = "/operacion/Asistencia/reporteByDateAsistExcel"; 
+      axios
+        .post(
+          url,
+          {
+            params: { listAsistenciaByDay: JSON.stringify(this.listAsistenciaByDay) },
+          },
+          { responseType: "blob" }
+        )
+        .then((response) => {
+          FileSaver.saveAs(response.data, "AsistByDate.xlsx");
+        });
+
         },
         nextPage() {
             this.pageNumber++;
