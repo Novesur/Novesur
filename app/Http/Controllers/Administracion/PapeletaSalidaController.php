@@ -28,52 +28,69 @@ class PapeletaSalidaController extends Controller
     public function create(Request $request)
     {
 
-      // dd(empty($request->listTempClientPSalida));
 
-     /*    DB::beginTransaction();
-        try { */
-            // $formatreq = date("Y-m-d");
+        $fechaDay= sprintf('%02s',substr($request->fecha,0, 2));
+        $fechaMes=  sprintf('%02s',substr($request->fecha,3, 1));
+        $fechaYear=  substr($request->fecha,5, 4);
+   /*      $fechaDay = '18';
+        $fechaMes =  '09';
+        $fechaYear =  '2023'; */
+        $fecha =  $fechaYear . '-' . $fechaMes . '-' . $fechaDay;
+        $fechaValida = $fecha >= now()->toDateString();
+
+
+
+        $now = Carbon::now();
+        $t8_30 = Carbon::createFromTime(8, 30);
+        $t18_00 = Carbon::createFromTime(18, 00);
+
+
+
+        if ($fechaValida && $now >= $t8_30   &&  $now  >= $t18_00) {
+
             $PapeletaSalida = new Papeletasalida;
             $PapeletaSalida->user_id = $request->nIdUser;
             $PapeletaSalida->fecha = Carbon::parse($request->cfecha)->format('Y-m-d');
-            //$PapeletaSalida->fecha = $formatreq;
             $PapeletaSalida->horasalida = substr($request->tHoraSalida, 0, 8);
             $PapeletaSalida->horaretorno = substr($request->tHoraRetorno, 0, 8);
             $PapeletaSalida->motivopapeletasalida_id = $request->nIdMotivo;
             $PapeletaSalida->estadopapeletasalida_id = '1';
             $PapeletaSalida->fundamento = nl2br(htmlentities(mb_strtoupper($request->cReferencia)));
             $PapeletaSalida->hora_emision = $request->hora;
+
             $PapeletaSalida->save();
-if(empty($request->listTempClientPSalida)){
-    return response()->json(['message' => 'Haga click en boton Agregar o campos de vendedor vacios', 'icon' => 'warning'], 200);
-}else{
 
-    if ($request->nIdMotivo == 3) {
-        $clientPapeletaSalida = Session::get('clients');
-    
-        $allclients = $clientPapeletaSalida->map(function ($PS) use ($PapeletaSalida) {
-            return [
-                'papeletasalida_id' => $PapeletaSalida->id,
-                'cliente_id'      => $PS->id,
-                'contacto' => $PS->contacto,
-                'direccion'   => $PS->direccion,
-            ];
-        });
-    
-    
-        ClientsPapeletaSalida::insert($allclients->toArray());
-    } else {
-        $clientsPapeletaSalida = new ClientsPapeletaSalida;
-        $clientsPapeletaSalida->papeletasalida_id = $PapeletaSalida->id;
-        $clientsPapeletaSalida->cliente_id = 202;
-        $clientsPapeletaSalida->contacto = NULL;
-        $clientsPapeletaSalida->direccion = NULL;
-        $clientsPapeletaSalida->save();
-    }
-    return response()->json(['message' => 'Papeleta dse Salida grabado', 'icon' => 'success'], 200);
-}
+            if (empty($request->listTempClientPSalida || $request->nIdMotivo != 3)) {
+                return response()->json(['message' => 'Haga click en boton Agregar o campos de vendedor vacios', 'icon' => 'warning'], 200);
+            } else {
+
+                if ($request->nIdMotivo == 3) {
+                    $clientPapeletaSalida = Session::get('clients');
+
+                    $allclients = $clientPapeletaSalida->map(function ($PS) use ($PapeletaSalida) {
+                        return [
+                            'papeletasalida_id' => $PapeletaSalida->id,
+                            'cliente_id'      => $PS->id,
+                            'contacto' => $PS->contacto,
+                            'direccion'   => $PS->direccion,
+                        ];
+                    });
 
 
+                    ClientsPapeletaSalida::insert($allclients->toArray());
+                } else {
+                    $clientsPapeletaSalida = new ClientsPapeletaSalida;
+                    $clientsPapeletaSalida->papeletasalida_id = $PapeletaSalida->id;
+                    $clientsPapeletaSalida->cliente_id = 202;
+                    $clientsPapeletaSalida->contacto = NULL;
+                    $clientsPapeletaSalida->direccion = NULL;
+                    $clientsPapeletaSalida->save();
+                }
+                return response()->json(['message' => 'Papeleta de Salida grabado', 'icon' => 'success'], 200);
+            }
+        } else {
+            return response()->json(['message' => 'Hora y fecha de Tolerancia no permitida', 'icon' => 'info'], 200);
+        }
     }
 
     public function listPapeleByVendedor(Request $request)
@@ -87,7 +104,7 @@ if(empty($request->listTempClientPSalida)){
             $dato = Papeletasalida::with('user', 'estadoPapeletaSalida', 'motivopapeletasalida')->get();
             return $dato;
 
-          /*   $dato =  ClientsPapeletaSalida::with('papeletasalida','cliente','papeletasalida.user','papeletasalida.estadoPapeletaSalida', 'papeletasalida.motivopapeletasalida')
+            /*   $dato =  ClientsPapeletaSalida::with('papeletasalida','cliente','papeletasalida.user','papeletasalida.estadoPapeletaSalida', 'papeletasalida.motivopapeletasalida')
             ->has('papeletasalida')->get(); */
             return $dato;
         }
@@ -196,49 +213,48 @@ if(empty($request->listTempClientPSalida)){
     {
         $fecha1 =  date("Y-m-d", strtotime($request->dFechainicio));
         $fecha2 =  date("Y-m-d", strtotime($request->dFechafin));
-        
+
         /*  $fecha1 = $request->dFechainicio;
         $fecha2 = $request->dFechafin; */
-        $vendedor = $request->nIdVendedor; 
-       
+        $vendedor = $request->nIdVendedor;
+
         /*         $papeletasalida = Papeletasalida::with('user','motivopapeletasalida')->whereBetween('fecha', [$fecha1 , $fecha2] )->where('estadopapeletasalida_id',3)->get();
         */
-        
+
         if ($request->nIdMotivo == Null && $request->nIdVendedor == Null) {
             $dato = ClientsPapeletaSalida::with('papeletasalida', 'cliente', 'papeletasalida.user', 'papeletasalida.motivopapeletasalida')
-            ->whereHas('papeletasalida', function (Builder $query) use ($fecha1, $fecha2) {
-                $query->whereBetween('fecha', [$fecha1, $fecha2])->where('estadopapeletasalida_id', 2);
-            })->get();
-        
-          
+                ->whereHas('papeletasalida', function (Builder $query) use ($fecha1, $fecha2) {
+                    $query->whereBetween('fecha', [$fecha1, $fecha2])->where('estadopapeletasalida_id', 2);
+                })->get();
+
+
             return (new PapeletaExport)->setGenerarExcel($dato)->download('invoices.xlsx');
         }
 
-        if($request->nIdMotivo == Null){
+        if ($request->nIdMotivo == Null) {
             $dato = ClientsPapeletaSalida::with('papeletasalida', 'cliente', 'papeletasalida.user', 'papeletasalida.motivopapeletasalida')
-            ->whereHas('papeletasalida', function (Builder $query) use ($fecha1, $fecha2, $vendedor) {
-                $query->whereBetween('fecha', [$fecha1, $fecha2])->where('estadopapeletasalida_id', 3)->where('user_id', $vendedor);
-            })->get();
-        return (new PapeletaExport)->setGenerarExcel($dato)->download('invoices.xlsx');
+                ->whereHas('papeletasalida', function (Builder $query) use ($fecha1, $fecha2, $vendedor) {
+                    $query->whereBetween('fecha', [$fecha1, $fecha2])->where('estadopapeletasalida_id', 3)->where('user_id', $vendedor);
+                })->get();
+            return (new PapeletaExport)->setGenerarExcel($dato)->download('invoices.xlsx');
         }
     }
 
     public function ObservacionUpdate(Request $request)
     {
 
-      if($request->valormotivo != null){
-          $papeletasalida = Papeletasalida::find($request->idpapeleta);
-          if ($papeletasalida) {
-              $papeletasalida->observacion = mb_strtoupper($request->valormotivo);
-              $papeletasalida->save();
-          }
-      }
-
+        if ($request->valormotivo != null) {
+            $papeletasalida = Papeletasalida::find($request->idpapeleta);
+            if ($papeletasalida) {
+                $papeletasalida->observacion = mb_strtoupper($request->valormotivo);
+                $papeletasalida->save();
+            }
+        }
     }
 
-    public function getlistClientxIndex(Request $request){
-        $dato = ClientsPapeletaSalida::with('cliente')->where('papeletasalida_id' , $request->papeletaId)->get();
+    public function getlistClientxIndex(Request $request)
+    {
+        $dato = ClientsPapeletaSalida::with('cliente')->where('papeletasalida_id', $request->papeletaId)->get();
         return $dato;
-
     }
 }

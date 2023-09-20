@@ -9,7 +9,7 @@
         </div>
       </div>
     </div>
-    <div class="content container-fluid">
+    <div class="content container-fluid"> 
       <div class="card">
         <div class="card-body">
           <div class="container-fluid">
@@ -459,9 +459,10 @@ export default {
     },
 
     setGrabarPapeletaSalida() {
-      var url = "/administracion/papeletasalida/create";
+      var url = "/administracion/papeletasalida/create"; 
       let today = new Date();
       const hora = today.toLocaleTimeString();
+      const fecha = today.toLocaleDateString();
       axios
         .post(url, { 
           nIdUser: this.fillPapeletasalida.nIdUser,
@@ -472,9 +473,10 @@ export default {
           cReferencia: this.fillPapeletasalida.cReferencia,
           listTempClientPSalida: this.listTempClientPSalida,
           hora,
+          fecha
         })
         .then((response) => {
-          if (response.data.icon == 'warning') {
+          if (response.data.icon == 'warning' || response.data.icon == 'info' ) {
             Swal.fire({
               position: "center",
               icon: response.data.icon,
