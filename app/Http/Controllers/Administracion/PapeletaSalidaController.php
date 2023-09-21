@@ -32,21 +32,20 @@ class PapeletaSalidaController extends Controller
         $fechaDay= sprintf('%02s',substr($request->fecha,0, 2));
         $fechaMes=  sprintf('%02s',substr($request->fecha,3, 1));
         $fechaYear=  substr($request->fecha,5, 4);
-   /*      $fechaDay = '18';
-        $fechaMes =  '09';
-        $fechaYear =  '2023'; */
+
         $fecha =  $fechaYear . '-' . $fechaMes . '-' . $fechaDay;
         $fechaValida = $fecha >= now()->toDateString();
 
 
 
+        date_default_timezone_set('America/Lima');
         $now = Carbon::now();
-        $t8_30 = Carbon::createFromTime(8, 30);
-        $t18_00 = Carbon::createFromTime(18, 00);
+        $t8_30 = Carbon::createFromTime(8,30);
+        $t18_00 = Carbon::createFromTime(18,00);
 
 
 
-        if ($fechaValida && $now >= $t8_30   &&  $now  >= $t18_00) {
+        if ($fechaValida && $now >= $t8_30   &&  $now  <= $t18_00) {
 
             $PapeletaSalida = new Papeletasalida;
             $PapeletaSalida->user_id = $request->nIdUser;

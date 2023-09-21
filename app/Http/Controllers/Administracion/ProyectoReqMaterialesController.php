@@ -187,12 +187,21 @@ class ProyectoReqMaterialesController extends Controller
     public function listbyId(Request $request)
     {
      
-        $countable = Countable::all();
+   /*      $countable = Countable::all();
         $countMaxInformeValorizacion = $countable[0]->countInformeValorizacion;
         $yearMaxID = date("Y");
-        $formatreq = date("Y-m-d");
+        $formatreq = date("Y-m-d"); */
         $dato = ProyectoReqMateriales::with('ccostos')->where('codigo', $request->codRequMateriales)->first();
 
         return $dato;
     }
+
+    public function mostrarInfoReqMateriales(Request $request){
+
+        $datos = ProyectoMateriales::with('producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion', 'unidmedida')->where('pk_proyecto_reqmateriales', $request->item)->get();
+        return $datos;
+ 
+    }
+
+
 }

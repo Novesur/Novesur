@@ -515,6 +515,7 @@ Route::get('/administracion/proyecto_ReqMateriales/list', 'Administracion\Proyec
 Route::post('/operacion/proyecto_ReqMateriales/export', 'Administracion\ProyectoReqMaterialesController@export');
 Route::post('/administracion/proyecto_ReqMateriales/listbyId', 'Administracion\ProyectoReqMaterialesController@listbyId');
 Route::post('/administracion/proyecto_ReqMateriales/setGenerarPReqMaterialesPdf', 'Administracion\ProyectoReqMaterialesController@setGenerarPReqMaterialesPdf');
+Route::get('/administracion/proyecto_ReqMateriales/mostrarInfoReqMateriales', 'Administracion\ProyectoReqMaterialesController@mostrarInfoReqMateriales');
 
 /* Proyecto Materiales */
 Route::post('/administracion/ProyectoMateriales/addOrden', 'Administracion\ProyectoMaterialesController@addOrden');
@@ -522,6 +523,7 @@ Route::get('/administracion/ProyectoMateriales/eliminarTemporder', 'Administraci
 Route::post('/administracion/ProyectoMateriales/reorderReqMateriales', 'Administracion\ProyectoMaterialesController@reorderReqMateriales');
 Route::get('/administracion/ProyectoMateriales/listproyMateriales', 'Administracion\ProyectoMaterialesController@listproyMateriales');
 Route::post('/administracion/ProyectoMateriales/addReqMatProyReq', 'Administracion\ProyectoMaterialesController@addReqMatProyReq');
+Route::post('/administracion/ProyectoMateriales/SaveMatReqMatProy', 'Administracion\ProyectoMaterialesController@SaveMatReqMatProy');
 
 /* Proyecto Mano de Obra */
 Route::post('/administracion/ProyectoManoObra/addProyManObra', 'Administracion\ProyectoManoObraController@addProyManObra');
