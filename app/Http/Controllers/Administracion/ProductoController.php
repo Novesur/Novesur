@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Administracion;
 
+use App\Cliente;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Producto;
@@ -107,10 +108,11 @@ class ProductoController extends Controller
 
     public function ListarProductoById(Request $request)
     {
-       
+        
         //$dato = Producto::where('id', '=', $request->nIdProducto)->where('estado_id',1)->first();
-       
+     
         $dato = Producto::where('id', '=', $request->nIdProducto)->first();
+        
         return $dato;
     }
 

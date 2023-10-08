@@ -297,8 +297,7 @@ Route::get('/administracion/DetalleordenCompra/view', 'Administracion\DetalleOrd
 Route::get('/administracion/DetalleordenCompra/viewModal', 'Administracion\DetalleOrdenCompraController@viewModal');
 Route::post('/administracion/DetalleordenCompra/CambiarEstadoDetalleOC', 'Administracion\DetalleOrdenCompraController@CambiarEstadoDetalleOC');
 Route::post('/administracion/DetalleordenCompra/setMandarValorDetalleParteIngresoXId', 'Administracion\DetalleOrdenCompraController@setMandarValorDetalleParteIngresoXId');
-Route::post('/administracion/DetalleordenCompra/setEditarCantidadParteIngre', 'Administracion\DetalleOrdenCompraController@setEditarCantidadParteIngre');
-Route::post('/administracion/DetalleordenCompra/setEditarCantidadParteIngre', 'Administracion\DetalleOrdenCompraController@setEditarCantidadParteIngre');
+Route::post('/administracion/DetalleordenCompra/setAddCantidadParteIngre', 'Administracion\DetalleOrdenCompraController@setAddCantidadParteIngre');
 Route::post('/administracion/DetalleordenCompra/addOrdenEdit', 'Administracion\DetalleOrdenCompraController@addOrdenEdit');
 Route::post('/administracion/DetalleordenCompra/DeleteItemDetalleOrdenCompra', 'Administracion\DetalleOrdenCompraController@DeleteItemDetalleOrdenCompra');
 Route::post('/administracion/DetalleordenCompra/CargaDetalleOrdenCompraEdit', 'Administracion\DetalleOrdenCompraController@CargaDetalleOrdenCompraEdit');

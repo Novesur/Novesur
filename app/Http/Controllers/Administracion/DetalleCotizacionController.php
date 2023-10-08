@@ -59,6 +59,8 @@ class DetalleCotizacionController extends Controller
     }
 
     public function EditDatosItem(Request $request){
+        //dd($request);
+
 
        $detalle = DetalleCotizacion::with('producto')->where('id', $request->item)->first(); 
 
@@ -66,11 +68,11 @@ class DetalleCotizacionController extends Controller
        
       $cotizacion = Cotizacion::with('cliente')->where('id',$detalle->cotizacion_id)->first();
   
-
+  //dd($producto->precioSugerido > $request->cPUnitEdit);
 
       if($cotizacion->cliente->tipoPrecio == 'Lista'){
 
-        if($producto->precioSugerido > $request->cPUnitEdit){
+        if($producto->precioSugerido < $request->cPUnitEdit){
             return response()->json(['message' => 'El monto minimo es' . ' ' . $producto->precioSugerido]);
         }else{
             DetalleCotizacion::where('id', $request->item)
@@ -81,6 +83,21 @@ class DetalleCotizacionController extends Controller
         'punit' =>   $request->cPUnitEdit,
             ]);
         }
+
+        if($producto->precioDistribuidor > 0 ){
+            if($producto->precioDistribuidor < $request->cPUnitEdit){
+
+            return response()->json(['message' => 'El monto minimo es' . ' ' . $producto->precioSugerido]);
+        }else{
+            DetalleCotizacion::where('id', $request->item)
+            ->update([
+                'cantidad' => $request->cCantidadEdit,
+        'unidmedida_id' => $request->nIdUnidMedEdit,
+        'producto_id' => $request->nIdprodEdit,
+        'punit' =>   $request->cPUnitEdit,
+            ]);
+        }
+    }
 
       }
 

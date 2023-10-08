@@ -19,15 +19,15 @@ class CreateDetalleparteingresoTable extends Migration
             $table->foreign('parteingreso_id')->references('id')->on('parteingreso');
             $table->unsignedBigInteger('producto_id')->required();
             $table->foreign('producto_id')->references('id')->on('producto');
-            $table->integer('cantidad')->required();
+            $table->decimal('cantidad', 8, 2)->required();
             $table->unsignedBigInteger('unidmedida_id')->required();
-            $table->foreign('unidmedida_id')->references('id')->on('unidmedida');
+            $table->foreign('unidmedida_id')->references('id')->on('unidmedida'); 
             $table->double('punit');
             $table->enum('estado',[Parteingreso::PENDIENTE,Parteingreso::APROBADO])->default(Parteingreso::PENDIENTE); 
             $table->timestamps();
         });
     }
-
+   
     /**
      * Reverse the migrations.
      *

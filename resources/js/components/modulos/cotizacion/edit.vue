@@ -669,7 +669,7 @@
                           style="width: 90%"
                           filterable
                           placeholder="Select"
-                          @change="setBuscaPrecioXProducto()"
+                          @change="setBuscaPrecioXProductoModal()"
                         >
                           <el-option
                             v-for="item in listProd"
@@ -698,16 +698,17 @@
                   </div>
                 </div>
 
+                
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group row">
-                      <label class="col-md-4 col-form-label">P/UNIT</label>
+                      <label class="col-md-4 col-form-label">P/UNIT </label>
                       <div class="col-md-6">
                         <input
                           type="text"
                           class="form-control"
                           v-model="fillEditarProducto.cPUnitEdit"
-                          :onchange="this.setCalculaTotalEdit()"
+                          :onchange="this.setCalculaTotalModal()"
                         />
                       </div>
                     </div>
@@ -722,7 +723,7 @@
                           class="form-control"
                           v-model="fillEditarProducto.cTotalEdit"
                           :readonly="true"
-                          :onchange="this.setCalculaTotalEdit()"
+                          :onchange="this.setCalculaTotalModal()"
                         />
                       </div>
                     </div>
@@ -786,6 +787,7 @@ export default {
         nIdprodEdit: " ",
         cPUnitEdit: "",
         cTotalEdit: "",
+        ctipoPrecio:""
       },
 
       listUnidMed: [],
@@ -856,8 +858,7 @@ export default {
           },
         })
         .then((response) => {
-          this.fillEditarProducto.cNomClient =
-            response.data.cliente.razonsocial;
+          this.fillEditarProducto.cNomClient =response.data.cliente.razonsocial;
           this.fillEditarProducto.cDirClient = response.data.cliente.direccion;
           this.fillEditarProducto.cRucClient = response.data.cliente.ruc;
           this.fillEditarProducto.cAtencion = response.data.cliente.atencion;
@@ -877,6 +878,7 @@ export default {
           this.fillEditarProducto.Cconsignado = response.data.consignado;
           this.fillEditarProducto.cTransporte = response.data.transporte;
           this.fillEditarProducto.cObservacion = response.data.observacion;
+          this.fillEditarProducto.ctipoPrecio = response.data.cliente.tipoPrecio
         });
     },
 
@@ -1060,6 +1062,13 @@ export default {
       const c = a * b;
       this.fillEditarProducto.cTotal = parseFloat(c).toFixed(2);
     },
+
+    setCalculaTotalModal() {
+      const a = parseFloat(this.fillEditarProducto.cCantidadEdit);
+      const b = parseFloat(this.fillEditarProducto.cPUnitEdit);
+      const c = a * b;
+      this.fillEditarProducto.cTotalEdit = parseFloat(c).toFixed(2);
+    },
     setCalculaTotalEdit() {
       const a = parseFloat(this.fillEditarProducto.cCantidadEdit);
       const b = parseFloat(this.fillEditarProducto.cPUnitEdit);
@@ -1122,7 +1131,7 @@ export default {
     },
 
         EditDatosItem() {
-      var url = "/administracion/detallecotizancion/EditDatosItem"; 
+      var url = "/administracion/detallecotizancion/EditDatosItem";  
       axios
         .post(url, {
             item : localStorage.Codigo,
@@ -1161,12 +1170,32 @@ if(response.data.message){
       axios
         .get(url, {
           params: {
+            nIdProducto: this.fillEditarProducto.nIdprod, 
+          },
+        })
+        .then((response) => {
+         // this.fillEditarProducto.cPUnit = response.data.precioSugerido;
+          if(this.fillEditarProducto.ctipoPrecio=='Lista'){
+            this.fillEditarProducto.cPUnit = response.data.precioSugerido;
+          }else if(this.fillEditarProducto.ctipoPrecio=='Distribuidor')
+          this.fillEditarProducto.cPUnit = response.data.precioDistribuidor;
+        });
+    },
+
+    setBuscaPrecioXProductoModal() {
+      var url = "/administracion/producto/getListarProductoById";
+      axios
+        .get(url, {
+          params: {
             nIdProducto: this.fillEditarProducto.nIdprodEdit, 
           },
         })
         .then((response) => {
-          
-          this.fillEditarProducto.cPUnitEdit = response.data.precioSugerido;
+         // this.fillEditarProducto.cPUnitEdit = response.data.precioSugerido;
+          if(this.fillEditarProducto.ctipoPrecio=='Lista'){
+            this.fillEditarProducto.cPUnitEdit = response.data.precioSugerido;
+          }else if(this.fillEditarProducto.ctipoPrecio=='Distribuidor')
+          this.fillEditarProducto.cPUnitEdit = response.data.precioDistribuidor;
         });
     },
   },

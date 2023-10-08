@@ -120,6 +120,7 @@ class OrdencompraController extends Controller
                     'unidmedida_id'     => $product->unidmedida_id,
                     'punit'             => $product->punit,
                     'estado'            => 2, 
+                    'canting'            => 0, 
                 ];
             });
             

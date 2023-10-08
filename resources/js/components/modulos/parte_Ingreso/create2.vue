@@ -26,7 +26,7 @@
                         <div class="card card-info">
                             <div class="card-header">
                                 <h3 class="card-title">
-                                    Formulario Parte de Ingreso 
+                                    Formulario Parte de Ingreso
                                 </h3>
                             </div>
                             <div class="card-body">
@@ -283,11 +283,12 @@
                                                     "
                                                 ></td>
 
-                                                <!--   <td v-text="item.cantidad-item.cantidadKardex"></td> -->
-                                                <td v-text="item.cantidad"></td>
+
+
                                                 <td
                                                     v-text="item.cantidadKardex"
                                                 ></td>
+                                                   <td v-text="item.canting"></td>
                                                 <td
                                                     v-text="
                                                         item.unidmedida_nombre
@@ -298,13 +299,13 @@
                                                 ></td>
 
                                                 <td v-if="item.estado == '2'">
-                                                    Completo
-                                                </td>
-                                                <td v-if="item.estado == '1'">
                                                     Pendiente
                                                 </td>
+                                                <td v-if="item.estado == '1'">
+                                                    Completo
+                                                </td>
 
-                                                <td>
+                                                <td v-if="item.estado == '2'">
                                                     <el-checkbox
                                                         @change="
                                                             marcarFila(
@@ -327,9 +328,9 @@
                               <i class="far fa-bell-slash"></i> Pendiente
                             </button>
 
-                      
 
-                     
+
+
                           </template> -->
                                                 <template
                                                     v-if="item.estado == '2'"
@@ -446,9 +447,9 @@
                     <div class="modal-footer">
                         <button
                             class="btn btn-primary"
-                            @click="setEditarCantidad()"
+                            @click="setAddCantidad()"
                         >
-                            Editar
+                            Agregar
                         </button>
                         <button
                             class="btn btn-secondary"
@@ -648,9 +649,9 @@ export default {
                 });
         },
 
-        setEditarCantidad() {
+        setAddCantidad() {
             var url =
-                "/administracion/DetalleordenCompra/setEditarCantidadParteIngre";
+                "/administracion/DetalleordenCompra/setAddCantidadParteIngre";
             axios
                 .post(url, {
                     item: sessionStorage.item,
@@ -767,7 +768,7 @@ export default {
         marcarFila(index, iddetalleOrdenCompra, cantidadKardex) {
             this.listCompletFilter.map(function (x, y) {
                 var url = "/administracion/DetalleordenCompra/editCantComplete";
-               
+
                 axios
                     .post(url, {
                         iddetalleOrdenCompra,

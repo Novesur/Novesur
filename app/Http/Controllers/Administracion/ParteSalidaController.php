@@ -72,6 +72,7 @@ class ParteSalidaController extends Controller
                 });
                 $allpsalida = $allpsalida->toArray();
                 Detallepartesalida::insert($allpsalida);
+                
                 foreach ($allpsalida as $item ) {
                     $temp = (object)$item;
                     $kardex = Kardex::where('producto_id', $temp->producto_id)->first();

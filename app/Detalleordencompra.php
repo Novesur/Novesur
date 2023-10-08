@@ -16,6 +16,7 @@ class Detalleordencompra extends Model
         'unidmedida_id',
         'punit',
         'estado',
+        'canting'
     ];
     public function ordencompras()
     {

@@ -951,7 +951,7 @@ export default {
     },
 
     setBuscaPrecioXProducto() {
-      var url = "/administracion/producto/getListarProductoById"; 
+      var url = "/administracion/producto/getListarProductoById";  
       axios
         .get(url, {
           params: {

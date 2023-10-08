@@ -29,19 +29,22 @@ class PapeletaSalidaController extends Controller
     {
 
 
-        $fechaDay= sprintf('%02s',substr($request->fecha,0, 2));
+        /*     $fechaDay= sprintf('%02s',substr($request->fecha,0, 2));
         $fechaMes=  sprintf('%02s',substr($request->fecha,3, 1));
         $fechaYear=  substr($request->fecha,5, 4);
 
         $fecha =  $fechaYear . '-' . $fechaMes . '-' . $fechaDay;
         $fechaValida = $fecha >= now()->toDateString();
+ */
 
-
+        $fecha = date("Y-m-d");
+     
+        $fechaValida = $fecha >= now()->toDateString();
 
         date_default_timezone_set('America/Lima');
         $now = Carbon::now();
-        $t8_30 = Carbon::createFromTime(8,30);
-        $t18_00 = Carbon::createFromTime(18,00);
+        $t8_30 = Carbon::createFromTime(8, 30);
+        $t18_00 = Carbon::createFromTime(18, 00);
 
 
 

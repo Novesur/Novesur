@@ -145,6 +145,11 @@
                       <th>Cotizar</th>
                       <th>Acciones</th>
                       <th>Vendedor</th>
+                      <th v-if="
+                            listRolPermisoByUsuario.includes(
+                              'cliente.fcreacion'
+                            )
+                          ">F.Creacion</th>
                       <th>Razon Social</th>
                       <th>Ruc</th>
                       <th>Atencion</th>
@@ -202,6 +207,11 @@
                             : item.user.fullname
                         }}
                       </td>
+                      <td v-if="
+                            listRolPermisoByUsuario.includes(
+                              'cliente.fcreacion'
+                            )
+                          " >{{ item.created_at.slice(0,10)| moment("DD - MM - Y") }}</td>
 
                       <td v-text="item.razonsocial"></td>
                       <td v-text="item.ruc"></td>
@@ -331,7 +341,7 @@ export default {
     },
 
     getExcelCliente() {
-      var url = "/operacion/Cliente/export"; 
+      var url = "/operacion/Cliente/export";
       axios
         .post(
           url,
