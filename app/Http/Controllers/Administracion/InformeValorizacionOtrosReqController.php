@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Administracion;
 use App\Http\Controllers\Controller;
 use App\InformeValorizacion;
 use App\ProyectoReqMateriales;
+use App\ProyectOtrosReq;
 use App\TempValorizacionOtrosRequerimientos;
 use App\TiempoAlquiler;
 use App\valorizacionOtrosReq;
@@ -14,14 +15,14 @@ use Illuminate\Support\Facades\Session;
 class InformeValorizacionOtrosReqController extends Controller
 {
 
-  
 
-    public function listInfoValorOtrosReq(Request $request){ 
+
+    public function listInfoValorOtrosReq(Request $request){
 
         $idproyReqMateriales = ProyectoReqMateriales::where('codigo', $request->codRequMateriales)->first();
         $InformeValorizacion = InformeValorizacion::where('pk_proyecto_reqmateriales', $idproyReqMateriales->id)->first();
-        $dato = valorizacionOtrosReq::with('unidmedida')->where('pk_informe_valorizacion', $InformeValorizacion->id)->get(); 
-        return $dato;  
+        $dato = valorizacionOtrosReq::with('unidmedida')->where('pk_informe_valorizacion', $InformeValorizacion->id)->get();
+        return $dato;
 }
 
 
@@ -43,15 +44,16 @@ class InformeValorizacionOtrosReqController extends Controller
 
     public function CleanOtrosProyInfoValor()
     {
-        Session::put('OtrosProyInfoValor', null); 
+        Session::put('OtrosProyInfoValor', null);
         $dato = session()->get('OtrosProyInfoValor') ?? collect([]);
         return response()->json(['datos' => $dato]);
     }
 
     public function reorderOtrosReq(Request $request){
 
-        $infoValorOtrosReq = valorizacionOtrosReq::where('id',$request->item)->first();
-        $infoValorOtrosReq->delete();
+
+        $proyectOtrosReq = ProyectOtrosReq::where('id',$request->item)->first();
+        $proyectOtrosReq->delete();
 
     }
 
@@ -59,8 +61,8 @@ class InformeValorizacionOtrosReqController extends Controller
     public function ListValorOtrosReqxInfoValor(Request $request){
         $dato = valorizacionOtrosReq::with('unidmedida')->where('pk_informe_valorizacion', $request->pk_informe_valorizacion)->get();
         return $dato;
-    
-    } 
+
+    }
 
 
 

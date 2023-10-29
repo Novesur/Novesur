@@ -286,9 +286,9 @@
 
 
                                                 <td
-                                                    v-text="item.cantidadKardex"
+                                                    v-text="item.cantidad"
                                                 ></td>
-                                                   <td v-text="item.canting"></td>
+                                                   <td v-text="item.cantidadKardex"></td>
                                                 <td
                                                     v-text="
                                                         item.unidmedida_nombre

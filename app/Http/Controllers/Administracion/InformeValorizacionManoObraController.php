@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Administracion;
 use App\Http\Controllers\Controller;
 use App\InformeValorizacion;
 use App\ProyectoReqMateriales;
+use App\ProyectoManObra;
 use App\valorizacionManoObra;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -22,13 +23,13 @@ class InformeValorizacionManoObraController extends Controller
 
     public function reorderReqManObra(Request $request)
     {
-        $infoValorManoObra = valorizacionManoObra::where('id', $request->item)->first();
-        $infoValorManoObra->delete();
+        $proyectoManObra = ProyectoManObra::where('id', $request->item)->first();
+        $proyectoManObra->delete();
     }
     public function ListValorMaNObraxInfoValor(Request $request)
     {
         $dato = valorizacionManoObra::with('personal')->where('pk_informe_valorizacion', $request->pk_informe_valorizacion)->get();
-       
+
         return $dato;
     }
 
@@ -46,7 +47,7 @@ class InformeValorizacionManoObraController extends Controller
     }
 
     public function EditOtrosReqPersonal(Request $request){
-        
+
         valorizacionManoObra::where('id', $request->itemStorage)->update(['personal_id' => $request->nidPersonalModal]);
 
     }

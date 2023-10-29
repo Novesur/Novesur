@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProyectoMateriales extends Model
 {
+    use SoftDeletes;
     protected $table = 'proyecto_materiales';
     public $timestamps = false;
 

@@ -559,7 +559,7 @@
                                             clearable
                                             filterable
                                             :style="{ width: '350px' }"
-                                            
+
                                         >
                                             <el-option
                                                 v-for="item in listPersonal"
@@ -805,7 +805,7 @@
                                     </div>
                                 </div> -->
 
-                                
+
                                 <div class="col-md-6">
                                         <div class="form-group row">
                                             <label
@@ -878,14 +878,14 @@
                             </thead>
                             <tbody>
                                 <tr
-                                    v-for="(item, index) 
+                                    v-for="(item, index)
                                     in listProyOtrosReq"
                                     :key="index"
                                 >
                                   <td v-text="item.descripcion"></td>
                                     <td v-text="item.cantidad"></td>
-                                    <td v-text="item.unidmedida.nombre"></td> 
-                                   
+                                    <td v-text="item.unidmedida.nombre"></td>
+
                                     <td>
                                         <button
                                             class="btn btn-danger btn-sm"
@@ -991,7 +991,7 @@ export default {
                 nIdTipoPago: "",
                 nIdTipoMoneda: "",
                 nIdUser: sessionStorage.getItem("iduser"),
-              
+
                 cDiasMObra: "",
                 cHorasMObra: "",
                 cDescripcion: "",
@@ -1136,7 +1136,7 @@ export default {
         },
 
         setAddMObra() {
-            var url = "/administracion/ProyectoManoObra/addReqMatProyManObra"; 
+            var url = "/administracion/ProyectoManoObra/addReqMatProyManObra";
             axios
                 .post(url, {
                     codRequMateriales: this.fillCrearInformeValorizacion.codRequMateriales,
@@ -1153,9 +1153,9 @@ export default {
         },
 
         setcleanListMObra() {
-            
+
                 (this.fillCrearInformeValorizacion.cDiasMObra = 0);
-            this.fillCrearInformeValorizacion.cHorasMObra = 0; 
+            this.fillCrearInformeValorizacion.cHorasMObra = 0;
         },
 
         setOtrosRequerimientos() {
@@ -1168,7 +1168,7 @@ export default {
                         this.fillCrearInformeValorizacion.cDescripcion,
                     cCantidadReq:
                         this.fillCrearInformeValorizacion.cCantidadReq,
-                    
+
                     estado: "I",
                     cCantAlq: this.fillCrearInformeValorizacion.cCantAlq,
                     nIdAlquiler: this.fillCrearInformeValorizacion.nIdAlquiler,
@@ -1177,7 +1177,7 @@ export default {
                 })
                 .then((response) => {
                         this.fillCrearInformeValorizacion.cCantidadReq = 0;
-                        this.getListInfoProyOtrosReq(this.fillCrearInformeValorizacion.codRequMateriales) 
+                        this.getListInfoProyOtrosReq(this.fillCrearInformeValorizacion.codRequMateriales)
                 });
         },
 
@@ -1197,19 +1197,21 @@ export default {
 
         DeletListInfoValMateriales(item,pk_informe_valorizacion) {
             var url =
-                "/administracion/informeValorizacion/reorderReqMateriales"; 
+                "/administracion/informeValorizacion/reorderReqMateriales";
             axios
                 .post(url, {
                     item: item,
                 })
                 .then(() => {
-                    this.getListValorMaterialesxInfoValor(pk_informe_valorizacion)
-                    
+
+                    this.getListInfoProyMateriales(this.fillCrearInformeValorizacion.codRequMateriales)
+                    //this.getListValorMaterialesxInfoValor(pk_informe_valorizacion)
+
                 });
         },
 
         getListValorMaterialesxInfoValor(pk_informe_valorizacion){
-            var url = "/administracion/informeValorizacion/ListValorMaterialesxInfoValor";  
+            var url = "/administracion/informeValorizacion/ListValorMaterialesxInfoValor";
             axios
                 .get(url, {
                     params: {
@@ -1217,12 +1219,12 @@ export default {
                     },
                 })
                 .then((response) => {
-             
+
                     this.listProyInfoValorMateriales = response.data
-                   
+
                 });
 
-        }, 
+        },
 
         DeletListReqMaNObra(item,pk_informe_valorizacion) {
             var url = "/administracion/informeValorizacion/reorderReqManObra";
@@ -1231,13 +1233,13 @@ export default {
                     item: item,
                 })
                 .then((response) => {
-                  
+
                     this.getListValorMaNObraxInfoValor(pk_informe_valorizacion);
                 });
         },
 
         getListValorMaNObraxInfoValor(pk_informe_valorizacion){
-            var url = "/administracion/informeValorizacion/ListValorMaNObraxInfoValor";   
+            var url = "/administracion/informeValorizacion/ListValorMaNObraxInfoValor";
             axios
                 .get(url, {
                     params: {
@@ -1245,14 +1247,14 @@ export default {
                     },
                 })
                 .then((response) => {
-                 
+
                     this.listInfoValorManoObra = response.data
-                   
+
                 });
 
-        }, 
+        },
 
-        
+
 
         DeletListOtrosReq(item,pk_informe_valorizacion) {
             var url = "/administracion/informeValorizacion/reorderOtrosReq";
@@ -1261,13 +1263,13 @@ export default {
                     item: item,
                 })
                 .then((response) => {
-                    
+
                     this.getListValorOtrosReqxInfoValor(pk_informe_valorizacion)
                 });
         },
 
         getListValorOtrosReqxInfoValor(pk_informe_valorizacion){
-            var url = "/administracion/informeValorizacion/ListValorOtrosReqxInfoValor";   
+            var url = "/administracion/informeValorizacion/ListValorOtrosReqxInfoValor";
             axios
                 .get(url, {
                     params: {
@@ -1275,12 +1277,12 @@ export default {
                     },
                 })
                 .then((response) => {
-                 
+
                     this.listProyOtrosReq = response.data
-                   
+
                 });
 
-        }, 
+        },
 
         getListarByProveedor() {
             var url = "/administracion/proveedor/getListarProveedorById";
@@ -1317,7 +1319,7 @@ export default {
             axios
                 .get(url)
                 .then((response) => {
-                   
+
                     this.listProd = response.data;
                 });
         },
@@ -1339,7 +1341,7 @@ export default {
                 .post(url, {
                     nIdUser : this.fillCrearInformeValorizacion.nIdUser,
              codRequMateriales: this.fillCrearInformeValorizacion.codRequMateriales,
-                    cImporte: this.fillCrearInformeValorizacion.cImporte, 
+                    cImporte: this.fillCrearInformeValorizacion.cImporte,
                 })
                 .then((response) => {
                     Swal.fire({
@@ -1396,7 +1398,7 @@ export default {
             return this.error;
         },
         setAddValorReqMaterial() {
-           
+
             var url = "/administracion/ProyectoMateriales/addReqMatProyReq";
 
             axios
@@ -1404,12 +1406,12 @@ export default {
                     codRequMateriales: this.fillCrearInformeValorizacion.codRequMateriales,
                     nIdmaterial: this.fillCrearInformeValorizacion.nIdmaterial,
                     cCantMaterial:this.fillCrearInformeValorizacion.cCantMaterial,
-                    nIdUnidMedMat:this.fillCrearInformeValorizacion.nIdUnidMedMat, 
+                    nIdUnidMedMat:this.fillCrearInformeValorizacion.nIdUnidMedMat,
                     estado: "I",
                 })
                 .then((response) => {
                     this.getListInfoProyMateriales(this.fillCrearInformeValorizacion.codRequMateriales)
-                }); 
+                });
         },
 
         setLimpiaMaterial() {
@@ -1489,12 +1491,12 @@ export default {
         },
         buscaxCodRequMateriales(){
 
-        var url = "/administracion/proyecto_ReqMateriales/listbyId";   
+        var url = "/administracion/proyecto_ReqMateriales/listbyId";
       axios
         .post(url, {
             codRequMateriales: this.fillCrearInformeValorizacion.codRequMateriales,
             cImporte:this.fillCrearInformeValorizacion.cImporte
-       
+
         })
         .then((response) => {
             this.fillCrearInformeValorizacion.nIdCcostos= response.data.centro_costos_id
@@ -1507,16 +1509,16 @@ export default {
 
             this.getListInfoProyMateriales(this.fillCrearInformeValorizacion.codRequMateriales)
            this.getListInfoProyManoObra(this.fillCrearInformeValorizacion.codRequMateriales)
-           this.getListInfoProyOtrosReq(this.fillCrearInformeValorizacion.codRequMateriales) 
+           this.getListInfoProyOtrosReq(this.fillCrearInformeValorizacion.codRequMateriales)
 
         });
-    
+
         },
 
-        
+
         getListInfoProyMateriales(codRequMateriales){
 
-            var url = "/administracion/ProyectoMateriales/listproyMateriales";  
+            var url = "/administracion/ProyectoMateriales/listproyMateriales";
             axios
                 .get(url, {
                     params: {
@@ -1524,15 +1526,15 @@ export default {
                     },
                 })
                 .then((response) => {
-                    
+
                     this.listProyInfoValorMateriales = response.data
-                   
+
                 });
 
         },
 
         getListInfoProyManoObra(codRequMateriales){
-            var url = "/administracion/ProyectoManoObra/listproyManoObra"; 
+            var url = "/administracion/ProyectoManoObra/listproyManoObra";
             axios
                 .get(url, {
                     params: {
@@ -1540,24 +1542,24 @@ export default {
                     },
                 })
                 .then((response) => {
-                  
+
                     this.listInfoValorManoObra = response.data
                 });
 
         },
 
         getListInfoProyOtrosReq(codRequMateriales){
-            var url = "/administracion/ProyectOtrosReq/listproyOtrosReq"; 
+            var url = "/administracion/ProyectOtrosReq/listproyOtrosReq";
             axios
                 .get(url, {
                     params: {
-                        codRequMateriales 
+                        codRequMateriales
                     },
                 })
                 .then((response) => {
                     console.log(response.data)
                     this.listProyOtrosReq = response.data
-                  
+
                 });
 
         }
