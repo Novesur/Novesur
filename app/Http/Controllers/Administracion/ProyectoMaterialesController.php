@@ -104,4 +104,23 @@ class ProyectoMaterialesController extends Controller
         $ProyectoMateriales->estado = 'R';
         $ProyectoMateriales->save();
     }
+
+    public function getDataModalReqMateriales(Request $request){ 
+        $proyectoMateriales = ProyectoMateriales::where('id', $request->item)->first();
+        return $proyectoMateriales ;
+    }
+
+    public function EditModalReqMateriales(Request $request){
+        $proyectoMateriales = ProyectoMateriales::where('id', $request->item)->first();
+        $proyectoMateriales->pk_proyecto_reqmateriales = $proyectoMateriales->pk_proyecto_reqmateriales;
+        $proyectoMateriales->producto_id =  $proyectoMateriales->producto_id;
+        $proyectoMateriales->cantidad = $proyectoMateriales->cantidad;
+        $proyectoMateriales->unidmedida_id = $proyectoMateriales->unidmedida_id;
+        $proyectoMateriales->cantInfoValor = $request->cCantidadReqmatModal;
+        $proyectoMateriales->unidmedidaInfoValor_id = $request->nIdUnidMedOtrosReqModal;
+        $proyectoMateriales->fecha = $proyectoMateriales->fecha ;
+        $proyectoMateriales->estado = 'R';
+        $proyectoMateriales->save();
+
+    }
 }

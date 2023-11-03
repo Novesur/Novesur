@@ -116,7 +116,7 @@
                                                             v-model="
                                                                 fillCrearInformeValorizacion.nIdClient
                                                             "
-                                                             :disabled='true'
+                                                            :disabled="true"
                                                         />
                                                     </div>
                                                 </div>
@@ -138,7 +138,7 @@
                                                         v-model="
                                                             fillCrearInformeValorizacion.detservicio
                                                         "
-                                                        :disabled='true'
+                                                        :disabled="true"
                                                     />
                                                 </div>
                                             </div>
@@ -428,7 +428,9 @@
                                     <div class="col-md-4 offset-4">
                                         <button
                                             class="btn btn-flat btn-primary btnWidth"
-                                            @click.prevent="setAddValorReqMaterial()"
+                                            @click.prevent="
+                                                setAddValorReqMaterial()
+                                            "
                                         >
                                             Agregar
                                         </button>
@@ -470,31 +472,51 @@
                                                 ) in listProyInfoValorMateriales"
                                                 :key="index"
                                             >
-                                                <td v-text="item.producto.codigo"></td>
-                                                <td v-text="item.cantidad"></td>
-
                                                 <td
                                                     v-text="
-                                                        item.producto.familia.nombre +
-                                                        ' ' +
-                                                        item.producto.subfamilia.nombre +
-                                                        ', MARCA :' +
-                                                        item.producto.marca.nombre +
-                                                        ', MODELO/TIPO :' +
-                                                        item.producto.modelotipo.nombre +
-                                                        ', MATERIAL :' +
-                                                        item.producto.material.nombre
+                                                        item.producto.codigo
                                                     "
                                                 ></td>
                                                 <td
-                                                    v-text="item.unidmedida.nombre"
+                                                    v-text="item.cantInfoValor"
+                                                ></td>
+
+                                                <td
+                                                    v-text="
+                                                        item.producto.familia
+                                                            .nombre +
+                                                        ' ' +
+                                                        item.producto.subfamilia
+                                                            .nombre +
+                                                        ', MARCA :' +
+                                                        item.producto.marca
+                                                            .nombre +
+                                                        ', MODELO/TIPO :' +
+                                                        item.producto.modelotipo
+                                                            .nombre +
+                                                        ', MATERIAL :' +
+                                                        item.producto.material
+                                                            .nombre
+                                                    "
+                                                ></td>
+                                                <td
+                                                    v-text="
+                                                        item
+                                                            .unidmedidaInfoValor_id
+                                                            .nombre
+                                                    "
                                                 ></td>
                                                 <td>
                                                     <button
+                                                        v-if="
+                                                            listRolPermisoByUsuario.includes(
+                                                                'informeValorizacion.eliminar'
+                                                            )
+                                                        "
                                                         class="btn btn-danger btn-sm"
                                                         @click.prevent="
                                                             DeletListInfoValMateriales(
-                                                                item.id , item.pk_informe_valorizacion
+                                                                item.id
                                                             )
                                                         "
                                                     >
@@ -502,6 +524,25 @@
                                                             class="fas fa-trash-alt"
                                                         ></i>
                                                         Eliminar
+                                                    </button>
+
+                                                    <button
+                                                        v-if="
+                                                            listRolPermisoByUsuario.includes(
+                                                                'informeValorizacion.editar'
+                                                            )
+                                                        "
+                                                        class="btn btn-success btn-sm"
+                                                        @click.prevent="
+                                                            abrirModalReqMateriales(
+                                                                item.id
+                                                            )
+                                                        "
+                                                    >
+                                                        <i
+                                                            class="fas fa-pencil-alt"
+                                                        ></i
+                                                        >Editar
                                                     </button>
                                                 </td>
                                             </tr>
@@ -554,17 +595,24 @@
 
                                     <div class="col-md-6">
                                         <el-select
-                                            v-model="fillCrearInformeValorizacion.nIdPersonal"
+                                            v-model="
+                                                fillCrearInformeValorizacion.nIdPersonal
+                                            "
                                             placeholder="Seleccione un Personal"
                                             clearable
                                             filterable
                                             :style="{ width: '350px' }"
-
                                         >
                                             <el-option
                                                 v-for="item in listPersonal"
                                                 :key="item.id"
-                                                :label="item.nombres +' '+ item.ApPaterno+' '+ item.ApMaterno"
+                                                :label="
+                                                    item.nombres +
+                                                    ' ' +
+                                                    item.ApPaterno +
+                                                    ' ' +
+                                                    item.ApMaterno
+                                                "
                                                 :value="item.id"
                                             >
                                             </el-option>
@@ -672,10 +720,20 @@
                             </thead>
                             <tbody>
                                 <tr
-                                    v-for="(item, index) in listInfoValorManoObra"
+                                    v-for="(
+                                        item, index
+                                    ) in listInfoValorManoObra"
                                     :key="index"
                                 >
-                                    <td v-text="item.personal.ApPaterno  + ' ' + item.personal.ApMaterno +' ' + item.personal.nombres"></td>
+                                    <td
+                                        v-text="
+                                            item.personal.ApPaterno +
+                                            ' ' +
+                                            item.personal.ApMaterno +
+                                            ' ' +
+                                            item.personal.nombres
+                                        "
+                                    ></td>
                                     <td v-text="item.dias"></td>
                                     <td v-text="item.horas"></td>
                                     <td>
@@ -683,7 +741,8 @@
                                             class="btn btn-danger btn-sm"
                                             @click.prevent="
                                                 DeletListReqMaNObra(
-                                                    item.id,item.pk_informe_valorizacion
+                                                    item.id,
+                                                    item.pk_informe_valorizacion
                                                 )
                                             "
                                         >
@@ -708,7 +767,8 @@
                         <div class="card">
                             <div
                                 class="card-header"
-                                style="background-color: #9b59b6; color: white">
+                                style="background-color: #9b59b6; color: white"
+                            >
                                 <h3 class="card-title">OTROS REQUERIMIENTOS</h3>
                             </div>
                             <div class="card-body">
@@ -743,7 +803,7 @@
                                     </div>
                                 </div>
 
-                          <!--       <div class="form-group row">
+                                <!--       <div class="form-group row">
                                     <label class="col-md-2 col-form-label"
                                         >PRECIO</label
                                     >
@@ -805,32 +865,30 @@
                                     </div>
                                 </div> -->
 
-
                                 <div class="col-md-6">
-                                        <div class="form-group row">
-                                            <label
-                                                class="col-md-4 col-form-label"
-                                                >Unid Medida</label
+                                    <div class="form-group row">
+                                        <label class="col-md-4 col-form-label"
+                                            >Unid Medida</label
+                                        >
+                                        <div class="col-md-4">
+                                            <el-select
+                                                v-model="
+                                                    fillCrearInformeValorizacion.nIdUnidMedOtrosReq
+                                                "
+                                                placeholder="Select"
+                                                style="width: 70%"
                                             >
-                                            <div class="col-md-4">
-                                                <el-select
-                                                    v-model="
-                                                        fillCrearInformeValorizacion.nIdUnidMedOtrosReq
-                                                    "
-                                                    placeholder="Select"
-                                                    style="width: 70%"
+                                                <el-option
+                                                    v-for="item in listUnidMed"
+                                                    :key="item.id"
+                                                    :label="item.nombre"
+                                                    :value="item.id"
                                                 >
-                                                    <el-option
-                                                        v-for="item in listUnidMed"
-                                                        :key="item.id"
-                                                        :label="item.nombre"
-                                                        :value="item.id"
-                                                    >
-                                                    </el-option>
-                                                </el-select>
-                                            </div>
+                                                </el-option>
+                                            </el-select>
                                         </div>
                                     </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -878,11 +936,10 @@
                             </thead>
                             <tbody>
                                 <tr
-                                    v-for="(item, index)
-                                    in listProyOtrosReq"
+                                    v-for="(item, index) in listProyOtrosReq"
                                     :key="index"
                                 >
-                                  <td v-text="item.descripcion"></td>
+                                    <td v-text="item.descripcion"></td>
                                     <td v-text="item.cantidad"></td>
                                     <td v-text="item.unidmedida.nombre"></td>
 
@@ -891,7 +948,8 @@
                                             class="btn btn-danger btn-sm"
                                             @click.prevent="
                                                 DeletListOtrosReq(
-                                                    item.id,item.pk_proyecto_reqmateriales
+                                                    item.id,
+                                                    item.pk_proyecto_reqmateriales
                                                 )
                                             "
                                         >
@@ -956,6 +1014,127 @@
                 </div>
             </div>
         </div>
+
+        <!-- MODAL DE REQUERIMIENTO DE MATERIALES -->
+        <div
+            class="modal fade"
+            :class="{ show: modalShowReqMateriales }"
+            :style="modalShowReqMateriales ? mostrarModal : ocultarModal"
+        >
+            <div
+                class="modal-dialog modal-lg modal-dialog-center modal-dialog-scrollable d-flex align-items-center"
+                style="top: 10% !important"
+                role="document"
+            >
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Sistemas Novesur</h5>
+                        <button
+                            class="close"
+                            @click="abrirModalReqMateriales"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label"
+                                >CANTIDAD:
+                            </label>
+
+                            <div class="col-md-5">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    v-model="
+                                        fillCrearInformeValorizacion.cCantidadReqmatModal
+                                    "
+                                />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label"
+                                >DESCRIPCION:
+                            </label>
+
+                            <div class="col-md-9">
+                                <el-select
+                                    v-model="
+                                        fillCrearInformeValorizacion.cDescripcionModal
+                                    "
+                                    style="width: 90%"
+                                    filterable
+                                    placeholder="Select"
+                                    :disabled="true"
+                                >
+                                    <v-row align="right">
+                                        <el-option
+                                            v-for="item in listProd"
+                                            :key="item.id"
+                                            :label="
+                                                item.codigo +
+                                                ' - ' +
+                                                item.familia.nombre +
+                                                ' , ' +
+                                                item.subfamilia.nombre +
+                                                ' , Modelo: ' +
+                                                item.modelotipo.nombre +
+                                                ' , Marca : ' +
+                                                item.marca.nombre +
+                                                ' , Material : ' +
+                                                item.material.nombre +
+                                                ' ,' +
+                                                item.homologacion.nombre
+                                            "
+                                            :value="item.id"
+                                        >
+                                        </el-option>
+                                    </v-row>
+                                </el-select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label"
+                                >Unid Medida</label
+                            >
+                            <div class="col-md-3">
+                                <el-select
+                                    v-model="
+                                        fillCrearInformeValorizacion.nIdUnidMedOtrosReqModal
+                                    "
+                                    placeholder="Select"
+                                    style="width: 70%"
+                                >
+                                    <el-option
+                                        v-for="item in listUnidMed"
+                                        :key="item.id"
+                                        :label="item.nombre"
+                                        :value="item.id"
+                                    >
+                                    </el-option>
+                                </el-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                            class="btn btn-primary"
+                            @click="editReqMateriales"
+                        >
+                            Editar
+                        </button>
+                        <button
+                            class="btn btn-secondary"
+                            @click="abrirModalReqMateriales"
+                        >
+                            Cerrar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FIN DEL MODAL DE REQUERIMIENTO DE MATERIALES -->
     </div>
 </template>
 
@@ -977,8 +1156,8 @@ export default {
                 cCantAlq: "",
                 nIdAlquiler: "",
                 precioOtros: "",
-                codRequMateriales:"",
-                nIdPersonal:"",
+                codRequMateriales: "",
+                nIdPersonal: "",
 
                 cDocumento: "",
                 cFechaEmision: "",
@@ -1001,16 +1180,19 @@ export default {
                 nIdUnidMedMat: "",
                 radTipoTiempo: "1",
                 estado: "",
+                cDescripcionModal: "",
+                cCantidadReqmatModal: "",
+                nIdUnidMedOtrosReqModal: "",
             },
             listAlmacen: [],
-            listPersonal:[],
+            listPersonal: [],
             listUnidMed: [],
             listTiempoAlquiler: [],
             listProd: [],
             listCCostos: [],
             listProyInfoValorMateriales: [],
-            listInfoValorManoObra:[],
-            listProyOtrosReq:[],
+            listInfoValorManoObra: [],
+            listProyOtrosReq: [],
             listartempProduccion: [],
             listartempMobra: [],
             listartempRequerimientos: [],
@@ -1030,6 +1212,7 @@ export default {
             validateHoras: true,
 
             modalShow: false,
+            modalShowReqMateriales: false,
             mostrarModal: {
                 display: "block",
                 background: "#0000006b",
@@ -1037,6 +1220,10 @@ export default {
             ocultarModal: {
                 display: "none",
             },
+
+            listRolPermisoByUsuario: JSON.parse(
+                sessionStorage.getItem("listRolPermisosByUsuario")
+            ),
             error: 0,
             mensajeError: [],
         };
@@ -1051,7 +1238,7 @@ export default {
         this.getListarCentroCostos();
         this.getListarTiempoAlquiler();
         this.getListPersonal();
-        this.fillCrearInformeValorizacion.cImporte= 0
+        this.fillCrearInformeValorizacion.cImporte = 0;
     },
 
     methods: {
@@ -1108,7 +1295,6 @@ export default {
             });
         },
 
-
         consultaRuc() {
             var url = "/administracion/cliente/consultaRuc";
             axios
@@ -1139,7 +1325,8 @@ export default {
             var url = "/administracion/ProyectoManoObra/addReqMatProyManObra";
             axios
                 .post(url, {
-                    codRequMateriales: this.fillCrearInformeValorizacion.codRequMateriales,
+                    codRequMateriales:
+                        this.fillCrearInformeValorizacion.codRequMateriales,
                     nIdPersonal: this.fillCrearInformeValorizacion.nIdPersonal,
                     cDiasMObra: this.fillCrearInformeValorizacion.cDiasMObra,
                     cHorasMObra: this.fillCrearInformeValorizacion.cHorasMObra,
@@ -1148,22 +1335,23 @@ export default {
                 .then((response) => {
                     this.fillCrearInformeValorizacion.cDiasMObra = 0;
                     this.fillCrearInformeValorizacion.cHorasMObra = 0;
-                    this.getListInfoProyManoObra(this.fillCrearInformeValorizacion.codRequMateriales)
+                    this.getListInfoProyManoObra(
+                        this.fillCrearInformeValorizacion.codRequMateriales
+                    );
                 });
         },
 
         setcleanListMObra() {
-
-                (this.fillCrearInformeValorizacion.cDiasMObra = 0);
+            this.fillCrearInformeValorizacion.cDiasMObra = 0;
             this.fillCrearInformeValorizacion.cHorasMObra = 0;
         },
 
         setOtrosRequerimientos() {
-            var url =
-                "/administracion/ProyectOtrosReq/addReqMatProyOtrosReq";
+            var url = "/administracion/ProyectOtrosReq/addReqMatProyOtrosReq";
             axios
                 .post(url, {
-                    codRequMateriales: this.fillCrearInformeValorizacion.codRequMateriales,
+                    codRequMateriales:
+                        this.fillCrearInformeValorizacion.codRequMateriales,
                     cDescripcion:
                         this.fillCrearInformeValorizacion.cDescripcion,
                     cCantidadReq:
@@ -1173,11 +1361,14 @@ export default {
                     cCantAlq: this.fillCrearInformeValorizacion.cCantAlq,
                     nIdAlquiler: this.fillCrearInformeValorizacion.nIdAlquiler,
                     precioOtros: this.fillCrearInformeValorizacion.precioOtros,
-                    nIdUnidMedOtrosReq: this.fillCrearInformeValorizacion.nIdUnidMedOtrosReq
+                    nIdUnidMedOtrosReq:
+                        this.fillCrearInformeValorizacion.nIdUnidMedOtrosReq,
                 })
                 .then((response) => {
-                        this.fillCrearInformeValorizacion.cCantidadReq = 0;
-                        this.getListInfoProyOtrosReq(this.fillCrearInformeValorizacion.codRequMateriales)
+                    this.fillCrearInformeValorizacion.cCantidadReq = 0;
+                    this.getListInfoProyOtrosReq(
+                        this.fillCrearInformeValorizacion.codRequMateriales
+                    );
                 });
         },
 
@@ -1195,7 +1386,7 @@ export default {
                 (this.fillCrearInformeValorizacion.cCantidadReq = 0);
         },
 
-        DeletListInfoValMateriales(item,pk_informe_valorizacion) {
+        DeletListInfoValMateriales(item) {
             var url =
                 "/administracion/informeValorizacion/reorderReqMateriales";
             axios
@@ -1203,85 +1394,77 @@ export default {
                     item: item,
                 })
                 .then(() => {
-
-                    this.getListInfoProyMateriales(this.fillCrearInformeValorizacion.codRequMateriales)
+                    this.getListInfoProyMateriales(
+                        this.fillCrearInformeValorizacion.codRequMateriales
+                    );
                     //this.getListValorMaterialesxInfoValor(pk_informe_valorizacion)
-
                 });
         },
 
-        getListValorMaterialesxInfoValor(pk_informe_valorizacion){
-            var url = "/administracion/informeValorizacion/ListValorMaterialesxInfoValor";
+        getListValorMaterialesxInfoValor(pk_informe_valorizacion) {
+            var url =
+                "/administracion/informeValorizacion/ListValorMaterialesxInfoValor";
             axios
                 .get(url, {
                     params: {
-                        pk_informe_valorizacion
+                        pk_informe_valorizacion,
                     },
                 })
                 .then((response) => {
-
-                    this.listProyInfoValorMateriales = response.data
-
+                    this.listProyInfoValorMateriales = response.data;
                 });
-
         },
 
-        DeletListReqMaNObra(item,pk_informe_valorizacion) {
+        DeletListReqMaNObra(item, pk_informe_valorizacion) {
             var url = "/administracion/informeValorizacion/reorderReqManObra";
             axios
                 .post(url, {
                     item: item,
                 })
                 .then((response) => {
-
                     this.getListValorMaNObraxInfoValor(pk_informe_valorizacion);
                 });
         },
 
-        getListValorMaNObraxInfoValor(pk_informe_valorizacion){
-            var url = "/administracion/informeValorizacion/ListValorMaNObraxInfoValor";
+        getListValorMaNObraxInfoValor(pk_informe_valorizacion) {
+            var url =
+                "/administracion/informeValorizacion/ListValorMaNObraxInfoValor";
             axios
                 .get(url, {
                     params: {
-                        pk_informe_valorizacion
+                        pk_informe_valorizacion,
                     },
                 })
                 .then((response) => {
-
-                    this.listInfoValorManoObra = response.data
-
+                    this.listInfoValorManoObra = response.data;
                 });
-
         },
 
-
-
-        DeletListOtrosReq(item,pk_informe_valorizacion) {
+        DeletListOtrosReq(item, pk_informe_valorizacion) {
             var url = "/administracion/informeValorizacion/reorderOtrosReq";
             axios
                 .post(url, {
                     item: item,
                 })
                 .then((response) => {
-
-                    this.getListValorOtrosReqxInfoValor(pk_informe_valorizacion)
+                    this.getListValorOtrosReqxInfoValor(
+                        pk_informe_valorizacion
+                    );
                 });
         },
 
-        getListValorOtrosReqxInfoValor(pk_informe_valorizacion){
-            var url = "/administracion/informeValorizacion/ListValorOtrosReqxInfoValor";
+        getListValorOtrosReqxInfoValor(pk_informe_valorizacion) {
+            var url =
+                "/administracion/informeValorizacion/ListValorOtrosReqxInfoValor";
             axios
                 .get(url, {
                     params: {
-                        pk_informe_valorizacion
+                        pk_informe_valorizacion,
                     },
                 })
                 .then((response) => {
-
-                    this.listProyOtrosReq = response.data
-
+                    this.listProyOtrosReq = response.data;
                 });
-
         },
 
         getListarByProveedor() {
@@ -1316,12 +1499,9 @@ export default {
         },
         getListarproductosByName() {
             var url = "/administracion/detallecotizancion/listProdByName";
-            axios
-                .get(url)
-                .then((response) => {
-
-                    this.listProd = response.data;
-                });
+            axios.get(url).then((response) => {
+                this.listProd = response.data;
+            });
         },
 
         limpiarCriteriosBsq() {
@@ -1339,8 +1519,9 @@ export default {
             var url = "/administracion/InformeValorizacion/create";
             axios
                 .post(url, {
-                    nIdUser : this.fillCrearInformeValorizacion.nIdUser,
-             codRequMateriales: this.fillCrearInformeValorizacion.codRequMateriales,
+                    nIdUser: this.fillCrearInformeValorizacion.nIdUser,
+                    codRequMateriales:
+                        this.fillCrearInformeValorizacion.codRequMateriales,
                     cImporte: this.fillCrearInformeValorizacion.cImporte,
                 })
                 .then((response) => {
@@ -1398,19 +1579,23 @@ export default {
             return this.error;
         },
         setAddValorReqMaterial() {
-
             var url = "/administracion/ProyectoMateriales/addReqMatProyReq";
 
             axios
                 .post(url, {
-                    codRequMateriales: this.fillCrearInformeValorizacion.codRequMateriales,
+                    codRequMateriales:
+                        this.fillCrearInformeValorizacion.codRequMateriales,
                     nIdmaterial: this.fillCrearInformeValorizacion.nIdmaterial,
-                    cCantMaterial:this.fillCrearInformeValorizacion.cCantMaterial,
-                    nIdUnidMedMat:this.fillCrearInformeValorizacion.nIdUnidMedMat,
+                    cCantMaterial:
+                        this.fillCrearInformeValorizacion.cCantMaterial,
+                    nIdUnidMedMat:
+                        this.fillCrearInformeValorizacion.nIdUnidMedMat,
                     estado: "I",
                 })
                 .then((response) => {
-                    this.getListInfoProyMateriales(this.fillCrearInformeValorizacion.codRequMateriales)
+                    this.getListInfoProyMateriales(
+                        this.fillCrearInformeValorizacion.codRequMateriales
+                    );
                 });
         },
 
@@ -1489,82 +1674,118 @@ export default {
                     this.listTiempoAlquiler[0].id;
             });
         },
-        buscaxCodRequMateriales(){
+        buscaxCodRequMateriales() {
+            var url = "/administracion/proyecto_ReqMateriales/listbyId";
+            axios
+                .post(url, {
+                    codRequMateriales:
+                        this.fillCrearInformeValorizacion.codRequMateriales,
+                    cImporte: this.fillCrearInformeValorizacion.cImporte,
+                })
+                .then((response) => {
+                    this.fillCrearInformeValorizacion.nIdCcostos =
+                        response.data.centro_costos_id;
+                    this.fillCrearInformeValorizacion.nIdClient =
+                        response.data.cliente;
+                    this.fillCrearInformeValorizacion.detservicio =
+                        response.data.detservicio;
+                    this.fillCrearInformeValorizacion.FInicio =
+                        response.data.fechainicio;
+                    this.fillCrearInformeValorizacion.FFinal =
+                        response.data.fechafinal;
+                    this.fillCrearInformeValorizacion.cDuracion =
+                        response.data.duracion;
+                    this.fillCrearInformeValorizacion.nIdOS =
+                        response.data.ord_servicio;
 
-        var url = "/administracion/proyecto_ReqMateriales/listbyId";
-      axios
-        .post(url, {
-            codRequMateriales: this.fillCrearInformeValorizacion.codRequMateriales,
-            cImporte:this.fillCrearInformeValorizacion.cImporte
-
-        })
-        .then((response) => {
-            this.fillCrearInformeValorizacion.nIdCcostos= response.data.centro_costos_id
-            this.fillCrearInformeValorizacion.nIdClient= response.data.cliente
-            this.fillCrearInformeValorizacion.detservicio= response.data.detservicio
-            this.fillCrearInformeValorizacion.FInicio= response.data.fechainicio
-            this.fillCrearInformeValorizacion.FFinal= response.data.fechafinal
-            this.fillCrearInformeValorizacion.cDuracion= response.data.duracion
-            this.fillCrearInformeValorizacion.nIdOS= response.data.ord_servicio
-
-            this.getListInfoProyMateriales(this.fillCrearInformeValorizacion.codRequMateriales)
-           this.getListInfoProyManoObra(this.fillCrearInformeValorizacion.codRequMateriales)
-           this.getListInfoProyOtrosReq(this.fillCrearInformeValorizacion.codRequMateriales)
-
-        });
-
+                    this.getListInfoProyMateriales(
+                        this.fillCrearInformeValorizacion.codRequMateriales
+                    );
+                    this.getListInfoProyManoObra(
+                        this.fillCrearInformeValorizacion.codRequMateriales
+                    );
+                    this.getListInfoProyOtrosReq(
+                        this.fillCrearInformeValorizacion.codRequMateriales
+                    );
+                });
         },
 
-
-        getListInfoProyMateriales(codRequMateriales){
-
+        getListInfoProyMateriales(codRequMateriales) {
             var url = "/administracion/ProyectoMateriales/listproyMateriales";
             axios
                 .get(url, {
                     params: {
-                        codRequMateriales
+                        codRequMateriales,
                     },
                 })
                 .then((response) => {
-
-                    this.listProyInfoValorMateriales = response.data
-
+                    this.listProyInfoValorMateriales = response.data;
                 });
-
         },
 
-        getListInfoProyManoObra(codRequMateriales){
+        getListInfoProyManoObra(codRequMateriales) {
             var url = "/administracion/ProyectoManoObra/listproyManoObra";
             axios
                 .get(url, {
                     params: {
-                        codRequMateriales
+                        codRequMateriales,
                     },
                 })
                 .then((response) => {
-
-                    this.listInfoValorManoObra = response.data
+                    this.listInfoValorManoObra = response.data;
                 });
-
         },
 
-        getListInfoProyOtrosReq(codRequMateriales){
+        getListInfoProyOtrosReq(codRequMateriales) {
             var url = "/administracion/ProyectOtrosReq/listproyOtrosReq";
             axios
                 .get(url, {
                     params: {
-                        codRequMateriales
+                        codRequMateriales,
                     },
                 })
                 .then((response) => {
-                    console.log(response.data)
-                    this.listProyOtrosReq = response.data
-
+                    this.listProyOtrosReq = response.data;
                 });
+        },
 
-        }
+        abrirModalReqMateriales(item) {
+            this.modalShowReqMateriales = !this.modalShowReqMateriales;
 
+            var url =
+                "/administracion/ProyectoMateriales/getDataModalReqMateriales";
+            axios
+                .post(url, {
+                    item,
+                })
+                .then((response) => {
+                    this.fillCrearInformeValorizacion.cCantidadReqmatModal =
+                        response.data.cantInfoValor;
+                    this.fillCrearInformeValorizacion.cDescripcionModal =
+                        response.data.producto_id;
+                    this.fillCrearInformeValorizacion.nIdUnidMedOtrosReqModal =
+                        response.data.unidmedidaInfoValor_id;
+                    localStorage.Id = item;
+                });
+        },
 
+        editReqMateriales() {
+            var url =
+                "/administracion/ProyectoMateriales/EditModalReqMateriales";
+            axios
+                .post(url, {
+                    item: localStorage.getItem("Id"),
+                    cCantidadReqmatModal:
+                        this.fillCrearInformeValorizacion.cCantidadReqmatModal,
+                    nIdUnidMedOtrosReqModal:
+                        this.fillCrearInformeValorizacion
+                            .nIdUnidMedOtrosReqModal,
+                })
+                .then((response) => {
+                    this.buscaxCodRequMateriales();
+                    this.modalShowReqMateriales = !this.modalShowReqMateriales;
+                });
+        },
     },
 
     computed: {

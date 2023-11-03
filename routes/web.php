@@ -523,6 +523,10 @@ Route::post('/administracion/ProyectoMateriales/reorderReqMateriales', 'Administ
 Route::get('/administracion/ProyectoMateriales/listproyMateriales', 'Administracion\ProyectoMaterialesController@listproyMateriales');
 Route::post('/administracion/ProyectoMateriales/addReqMatProyReq', 'Administracion\ProyectoMaterialesController@addReqMatProyReq');
 Route::post('/administracion/ProyectoMateriales/SaveMatReqMatProy', 'Administracion\ProyectoMaterialesController@SaveMatReqMatProy');
+Route::post('/administracion/ProyectoMateriales/getDataModalReqMateriales', 'Administracion\ProyectoMaterialesController@getDataModalReqMateriales');
+Route::post('/administracion/ProyectoMateriales/EditModalReqMateriales', 'Administracion\ProyectoMaterialesController@EditModalReqMateriales');
+
+
 
 /* Proyecto Mano de Obra */
 Route::post('/administracion/ProyectoManoObra/addProyManObra', 'Administracion\ProyectoManoObraController@addProyManObra');

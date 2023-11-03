@@ -38,17 +38,17 @@ class PapeletaSalidaController extends Controller
  */
 
         $fecha = date("Y-m-d");
-     
+
         $fechaValida = $fecha >= now()->toDateString();
 
         date_default_timezone_set('America/Lima');
         $now = Carbon::now();
-        $t8_30 = Carbon::createFromTime(8, 30);
-        $t18_00 = Carbon::createFromTime(18, 00);
+        $tiempoMin = Carbon::createFromTime(8, 30);
+        $tiempoMax = Carbon::createFromTime(20, 00);
 
 
 
-        if ($fechaValida && $now >= $t8_30   &&  $now  <= $t18_00) {
+        if ($fechaValida && $now >= $tiempoMin   &&  $now  <= $tiempoMax) {
 
             $PapeletaSalida = new Papeletasalida;
             $PapeletaSalida->user_id = $request->nIdUser;
