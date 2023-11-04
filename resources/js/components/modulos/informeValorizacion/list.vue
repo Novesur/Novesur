@@ -320,11 +320,12 @@
         <!--    MODAL DE REQUERIMIENTOS DE MATERIALES -->
 
         <div
-            class="modal fade"
+            class="modal fade modal-scroll "
             :class="{ show: modalShowEditItem }"
-            :style="modalShowEditItem ? mostrarModal : ocultarModal"
+
+            :style="modalShowEditItem ? mostrarModal : ocultarModal "
         >
-            <div class="modal-editcotitem modal-lg" role="document">
+            <div class="modal-editcotitem modal-lg " role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Requerimiento de Materiales</h5>
@@ -1166,9 +1167,10 @@ export default {
                     this.fillBPInfValor.nIdAlquiler =
                         response.data.pk_tiempo_alquiler.id;
                     localStorage.id = response.data.id;
-                    /*        localStorage.IdAlquiler = response.data.pk_tiempo_alquiler.id; 
+                    /*        localStorage.IdAlquiler = response.data.pk_tiempo_alquiler.id;
           localStorage.IdUnidMed = response.data.unidmedida_id; */
-                    localStorage.pk_informe_valorizacion = pk_informe_valorizacion;
+                    localStorage.pk_informe_valorizacion =
+                        pk_informe_valorizacion;
                 });
         },
 
@@ -1193,20 +1195,23 @@ export default {
         },
 
         EditManObraPersonal() {
-            
             var url =
                 "/administracion/informeValorizacion/EditOtrosReqPersonal";
             axios
                 .post(url, {
-                    itemStorage : localStorage.itemStorage,
+                    itemStorage: localStorage.itemStorage,
                     nidPersonalModal: this.fillBPInfValor.nidPersonalModal,
                 })
                 .then(() => {
-                       this.fillBPInfValor.nidPersonalModal = "";
-          this.setMostrarInfoManObra(localStorage.pk_informe_valorizacion);
-          this.modalShowEditPersonal = !this.modalShowEditPersonal;
-          localStorage.removeItem(itemStorage);
-          localStorage.removeItem(localStorage.pk_informe_valorizacion);
+                    this.fillBPInfValor.nidPersonalModal = "";
+                    this.setMostrarInfoManObra(
+                        localStorage.pk_informe_valorizacion
+                    );
+                    this.modalShowEditPersonal = !this.modalShowEditPersonal;
+                    localStorage.removeItem(itemStorage);
+                    localStorage.removeItem(
+                        localStorage.pk_informe_valorizacion
+                    );
                 });
         },
 
@@ -1261,8 +1266,9 @@ export default {
                     this.fillBPInfValor.nidPersonalModal =
                         response.data.personal_id;
                     localStorage.itemStorage = item;
-                    localStorage.pk_informe_valorizacion = pk_informe_valorizacion;
-                   // this.setMostrarInfoManObra(pk_informe_valorizacion);
+                    localStorage.pk_informe_valorizacion =
+                        pk_informe_valorizacion;
+                    // this.setMostrarInfoManObra(pk_informe_valorizacion);
                 });
         },
 

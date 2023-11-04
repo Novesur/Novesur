@@ -9,3 +9,7 @@
 .btnWidth_Excel{
     width: 20% !important;
 }
+
+.modal-scroll{
+    overflow-y: scroll;
+  }

@@ -242,7 +242,9 @@ class InformeValorizacionController extends Controller
             ->where('pk_informe_valorizacion', $idReqMateriales)
             ->get();
         $valorizacionManoObra = valorizacionManoObra::with('personal')->where('pk_informe_valorizacion', $idReqMateriales)->get();
-        $valorizacionOtrosReq = valorizacionOtrosReq::where('pk_informe_valorizacion', $idReqMateriales)->get();
+        $valorizacionOtrosReq = valorizacionOtrosReq::with('unidmedida')->where('pk_informe_valorizacion', $idReqMateriales)->get();
+       
+       
         $logo = asset('img/logo.gif');
         $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('reporte.informeValorizacion.InformeValorizacion', [
             'logo' => $logo,

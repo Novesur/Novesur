@@ -41,7 +41,7 @@
             <td><strong style="font-size: 14px">DURACION :</strong></td>
             <td colspan="3" style="font-size: 12px">{{$InformeValorizacion->duracion}}</td>
         </tr>
-   
+
         <tr>
             <td><strong style="font-size: 14px">O/S Nro :</strong></td>
             <td colspan="3" style="font-size: 12px">{{$InformeValorizacion->ord_servicio}}</td>
@@ -74,21 +74,31 @@
         </tr>
         @if($valorizacionManoObra) @foreach ($valorizacionManoObra as $dataManObra)
         <tr>
-            <td align="center" style="font-size: 12px">{{$dataManObra->personal->nombres}}</td>
+            <td align="center" style="font-size: 12px">{{$dataManObra->personal->nombres}} {{$dataManObra->personal->ApPaterno}} {{$dataManObra->personal->ApMaterno}}</td>
             <td align="center" style="font-size: 12px">{{$dataManObra->horas}}</td>
             <td align="center" style="font-size: 12px">{{$dataManObra->dias}}</td>
         </tr>
         @endforeach @endif
+
     </table>
     <table width="100%" border="1">
         <tr>
             <td width="51%" align="center" bgcolor="#33CCFF" style="font-size: 12px"><strong>OTROS REQUERIMIENTOS</strong></td>
             <td width="49%" align="center" bgcolor="#33CCFF" style="font-size: 12px"><strong>DESCRIPCION</strong></td>
+            <td width="51%" align="center" bgcolor="#33CCFF" style="font-size: 12px"><strong>UNID MEDIDA</strong></td>
         </tr>
         @if($valorizacionOtrosReq) @foreach ($valorizacionOtrosReq as $dataRque)
         <tr>
-            <td align="center" style="font-size: 12px">{{$dataRque->descripcion}}</td>
-            <td align="center" style="font-size: 12px">{{$dataRque->cantidad}}</td>
+            @if($dataRque->cantidad == 0)
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            @else
+                <td align="center" style="font-size: 12px">{{$dataRque->descripcion}}</td>
+                <td align="center" style="font-size: 12px">{{$dataRque->cantidad}}</td>
+                <td align="center" style="font-size: 12px">{{$dataRque->unidmedida->nombre}}</td>
+
+            @endif
         </tr>
         @endforeach @endif
     </table>
