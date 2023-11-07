@@ -267,7 +267,8 @@
                                                 <th>Unid. Medida</th>
                                                 <th>Descripcion</th>
                                                 <th>Estado</th>
-                                                <th>Accion</th>
+                                                <th>Cantidad</th>
+                                                <th>Agregar</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -283,12 +284,10 @@
                                                     "
                                                 ></td>
 
-
-
+                                                <td v-text="item.cantidad"></td>
                                                 <td
-                                                    v-text="item.cantidad"
+                                                    v-text="item.cantidadKardex"
                                                 ></td>
-                                                   <td v-text="item.cantidadKardex"></td>
                                                 <td
                                                     v-text="
                                                         item.unidmedida_nombre
@@ -305,44 +304,44 @@
                                                     Completo
                                                 </td>
 
-                                                <td v-if="item.estado == '2'">
-                                                    <el-checkbox
-                                                        @change="
-                                                            marcarFila(
-                                                                index,
-                                                                item.iddetalleOrdenCompra,
-                                                                item.cantidadKardex
-                                                            )
-                                                        "
-                                                        v-model="item.checked"
-                                                        >Completo</el-checkbox
-                                                    >
-                                                </td>
-                                                <!--      <template v-if="item.estado == '1'">
-                            <button
-                              class="btn btn-flat btn-primary btn-sm"
-                              @click.prevent="
-                                setCambiarEstadoDetalleOC(1, item.id)
-                              "
-                            >
-                              <i class="far fa-bell-slash"></i> Pendiente
-                            </button>
-
-
-
-
-                          </template> -->
                                                 <template
-                                                    v-if="item.estado == '2'"
+                                                    v-if="item.estado == '1'"
                                                 >
-                                                    <!--     <button
-                              class="btn btn-flat btn-success btn-sm"
-                              @click.prevent="
-                                setCambiarEstadoDetalleOC(2, item.id)
-                              "
-                            >
-                              <i class="far fa-bell"></i> Completo
-                            </button> -->
+                                                    <td>
+                                              <!--           <button
+                                                            class="btn btn-flat btn-danger btn-sm"
+                                                            @click.prevent="
+                                                                setValorCantidadModal(
+                                                                    item.iddetalleOrdenCompra
+                                                                )
+                                                            "
+                                                        >
+                                                            <i
+                                                                class="far fa-edit"
+                                                            ></i>
+                                                            Cantidad
+                                                        </button> -->
+                                                    </td>
+
+                                                    <td>
+                                                        <el-checkbox
+                                                            @change="
+                                                                marcarFila(
+                                                                    index,
+                                                                    item.iddetalleOrdenCompra,
+                                                                    item.cantidadKardex,
+
+                                                                )
+                                                            "
+                                                            v-model="item.checked"
+                                                            >Seleccionar</el-checkbox
+                                                        >
+                                                    </td>
+                                                </template >
+
+                                                <template v-else>
+
+                                                    <td >
                                                     <button
                                                         class="btn btn-flat btn-danger btn-sm"
                                                         @click.prevent="
@@ -356,7 +355,29 @@
                                                         ></i>
                                                         Cantidad
                                                     </button>
+                                                </td>
+
+                                                <td >
+                                                    <el-checkbox
+                                                        @change="
+                                                            marcarFila(
+                                                                index,
+                                                                item.iddetalleOrdenCompra,
+                                                                item.cantidadKardex,
+
+                                                            )
+                                                        "
+
+                                                        v-model="item.checked"
+                                                        >Seleccionar</el-checkbox
+                                                    >
+                                                </td>
+
                                                 </template>
+
+
+
+
 
                                                 <!--  <td v-text="item.estado"></td> -->
                                             </tr>
@@ -485,7 +506,6 @@ export default {
                 nIdMotivo: "",
                 cCantidadModal: "",
             },
-
 
             listarDetalleOrdeCompra: [],
             listCompletFilter: [],
@@ -765,7 +785,7 @@ export default {
             });
         },
 
-        marcarFila(index, iddetalleOrdenCompra, cantidadKardex) {
+        marcarFila(index, iddetalleOrdenCompra, cantidadKardex,grabado) {
             this.listCompletFilter.map(function (x, y) {
                 var url = "/administracion/DetalleordenCompra/editCantComplete";
 
@@ -776,11 +796,12 @@ export default {
                         checked: x.checked,
                     })
                     .then((response) => {
-                        x.checked= false
+
+                        x.checked = false;
                     });
-                });
-                this.getListarOrdenCompra();
-            },
+            });
+            this.getListarOrdenCompra();
+        },
 
         filtrarPermisoByRol() {
             let me = this;
@@ -806,6 +827,7 @@ export default {
                     estado: x.estado,
                     punit: x.punit,
                     iddetalleOrdenCompra: x.id,
+                    grabado: x.grabado
                     //checked: false,
                 });
             });

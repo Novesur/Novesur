@@ -128,7 +128,7 @@ class ParteIngresoController extends Controller
         $parteIngreso->save();
 
         /// Graba Parte de DetalleParteIngreso  //////////////
-        $DOc = Detalleordencompra::where('ordencompras_id', $Oc->id)->get();
+        $DOc = Detalleordencompra::where('ordencompras_id', $Oc->id)->where('grabado','1')->get();
 
 
         if ($DOc) {

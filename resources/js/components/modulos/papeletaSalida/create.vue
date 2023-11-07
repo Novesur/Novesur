@@ -408,7 +408,7 @@ export default {
     },
 
     onChangeMotivo(event) {
-      if (event == 3) {
+      if (event == 3 || event == 2 ) {
         this.fillPapeletasalida.estadoMotivo = false;
       } else {
         this.fillPapeletasalida.estadoMotivo = true;

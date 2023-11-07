@@ -55,9 +55,9 @@ class DetalleOrdenCompraController extends Controller
     {
         $detalleOc = Detalleordencompra::where('id', $request->item)->first();
 
-        $calcCantidad = $request->cCantidadModal > $detalleOc->cantidad - $detalleOc->cantidadKardex;
+        $calcCantidad = $request->cCantidadModal /* > $detalleOc->cantidad - $detalleOc->cantidadKardex */;
 
-        if ($calcCantidad) {
+        if ($calcCantidad > ($detalleOc->cantidad - $detalleOc->cantidadKardex)) {
             return response()->json(['message' => 'La cantidad maxima a pedir es' . ' ' . $detalleOc->cantidad - $detalleOc->cantidadKardex, 'icon' => 'error'], 200);
         } else {
             $valor = $request->cCantidadModal;
@@ -66,37 +66,32 @@ class DetalleOrdenCompraController extends Controller
                 return response()->json(['message' => 'Valor no permitido', 'icon' => 'success'], 200);
             } else {
                 if ($detalleOc->cantidadKardex == 0) {
-                        Detalleordencompra::where('id', $request->item)->update(['cantidadKardex' => $valor]);
+                    Detalleordencompra::where('id', $request->item)->update(['cantidadKardex' => $valor]);
                 } else {
                     Detalleordencompra::where('id', $request->item)->update(['cantidadKardex' => $valor + $detalleOc->cantidadKardex]);
 
+                    if ($detalleOc->cantidad == ($valor + $detalleOc->cantidadKardex)) {
+                        Detalleordencompra::where('id', $request->item)->update(['estado' => '1']);
+                    }
+                }
             }
 
-            if($detalleOc->cantidad - $detalleOc->cantidadKardex == 0) {
+
+            if ($detalleOc->cantidad == $calcCantidad) {
                 Detalleordencompra::where('id', $request->item)->update(['estado' => '1']);
             }
-
             return response()->json(['message' => 'cantidad agregada', 'icon' => 'success'], 200);
-
-            }
-
-
         }
     }
 
     public function editCantComplete(Request $request)
     {
         if ($request->checked === true) {
-            $detalle = Detalleordencompra::where('id', $request->iddetalleOrdenCompra)->first();
-            // Detalleordencompra::where('id', $request->iddetalleOrdenCompra)->update(['canting' =>  $detalle->cantidad]);
-            Detalleordencompra::where('id', $request->iddetalleOrdenCompra)->update(['canting' => 0]);
-            Detalleordencompra::where('id', $request->iddetalleOrdenCompra)->update(['cantidadKardex' => $detalle->cantidad]);
-           // Detalleordencompra::where('id', $request->iddetalleOrdenCompra)->update(['estado' => '1']);
+            Detalleordencompra::where('id', $request->iddetalleOrdenCompra)->update(['grabado' => '1']);
         }
 
         if ($request->checked === false) {
-            Detalleordencompra::where('id', $request->iddetalleOrdenCompra)->update(['canting' => 0]);
-           // Detalleordencompra::where('id', $request->iddetalleOrdenCompra)->update(['estado' => '2']);
+            Detalleordencompra::where('id', $request->iddetalleOrdenCompra)->update(['grabado' => '0']);
         }
     }
 

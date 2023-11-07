@@ -1,5 +1,6 @@
 <?php
 
+use App\Detalleordencompra;
 use App\Ordencompra;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -28,6 +29,7 @@ class CreateDetalleordencomprasTable extends Migration
            /*  $table->decimal('punit', 8, 4)->required(); */
             $table->double('punit');
             $table->enum('estado',[Ordencompra::PENDIENTE,Ordencompra::APROBADO])->default(Ordencompra::PENDIENTE);
+            $table->enum('grabado',[Detalleordencompra::SELECTTRUE,Detalleordencompra::SELECTFALSE,Detalleordencompra::GRABADO])->default(Detalleordencompra::SELECTFALSE);
             $table->decimal('canting',8,2)->nullable();
 
         });

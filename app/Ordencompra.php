@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Ordencompra extends Model
 {
-    const PENDIENTE = 1;
-    const APROBADO = 2;
+    const APROBADO = 1;
+    const PENDIENTE = 2;
     use SoftDeletes;
     protected $table = 'ordencompras';
     protected $fillable =[

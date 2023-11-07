@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Detalleordencompra extends Model
 {
+    const GRABADO = 2;
+    const SELECTTRUE = 1;
+    const SELECTFALSE = 0;
+
+
       public $timestamps = false;
 
     protected $table = 'detalleordencompras';
