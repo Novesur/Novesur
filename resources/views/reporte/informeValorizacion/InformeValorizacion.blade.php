@@ -47,6 +47,7 @@
             <td colspan="3" style="font-size: 12px">{{$InformeValorizacion->ord_servicio}}</td>
         </tr>
     </table>
+    <br />
     <table width="100%" border="1">
         <tr>
             <td colspan="4" align="center" bgcolor="#33CCFF"><strong></strong><strong>REQUERIMIENTO MATERIALES</strong></td>
@@ -66,6 +67,7 @@
         </tr>
         @endforeach @endif
     </table>
+    <br />
     <table width="100%" border="1">
         <tr>
             <td width="74%" align="center" bgcolor="#33CCFF" style="font-size: 14px"><strong>REQUERIMIENTO MANO DE OBRA (DIAS, HORAS, HOMBRE)</strong></td>
@@ -81,6 +83,7 @@
         @endforeach @endif
 
     </table>
+    <br />
     <table width="100%" border="1">
         <tr>
             <td width="51%" align="center" bgcolor="#33CCFF" style="font-size: 12px"><strong>OTROS REQUERIMIENTOS</strong></td>
@@ -102,6 +105,7 @@
         </tr>
         @endforeach @endif
     </table>
+    <br />
     <table width="100%" border="0">
         <tr>
             <td>&nbsp;</td>
