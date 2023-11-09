@@ -534,7 +534,7 @@ export default {
       var url = "/administracion/PapeletaSalida/Motivo";
       axios.get(url).then((response) => {
         this.listMotivo = response.data;
-        this.fillPapeletasalida.nIdMotivo = this.listMotivo[2].id;
+        this.fillPapeletasalida.nIdMotivo = this.listMotivo[3].id;
         this.fillPapeletasalida.estadoMotivo = false;
       });
     },

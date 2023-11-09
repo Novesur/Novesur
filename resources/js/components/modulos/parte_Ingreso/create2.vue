@@ -323,7 +323,7 @@
                                                         </button> -->
                                                     </td>
 
-                                                    <td>
+                                                    <td v-if="item.estado == '2' & item.grabado == '2' || item.estado == '1' & item.grabado == '0' || item.estado == '2' & item.grabado == '0' || item.estado == '1' & item.grabado == '1'|| item.estado == '2' & item.grabado == '1'" >
                                                         <el-checkbox
                                                             @change="
                                                                 marcarFila(
@@ -357,7 +357,7 @@
                                                     </button>
                                                 </td>
 
-                                                <td >
+                                                <td v-if="item.estado == '2' & item.grabado == '2' || item.estado == '1' & item.grabado == '0'|| item.estado == '2' & item.grabado == '0' || item.estado == '1' & item.grabado == '1'|| item.estado == '2' & item.grabado == '1'">
                                                     <el-checkbox
                                                         @change="
                                                             marcarFila(
@@ -787,7 +787,7 @@ export default {
 
         marcarFila(index, iddetalleOrdenCompra, cantidadKardex,grabado) {
             this.listCompletFilter.map(function (x, y) {
-                var url = "/administracion/DetalleordenCompra/editCantComplete";
+                var url = "/administracion/DetalleordenCompra/editCantComplete"; 
 
                 axios
                     .post(url, {

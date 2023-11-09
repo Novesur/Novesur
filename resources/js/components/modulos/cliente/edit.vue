@@ -332,7 +332,7 @@ export default {
   mounted() {
     this.getClienteById();
     this.getlistVendedores();
-  },
+  }, 
   methods: {
 
 

@@ -70,10 +70,32 @@ class DetalleCotizacionController extends Controller
   
   //dd($producto->precioSugerido > $request->cPUnitEdit);
 
+
+
+
+
+
+
       if($cotizacion->cliente->tipoPrecio == 'Lista'){
 
-        if($producto->precioSugerido < $request->cPUnitEdit){
-            return response()->json(['message' => 'El monto minimo es' . ' ' . $producto->precioSugerido]);
+
+
+
+        if(empty($producto->precioSugerido) || $producto->precioSugerido == 0 ){
+            DetalleCotizacion::where('id', $request->item)
+            ->update([
+                'cantidad' => $request->cCantidadEdit,
+        'unidmedida_id' => $request->nIdUnidMedEdit,
+        'producto_id' => $request->nIdprodEdit,
+        'punit' =>   $request->cPUnitEdit,
+            ]); 
+            return response()->json(['message' => 'Detalle editado', 'icon' => 'success'],200); 
+        }
+
+
+
+         if($producto->precioSugerido < $request->cPUnitEdit  ){
+            return response()->json(['message' => 'El monto minimo es' . ' ' . $producto->precioSugerido, 'icon' => 'error'],200);
         }else{
             DetalleCotizacion::where('id', $request->item)
             ->update([
@@ -82,12 +104,13 @@ class DetalleCotizacionController extends Controller
         'producto_id' => $request->nIdprodEdit,
         'punit' =>   $request->cPUnitEdit,
             ]);
+            return response()->json(['message' => 'Detalle editado', 'icon' => 'success'],200); 
         }
 
         if($producto->precioDistribuidor > 0 ){
             if($producto->precioDistribuidor < $request->cPUnitEdit){
 
-            return response()->json(['message' => 'El monto minimo es' . ' ' . $producto->precioSugerido]);
+            return response()->json(['message' => 'El monto minimo es' . ' ' . $producto->precioSugerido, 'icon' => 'error'],200);
         }else{
             DetalleCotizacion::where('id', $request->item)
             ->update([
@@ -97,15 +120,32 @@ class DetalleCotizacionController extends Controller
         'punit' =>   $request->cPUnitEdit,
             ]);
         }
-    }
+        return response()->json(['message' => 'Detalle editado', 'icon' => 'success'],200); 
+    } 
 
       }
 
 
       if($cotizacion->cliente->tipoPrecio == 'Distribuidor'){
 
+
+
+        if($producto->precioDistribuidor == '' || $producto->precioDistribuidor == 0 ){
+            DetalleCotizacion::where('id', $request->item)
+            ->update([
+                'cantidad' => $request->cCantidadEdit,
+        'unidmedida_id' => $request->nIdUnidMedEdit,
+        'producto_id' => $request->nIdprodEdit,
+        'punit' =>   $request->cPUnitEdit,
+            ]);
+            return response()->json(['message' => 'Detalle editado', 'icon' => 'success'],200); 
+        }
+
+
+
+
         if($detalle->producto->precioDistribuidor > $request->cPUnitEdit){
-            return response()->json(['message' => 'El monto minimo es' . ' ' . $detalle->producto->precioDistribuidor]);
+            return response()->json(['message' => 'El monto minimo es' . ' ' . $detalle->producto->precioDistribuidor,  'icon' => 'error'],200);
         }else{
             DetalleCotizacion::where('id', $request->item)
             ->update([
@@ -115,7 +155,7 @@ class DetalleCotizacionController extends Controller
         'punit' =>   $request->cPUnitEdit,
             ]);
         }
-        return response()->json(['message' => 'Detalle editado']);
+        return response()->json(['message' => 'Detalle editado', 'icon' => 'success'],200); 
 
       }
 

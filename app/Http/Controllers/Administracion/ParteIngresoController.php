@@ -154,13 +154,20 @@ class ParteIngresoController extends Controller
                     }
 
                    Detalleordencompra::where('id', $datOc->id)->update(['canting' => '0']);
+                   
 
                    $detalleParteIngreso->save();
                 }
             }
         }
+        $detalle = Detalleordencompra::where('ordencompras_id', $Oc->id)->where('grabado','1')->get();
+        foreach ($detalle as  $datDetdetalleOC) {
+            Detalleordencompra::where('id', $datDetdetalleOC->id)->update(['grabado' => '2']);
+        }
+
+        
         /// Grabamos Kardex  //////////////
-        $DetPingreso = Detalleparteingreso::where('estado', 1)->where('parteingreso_id',$parteIngreso->id)->get();
+        $DetPingreso = Detalleparteingreso::where('parteingreso_id',$parteIngreso->id)->get();
         if ($DetPingreso) {
             foreach ($DetPingreso as  $datDetPingreso) {
 
@@ -191,40 +198,39 @@ class ParteIngresoController extends Controller
                     $detalleKardex->cliente_id = 202;
                     $detalleKardex->save();
                 }else{
-                    dd($parteIngreso->id);
+                  /*   dd($parteIngreso->id); */
                     //Actualizamos Kardex
+                    $prodKardex->producto_id = $datDetPingreso->producto_id;
+                    $prodKardex->stock = $prodKardex->stock + $datDetPingreso->cantidad ;
+                    $prodKardex->costunit = $datDetPingreso->punit;
+                    $prodKardex->diferencia = 0;
+                    $prodKardex->save();
+
 
                 }
+           
 
-                $detalle = Detalleordencompra::where('ordencompras_id', $Oc->id)->get();
-                foreach ($detalle as  $datDetdetalleOC) {
-                  $estadoCantidad = intval($datDetdetalleOC->cantidad) - $datDetdetalleOC->cantidadKardex == 0.0;
-                  if($estadoCantidad){
-                            Detalleordencompra::where('id', $datDetdetalleOC->id)->update(['estado' => '1']);
-                        }
-                    }
+              
             }
 
             return response()->json(['message' => 'Grabado con exitos', 'icon' => 'success'], 200);
         }
 
   //Si los productos  estan en el kardex
-        if (!$DetPingreso) {
 
+  
+  
+
+            $kardex= Kardex::where('product_id',$DetPingreso->product_id)->get();
+
+
+            dd($kardex);
+        
+
+           
 
             //Actualizamos Kardex
-            //Kardex::where('producto_id', $datDetPingreso->producto_id)->update(['stock' => $prodKardex->stock + $datDetPingreso->cantidad]);
-
-            //Buscamos el Kardexid del Producto en el kardex
-
-           /*  $DetPingreso = Detalleparteingreso::where('producto_id', $datDetPingreso->producto_id)->get();
-            dd($DetPingreso);
-
-
-            $kardex = Kardex:: where('producto_id', $datDetPingreso->producto_id)->get();
-            $formatreq = date("Y-m-d");
-            $detalleKardex = new DetalleKardex();
-            $detalleKardex->kardex_id = $prodKardex->id; */
+ 
 
         }
 
@@ -239,25 +245,6 @@ class ParteIngresoController extends Controller
 
 
 
-                    $kardex = Kardex:: where('producto_id', $datDetPingreso->producto_id)->get();
-dd($kardex);
-
-
-                    $formatreq = date("Y-m-d");
-                    $detalleKardex = new DetalleKardex();
-                    $detalleKardex->kardex_id = $prodKardex->id;
-                    $detalleKardex->fecha = $formatreq;
-                    $detalleKardex->FactNo = mb_strtoupper($request->nroFactura);
-                    $detalleKardex->GuiaNo = mb_strtoupper($request->nroguia);
-                    $detalleKardex->proveedor_id = $Oc->proveedor_id;
-                    $detalleKardex->motivo_id = $request->nIdMotivo;
-                    $detalleKardex->unidmedida_id = $datOc->unidmedida_id;
-                    $detalleKardex->cantidad = $datDetPingreso->cantidad;
-                    $detalleKardex->costunit = $prodKardex->costunit;
-                    $detalleKardex->movimiento_id = 1;
-                    $detalleKardex->user_id = $request->nIdUser;
-                    $detalleKardex->cliente_id = 202;
-                    $detalleKardex->save();
 
 
 
