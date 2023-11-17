@@ -188,6 +188,7 @@ Route::post('/administracion/cotizacion/EditCotizacion', 'Administracion\Cotizac
 Route::post('/administracion/cotizacion/dellTempEditCotizacion', 'Administracion\CotizacionController@dellTempEditCotizacion');
 Route::get('/administracion/cotizacion/listCotizacionList', 'Administracion\CotizacionController@listCotizacionList');
 Route::get('/administracion/cotizacion/listCotizacionListByDate', 'Administracion\CotizacionController@listCotizacionListByDate');
+Route::get('/administracion/cotizacion/listCotizacionListByClient', 'Administracion\CotizacionController@listCotizacionListByClient');
 Route::get('/administracion/cotizacion/listCotizacionListByVendedor', 'Administracion\CotizacionController@listCotizacionListByVendedor');
 Route::post('/administracion/cotizacion/CantidadDiasCotizacion', 'Administracion\CotizacionController@CantidadDiasCotizacion');
 Route::post('/administracion/cotizacion/updateFechaCotizacion', 'Administracion\CotizacionController@updateFechaCotizacion');

@@ -78,6 +78,7 @@
                               </div>
                             </div>
 
+
                             <div class="col-md-12">
                               <div class="form-group row">
                                 <label class="col-md-1 col-form-label"
@@ -334,7 +335,7 @@
                                 class="btn btn-flat btn-info"
                                 @click.prevent="getlistCotizacionListByVendedor"
                               >
-                                Buscar2
+                                Buscar
                               </button></span
                             >
 
@@ -359,6 +360,48 @@
                             </div>
                           </div>
                         </div>
+
+
+
+
+                        
+                        <div class="col-md-12">
+                              <div class="form-group row">
+                                <label class="col-md-1 col-form-label"
+                                  >Cliente</label
+                                >
+                                <div class="col-md-5">
+                                  <el-select
+                                    v-model="fillListCotizacion.nIdClient" 
+                                    style="width: 100%"
+                                    filterable
+                                    placeholder="Select"
+                                    clearable
+                                  >
+                                  <el-option
+                                      v-for="item in this.listClientAdmin"
+                                      :key="item.id"
+                                      :label="item.razonsocial"
+                                      :value="item.id"
+                                    >
+                                    </el-option>
+                                  </el-select>
+                                </div>
+                                <span
+                              ><button
+                                class="btn btn-flat btn-info"
+                                @click.prevent="getlistCotizacionListByClient"
+                              >
+                                Buscar
+                              </button></span
+                            >
+                              </div>
+                            </div>
+
+
+
+
+
                       </div>
                     </form>
 
@@ -382,6 +425,7 @@
                               <th>Estado</th>
                               <th>Vendedor</th>
                               <th>Total</th>
+                              <th>Acción</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -404,6 +448,13 @@
                               <td v-text="item.user.fullname"></td>
 
                               <td>{{ item.detalle_sum | formatPrice }}</td>
+
+                              <td>  <button
+                          @click.prevent="getPdfCotizacion(item.codigo ,item.fecha)"
+                          class="btn btn-danger btn-sm"
+                        >
+                          <span><i class="far fa-file-pdf"></i></span> PDF
+                        </button></td>
                             </tr>
                           </tbody>
                         </table>
@@ -515,6 +566,7 @@ export default {
         cSelectAnios: "2022",
         nIdUser: sessionStorage.getItem("iduser"),
         nIdprod: "",
+        nIdClient:"",
       },
       rangoAnios: [
         { label: "2021", value: "2021" },
@@ -526,8 +578,9 @@ export default {
       listVendedorUser: [],
       listCotizacion: [],
       listCotizacionByDate: [],
-      listCliente: [],
+      listClientAdmin: [],
       listEstadoCoti: [],
+
 
       listProd: [],
       modalShow: false,
@@ -580,13 +633,14 @@ export default {
   },
 
   mounted() {
-    this.getListDetCotizacion();
+    //this.getListDetCotizacion();
 
     //this.cargaFechaActual();
     this.getlistVendedorxUsu();
     this.getlistEstadoPedido();
     this.getlistVendedorAdmin();
     this.getListarproductosByName();
+    this.getlistClientAdmin();
   },
 
   computed: {
@@ -676,22 +730,23 @@ export default {
     },
 
     getlistCotizacionListByProd() {
-      var url = "/administracion/cotizacion/listCotizacionList";
+      var url = "/administracion/cotizacion/listCotizacionList"; 
       axios
         .get(url, {
           params: {
             nIdprod: this.fillListCotizacion.nIdprod,
-            cSelectAnios: this.fillListCotizacion.cSelectAnios
+            cSelectAnios: this.fillListCotizacion.cSelectAnios,
+         
           },
         })
         .then((response) => {
           this.listCotizacion = response.data;
-          console.log(response.data);
+         
         });
     },
 
     getlistCotizacionListByVendedor() {
-      var url = "/administracion/cotizacion/listCotizacionListByVendedor";
+      var url = "/administracion/cotizacion/listCotizacionListByVendedor"; 
       axios
         .get(url, {
           params: {
@@ -699,6 +754,21 @@ export default {
           },
         })
         .then((response) => {
+
+          this.listCotizacionByDate = response.data;
+        });
+    },
+
+    getlistCotizacionListByClient() {
+      var url = "/administracion/cotizacion/listCotizacionListByClient";
+      axios
+        .get(url, {
+          params: {
+            nIdClient: this.fillListCotizacion.nIdClient,
+          },
+        })
+        .then((response) => {
+         
           this.listCotizacionByDate = response.data;
         });
     },
@@ -847,6 +917,14 @@ export default {
           FileSaver.saveAs(response.data, "CotizacionVendedor.xlsx");
         });
     },
+
+    getlistClientAdmin() {
+      var url = "/administracion/cliente/getListarAllCliente";
+      axios.get(url).then((response) => {
+        this.listClientAdmin = response.data;
+      });
+    },
+
 
     nextPage() {
       this.pageNumber++;
