@@ -641,9 +641,9 @@ export default {
 
     },
     getPdfProveedorFecha(item){
-      alert(item)
+    
 
-  /*             var config = { responseType: "blob" };
+               var config = { responseType: "blob" };
       var url = "/administracion/parte_ingreso/ProveedorFechaPdf";
       axios
         .post(
@@ -661,7 +661,7 @@ export default {
           var url = URL.createObjectURL(oMyBlob);
           window.open(url);
           //window.print();
-        }); */
+        }); 
     },
     getListarproductosByName() {
       var url = "/administracion/detallecotizancion/listProdByName";

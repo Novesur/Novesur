@@ -548,6 +548,39 @@
                             </li>
                         </ul>
                     </li>
+
+                    
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-circle"></i>
+                            <p>
+                                Parte de Salida
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                 <template v-if="listPermisos.includes('parte_salida.create')">
+                                   <router-link class="nav-link" :to="'/parte_salida/list'">
+                            
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Crear</p>
+                                </router-link>
+            
+                                 </template>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <template v-if="listPermisos.includes('parte_salida.list')"> 
+                                <router-link  class="nav-link" :to="'/parte_salida/list'">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Consulta</p>
+                                </router-link>
+                                </template>
+                            </li>
+                        </ul>
+                    </li>
+
                         </ul>
                     </li>
 

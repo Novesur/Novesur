@@ -31,13 +31,13 @@
                 <td>{{$data->tiempo}}</td>
                 @php
 
-                $apertura = new DateTime('08:00:00');
+                 $apertura = new DateTime('08:00:00'); 
                 $cierre = new DateTime($data->tiempo);
                 $tiempo = $apertura->diff($cierre);
                 @endphp
 
                 @if($apertura <= $cierre)
-                <td>{{$tiempo->format('%i')}}</td>
+                <td>{{$tiempo->format('%H Horas y  %i Minutos')}}</td>
                 @else
                 <td>0</td>
                 @endif

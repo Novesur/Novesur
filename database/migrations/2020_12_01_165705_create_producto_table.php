@@ -46,6 +46,8 @@ class CreateProductoTable extends Migration
 
             $table->decimal('precioDistribuidor', 8, 3)->nullable();
 
+            $table->integer('stock')->default(0);
+
             $table->timestamps();
         });
     }

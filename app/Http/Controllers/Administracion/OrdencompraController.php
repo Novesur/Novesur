@@ -116,7 +116,7 @@ class OrdencompraController extends Controller
                     'ordencompras_id'   => $ordenCompra->id,
                     'producto_id'       => $product->producto_id,
                     'cantidad'          => $product->cantidad,
-                    'cantidadKardex'    => $product->cantidad,
+                    'cantidadKardex'    => 0,
                     'unidmedida_id'     => $product->unidmedida_id,
                     'punit'             => $product->punit,
                     'estado'            => 2, 

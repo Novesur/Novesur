@@ -37,7 +37,7 @@ class DetalleOrdenCompraController extends Controller
             $DetalleOC->ordencompras_id = $DetalleOC->ordencompras_id;
             $DetalleOC->producto_id = $DetalleOC->producto_id;
             $DetalleOC->cantidad = $DetalleOC->cantidad;
-            $DetalleOC->cantidadKardex = $DetalleOC->cantidad;
+            $DetalleOC->cantidadKardex = $DetalleOC->cantidadKardex;
             $DetalleOC->unidmedida_id = $DetalleOC->unidmedida_id;
             $DetalleOC->punit = $DetalleOC->punit;
             $DetalleOC->estado = $request->cEstado;
@@ -64,18 +64,23 @@ class DetalleOrdenCompraController extends Controller
 
             if ($valor == 0) {
                 return response()->json(['message' => 'Valor no permitido', 'icon' => 'success'], 200);
-            } else {
+            }/*  else {
                 if ($detalleOc->cantidadKardex == 0) {
                     Detalleordencompra::where('id', $request->item)->update(['cantidadKardex' => $valor]);
+                  
                 } else {
                     Detalleordencompra::where('id', $request->item)->update(['cantidadKardex' => $valor + $detalleOc->cantidadKardex]);
+                  
 
                     if ($detalleOc->cantidad == ($valor + $detalleOc->cantidadKardex)) {
                         Detalleordencompra::where('id', $request->item)->update(['estado' => '1']);
                     }
                 }
+                Detalleordencompra::where('id', $request->item)->update(['canting' => $valor]);
             }
+ */
 
+ Detalleordencompra::where('id', $request->item)->update(['canting' => $valor]);
 
             if ($detalleOc->cantidad == $calcCantidad) {
                 Detalleordencompra::where('id', $request->item)->update(['estado' => '1']);
@@ -118,7 +123,7 @@ class DetalleOrdenCompraController extends Controller
         $detalleOrdenCompra->ordencompras_id = $ordenCompra->id;
         $detalleOrdenCompra->producto_id = $request->nIdprod;
         $detalleOrdenCompra->cantidad = $request->cCantidad;
-        $detalleOrdenCompra->cantidadKardex = $request->cCantidad;
+        $detalleOrdenCompra->cantidadKardex = $detalleOrdenCompra->cantidadKardex;
         $detalleOrdenCompra->unidmedida_id = $request->nIdUnidMed;
         $detalleOrdenCompra->punit = $request->cPrecio;
         $detalleOrdenCompra->estado = $detalleOrdenCompraData->estado;
@@ -144,7 +149,7 @@ class DetalleOrdenCompraController extends Controller
         $detalleOrdenCompra->ordencompras_id = $detalleOrdenCompra->ordencompras_id;
         $detalleOrdenCompra->producto_id = $request->nIdprodEdit;
         $detalleOrdenCompra->cantidad = $request->cCantidadEdit;
-        $detalleOrdenCompra->cantidadKardex = $request->cCantidadEdit;
+        $detalleOrdenCompra->cantidadKardex = $detalleOrdenCompra->cantidadKardex;
         $detalleOrdenCompra->unidmedida_id = $request->nIdUnidMedEdit;
         $detalleOrdenCompra->punit = $request->cPUnitEdit;
         $detalleOrdenCompra->estado = $detalleOrdenCompra->estado;

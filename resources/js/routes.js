@@ -547,7 +547,7 @@ export default new Router({
 
         {
             path: "/parte_salida/list",
-            name: "/parte_salida/list",
+            name: "parte_salida.list",
             component: require("./components/modulos/parte_salida/list")
                 .default,
         },

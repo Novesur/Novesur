@@ -23,6 +23,8 @@ class ParteSalidaController extends Controller
     {
 
 
+
+
       /*     try {
             if ($request->session()->has('psalida')) {
                 DB::beginTransaction(); */
@@ -62,6 +64,7 @@ class ParteSalidaController extends Controller
 
 
                 $detpsalida = Session::get('psalida');
+                
                 $allpsalida = $detpsalida->map(function ($product) use ($pSalida) {
                     return [
                         'partesalida_id' => $pSalida->id,
@@ -190,8 +193,9 @@ class ParteSalidaController extends Controller
         $valor = $request->get("params")['item'];
 
         $parteSalida = Partesalida::with('cliente','motivo','user')->where('id',$valor)->first();
+        /* dd($parteSalida); */
         $detalleParteSalida = Detallepartesalida::with('producto','unidmedida')->where('partesalida_id',$valor)->get();
-        $logo = asset('img/logo02.png');
+        $logo = asset('img/Logo_Novesur_RUC.jpg');
         $productos01 = asset('img/banner01.png');
         $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('reporte.parteSalida.reporte', [
             'logo' => $logo,

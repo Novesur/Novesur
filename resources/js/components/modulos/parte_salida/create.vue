@@ -511,7 +511,7 @@ export default {
     },
 
     setGrabarPSalida() {
-      var url = "/administracion/parte_salida/GrabarPSalida";
+      var url = "/administracion/parte_salida/GrabarPSalida"; 
       axios
         .post(url, {
           nIdCliente: this.fillPSalida.nIdCliente,
@@ -521,6 +521,7 @@ export default {
           cfecha: this.fillPSalida.cFecha,
           cobservacion: this.fillPSalida.cObservacion,
           nIdUser: this.fillPSalida.nIdUser,
+        
         })
         .then((response) => {
           Swal.fire({

@@ -10,11 +10,17 @@ class DetalleKardex extends Model
 
     protected $fillable =[
         'kardex_id',
+        'fecha',
+        'FactNo',
+        'GuiaNo',
         'proveedor_id',
         'motivo_id',
-        'unidmed_id',
+        'unidmedida_id',
+        'cantidad',
+        'costunit',
         'movimiento_id',
         'user_id',
+        'cliente_id',
     ];
 
     public function kardex()

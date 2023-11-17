@@ -22,11 +22,9 @@ class CreateDetalleordencomprasTable extends Migration
             $table->unsignedBigInteger('producto_id')->required();
             $table->foreign('producto_id')->references('id')->on('producto');
             $table->decimal('cantidad',8,2)->required();
-            //$table->integer('cantidad')->required();
             $table->decimal('cantidadKardex',8,2)->required();
             $table->unsignedBigInteger('unidmedida_id')->required();
             $table->foreign('unidmedida_id')->references('id')->on('unidmedida');
-           /*  $table->decimal('punit', 8, 4)->required(); */
             $table->double('punit');
             $table->enum('estado',[Ordencompra::PENDIENTE,Ordencompra::APROBADO])->default(Ordencompra::PENDIENTE);
             $table->enum('grabado',[Detalleordencompra::SELECTTRUE,Detalleordencompra::SELECTFALSE,Detalleordencompra::GRABADO])->default(Detalleordencompra::SELECTFALSE);
