@@ -62,7 +62,7 @@ Route::get('/administracion/estadoprod/getListarEstadoprod', 'Administracion\Est
 
 //////////  Producto
 Route::get('/administracion/producto/getListarProducto', 'Administracion\ProductoController@index');
-Route::post('/administracion/producto/setRegistrarProducto', 'Administracion\ProductoController@create');
+Route::post('/administracion/producto/setRegistrarProducto', 'Administracion\ProductoController@create'); 
 Route::get('/administracion/producto/getListarProductoById', 'Administracion\ProductoController@ListarProductoById');
 Route::get('/administracion/producto/ListarProductoByIdKardex', 'Administracion\ProductoController@ListarProductoByIdKardex');
 Route::post('/administracion/producto/setEditarProductos', 'Administracion\ProductoController@edit');

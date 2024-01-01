@@ -18,9 +18,11 @@ class Detalleordencompra extends Model
         'ordencompras_id',
         'producto_id',
         'cantidad',
+        'cantidadKardex',
         'unidmedida_id',
         'punit',
         'estado',
+        'grabado',
         'canting'
     ];
     public function ordencompras()

@@ -78,6 +78,7 @@ class ParteSalidaController extends Controller
                 
                 foreach ($allpsalida as $item ) {
                     $temp = (object)$item;
+                    
                     $kardex = Kardex::where('producto_id', $temp->producto_id)->first();
                     $kardex->producto_id = $temp->producto_id;
                     $kardex->stock = $kardex->stock - $temp->cantidad;
@@ -99,8 +100,10 @@ class ParteSalidaController extends Controller
                     $DetalleKardex->user_id =  $request->nIdUser;
                     $DetalleKardex->cliente_id =  $request->nIdCliente;
                     $DetalleKardex->save();
-
                 }
+                Kardex::where('producto_id', $temp->producto_id)->update(['stock' => $kardex->stock ]);
+
+                Producto::where('id', $temp->producto_id)->update(['stock' => $kardex->stock]);
 
                 Session::put('psalida', collect([]));
 

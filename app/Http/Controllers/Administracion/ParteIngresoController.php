@@ -98,7 +98,7 @@ class ParteIngresoController extends Controller
 
     public function setGrabaPIngreso(Request $request)
     {
-      
+
 
         $formatreq = date("Y-m-d");
 
@@ -128,115 +128,98 @@ class ParteIngresoController extends Controller
         $parteIngreso->save();
 
         /// Graba Parte de DetalleParteIngreso  //////////////
-        $DOc = Detalleordencompra::where('ordencompras_id', $Oc->id)->where('grabado', '1')->orWhere('estado','2')->where('grabado','2')->get();
 
+
+        $DOc = Detalleordencompra::where('ordencompras_id', $Oc->id)->where('grabado', '1')->where('canting', '>', 0)->get();
 
         if ($DOc) {
             foreach ($DOc as  $datOc) {
 
-                $resultado = $datOc->canting >= 0;
-
+                $resultado = intval($datOc->canting) >= 0;
 
                 if ($resultado) {
                     $detalleParteIngreso = new detalleParteIngreso;
                     $detalleParteIngreso->parteingreso_id = $parteIngreso->id;
                     $detalleParteIngreso->producto_id = $datOc->producto_id;
-                    /*  $detalleParteIngreso->cantidad = $datOc->cantidadKardex + $datOc->canting; */
                     $detalleParteIngreso->cantidad = $datOc->canting;
                     $detalleParteIngreso->unidmedida_id =  $datOc->unidmedida_id;
                     $detalleParteIngreso->punit = $datOc->punit;
                     //Si es completo
 
-                    if ($datOc->estado == 1) {
-                        $detalleParteIngreso->estado = 1;
+                    if ($datOc->cantidad == $datOc->canting) {
+                        $detalleParteIngreso->estado = '1';
                     } else {
-                        $detalleParteIngreso->estado = 2;
+                        $detalleParteIngreso->estado = '2';
                     }
-
-             
-
-
                     $detalleParteIngreso->save();
-                
                 }
+
+
+
+                /// Grabamos Kardex  //////////////
+
+                Detalleordencompra::where('id', $datOc->id)->update(['cantidadKardex' => intval($datOc->cantidadKardex) + intval($datOc->canting)]);
+
+                if ($datOc->cantidad == ($datOc->cantidadKardex + $datOc->canting)) {
+                    Detalleordencompra::where('producto_id', $datOc->producto_id)->update(['estado' => 1]);
+                }
+
+
+                $kardexCount = Kardex::where('producto_id', $datOc->producto_id)->count();
+
+                if ($kardexCount === 0) {
+                    $kardex = new Kardex;
+                    $kardex->producto_id = $datOc->producto_id;
+                    $kardex->stock = $datOc->cantidadKardex + intval($datOc->canting);
+                    $kardex->costunit = $datOc->punit;
+                    $kardex->diferencia = 0;
+                    $kardex->save();
+
+
+                    $detalleKardex = new DetalleKardex();
+                    $detalleKardex->kardex_id = $kardex->id;
+                    $detalleKardex->fecha = $formatreq;
+                    $detalleKardex->FactNo = mb_strtoupper($request->nroFactura);
+                    $detalleKardex->GuiaNo = mb_strtoupper($request->nroguia);
+                    $detalleKardex->proveedor_id = $Oc->proveedor_id;
+                    $detalleKardex->motivo_id = $request->nIdMotivo;
+                    $detalleKardex->unidmedida_id = $datOc->unidmedida_id;
+                    $detalleKardex->cantidad = $datOc->cantidadKardex + intval($datOc->canting);
+                    $detalleKardex->costunit = $datOc->punit;
+                    $detalleKardex->movimiento_id = 1;
+                    $detalleKardex->user_id = $request->nIdUser;
+                    $detalleKardex->cliente_id = 202;
+                    $detalleKardex->save();
+                    Detalleordencompra::where('id', $datOc->id)->update(['canting' => '0']);
+
+                } else {
+
+                    Kardex::where('producto_id', $datOc->producto_id)->update(['stock' => $datOc->cantidadKardex + intval($datOc->canting)]);
+
+
+
+                    $kardex =  Kardex::where('producto_id', $datOc->producto_id)->first();
+                    $detalleKardex = new DetalleKardex();
+                    $detalleKardex->kardex_id = $kardex->id;
+                    $detalleKardex->fecha = $formatreq;
+                    $detalleKardex->FactNo = mb_strtoupper($request->nroFactura);
+                    $detalleKardex->GuiaNo = mb_strtoupper($request->nroguia);
+                    $detalleKardex->proveedor_id = $Oc->proveedor_id;
+                    $detalleKardex->motivo_id = $request->nIdMotivo;
+                    $detalleKardex->unidmedida_id = $datOc->unidmedida_id;
+                    $detalleKardex->cantidad = $datOc->canting;
+                    $detalleKardex->costunit = $datOc->punit;
+                    $detalleKardex->movimiento_id = 1;
+                    $detalleKardex->user_id = $request->nIdUser;
+                    $detalleKardex->cliente_id = 202;
+                    $detalleKardex->save();
+                    Detalleordencompra::where('id', $datOc->id)->update(['canting' => '0']);
+                }
+                Producto::where('id', $datOc->producto_id)->update(['stock' => $datOc->cantidadKardex + intval($datOc->canting)]);
             }
+            return response()->json(['message' => 'Grabado con exitos', 'icon' => 'success'], 200);
         }
-
-         /// Grabamos Kardex  //////////////
-
-
-        $detalle = Detalleordencompra::where('ordencompras_id', $Oc->id)->where('grabado', '1')->get();
-        foreach ($detalle as  $datDetdetalleOC) {
-            Detalleordencompra::where('id', $datDetdetalleOC->id)->update(['grabado' => '2']);
-        }
-
-
-
-        $detalleOrdenCompra = Detalleordencompra::where('ordencompras_id', $Oc->id)->where('cantidadKardex','>', 0)->get();
-       
-        foreach ($detalleOrdenCompra as  $datDetdetalleOC) {
-            
-            $kardex= Kardex::where('producto_id', $datDetdetalleOC->producto_id)->first();
-           
-            
-            if(!$kardex){
-                $kardex = new Kardex;
-                $kardex->producto_id = $datDetdetalleOC->producto_id;
-                $kardex->stock = $datDetdetalleOC->cantidadKardex;
-                $kardex->costunit = $datDetdetalleOC->punit;
-                $kardex->diferencia = 0;
-                $kardex->save(); 
-
-    
-            }else{
-                $kardex->producto_id = $kardex->producto_id;
-                $kardex->stock = $datDetdetalleOC->cantidadKardex ;
-                $kardex->costunit = $datDetdetalleOC->punit;
-                $kardex->diferencia = 0;
-                $kardex->save();  
-
-
-         
-            }
-            
-            if($datDetdetalleOC->canting  > 0){
-            $detalleKardex = new DetalleKardex();
-            $detalleKardex->kardex_id = $kardex->id;
-            $detalleKardex->fecha = $formatreq;
-            $detalleKardex->FactNo = mb_strtoupper($request->nroFactura);
-            $detalleKardex->GuiaNo = mb_strtoupper($request->nroguia);
-            $detalleKardex->proveedor_id = $Oc->proveedor_id;
-            $detalleKardex->motivo_id = $request->nIdMotivo;
-            $detalleKardex->unidmedida_id = $datDetdetalleOC->unidmedida_id;
-
-       
-
-                $detalleKardex->cantidad =  $datDetdetalleOC->canting + $detalleKardex->cantidad; 
-               
-         
-       
-            $detalleKardex->costunit = $datDetdetalleOC->punit;
-            $detalleKardex->movimiento_id = 1;
-            $detalleKardex->user_id = $request->nIdUser;
-            $detalleKardex->cliente_id = 202;
-            $detalleKardex->save();   
-        
-        }
-            
-            Detalleordencompra::where('id', $datDetdetalleOC->id)->update(['canting' => '0']);
-            Producto::where('id', $datDetdetalleOC->producto_id)->update(['stock' => $kardex->stock]);
-        }
-
-        return response()->json(['message' => 'Grabado con exitos', 'icon' => 'success'], 200);
-    
-
     }
-
-
-
-
-
-
 
 
 
@@ -297,7 +280,7 @@ class ParteIngresoController extends Controller
         // dd($request->get("params")['item']);
         $valor = $request->get("params")['item'];
         $PartI = Parteingreso::with('proveedor', 'ordencompras')->where('id', $valor)->first();
-        $detPartI = Detalleparteingreso::with('parteingreso', 'producto', 'unidmedida')->where('parteingreso_id', $valor)->where('estado', 1)->get();
+        $detPartI = Detalleparteingreso::with('parteingreso', 'producto', 'unidmedida')->where('parteingreso_id', $valor)->get();
         // dd($detPartI);
         $logo = asset('img/logo.gif');
         $productos01 = asset('img/banner01.png');
@@ -317,7 +300,7 @@ class ParteIngresoController extends Controller
         $valor = $request->get("params")['item'];
         $PartI = Parteingreso::with('proveedor', 'ordencompras')->where('ordencompras_id', $valor)->first();
 
-        $detPartI = Detalleparteingreso::with('parteingreso', 'producto', 'unidmedida')->where('parteingreso_id', $PartI->id)->where('estado', 1)->get();
+        $detPartI = Detalleparteingreso::with('parteingreso', 'producto', 'unidmedida')->where('parteingreso_id', $PartI->id)->get();
         // dd($detPartI);
         $logo = asset('img/logo.gif');
         $productos01 = asset('img/banner01.png');
@@ -332,36 +315,5 @@ class ParteIngresoController extends Controller
 
 
 
-
-
-
-
-
-
-        //dd($request->get("params")['item']);
-        /*
-        $valor = $request->get("params")['item'];
-        $idOrdenCompra = Detalleparteingreso::where('ordencompras_id',  $valor)->first();
-        $PartI = Parteingreso::with('proveedor','ordencompras')->where('id', $idOrdenCompra->parteingreso_id)->first();
-        // dd($valor); // = 1
-        $CodOrdCompra = Detalleparteingreso::with('ordencompras')->where('ordencompras_id', $valor)->first();
-        //dd( $CodOrdCompra );
-        $detPartI = Detalleparteingreso::with('parteingreso', 'ordencompras')->where('ordencompras_id', $valor)->first();
-
-        $detalleOrdenCompra =  Detalleordencompra::with('producto', 'unidmedida', 'producto.familia', 'producto.subfamilia', 'producto.modelotipo', 'producto.marca', 'producto.material', 'producto.homologacion')
-        ->where('ordencompras_id', $detPartI->ordencompras_id)
-        ->where('estado', '2')->get();
-
-        $logo = asset('img/logo.gif');
-        $productos01 = asset('img/banner01.png');
-        $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('reporte.parteIngreso.ReporteNroOrden', [
-            'logo' => $logo,
-            'productos01' => $productos01,
-            'PartI' => $PartI,
-            'CodOrdCompra' => $CodOrdCompra,
-            'detalleOrdenCompra' => $detalleOrdenCompra,
-        ]);
-
-        return $pdf->download('invoice.pdf'); */
     }
 }

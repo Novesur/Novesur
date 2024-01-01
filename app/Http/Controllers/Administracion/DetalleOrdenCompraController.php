@@ -54,40 +54,23 @@ class DetalleOrdenCompraController extends Controller
     public function setAddCantidadParteIngre(Request $request)
     {
         $detalleOc = Detalleordencompra::where('id', $request->item)->first();
+        $cCantidadModal = $request->cCantidadModal;
 
-        $calcCantidad = $request->cCantidadModal /* > $detalleOc->cantidad - $detalleOc->cantidadKardex */;
-
-        if ($calcCantidad > ($detalleOc->cantidad - $detalleOc->cantidadKardex)) {
-            return response()->json(['message' => 'La cantidad maxima a pedir es' . ' ' . $detalleOc->cantidad - $detalleOc->cantidadKardex, 'icon' => 'error'], 200);
+        if ($cCantidadModal <= 0) {
+            return response()->json(['message' => 'Valor no permitido', 'icon' => 'info'], 200);
         } else {
-            $valor = $request->cCantidadModal;
-
-            if ($valor == 0) {
-                return response()->json(['message' => 'Valor no permitido', 'icon' => 'success'], 200);
-            }/*  else {
-                if ($detalleOc->cantidadKardex == 0) {
-                    Detalleordencompra::where('id', $request->item)->update(['cantidadKardex' => $valor]);
-                  
-                } else {
-                    Detalleordencompra::where('id', $request->item)->update(['cantidadKardex' => $valor + $detalleOc->cantidadKardex]);
-                  
-
-                    if ($detalleOc->cantidad == ($valor + $detalleOc->cantidadKardex)) {
-                        Detalleordencompra::where('id', $request->item)->update(['estado' => '1']);
-                    }
-                }
-                Detalleordencompra::where('id', $request->item)->update(['canting' => $valor]);
-            }
- */
-
- Detalleordencompra::where('id', $request->item)->update(['canting' => $valor]);
-
-            if ($detalleOc->cantidad == $calcCantidad) {
-                Detalleordencompra::where('id', $request->item)->update(['estado' => '1']);
-            }
-            return response()->json(['message' => 'cantidad agregada', 'icon' => 'success'], 200);
+            Detalleordencompra::where('id', $request->item)->update(['canting' => $cCantidadModal]);
+      /*       Detalleordencompra::where('id', $request->item)->update(['cantidadKardex' => $cCantidadModal + intval($detalleOc->canting)]); */
+            //Detalleordencompra::where('id', $request->item)->update(['cantidadKardex' => $cCantidadModal + $detalleOc->canting]);
         }
+        $detalleOc = Detalleordencompra::where('id', $request->item)->first();
+/* 
+        if ($detalleOc->cantidad == $detalleOc->cantidadKardex) {
+            Detalleordencompra::where('id', $request->item)->update(['estado' => '1']);
+        } */
+        return response()->json(['message' => 'cantidad agregada', 'icon' => 'success'], 200);
     }
+
 
     public function editCantComplete(Request $request)
     {
@@ -123,7 +106,7 @@ class DetalleOrdenCompraController extends Controller
         $detalleOrdenCompra->ordencompras_id = $ordenCompra->id;
         $detalleOrdenCompra->producto_id = $request->nIdprod;
         $detalleOrdenCompra->cantidad = $request->cCantidad;
-        $detalleOrdenCompra->cantidadKardex = $detalleOrdenCompra->cantidadKardex;
+        $detalleOrdenCompra->cantidadKardex = 0;
         $detalleOrdenCompra->unidmedida_id = $request->nIdUnidMed;
         $detalleOrdenCompra->punit = $request->cPrecio;
         $detalleOrdenCompra->estado = $detalleOrdenCompraData->estado;

@@ -17,7 +17,7 @@
                             class="btn btn-info btn-sm"
                             :to="'/ordenCompra/list'"
                         >
-                            <i class="fas fa-arrow-left"></i>Regresar
+                            <i class="fas fa-arrow-left"></i>Regresar 
                         </router-link>
                     </div>
                 </div>
@@ -262,10 +262,12 @@
                                         <thead>
                                             <tr>
                                                 <th>Codigo</th>
-                                                <th>Cantidad</th>
-                                                <th>Cantidad Ingresada</th>
-                                                <th>Unid. Medida</th>
                                                 <th>Descripcion</th>
+                                                <th>Cant. OrdCompra</th>
+                                                <th>Cant. Total</th>
+                                                <th>Cantidad Ingresada</th>
+
+                                                <th>Unid. Medida</th>
                                                 <th>Estado</th>
                                                 <th>Cantidad</th>
                                                 <th>Agregar</th>
@@ -283,32 +285,45 @@
                                                         item.producto_codigo
                                                     "
                                                 ></td>
+                                                <td
+                                                    v-text="item.producto_desc"
+                                                ></td>
 
                                                 <td v-text="item.cantidad"></td>
                                                 <td
                                                     v-text="item.cantidadKardex"
                                                 ></td>
+
+                                                <td v-text="item.canting"></td>
+
                                                 <td
                                                     v-text="
                                                         item.unidmedida_nombre
                                                     "
                                                 ></td>
-                                                <td
-                                                    v-text="item.producto_desc"
-                                                ></td>
 
-                                                <td v-if="item.estado == '2'">
+                                                <td v-if=" parseInt(
+                                                                item.cantidad
+                                                            ) !==
+                                                            parseInt(
+                                                                item.cantidadKardex
+                                                            )">
                                                     Pendiente
                                                 </td>
-                                                <td v-if="item.estado == '1'">
+                                                <td v-else>
                                                     Completo
                                                 </td>
 
                                                 <template
-                                                    v-if="item.estado == '1'"
+                                                    v-if=" parseInt(
+                                                                item.cantidad
+                                                            ) ==
+                                                            parseInt(
+                                                                item.cantidadKardex
+                                                            )"
                                                 >
                                                     <td>
-                                              <!--           <button
+                                                        <!--           <button
                                                             class="btn btn-flat btn-danger btn-sm"
                                                             @click.prevent="
                                                                 setValorCantidadModal(
@@ -323,61 +338,90 @@
                                                         </button> -->
                                                     </td>
 
-                                                    <td v-if="item.estado == '2' & item.grabado == '2' || item.estado == '1' & item.grabado == '0' || item.estado == '2' & item.grabado == '0' || item.estado == '1' & item.grabado == '1'|| item.estado == '2' & item.grabado == '1'" >
+                                                    <td
+                                                        v-if="
+                                                            parseInt(
+                                                                item.cantidad
+                                                            ) !==
+                                                            parseInt(
+                                                                item.cantidadKardex
+                                                            )
+                                                        "
+                                                    >
                                                         <el-checkbox
+                                                            v-if="
+                                                                parseInt(
+                                                                    item.cantidad
+                                                                ) !==
+                                                                parseInt(
+                                                                    item.cantidadKardex
+                                                                )
+                                                            "
                                                             @change="
                                                                 marcarFila(
                                                                     index,
                                                                     item.iddetalleOrdenCompra,
-                                                                    item.cantidadKardex,
-
+                                                                    item.cantidadKardex
                                                                 )
                                                             "
-                                                            v-model="item.checked"
+                                                            v-model="
+                                                                item.checked
+                                                            "
                                                             >Seleccionar</el-checkbox
                                                         >
                                                     </td>
-                                                </template >
-
-                                                <template v-else>
-
-                                                    <td >
-                                                    <button
-                                                        class="btn btn-flat btn-danger btn-sm"
-                                                        @click.prevent="
-                                                            setValorCantidadModal(
-                                                                item.iddetalleOrdenCompra
-                                                            )
-                                                        "
-                                                    >
-                                                        <i
-                                                            class="far fa-edit"
-                                                        ></i>
-                                                        Cantidad
-                                                    </button>
-                                                </td>
-
-                                                <td v-if="item.estado == '2' & item.grabado == '2' || item.estado == '1' & item.grabado == '0'|| item.estado == '2' & item.grabado == '0' || item.estado == '1' & item.grabado == '1'|| item.estado == '2' & item.grabado == '1'">
-                                                    <el-checkbox
-                                                        @change="
-                                                            marcarFila(
-                                                                index,
-                                                                item.iddetalleOrdenCompra,
-                                                                item.cantidadKardex,
-
-                                                            )
-                                                        "
-
-                                                        v-model="item.checked"
-                                                        >Seleccionar</el-checkbox
-                                                    >
-                                                </td>
-
                                                 </template>
 
+                                                <template v-else>
+                                                    <td>
+                                                        <button
+                                                            class="btn btn-flat btn-danger btn-sm"
+                                                            @click.prevent="
+                                                                setValorCantidadModal(
+                                                                    item.iddetalleOrdenCompra
+                                                                )
+                                                            "
+                                                        >
+                                                            <i
+                                                                class="far fa-edit"
+                                                            ></i>
+                                                            Cantidad
+                                                        </button>
+                                                    </td>
 
-
-
+                                                    <td
+                                                        v-if="
+                                                            parseInt(
+                                                                item.cantidad
+                                                            ) !==
+                                                            parseInt(
+                                                                item.cantidadKardex
+                                                            )
+                                                        "
+                                                    >
+                                                        <el-checkbox
+                                                            v-if="
+                                                                parseInt(
+                                                                    item.cantidad
+                                                                ) !==
+                                                                parseInt(
+                                                                    item.cantidadKardex
+                                                                )
+                                                            "
+                                                            @change="
+                                                                marcarFila(
+                                                                    index,
+                                                                    item.iddetalleOrdenCompra,
+                                                                    item.cantidadKardex
+                                                                )
+                                                            "
+                                                            v-model="
+                                                                item.checked
+                                                            "
+                                                            >Seleccionar</el-checkbox
+                                                        >
+                                                    </td>
+                                                </template>
 
                                                 <!--  <td v-text="item.estado"></td> -->
                                             </tr>
@@ -785,9 +829,9 @@ export default {
             });
         },
 
-        marcarFila(index, iddetalleOrdenCompra, cantidadKardex,grabado) {
+        marcarFila(index, iddetalleOrdenCompra, cantidadKardex, grabado) {
             this.listCompletFilter.map(function (x, y) {
-                var url = "/administracion/DetalleordenCompra/editCantComplete"; 
+                var url = "/administracion/DetalleordenCompra/editCantComplete";
 
                 axios
                     .post(url, {
@@ -796,7 +840,6 @@ export default {
                         checked: x.checked,
                     })
                     .then((response) => {
-
                         x.checked = false;
                     });
             });
@@ -827,7 +870,7 @@ export default {
                     estado: x.estado,
                     punit: x.punit,
                     iddetalleOrdenCompra: x.id,
-                    grabado: x.grabado
+                    grabado: x.grabado,
                     //checked: false,
                 });
             });

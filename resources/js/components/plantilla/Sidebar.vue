@@ -561,7 +561,7 @@
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
                                  <template v-if="listPermisos.includes('parte_salida.create')">
-                                   <router-link class="nav-link" :to="'/parte_salida/list'">
+                                   <router-link class="nav-link" :to="'/parte_salida/create'">
                             
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Crear</p>

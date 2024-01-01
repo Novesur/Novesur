@@ -491,12 +491,11 @@ export default new Router({
 
         {
             path: "/parteingreso/create2",
-            name: "parteingreso.create2",
+            name: "parteingreso.create2", 
             component: require("./components/modulos/parte_ingreso/create2")
                 .default,
-            beforeEnter: (to, from, next) => {
-                verificarAcceso(to, from, next);
-            },
+                props: true,
+        
         },
 
         {

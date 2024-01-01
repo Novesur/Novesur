@@ -457,6 +457,23 @@
                   </div>
                 </div>
 
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-md-4 col-form-label">STOCK</label>
+                      <div class="col-md-2">
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="fillregistrarCotizacion.cStock"
+                          :readonly="true"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                  
                 <div class="card-footer">
                   <div class="row">
                     <div class="col-md-4 offset-4">
@@ -636,6 +653,7 @@ export default {
         Cconsignado: "",
         cObservacion: "",
         ctipoPrecio:"",
+        cStock:"",
       },
 
       listUnidMed: [],
@@ -966,6 +984,7 @@ export default {
             this.fillregistrarCotizacion.cPUnit = response.data.precioSugerido;
           }else if(this.fillregistrarCotizacion.ctipoPrecio=='Distribuidor')
           this.fillregistrarCotizacion.cPUnit = response.data.precioDistribuidor;
+          this.fillregistrarCotizacion.cStock= response.data.stock;
         });
     },
   },
