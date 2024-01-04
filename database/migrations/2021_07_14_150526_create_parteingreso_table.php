@@ -28,7 +28,9 @@ class CreateParteingresoTable extends Migration
             $table->string('observacion',200);
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->timestamps(); 
+            $table->unsignedBigInteger('almacen_id');
+            $table->foreign('almacen_id')->references('id')->on('almacen');
+            $table->timestamps();
         });
     }
 

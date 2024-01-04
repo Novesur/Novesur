@@ -43,5 +43,10 @@ class Parteingreso extends Model
         return $this->belongsTo(Ordencompra::class);
     }
 
+    public function almacen()
+    {
+        return $this->belongsTo(Almacen::class);
+    }
+
 }
 

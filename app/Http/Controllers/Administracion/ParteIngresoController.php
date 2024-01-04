@@ -13,6 +13,7 @@ use App\Partesalida;
 use Illuminate\Http\Request;
 use App\Producto;
 use App\UnidMedida;
+use App\User;
 use App\ReporteParteIngreso;
 use Illuminate\Support\Facades\Session;
 use App\TempPIngreso;
@@ -103,7 +104,7 @@ class ParteIngresoController extends Controller
         $formatreq = date("Y-m-d");
 
         $formatYear = date("Y");
-
+        $user = User::where('id', $request->nIdUser)->first();
 
         ///  Graba Parte de Ingreso  //////////////
         $parteIngreso = new Parteingreso();
@@ -125,12 +126,14 @@ class ParteIngresoController extends Controller
         $parteIngreso->Fecha = $formatreq;
         $parteIngreso->observacion = mb_strtoupper($request->cobservacion);
         $parteIngreso->user_id = $request->nIdUser;
+        $parteIngreso->almacen_id = $user->almacen_id;
         $parteIngreso->save();
 
         /// Graba Parte de DetalleParteIngreso  //////////////
 
 
-        $DOc = Detalleordencompra::where('ordencompras_id', $Oc->id)->where('grabado', '1')->where('canting', '>', 0)->get();
+        $DOc = Detalleordencompra::where('ordencompras_id', $Oc->id)->where('canting', '>', 0)->get();
+        //$DOc = Detalleordencompra::where('ordencompras_id', $Oc->id)->where('grabado', '1')->where('canting', '>', 0)->get();
 
         if ($DOc) {
             foreach ($DOc as  $datOc) {
