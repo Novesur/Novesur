@@ -781,6 +781,13 @@ export default new Router({
             component: require("./components/modulos/asistencia/reporte").default,
         },
 
+        /* INGRESO DE ALMACEN */
+        {
+            path: "/ingreso_almacen/create",
+            name: "ingreso_almacen.create",
+            component: require("./components/modulos/ingreso_almacen/create").default,
+        },
+
     ],
 
     mode: "history",

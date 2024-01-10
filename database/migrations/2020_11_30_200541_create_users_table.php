@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->char('firstname',30);
             $table->char('secondname',30);
             $table->char('lastname',30);
-            $table->char('username',30);
+            $table->char('username',30)->unique();
             $table->char('email',50);
             $table->string('celular',30);
             $table->unsignedBigInteger('roles_id');

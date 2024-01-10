@@ -9,7 +9,7 @@
         </div>
       </div>
     </div>
-    <div class="content container-fluid"> 
+    <div class="content container-fluid">
       <div class="card">
         <div class="card-body">
           <div class="container-fluid">
@@ -322,7 +322,7 @@ export default {
 
         cCantidadModal: "",
       },
-   
+
       listVendedorUser: [],
       listarDetalleOrdeCompra: [],
       listTempClientPSalida: [],
@@ -459,12 +459,12 @@ export default {
     },
 
     setGrabarPapeletaSalida() {
-      var url = "/administracion/papeletasalida/create"; 
+      var url = "/administracion/papeletasalida/create";
       let today = new Date();
       const hora = today.toLocaleTimeString();
       const fecha = today.toLocaleDateString();
       axios
-        .post(url, { 
+        .post(url, {
           nIdUser: this.fillPapeletasalida.nIdUser,
           cfecha: this.fillPapeletasalida.cFecha,
           tHoraSalida: this.fillPapeletasalida.tHoraSalida,
@@ -496,7 +496,7 @@ export default {
             this.setResetCamposClientTemp();
           }
 
-      
+
         });
     },
     abrirModal() {

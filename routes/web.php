@@ -260,6 +260,7 @@ Route::post('/administracion/parte_ingreso/ProveedorFechaPdf', 'Administracion\P
 Route::get('/administracion/parte_ingreso/ListParteIngresoxNroOrden', 'Administracion\ParteIngresoController@ListParteIngresoxNroOrden');
 Route::post('/administracion/parte_ingreso/ProveedorOrdenCompraPdf', 'Administracion\ParteIngresoController@ProveedorOrdenCompraPdf'); 
 Route::get('/administracion/parte_ingreso/ListParteIngresoxProduct', 'Administracion\ParteIngresoController@ListParteIngresoxProduct');
+Route::post('/administracion/parte_ingreso/setSaveIngAlmacen', 'Administracion\ParteIngresoController@setSaveIngAlmacen');
 
 
 

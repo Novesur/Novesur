@@ -17,7 +17,7 @@
                             class="btn btn-info btn-sm"
                             :to="'/ordenCompra/list'"
                         >
-                            <i class="fas fa-arrow-left"></i>Regresar 
+                            <i class="fas fa-arrow-left"></i>Regresar
                         </router-link>
                     </div>
                 </div>
@@ -143,6 +143,7 @@
                                                                     item.nombre
                                                                 "
                                                                 :value="item.id"
+                                                                :disabled="item.nombre === 'INGRESO DE MERCADERIA'"
                                                             >
                                                             </el-option>
                                                         </el-select>

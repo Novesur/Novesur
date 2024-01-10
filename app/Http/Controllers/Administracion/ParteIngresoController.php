@@ -194,7 +194,6 @@ class ParteIngresoController extends Controller
                     $detalleKardex->cliente_id = 202;
                     $detalleKardex->save();
                     Detalleordencompra::where('id', $datOc->id)->update(['canting' => '0']);
-
                 } else {
 
                     Kardex::where('producto_id', $datOc->producto_id)->update(['stock' => $datOc->cantidadKardex + intval($datOc->canting)]);
@@ -315,8 +314,67 @@ class ParteIngresoController extends Controller
         ]);
 
         return $pdf->download('invoice.pdf');
+    }
+
+    public function setSaveIngAlmacen(Request $request)
+    {
+        ///  Graba Parte de Ingreso  //////////////
+        $user = User::where('id', $request->nIdUser)->first();
+        $parteIngreso = new Parteingreso();
+        $formatreq = date("Y-m-d");
+
+        $formatYear = date("Y");
+        // $date = Carbon::now();
+        $countPIngreso = Parteingreso::count();
 
 
+        $codPi = 'PI' . sprintf('%04d',  $countPIngreso + 1) . '-' . $formatYear;
 
+        $parteIngreso->codigo =  $codPi;
+        $parteIngreso->Nrofactura = mb_strtoupper($codPi);
+        $parteIngreso->Nroguia = mb_strtoupper($codPi);
+        $parteIngreso->ordencompras_id = 1;
+        $parteIngreso->proveedor_id = 19;
+        $parteIngreso->motivo_id = 11;
+        $parteIngreso->Fecha = $formatreq;
+        $parteIngreso->observacion = 'INGRESO DE SCTOCK' . '-' . $formatYear;
+        $parteIngreso->user_id = $request->nIdUser;
+        $parteIngreso->almacen_id = $user->almacen_id;
+        $parteIngreso->save();
+
+
+        $detalleParteIngreso = new detalleParteIngreso;
+        $detalleParteIngreso->parteingreso_id = $parteIngreso->id;
+        $detalleParteIngreso->producto_id = $request->nIdprod;
+        $detalleParteIngreso->cantidad = $request->cCantidad;
+        $detalleParteIngreso->unidmedida_id =  $request->nIdUnidMed;
+        $detalleParteIngreso->punit = $request->punit;
+        $detalleParteIngreso->estado = '1';
+        $detalleParteIngreso->save();
+
+                    $kardex = new Kardex;
+                    $kardex->producto_id = $request->nIdprod;
+                    $kardex->stock = $request->cCantidad;
+                    $kardex->costunit = $request->punit;
+                    $kardex->diferencia = 0;
+                    $kardex->save();
+
+                    
+                    $detalleKardex = new DetalleKardex();
+                    $detalleKardex->kardex_id = $kardex->id;
+                    $detalleKardex->fecha = $formatreq;
+                    $detalleKardex->FactNo = mb_strtoupper($codPi);
+                    $detalleKardex->GuiaNo = mb_strtoupper($codPi);
+                    $detalleKardex->proveedor_id = 19;
+                    $detalleKardex->motivo_id = 11;
+                    $detalleKardex->unidmedida_id = $request->nIdUnidMed;
+                    $detalleKardex->cantidad = $request->cCantidad;
+                    $detalleKardex->costunit = $request->punit;
+                    $detalleKardex->movimiento_id = 1;
+                    $detalleKardex->user_id = $request->nIdUser;
+                    $detalleKardex->cliente_id = 202;
+                    $detalleKardex->save();
+
+                    Producto::where('id', $request->nIdprod)->update(['stock' => $request->cCantidad]);
     }
 }

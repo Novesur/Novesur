@@ -39,7 +39,7 @@
                         </template>
                     </li>
 
-                 
+
 
                     <li class="nav-item has-treeview">
                         <template v-if="listPermisos.includes('productos.index')">
@@ -152,7 +152,7 @@
 
 
                             <li class="nav-item">
-                                <template v-if="listPermisos.includes('parteingreso.list')"> 
+                                <template v-if="listPermisos.includes('parteingreso.list')">
                                     <router-link class="nav-link" :to="'/parteingreso/list'">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Lista Parte de Ingreso</p>
@@ -433,11 +433,11 @@
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <template >
-                                  
-                                     
+
+
                                         <li class="nav-item has-treeview">
                                             <a href="#" class="nav-link">
-                    
+
                                                 <i class="fas fa-solid fa-briefcase"></i>
                                                 <p>
                                                     Requerimiento de Materiales
@@ -453,7 +453,7 @@
                                                         </router-link>
                                                     </template>
                                                 </li>
-                    
+
                                                 <li class="nav-item">
                                                     <template v-if="listPermisos.includes('requerimientoMateriales.reporte')">
                                                         <router-link class="nav-link" :to="'/requerimientoMateriales/list'">
@@ -464,14 +464,14 @@
                                                 </li>
                                             </ul>
                                         </li>
-                                        
-                                    
+
+
                                 </template>
                             </li>
                             <li class="nav-item has-treeview">
                                 <a href="#" class="nav-link">
-                            
-                            
+
+
                                     <i class="fas fa-solid fa-clipboard-list"></i>
                                     <p>
                                         Informe de Producción
@@ -487,7 +487,7 @@
                                             </router-link>
                                         </template>
                                     </li>
-                            
+
                                     <li class="nav-item">
                                         <template v-if="listPermisos.includes('informeProduccion.reporte')">
                                             <router-link class="nav-link" :to="'/informeProduccion/list'">
@@ -496,7 +496,7 @@
                                             </router-link>
                                         </template>
                                     </li>
-                            
+
                                 </ul>
                             </li>
                         </ul>
@@ -516,7 +516,7 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
-                  
+
 
                             <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
@@ -530,14 +530,14 @@
                             <li class="nav-item">
                                  <template v-if="listPermisos.includes('parteingreso.create2')">
                                    <router-link class="nav-link" :to="'/parteingreso/create2'">
-                            
+
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Crear</p>
                                 </router-link>
-            
+
                                  </template>
                             </li>
-                            
+
                             <li class="nav-item">
                                 <template v-if="listPermisos.includes('parteingreso.list')">
                                 <router-link  class="nav-link" :to="'/parteingreso/list'">
@@ -549,7 +549,7 @@
                         </ul>
                     </li>
 
-                    
+
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-circle"></i>
@@ -562,16 +562,16 @@
                             <li class="nav-item">
                                  <template v-if="listPermisos.includes('parte_salida.create')">
                                    <router-link class="nav-link" :to="'/parte_salida/create'">
-                            
+
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Crear</p>
                                 </router-link>
-            
+
                                  </template>
                             </li>
-                            
+
                             <li class="nav-item">
-                                <template v-if="listPermisos.includes('parte_salida.list')"> 
+                                <template v-if="listPermisos.includes('parte_salida.list')">
                                 <router-link  class="nav-link" :to="'/parte_salida/list'">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Consulta</p>
@@ -581,11 +581,42 @@
                         </ul>
                     </li>
 
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-circle"></i>
+                            <p>
+                                Ingreso de Almacen
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                 <template v-if="listPermisos.includes('ingreso_almacen.create')">
+                                   <router-link class="nav-link" :to="'/ingreso_almacen/create'">
+
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Crear</p>
+                                </router-link>
+
+                                 </template>
+                            </li>
+
+                         <!--    <li class="nav-item">
+                                <template v-if="listPermisos.includes('parte_salida.list')">
+                                <router-link  class="nav-link" :to="'/parte_salida/list'">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Consulta</p>
+                                </router-link>
+                                </template>
+                            </li> -->
+                        </ul>
+                    </li>
+
                         </ul>
                     </li>
 
 
-                    
+
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
 
@@ -597,7 +628,7 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
-                  
+
 
                             <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
@@ -611,14 +642,14 @@
                             <li class="nav-item">
                                  <template v-if="listPermisos.includes('proyectoMat.create')">
                                    <router-link class="nav-link" :to="'/proyecto_ReqMateriales/create'">
-                            
+
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Crear</p>
                                 </router-link>
-            
+
                                  </template>
                             </li>
-                            
+
                             <li class="nav-item">
                                 <template v-if="listPermisos.includes('proyectoMat.list')">
                                 <router-link  class="nav-link" :to="'/proyecto_ReqMateriales/list'">
@@ -630,7 +661,7 @@
                         </ul>
                     </li>
 
-           
+
 
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
@@ -644,14 +675,14 @@
                             <li class="nav-item">
                                  <template v-if="listPermisos.includes('informe.valorizacion')">
                                    <router-link class="nav-link" :to="'/informeValorizacion/create'">
-                            
+
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Crear</p>
                                 </router-link>
-            
+
                                  </template>
                             </li>
-                            
+
                             <li class="nav-item">
                                 <template v-if="listPermisos.includes('informe.consulta')">
                                 <router-link  class="nav-link" :to="'/informeValorizacion/list'">
@@ -703,8 +734,8 @@
                                 </template>
                             </li>
 
-                    
-<!-- 
+
+<!--
                             <li class="nav-item">
                                 <template v-if="listPermisos.includes('menu.detalle')">
                                     <router-link class="nav-link" :to="'/menu/detalle'">
@@ -765,7 +796,7 @@
                                 </template>
                             </li>
 
-                 
+
 
 
                   <!--          <li class="nav-item">
@@ -791,7 +822,7 @@
                     </li>
 
 
-                    
+
 
 
 
