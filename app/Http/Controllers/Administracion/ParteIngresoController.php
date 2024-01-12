@@ -339,7 +339,7 @@ class ParteIngresoController extends Controller
         $parteIngreso->Fecha = $formatreq;
         $parteIngreso->observacion = 'INGRESO DE SCTOCK' . '-' . $formatYear;
         $parteIngreso->user_id = $request->nIdUser;
-        $parteIngreso->almacen_id = $user->almacen_id;
+        $parteIngreso->almacen_id = $request->nIdAlmacen;
         $parteIngreso->save();
 
 
@@ -352,12 +352,20 @@ class ParteIngresoController extends Controller
         $detalleParteIngreso->estado = '1';
         $detalleParteIngreso->save();
 
-                    $kardex = new Kardex;
-                    $kardex->producto_id = $request->nIdprod;
-                    $kardex->stock = $request->cCantidad;
-                    $kardex->costunit = $request->punit;
-                    $kardex->diferencia = 0;
-                    $kardex->save();
+        $countKardex=Kardex::where('producto_id',$request->nIdprod)->count();
+        if ($countKardex === 0){
+            $kardex = new Kardex;
+            $kardex->producto_id = $request->nIdprod;
+            $kardex->stock = $request->cCantidad;
+            $kardex->costunit = $request->punit;
+            $kardex->diferencia = 0;
+            $kardex->save();
+        }else{
+            $kardex = Kardex::where('producto_id',$request->nIdprod)->first();
+            Kardex::where('producto_id', $request->nIdprod)->update(['stock' => $kardex->stock + $request->cCantidad]);
+        }
+
+
 
                     
                     $detalleKardex = new DetalleKardex();
