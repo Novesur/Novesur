@@ -15,8 +15,10 @@ class AsistenciaImport implements ToModel, WithHeadingRow, WithBatchInserts, Wit
     public function model(array $row)
     {
 
-       $fecha = date('Y-m-d', strtotime(substr($row['fechahora'], 0, 10)));
-       $tiempo =  substr($row['fechahora'], 11, 19);
+       $fecha = date('Y-m-d', strtotime(substr($row['fechahora'], 0, 9)));
+ 
+       $tiempo =  substr($row['fechahora'], 9, 19);
+      
 
         $dato = Asistencia::where('fecha', $fecha )->where('tiempo', $tiempo)->count();
 

@@ -324,7 +324,7 @@ export default {
         },
 
         setImportFile() {
-            var data = new FormData(document.getElementById("mainFormAsist"));
+            var data = new FormData(document.getElementById("mainFormAsist")); 
             var url = "/administracion/asistencia/import";
             axios
                 .post(url, data, {

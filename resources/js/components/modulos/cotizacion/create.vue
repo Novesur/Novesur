@@ -472,7 +472,15 @@
                     </div>
                   </div>
                 </div>
+
                 
+              
+
+
+                  <listStock :stock= "this.listStock"></listStock>
+             
+                      
+             
                   
                 <div class="card-footer">
                   <div class="row">
@@ -616,6 +624,7 @@
   </div>
 </template>
 <script>
+  import listStock from '../ingreso_almacen/shared/listStock.vue'
 export default {
   data() {
     return {
@@ -662,6 +671,7 @@ export default {
       listDescripPago: [],
       listGarantia: [],
       listarProductosPaginated: [],
+      listStock:[],
 
 
       modalShow: false,
@@ -676,6 +686,11 @@ export default {
       mensajeError: [],
     };
   },
+
+  components:{
+    listStock
+      },
+
   mounted() {
     this.getClienteById();
     this.getListarUnidadMedida();
@@ -982,11 +997,31 @@ export default {
       
           if(this.fillregistrarCotizacion.ctipoPrecio=='Lista'){
             this.fillregistrarCotizacion.cPUnit = response.data.precioSugerido;
+              this.fillregistrarCotizacion.cStock= response.data.stock;
           }else if(this.fillregistrarCotizacion.ctipoPrecio=='Distribuidor')
           this.fillregistrarCotizacion.cPUnit = response.data.precioDistribuidor;
           this.fillregistrarCotizacion.cStock= response.data.stock;
+
+        
         });
+        this.getListStock();
     },
+    getListStock(){
+      var url = "/administracion/parteingSalida/listStockByproduct";
+      axios
+        .get(url, {
+          params: {
+            nIdprod: this.fillregistrarCotizacion.nIdprod,
+          },
+        })
+        .then((response) => {
+          this.listStock = response.data;
+        
+        });
+
+    }
+
+
   },
 };
 </script>

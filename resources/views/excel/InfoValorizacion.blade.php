@@ -13,7 +13,7 @@
       </strong><br />
     </p></td> 
     <td width="58%" align="center">&nbsp;</td>
-    <td width="9%" align="center"><strong>FECHA</strong></td>
+    <td width="9%" align="center"><strong>MES/AÑO/FECHA</strong></td>
     <td width="24%" align="center">{{$diaActual}}</td>
   </tr>
   <tr>
@@ -31,18 +31,35 @@
     <td colspan="2">{{$InformeValorizacion->proyectoReqMateriales->codigo}}</td>
   </tr>
   <tr>
-    <td><strong>CENTRO DE COSTOS :</strong></td>
+    <td><strong>NOMBRE DEL PROYECTO:</strong></td>
     <td colspan="2">{{$InformeValorizacion->ccostos->nombre}}</td>
   </tr>
+  <tr>
+    <td><strong>CLIENTE : </strong></td>
+    <td colspan="2">{{$InformeValorizacion->cliente}} </td>
+  </tr>
+  <tr>
+    <td><strong>FECHA INICIO : </strong></td>
+    <td colspan="2">{{date('d-m-Y', strtotime($InformeValorizacion->fechainicio))}} </td>
+    <td><strong>FECHA FINAL : </strong></td>
+    <td colspan="2">{{ date('d-m-Y', strtotime($InformeValorizacion->fechafinal))}} </td>
+  </tr>
+
+  <tr>
+    <td><strong>DURACION : </strong></td>
+    <td colspan="2">{{$InformeValorizacion->duracion}} </td>
+  </tr>
+
+  <tr>
+    <td><strong>O/S Nro : </strong></td>
+    <td colspan="2">{{$InformeValorizacion->ord_servicio}} </td>
+  </tr>
+
   <tr>
     <td><strong>DETALLE DE SERVICIO : </strong></td>
     <td colspan="2">{{$InformeValorizacion->detservicio}} </td>
   </tr>
 
-  <tr>
-    <td><strong>CLIENTE : </strong></td>
-    <td colspan="2">{{$InformeValorizacion->cliente}} </td>
-  </tr>
 
   </table>
 <br />

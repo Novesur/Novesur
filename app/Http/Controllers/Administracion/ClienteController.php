@@ -63,7 +63,7 @@ class ClienteController extends Controller
 
         $roluser = User::where('id', $request->nIdUser)->first();
 
-        if ($roluser->roles_id == 1 || $roluser->roles_id == 4 || $roluser->roles_id == 7 || $roluser->roles_id == 9 || $roluser->roles_id == 11) {
+        if ($roluser->roles_id == 1 || $roluser->roles_id == 4 || $roluser->roles_id == 7 || $roluser->roles_id == 9 || $roluser->roles_id == 11 || $roluser->roles_id == 5) {
             if ($request->cNombre == null and $request->cRuc == null and $request->nIdVendedor == null) {
                 $dato = Cliente::with('user')->get();
                 return $dato;

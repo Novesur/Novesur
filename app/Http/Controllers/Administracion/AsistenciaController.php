@@ -18,6 +18,7 @@ class AsistenciaController extends Controller
 
         $path= $request->file('select_file');
         $dato= is_null($path);
+        
        if(!$dato){
            Excel::import(new AsistenciaImport, $path);
            return response()->json(['message' => 'Exportacion Realizada', 'icon' => 'success'], 200);
@@ -40,7 +41,6 @@ class AsistenciaController extends Controller
 
        $dFechafin = $request->dFechafin;
        $dFechafin = ($dFechafin == NULL) ? ($dFechafin = 0) : $dFechafin;
-        
         $rpta = DB::select('call sp_AsistenciaByDay (?,?)', [
             $dFechainicio,
             $dFechafin,

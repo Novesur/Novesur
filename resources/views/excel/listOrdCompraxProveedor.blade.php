@@ -14,6 +14,7 @@
             <th>FECHA</th>
             <th>COD PROD</th>
             <th>PRODUCTO</th>
+            <th>TIPO DE CAMBIO</th>
             <th>CANTIDAD</th>
             <th>PRECIO</th>
             <th>TOTAL</th>
@@ -26,6 +27,7 @@
                 <td>{{date('d-m-Y', strtotime($data->Femision))}}</td>
                 <td>{{$data->detalle[0]->producto->codigo}}  </td>
                 <td> {{$data->detalle[0]->producto->familia->nombre}},{{$data->detalle[0]->producto->subfamilia->nombre}},  {{'MODELO :' .' '.$data->detalle[0]->producto->modelotipo->nombre}}, {{'MARCA :' .' '.$data->detalle[0]->producto->marca->nombre}}, {{'MATERIAL :' .' '.$data->detalle[0]->producto->material->nombre}}, {{$data->detalle[0]->producto->homologacion->nombre}}</td>
+                <td>{{$data->tipocambio->nombre}}</td>
                 <td>{{$data->detalle[0]->cantidad}}</td>
                 <td>{{$data->detalle[0]->punit}}</td>
                 <td>{{$data->detalle[0]->cantidad * $data->detalle[0]->punit }}</td>

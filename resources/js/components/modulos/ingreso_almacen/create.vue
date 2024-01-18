@@ -179,12 +179,13 @@
                     </div>
                   </div>
                 </form>
+                <liststock :stock= "this.listStock"></liststock>
                 <div class="card-footer">
                   <div class="row">
                     <div class="col-md-4 offset-4">
                       <button
                         class="btn btn-flat btn-info btnWidth"
-                        @click.prevent="setSaveIngAlmacen"
+                        @click.prevent="setRegistrarIngAlmacen" 
                       >
                         Guardar
                       </button>
@@ -240,6 +241,7 @@
 </template>
 
 <script>
+  import liststock from './shared/listStock.vue';
 export default {
   data() {
     return {
@@ -251,15 +253,18 @@ export default {
         cCantidadModal: "",
         cCantidad: "",
         nIdUnidMed: "",
+       
 
         cStock: "",
       },
+
 
       listarDetalleOrdeCompra: [],
 
       listProd: [],
       listUnidMed: [],
       listAlmacen:[],
+      listStock:[],
 
       estadoProv: false,
       estadoCliente: false,
@@ -277,19 +282,28 @@ export default {
       error: 0,
       mensajeError: [],
     };
+
+    
   },
+
+  components:{
+    liststock
+      },
+      
   mounted() {
     this.getListarUnidadMedida();
     this.getListarproductosByName();
     this.fillIngAlmacen.punit = 0;
     this.getListAlmacen();
   },
-  computed: {},
+  computed: {
+  
+  },
   methods: {
     limpiarCriteriosBsq() {},
 
     setSaveIngAlmacen() {
-      var url = "/administracion/parte_ingreso/setSaveIngAlmacen";
+      var url = "/administracion/parteingSalida/create"; 
       axios
         .post(url, {
           nIdUser: this.fillIngAlmacen.nIdUser,
@@ -300,11 +314,10 @@ export default {
           punit: this.fillIngAlmacen.punit,
           nIdAlmacen: this.fillIngAlmacen.nIdAlmacen
         })
-        .then((response) => {
-          //this.listarPSalidaPaginated = response.data.datos;
-
+        .then(() => {
           this.setLimpiaDetalleProducto();
           this.getBuscaStockProducto();
+          this.getListStock();
         });
     },
 
@@ -315,19 +328,28 @@ export default {
     abrirModalCantidad() {
       this.modalCantidad = !this.modalCantidad;
     },
-    validaPIngreso() {
+    validaingAlmacen() {
       this.error = 0;
       this.mensajeError = [];
 
-      /*    if (!this.fillIngAlmacen.nroFactura) {
-    this.mensajeError.push("El campo Factura es obligatorio");
-  } */
+        if (!this.fillIngAlmacen.cCantidad) {
+    this.mensajeError.push("El campo cantidad es obligatorio");
+  } 
 
       if (this.mensajeError.length) {
         this.error = 1;
       }
 
       return this.error;
+    },
+
+    setRegistrarIngAlmacen() {
+      if (this.validaingAlmacen()) {
+        this.modalShow = true;
+        return;
+      }
+      this.setSaveIngAlmacen();
+      
     },
 
     limpiarDetallePSalida() {
@@ -380,7 +402,22 @@ export default {
         .then((response) => {
           this.fillIngAlmacen.cStock = response.data.stock;
         });
+        this.getListStock();
     },
+
+    getListStock(){
+      var url = "/administracion/parteingSalida/listStockByproduct";
+      axios
+        .get(url, {
+          params: {
+            nIdprod: this.fillIngAlmacen.nIdprod,
+          },
+        })
+        .then((response) => {
+          this.listStock = response.data;
+        });
+
+    }
   },
 };
 </script>

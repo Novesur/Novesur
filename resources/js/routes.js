@@ -481,13 +481,7 @@ export default new Router({
         },
 
         // PARTE DE INGRESO
-        {
-            path: "/parteingreso/create/:id",
-            name: "parteingreso.create",
-            component: require("./components/modulos/parte_ingreso/create")
-                .default,
-            props: true,
-        },
+  
 
         {
             path: "/parteingreso/create2",

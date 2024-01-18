@@ -669,8 +669,9 @@ export default {
         },
 
         setGrabarPIngreso() {
-            var url = "/administracion/parte_ingreso/setGrabarPIngreso";
-            axios
+
+                var url = "/administracion/parteingSalida/saveParteIngreso";
+                axios
                 .post(url, {
                     cOrdenComPra: this.fillPIngreso.cOrdenComPra,
                     nroFactura: this.fillPIngreso.nroFactura,
@@ -679,6 +680,7 @@ export default {
                     nIdUser: this.fillPIngreso.nIdUser,
                     nIdMotivo: this.fillPIngreso.nIdMotivo,
                     listCompletFilter: this.listCompletFilter,
+                    
                 })
                 .then((response) => {
                     Swal.fire({
@@ -690,10 +692,8 @@ export default {
                     });
                     this.setResetCampos();
                     this.getListarOrdenCompra();
-
-                    /* this.setLimpiaCampos();
-          this.eliminarTempitemPIngreso(); */
                 });
+               
         },
         abrirModal() {
             this.modalShow = !this.modalShow;

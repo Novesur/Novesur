@@ -260,14 +260,19 @@ Route::post('/administracion/parte_ingreso/ProveedorFechaPdf', 'Administracion\P
 Route::get('/administracion/parte_ingreso/ListParteIngresoxNroOrden', 'Administracion\ParteIngresoController@ListParteIngresoxNroOrden');
 Route::post('/administracion/parte_ingreso/ProveedorOrdenCompraPdf', 'Administracion\ParteIngresoController@ProveedorOrdenCompraPdf'); 
 Route::get('/administracion/parte_ingreso/ListParteIngresoxProduct', 'Administracion\ParteIngresoController@ListParteIngresoxProduct');
-Route::post('/administracion/parte_ingreso/setSaveIngAlmacen', 'Administracion\ParteIngresoController@setSaveIngAlmacen');
 
 
 
-/* Route::post('/administracion/parte_ingreso/create', 'Administracion\ParteIngresoController@addPIngreso');
-Route::get('/administracion/parte_ingreso/ListtempParteIngreso', 'Administracion\ParteIngresoController@ListtempParteIngreso');
-Route::post('/administracion/parte_ingreso/eliminarTempitemPIngreso', 'Administracion\ParteIngresoController@eliminarTempitemPIngreso');
-Route::post('/administracion/parte_ingreso/setGrabaPIngreso', 'Administracion\ParteIngresoController@setGrabaPIngreso');*/
+
+
+
+//Parte ingresoSalida
+Route::post('/administracion/parteingSalida/create', 'Administracion\ParteInSaliController@create');
+Route::post('/administracion/parteingSalida/saveParteIngreso', 'Administracion\ParteInSaliController@saveParteIngreso');
+Route::post('/administracion/parteingSalida/saveParteSalida', 'Administracion\ParteInSaliController@saveParteSalida');
+Route::get('/administracion/parteingSalida/listStockByproduct', 'Administracion\ParteInSaliController@listStockByproduct');
+Route::post('/administracion/parteingSalida/StockProductByAlmacen', 'Administracion\ParteInSaliController@StockProductByAlmacen');
+
 
 /// Garantia
 Route::get('/administracion/garantia/index', 'Administracion\GarantiaController@index');
