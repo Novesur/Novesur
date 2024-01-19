@@ -783,21 +783,19 @@ export default {
         },
 
         getBuscaStockProducto() {
-          var url = "/administracion/parteingSalida/StockProductByAlmacen"; 
+          var url = "/administracion/parteingSalida/StockProductByAlmacen";
             axios
                 .post(url, {
                     nIdprod: this.fillPSalida.nIdprod,
                     nIdAlmacen: this.fillPSalida.nIdAlmacen
                 })
                 .then((response) => {
-                  console.log(response.data[0].cantidad)
 
-                  if(response.data[0].cantidad === ''){
-                    console.log('vacio')
+                  if(response.data.length === 0){
+                    this.fillPSalida.cStock=0
+                  }else{
+                        this.fillPSalida.cStock= response.data[0].cantidad
                   }
-      
-
-                  
                 });
 
         },
