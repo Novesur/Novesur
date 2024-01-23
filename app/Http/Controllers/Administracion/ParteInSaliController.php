@@ -118,7 +118,7 @@ class ParteInSaliController extends Controller
         $parteIngreso->Fecha = $formatreq;
         $parteIngreso->observacion = mb_strtoupper($request->cobservacion);
         $parteIngreso->user_id = $request->nIdUser;
-        $parteIngreso->almacen_id = $user->almacen_id;
+        $parteIngreso->almacen_id = $request->nIdAlmacen;
         $parteIngreso->cliente_id = 202;
         $parteIngreso->movimiento_id = 1;
         $parteIngreso->estadopedido_id = 2;
@@ -161,16 +161,12 @@ class ParteInSaliController extends Controller
                 }
 
 
-                $kardexCount = Kardex::where('producto_id', $datOc->producto_id)->count();
+                $kardexCount = Kardex::where('producto_id', $datOc->producto_id)->count(); 
 
                 if ($kardexCount === 0) {
                     $kardex = new Kardex;
                     $kardex->producto_id = $datOc->producto_id;
-                    $kardex->stock = $request->cCantidad;
-
-
-
-
+                    $kardex->stock = $datOc->cantidadKardex + intval($datOc->canting);
                     $kardex->costunit = $datOc->punit;
                     $kardex->diferencia = 0;
                     $kardex->save();
@@ -313,7 +309,9 @@ class ParteInSaliController extends Controller
     }
 
     public function StockProductByAlmacen(Request $request){ 
-        if (!$request->ajax()) return redirect('/');
+
+     
+       if (!$request->ajax()) return redirect('/');
         $nIdprod = $request->nIdprod;
         $nIdAlmacen = $request->nIdAlmacen;
 
@@ -323,6 +321,8 @@ class ParteInSaliController extends Controller
             $nIdprod,
             $nIdAlmacen 
         ]);
-        return $rpta; 
+        return $rpta;  
+
+
     }
 }

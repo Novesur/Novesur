@@ -794,7 +794,7 @@ export default {
                   if(response.data.length === 0){
                     this.fillPSalida.cStock=0
                   }else{
-                        this.fillPSalida.cStock= response.data[0].cantidad
+                        this.fillPSalida.cStock= response.data[0].stock
                   }
                 });
 

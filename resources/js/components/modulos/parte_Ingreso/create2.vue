@@ -31,7 +31,7 @@
                             </div>
                             <div class="card-body">
                                 <form role="form">
-                                    <div class="col-md-12">
+                                    <div class="col-md-12"> 
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group row">
@@ -244,6 +244,41 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <div class="form-group row">
+                                                <label
+                                                    class="col-md-2 col-form-label"
+                                                    >ALMACEN</label
+                                                >
+                                                <div class="col-md-3">
+                                                    <el-select
+                                                        v-model="
+                                                            fillPIngreso.nIdAlmacen
+                                                        "
+                                                        placeholder="Select"
+                                                        style="width: 70%"
+                                                    >
+                                                        <el-option
+                                                            v-for="item in listAlmacen"
+                                                            :key="item.id"
+                                                            :label="item.nombre"
+                                                            :value="item.id"
+                                                            :disabled="
+                                                                item.nombre ===
+                                                                    'Almacen Oficina' ||
+                                                                item.nombre ===
+                                                                    'NINGUNO'
+                                                            "
+                                                        >
+                                                        </el-option>
+                                                    </el-select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     </div>
                                 </form>
                             </div>
@@ -545,6 +580,7 @@ export default {
                 cOrdenComPra: "",
                 cNroGuia: "",
                 nroFactura: "",
+                nIdAlmacen: "",
 
                 cObservacion: "",
                 nIdUser: sessionStorage.getItem("iduser"),
@@ -555,6 +591,7 @@ export default {
             listarDetalleOrdeCompra: [],
             listCompletFilter: [],
             listMotivo: [],
+            listAlmacen:[],
             estadoProv: false,
             estadoCliente: false,
 
@@ -577,6 +614,7 @@ export default {
     },
     mounted() {
         this.getListarMotivo();
+        this.getListAlmacen();
         /*     this.getListarByProveedor();
     this.setListarDatosOrdenCompraXId();
     this.setListarDetalleOrdenCompraxId();
@@ -587,6 +625,15 @@ export default {
     },
     computed: {},
     methods: {
+
+        getListAlmacen() {
+            var url = "/administracion/almacen/listAlmacen";
+            axios.get(url).then((response) => {
+                this.listAlmacen = response.data;
+                this.fillPIngreso.nIdAlmacen = this.listAlmacen[1].id;
+            });
+        },
+
         getListarOrdenCompra() {
             var url = "/administracion/parteIngreso/ListarDatosOrdenCompra";
             axios
@@ -680,6 +727,7 @@ export default {
                     nIdUser: this.fillPIngreso.nIdUser,
                     nIdMotivo: this.fillPIngreso.nIdMotivo,
                     listCompletFilter: this.listCompletFilter,
+                    nIdAlmacen :this.fillPIngreso.nIdAlmacen
                     
                 })
                 .then((response) => {
