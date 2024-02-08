@@ -782,6 +782,20 @@ export default new Router({
             component: require("./components/modulos/ingreso_almacen/create").default,
         },
 
+        /* GESTION DE VENTAS */
+        {
+            path: "/visitas/create",
+            name: "visitas.create",
+            component: require("./components/modulos/visitas/create").default,
+        },
+
+        {
+            path: "/visitas/list",
+            name: "visitas.list",
+            component: require("./components/modulos/visitas/list").default,
+        },
+
+
     ],
 
     mode: "history",

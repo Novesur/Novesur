@@ -25,18 +25,6 @@ class ParteIngresoController extends Controller
 {
 
 
-    public function ListarDatosOrdenCompra(Request $request)
-    {
-
-        $cOrdenComPra = $request->cOrdenComPra;
-
-        $dato = Detalleordencompra::with('ordencompras', 'unidmedida', 'producto', 'producto.familia', 'producto.subfamilia', 'producto.modelotipo', 'producto.marca', 'producto.material', 'producto.homologacion', 'ordencompras.proveedor', 'ordencompras.estadoordencompra')
-            /* ->where('estado', 2) */
-            ->whereHas('ordencompras', function (Builder $query) use ($cOrdenComPra) {
-                $query->where('codigo', $cOrdenComPra);
-            })->get();
-        return $dato;
-    }
 
     public function CambiarEstadoDetalleOC(Request $request)
     {

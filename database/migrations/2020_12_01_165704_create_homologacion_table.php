@@ -15,7 +15,7 @@ class CreateHomologacionTable extends Migration
     {
         Schema::create('homologacion', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre',20)->unique()->required();
+            $table->string('nombre',100)->unique()->required();
             $table->timestamps();
         });
     }

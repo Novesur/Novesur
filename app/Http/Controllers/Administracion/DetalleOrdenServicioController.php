@@ -9,21 +9,24 @@ use Illuminate\Http\Request;
 
 class DetalleOrdenServicioController extends Controller
 {
-    public function view(Request $request){
+    public function view(Request $request)
+    {
 
 
-        $dato = Detalleordenservicio::with('ordenservicio','unidmedida','producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia')->where('ordenservicio_id', $request->item)->get();
+        $dato = Detalleordenservicio::with('ordenservicio', 'unidmedida', 'producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia')->where('ordenservicio_id', $request->item)->get();
         return $dato;
     }
 
-    public function viewDetalleOrdenServicio(Request $request){
+    public function viewDetalleOrdenServicio(Request $request)
+    {
 
         $ordenServicio = Ordenservicio::where('codigo', $request->item)->first();
-        $dato = Detalleordenservicio::with('ordenservicio','unidmedida','producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia')->where('ordenservicio_id', $ordenServicio->id)->get();
+        $dato = Detalleordenservicio::with('ordenservicio', 'unidmedida', 'producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia')->where('ordenservicio_id', $ordenServicio->id)->get();
         return $dato;
     }
 
-    public function addOrdenEdit(Request $request){
+    public function addOrdenEdit(Request $request)
+    {
 
 
         $ordenServicio = Ordenservicio::where('codigo', $request->nidOrdenServicio)->first();
@@ -48,22 +51,22 @@ class DetalleOrdenServicioController extends Controller
         $detalleOrdenServicio->ordenservicio_id = $ordenServicio->id;
         $detalleOrdenServicio->producto_id = $request->nIdprod;
         $detalleOrdenServicio->cantidad = $request->cCantidad;
-        $detalleOrdenServicio->cantidadKardex = $request->cCantidad;
+        $detalleOrdenServicio->cantidadKardex = 0;
         $detalleOrdenServicio->unidmedida_id = $request->nIdUnidMed;
-        $detalleOrdenServicio->punit = $request-> cPrecio;
+        $detalleOrdenServicio->punit = $request->cPrecio;
         $detalleOrdenServicio->estado =  $detalleOrdenServicioData->estado;
         $detalleOrdenServicio->save();
-
     }
 
-    public function CargaDetalleOrdenServicioEdit(Request $request){
+    public function CargaDetalleOrdenServicioEdit(Request $request)
+    {
 
         $data = Detalleordenservicio::find($request->item);
-     return $data;
-
+        return $data;
     }
 
-    public function ModalSaveItemsDetalleOS(Request $request){
+    public function ModalSaveItemsDetalleOS(Request $request)
+    {
         $detalleOrdenServicio = Detalleordenservicio::find($request->id);
         $detalleOrdenServicio->ordenservicio_id = $detalleOrdenServicio->ordenservicio_id;
         $detalleOrdenServicio->producto_id = $request->nIdprodEdit;
@@ -75,9 +78,35 @@ class DetalleOrdenServicioController extends Controller
         $detalleOrdenServicio->save();
     }
 
-    public function DeleteItemDetalleOrdenServicio(Request $request){
+    public function DeleteItemDetalleOrdenServicio(Request $request)
+    {
         $detalle = Detalleordenservicio::find($request->item);
         $detalle->delete();
+    }
 
-     }
+    public function setMandarValorDetalleParteSalidaXId(Request $request)
+    {
+        $dato = Detalleordenservicio::where('id', $request->item)->first();
+       
+        return $dato;
+    }
+
+    public function setAddCantidadParteSali(Request $request)
+    {
+        
+        $detalleOs = Detalleordenservicio::where('id', $request->item)->first();
+        $cCantidadModal = $request->cCantidadModal;
+
+
+        if ($cCantidadModal > $detalleOs->cantidad ) {
+            return response()->json(['message' => 'Cantidad menos de lo permitido', 'icon' => 'info'], 200);
+        }
+
+        if ($cCantidadModal <= 0 ) {
+            return response()->json(['message' => 'Valor no permitido', 'icon' => 'info'], 200);
+        } else {
+            Detalleordenservicio::where('id', $request->item)->update(['canting' => $cCantidadModal]);
+        }
+        return response()->json(['message' => 'cantidad agregada', 'icon' => 'success'], 200);
+    }
 }

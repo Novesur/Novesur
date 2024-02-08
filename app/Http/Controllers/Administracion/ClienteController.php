@@ -223,4 +223,9 @@ class ClienteController extends Controller
         return $dato;
 
     }
+
+    public function listDataCliente(Request $request){
+        $dato = Cliente::with('user')->where('id', $request->nIdCliente)->first();
+        return $dato;
+    }
 }

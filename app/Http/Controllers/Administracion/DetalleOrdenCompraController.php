@@ -56,6 +56,10 @@ class DetalleOrdenCompraController extends Controller
         $detalleOc = Detalleordencompra::where('id', $request->item)->first();
         $cCantidadModal = $request->cCantidadModal;
 
+        
+        if ($cCantidadModal > $detalleOc->cantidad ) {
+            return response()->json(['message' => 'Cantidad menos de lo permitido', 'icon' => 'info'], 200);
+        }
         if ($cCantidadModal <= 0) {
             return response()->json(['message' => 'Valor no permitido', 'icon' => 'info'], 200);
         } else {

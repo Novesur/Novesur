@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Administracion;
 
 use App\DetalleKardex;
 use App\Detalleordencompra;
+use App\Detalleordenservicio;
 use App\DetalleParteIngSali;
 use App\Http\Controllers\Controller;
 use App\Kardex;
 use App\Ordencompra;
+use App\Ordenservicio;
 use App\ParteIngSali;
 use App\Producto;
 use App\User;
@@ -15,6 +17,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Builder;
 
 class ParteInSaliController extends Controller
 {
@@ -90,7 +93,7 @@ class ParteInSaliController extends Controller
         $detalleKardex->save();
     }
 
-    public function saveParteIngreso(Request $request)
+    public function saveParteIngresoOC(Request $request)
     {
 
         $formatreq = date("Y-m-d");
@@ -122,6 +125,9 @@ class ParteInSaliController extends Controller
         $parteIngreso->cliente_id = 202;
         $parteIngreso->movimiento_id = 1;
         $parteIngreso->estadopedido_id = 2;
+        $parteIngreso->Nroordenservicio = NULL;
+        $parteIngreso->tipo_orden = 'C';
+        
 
         $parteIngreso->save();
 
@@ -214,6 +220,135 @@ class ParteInSaliController extends Controller
             }
             return response()->json(['message' => 'Grabado con exitos', 'icon' => 'success'], 200);
         }
+    }
+
+    public function saveParteIngresoOS(Request $request){
+
+        $formatreq = date("Y-m-d");
+
+        $formatYear = date("Y");
+        $user = User::where('id', $request->nIdUser)->first();
+
+        ///  Graba Parte de Ingreso  //////////////
+        $parteIngreso = new ParteIngSali();
+        // $date = Carbon::now();
+        $countParteIngSali = ParteIngSali::count();
+        $Oc = Ordenservicio::where('codigo', $request->cOrdenServicio)->first();
+        //$date = Carbon::parse($request->cFecha)->format('Y-m-d');
+        if ($countParteIngSali == 0) {
+            $codPi = 'PI0001' . '-' . $formatYear;
+        } else {
+            $codPi = 'PI' . sprintf('%04d',  $countParteIngSali + 1) . '-' . $formatYear;
+        }
+        $parteIngreso->codigo =  $codPi;
+        $parteIngreso->Nrofactura = mb_strtoupper($request->nroFactura);
+        $parteIngreso->Nroguia = mb_strtoupper($request->nroguia);
+        $parteIngreso->Nroordencompras = NULL;
+        $parteIngreso->proveedor_id = $Oc->proveedor_id;
+        $parteIngreso->motivo_id = $request->nIdMotivo;
+        $parteIngreso->Fecha = $formatreq;
+        $parteIngreso->observacion = mb_strtoupper($request->cobservacion);
+        $parteIngreso->user_id = $request->nIdUser;
+        $parteIngreso->almacen_id = $request->nIdAlmacen;
+        $parteIngreso->cliente_id = 202;
+        $parteIngreso->movimiento_id = 1;
+        $parteIngreso->estadopedido_id = 2;
+        $parteIngreso->Nroordenservicio = $request->cOrdenServicio;
+        $parteIngreso->tipo_orden = 'S';
+        
+
+        $parteIngreso->save();
+
+        /// Graba Parte de DetalleParteIngreso  //////////////
+        $DOs = Detalleordenservicio::where('ordenservicio_id', $Oc->id)->where('canting', '>', 0)->get();
+        //$DOc = Detalleordencompra::where('ordencompras_id', $Oc->id)->where('grabado', '1')->where('canting', '>', 0)->get();
+
+
+        if ($DOs) {
+            foreach ($DOs as  $datOc) {
+
+                $resultado = intval($datOc->canting) >= 0;
+
+                if ($resultado) {
+                    $detalleParteIngreso = new DetalleParteIngSali;
+                    $detalleParteIngreso->parte_ing_sali_id = $parteIngreso->id;
+                    $detalleParteIngreso->producto_id = $datOc->producto_id;
+                    $detalleParteIngreso->cantidad = $datOc->canting;
+                    $detalleParteIngreso->unidmedida_id =  $datOc->unidmedida_id;
+                    $detalleParteIngreso->punit = $datOc->punit;
+
+                    //Si es completo
+
+                    if ($datOc->cantidad == $datOc->canting) {
+                        $detalleParteIngreso->estadopedido_id = 2;
+                    } else {
+                        $detalleParteIngreso->estadopedido_id = 4;
+                    }
+                    $detalleParteIngreso->save();
+                }
+                /// Grabamos Kardex  //////////////
+
+                Detalleordenservicio::where('id', $datOc->id)->update(['cantidadKardex' => intval($datOc->cantidadKardex) + intval($datOc->canting)]);
+
+                if ($datOc->cantidad == ($datOc->cantidadKardex + $datOc->canting)) {
+                    Detalleordenservicio::where('producto_id', $datOc->producto_id)->update(['estado' => 1]);
+                }
+
+
+                $kardexCount = Kardex::where('producto_id', $datOc->producto_id)->count(); 
+
+                if ($kardexCount === 0) {
+                    $kardex = new Kardex;
+                    $kardex->producto_id = $datOc->producto_id;
+                    $kardex->stock = $datOc->cantidadKardex + intval($datOc->canting);
+                    $kardex->costunit = $datOc->punit;
+                    $kardex->diferencia = 0;
+                    $kardex->save();
+
+
+                    $detalleKardex = new DetalleKardex();
+                    $detalleKardex->kardex_id = $kardex->id;
+                    $detalleKardex->fecha = $formatreq;
+                    $detalleKardex->FactNo = mb_strtoupper($request->nroFactura);
+                    $detalleKardex->GuiaNo = mb_strtoupper($request->nroguia);
+                    $detalleKardex->proveedor_id = $Oc->proveedor_id;
+                    $detalleKardex->motivo_id = $request->nIdMotivo;
+                    $detalleKardex->unidmedida_id = $datOc->unidmedida_id;
+                    $detalleKardex->cantidad = $datOc->cantidadKardex + intval($datOc->canting);
+                    $detalleKardex->costunit = $datOc->punit;
+                    $detalleKardex->movimiento_id = 1;
+                    $detalleKardex->user_id = $request->nIdUser;
+                    $detalleKardex->cliente_id = 202;
+                    $detalleKardex->save();
+                    Detalleordenservicio::where('id', $datOc->id)->update(['canting' => '0']);
+                } else {
+
+                    Kardex::where('producto_id', $datOc->producto_id)->update(['stock' => $datOc->cantidadKardex + intval($datOc->canting)]);
+
+
+
+                    $kardex =  Kardex::where('producto_id', $datOc->producto_id)->first();
+                    $detalleKardex = new DetalleKardex();
+                    $detalleKardex->kardex_id = $kardex->id;
+                    $detalleKardex->fecha = $formatreq;
+                    $detalleKardex->FactNo = mb_strtoupper($request->nroFactura);
+                    $detalleKardex->GuiaNo = mb_strtoupper($request->nroguia);
+                    $detalleKardex->proveedor_id = $Oc->proveedor_id;
+                    $detalleKardex->motivo_id = $request->nIdMotivo;
+                    $detalleKardex->unidmedida_id = $datOc->unidmedida_id;
+                    $detalleKardex->cantidad = $datOc->canting;
+                    $detalleKardex->costunit = $datOc->punit;
+                    $detalleKardex->movimiento_id = 1;
+                    $detalleKardex->user_id = $request->nIdUser;
+                    $detalleKardex->cliente_id = 202;
+                    $detalleKardex->save();
+                    Detalleordenservicio::where('id', $datOc->id)->update(['canting' => '0']);
+                }
+                Producto::where('id', $datOc->producto_id)->update(['stock' => $datOc->cantidadKardex + intval($datOc->canting)]);
+            }
+            return response()->json(['message' => 'Grabado con exitos', 'icon' => 'success'], 200);
+        }
+
     }
 
 
@@ -322,7 +457,41 @@ class ParteInSaliController extends Controller
             $nIdAlmacen 
         ]);
         return $rpta;  
-
-
     }
+    public function ListarDatosOrdenCompra(Request $request)
+    {
+
+        $cOrdenComPra = $request->cOrdenComPra;
+
+        $dato = Detalleordencompra::with('ordencompras', 'unidmedida', 'producto', 'producto.familia', 'producto.subfamilia', 'producto.modelotipo', 'producto.marca', 'producto.material', 'producto.homologacion', 'ordencompras.proveedor', 'ordencompras.estadoordencompra')
+            /* ->where('estado', 2) */
+            ->whereHas('ordencompras', function (Builder $query) use ($cOrdenComPra) {
+                $query->where('codigo', $cOrdenComPra);
+            })->get();
+        return $dato;
+    }
+
+    public function ListarDatosOrdenServicio(Request $request)
+    {
+
+        $cOrdenServicio = $request->cOrdenServicio;
+        $dato = Detalleordenservicio::with('ordenservicio', 'unidmedida', 'producto', 'producto.familia', 'producto.subfamilia', 'producto.modelotipo', 'producto.marca', 'producto.material', 'producto.homologacion', 'ordenservicio.proveedor', 'ordenservicio.estadoordencompra')
+            ->whereHas('ordenservicio', function (Builder $query) use ($cOrdenServicio) {
+                $query->where('codigo', $cOrdenServicio);
+            })->get();
+        return $dato;
+    }
+
+    
+
+    public function eliminarTemporder()
+    {
+        Session::put('products', null);
+        $dato = session()->get('products') ?? collect([]);
+        return response()->json(['datos' => $dato]);
+    }
+
+
+    
+    
 }

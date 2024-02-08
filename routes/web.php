@@ -164,6 +164,9 @@ Route::post('/administracion/cliente/consultaRuc', 'Administracion\ClienteContro
 Route::post('/administracion/cliente/consultaDNI', 'Administracion\ClienteController@consultaDNI');
 Route::post('/administracion/cliente/UpdateClientVendedor', 'Administracion\ClienteController@UpdateClientVendedor');
 Route::get('/administracion/cliente/listClientesByIdCoti', 'Administracion\ClienteController@listClientesByIdCoti');
+Route::post('/administracion/cliente/listDataCliente', 'Administracion\ClienteController@listDataCliente');
+
+
 
 
 //DetalleCotizacion
@@ -252,7 +255,7 @@ Route::post('/administracion/articulo/store', 'Administracion\ArticuloController
 Route::get('/administracion/articulo/listArticulosById', 'Administracion\ArticuloController@listArticulosById');
 
 /// Parte de Ingreso
-Route::post('/administracion/parteIngreso/ListarDatosOrdenCompra', 'Administracion\ParteIngresoController@ListarDatosOrdenCompra');
+
 Route::post('/administracion/parteIngreso/CambiarEstadoDetalleOC', 'Administracion\ParteIngresoController@CambiarEstadoDetalleOC');
 Route::post('/administracion/parte_ingreso/setGrabarPIngreso', 'Administracion\ParteIngresoController@setGrabaPIngreso');
 Route::get('/administracion/parte_ingreso/ListParteIngreso', 'Administracion\ParteIngresoController@ListParteIngreso');
@@ -268,11 +271,13 @@ Route::get('/administracion/parte_ingreso/ListParteIngresoxProduct', 'Administra
 
 //Parte ingresoSalida
 Route::post('/administracion/parteingSalida/create', 'Administracion\ParteInSaliController@create');
-Route::post('/administracion/parteingSalida/saveParteIngreso', 'Administracion\ParteInSaliController@saveParteIngreso');
+Route::post('/administracion/parteingSalida/saveParteIngresoOC', 'Administracion\ParteInSaliController@saveParteIngresoOC');
 Route::post('/administracion/parteingSalida/saveParteSalida', 'Administracion\ParteInSaliController@saveParteSalida');
 Route::get('/administracion/parteingSalida/listStockByproduct', 'Administracion\ParteInSaliController@listStockByproduct');
 Route::post('/administracion/parteingSalida/StockProductByAlmacen', 'Administracion\ParteInSaliController@StockProductByAlmacen');
-
+Route::post('/administracion/parteingSalida/ListarDatosOrdenCompra', 'Administracion\ParteInSaliController@ListarDatosOrdenCompra');
+Route::post('/administracion/parteingSalida/ListarDatosOrdenServicio', 'Administracion\ParteInSaliController@ListarDatosOrdenServicio');
+Route::post('/administracion/parteingSalida/saveParteIngresoOS', 'Administracion\ParteInSaliController@saveParteIngresoOS');
 
 /// Garantia
 Route::get('/administracion/garantia/index', 'Administracion\GarantiaController@index');
@@ -374,6 +379,11 @@ Route::post('/administracion/DetalleOrdenservicio/CargaDetalleOrdenServicioEdit'
 Route::post('/administracion/DetalleOrdenservicio/ModalSaveItemsDetalleOS', 'Administracion\DetalleOrdenServicioController@ModalSaveItemsDetalleOS');
 Route::post('/administracion/DetalleOrdenservicio/DeleteItemDetalleOrdenServicio', 'Administracion\DetalleOrdenServicioController@DeleteItemDetalleOrdenServicio');
 Route::get('/administracion/DetalleOrdenservicio/viewDetalleOrdenServicio', 'Administracion\DetalleOrdenServicioController@viewDetalleOrdenServicio');
+Route::post('/administracion/DetalleOrdenservicio/setMandarValorDetalleParteSalidaXId', 'Administracion\DetalleOrdenServicioController@setMandarValorDetalleParteSalidaXId');
+Route::post('/administracion/DetalleOrdenservicio/setAddCantidadParteSali', 'Administracion\DetalleOrdenServicioController@setAddCantidadParteSali');
+
+
+
 
 
 ///Menus
@@ -639,6 +649,19 @@ Route::get('/administracion/asistencia/listAsistByDate', 'Administracion\Asisten
 Route::get('/administracion/asistencia/listByDatePersonal', 'Administracion\AsistenciaController@listByDatePersonal');
 Route::post('/operacion/Asistencia/reporteByDateAsistExcel', 'Administracion\AsistenciaController@reporteByDateAsistExcel');
 
+/* Distrito */
+Route::get('/administracion/distrito/index', 'Administracion\DistritoController@index');
+/* Estado de la Obra */
+Route::get('/administracion/EstadoObra/list', 'Administracion\EstadoObraController@list');
+/* Visita de Obra */
+Route::post('/administracion/visita/create', 'Administracion\VisitaController@create');
+Route::get('/administracion/visita/list', 'Administracion\VisitaController@list');
+Route::post('/operacion/visita/export', 'Administracion\VisitaController@export');
+
+
+
+/* Personal Contacto */
+Route::get('/administracion/personalContacto/list', 'Administracion\PersonalContactoController@list');
 
 
 

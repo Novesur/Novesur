@@ -26,7 +26,7 @@
                         <div class="card card-info">
                             <div class="card-header">
                                 <h3 class="card-title">
-                                    Formulario Parte de Ingreso
+                                    Formulario Parte de Salida
                                 </h3>
                             </div>
                             <div class="card-body">

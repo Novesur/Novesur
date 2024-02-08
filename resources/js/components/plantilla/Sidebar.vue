@@ -323,6 +323,25 @@
                                     </router-link>
                                 </template>
                             </li>
+
+                            <li class="nav-item">
+                                <template v-if="listPermisos.includes('visitas.create')">
+                                    <router-link class="nav-link" :to="'/visitas/create'">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Gestión de Visitas</p>
+                                    </router-link> 
+                                </template>
+                            </li>
+
+                            <li class="nav-item">
+                                <template v-if="listPermisos.includes('visitas.list')">
+                                    <router-link class="nav-link" :to="'/visitas/list'">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Reporte de Visitas</p>
+                                    </router-link> 
+                                </template>
+                            </li>
+
                         </ul>
                     </li>
 
