@@ -55,6 +55,7 @@ class DetalleOrdenServicioController extends Controller
         $detalleOrdenServicio->unidmedida_id = $request->nIdUnidMed;
         $detalleOrdenServicio->punit = $request->cPrecio;
         $detalleOrdenServicio->estado =  $detalleOrdenServicioData->estado;
+        $detalleOrdenServicio->canting =  0;
         $detalleOrdenServicio->save();
     }
 
@@ -75,6 +76,7 @@ class DetalleOrdenServicioController extends Controller
         $detalleOrdenServicio->unidmedida_id = $request->nIdUnidMedEdit;
         $detalleOrdenServicio->punit = $request->cPUnitEdit;
         $detalleOrdenServicio->estado = $detalleOrdenServicio->estado;
+        $detalleOrdenServicio->canting =  0;
         $detalleOrdenServicio->save();
     }
 
@@ -87,13 +89,13 @@ class DetalleOrdenServicioController extends Controller
     public function setMandarValorDetalleParteSalidaXId(Request $request)
     {
         $dato = Detalleordenservicio::where('id', $request->item)->first();
-       
+
         return $dato;
     }
 
     public function setAddCantidadParteSali(Request $request)
     {
-        
+
         $detalleOs = Detalleordenservicio::where('id', $request->item)->first();
         $cCantidadModal = $request->cCantidadModal;
 

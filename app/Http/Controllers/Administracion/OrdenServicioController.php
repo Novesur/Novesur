@@ -89,10 +89,12 @@ class OrdenServicioController extends Controller
                     'ordenservicio_id'   => $ordenServicio->id,
                     'producto_id'       => $product->producto_id,
                     'cantidad'          => $product->cantidad,
-                    'cantidadKardex'    => $product->cantidad,
+                    'cantidadKardex'    => 0,
                     'unidmedida_id'     => $product->unidmedida_id,
                     'punit'             => $product->punit,
                     'estado'            => 1,
+                    'canting'            => 0,
+
                 ];
             });
             DetalleordenServicio::insert($allProducts->toArray());
