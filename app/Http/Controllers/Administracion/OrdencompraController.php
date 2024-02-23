@@ -266,6 +266,7 @@ class OrdencompraController extends Controller
 
     public function exportPrecioOcExcelxProduct(Request $request){ 
         $listOrdenPedidoXProduct = json_decode($request->params['listOrdenPedidoXProduct']);
+    
         return (new ListPrecprodExport)->setGenerarExcel($listOrdenPedidoXProduct)->download('invoices.xlsx');
 
     }

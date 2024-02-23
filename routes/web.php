@@ -144,6 +144,8 @@ Route::post('/administracion/reportes/movimientoxProducto', 'Administracion\Repo
 ///  Almacen
 Route::get('/administracion/almacen/listAlmacen', 'Administracion\AlmacenController@index');
 Route::get('/administracion/almacen/AlmacenbyEstado', 'Administracion\AlmacenController@AlmacenbyEstado');
+Route::get('/administracion/almacen/AlmacenLlegada', 'Administracion\AlmacenController@AlmacenLlegada');
+
 
 
 
@@ -165,6 +167,8 @@ Route::post('/administracion/cliente/consultaDNI', 'Administracion\ClienteContro
 Route::post('/administracion/cliente/UpdateClientVendedor', 'Administracion\ClienteController@UpdateClientVendedor');
 Route::get('/administracion/cliente/listClientesByIdCoti', 'Administracion\ClienteController@listClientesByIdCoti');
 Route::post('/administracion/cliente/listDataCliente', 'Administracion\ClienteController@listDataCliente');
+Route::post('/administracion/cliente/BuscaRucBD', 'Administracion\ClienteController@BuscaRucBD');
+
 
 
 
@@ -662,6 +666,15 @@ Route::post('/operacion/visita/export', 'Administracion\VisitaController@export'
 
 /* Personal Contacto */
 Route::get('/administracion/personalContacto/list', 'Administracion\PersonalContactoController@list');
+
+
+/* Guia de Remision  */
+Route::get('/administracion/GuiaRemision/tipotraslado', 'Administracion\GuiaRemisionController@tipoTraslado');
+Route::get('/administracion/GuiaRemision/ListModTransporte', 'Administracion\GuiaRemisionController@ListModTransporte');
+Route::post('/operacion/GuiaRemision/create', 'Administracion\GuiaRemisionController@create');
+Route::post('/administracion/GuiaRemision/addProduct', 'Administracion\GuiaRemisionController@addProduct');
+Route::get('/administracion/GuiaRemision/ListtempGuiaRemision', 'Administracion\GuiaRemisionController@ListtempGuiaRemision');
+Route::post('/administracion/GuiaRemision/eliminarTemporder', 'Administracion\GuiaRemisionController@eliminarTemporder');
 
 
 

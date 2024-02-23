@@ -35,6 +35,8 @@ class CreateParteIngSaliTable extends Migration
             $table->foreign('movimiento_id')->references('id')->on('movimiento');
             $table->unsignedBigInteger('estadopedido_id');
             $table->foreign('estadopedido_id')->references('id')->on('estadopedido');
+            $table->string('Nroordenservicio',20)->nullable();
+            $table->enum('tipo_orden', ['C', 'S', 'N']);
             $table->timestamps();
             $table->softDeletes();
         });

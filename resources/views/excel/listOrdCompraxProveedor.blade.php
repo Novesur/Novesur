@@ -14,7 +14,7 @@
             <th>FECHA</th>
             <th>COD PROD</th>
             <th>PRODUCTO</th>
-            <th>TIPO DE CAMBIO</th>
+            <th>MONEDA</th>
             <th>CANTIDAD</th>
             <th>PRECIO</th>
             <th>TOTAL</th>

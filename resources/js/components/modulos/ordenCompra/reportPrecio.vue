@@ -115,7 +115,7 @@
                             <th>PROVEEDOR</th>
                             <th>COD PRODUCT</th>
                             <th>PRODUCTO</th>
-                            <th>TIPO DE CAMBIO</th>
+                            <th>MONEDA</th>
                             <th>CANTIDAD</th>
                             <th>PRECIO</th>
                             <th>TOTAL</th>
@@ -139,12 +139,9 @@
                             ></td>
 
                           </template>
-                          <template v-else>
-                            <td>ANULADO</td>
-                            <td></td>
-                            <td></td>
-                          </template>
-
+                      
+                          
+                          <template v-if="item.ordencompras">
                           <td v-text="item.producto.codigo"></td>
 
                           <td v-text="item.producto.familia.nombre  +
@@ -159,22 +156,21 @@
                                         ' ,' +
                                         item.producto.homologacion.nombre "></td>
 
-
+                          </template> 
                           <!--   <td v-text="item.ordencompras.tipocambio.nombre"></td> -->
 
 
                           <template v-if="item.ordencompras">
                             <td  v-text="item.ordencompras.tipocambio.nombre"></td>
 
-                          </template>
-                          <template v-else>
-                              <td></td>
-                          </template>
-
-
+                            
+                            
+                            
+                            
                             <td v-text="item.cantidad"></td>
                             <td   v-text="Number(item.punit).toFixed(4)"></td>
                             <td v-text="Number(item.cantidad * item.punit).toFixed(2)"></td>
+                          </template>
 
                           <!--   <td> 
                               <button

@@ -18,6 +18,7 @@ class CreateAlmacenTable extends Migration
             $table->string('nombre',20)->unique()->required();
             $table->char('codigo',20);
             $table->char('estado',1);
+            $table->string('direccion',150)->nullable();
         });
     }
 

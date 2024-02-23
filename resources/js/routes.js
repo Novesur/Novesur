@@ -557,7 +557,7 @@ export default new Router({
         },
 
         {
-            path: "/guiaremision/create/:id",
+            path: "/guiaremision/create",
             name: "guiaremision.create",
             component: require("./components/modulos/guiaremision/create")
                 .default,
@@ -794,6 +794,7 @@ export default new Router({
             name: "visitas.list",
             component: require("./components/modulos/visitas/list").default,
         },
+
 
 
     ],

@@ -228,4 +228,11 @@ class ClienteController extends Controller
         $dato = Cliente::with('user')->where('id', $request->nIdCliente)->first();
         return $dato;
     }
+
+    public function BuscaRucBD(Request $request){
+
+        $dato = Cliente::where('ruc', $request->nIdRuc)->first();
+        return $dato;
+
+    }
 }

@@ -25,6 +25,8 @@ class CreateCountableTable extends Migration
             $table->integer('countordenservicioPiura')->required();
             $table->integer('countProyectReqMaterial')->required();
             $table->integer('countInformeValorizacion')->required();
+            $table->integer('countGuiaInterna')->required();
+            $table->integer('countGuiaExterna')->required();
            
         });
     }

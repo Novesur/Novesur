@@ -60,6 +60,8 @@ class ParteInSaliController extends Controller
         $detalleParteIngSali->unidmedida_id =  $request->nIdUnidMed;
         $detalleParteIngSali->punit = $request->punit;
         $detalleParteIngSali->estadopedido_id = 2;
+        $detalleParteIngSali->Nroordenservicio = NULL;
+        $detalleParteIngSali->tipo_orden = 'N';
         $detalleParteIngSali->save();
 
         $countKardex = Kardex::where('producto_id', $request->nIdprod)->count();

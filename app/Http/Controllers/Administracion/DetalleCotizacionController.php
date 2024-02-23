@@ -31,7 +31,7 @@ class DetalleCotizacionController extends Controller
     {
         $idcoti = Cotizacion::where('codigo',$request->item)->first();
 
-       
+
 
         $dato = DetalleCotizacion::with('unidmedida','producto','producto.marca','producto.familia','producto.material','producto.modelotipo','producto.subfamilia','producto.homologacion')->where('cotizacion_id', $idcoti->id)->get();
         return $dato;
@@ -62,12 +62,12 @@ class DetalleCotizacionController extends Controller
         //dd($request);
 
 
-       $detalle = DetalleCotizacion::with('producto')->where('id', $request->item)->first(); 
+       $detalle = DetalleCotizacion::with('producto')->where('id', $request->item)->first();
 
        $producto = Producto::find($request->nIdprodEdit);
-       
+
       $cotizacion = Cotizacion::with('cliente')->where('id',$detalle->cotizacion_id)->first();
-  
+
   //dd($producto->precioSugerido > $request->cPUnitEdit);
 
 
@@ -88,13 +88,13 @@ class DetalleCotizacionController extends Controller
         'unidmedida_id' => $request->nIdUnidMedEdit,
         'producto_id' => $request->nIdprodEdit,
         'punit' =>   $request->cPUnitEdit,
-            ]); 
-            return response()->json(['message' => 'Detalle editado', 'icon' => 'success'],200); 
+            ]);
+            return response()->json(['message' => 'Detalle editado', 'icon' => 'success'],200);
         }
 
 
 
-         if($producto->precioSugerido < $request->cPUnitEdit  ){
+         if($producto->precioSugerido > $request->cPUnitEdit  ){
             return response()->json(['message' => 'El monto minimo es' . ' ' . $producto->precioSugerido, 'icon' => 'error'],200);
         }else{
             DetalleCotizacion::where('id', $request->item)
@@ -104,7 +104,7 @@ class DetalleCotizacionController extends Controller
         'producto_id' => $request->nIdprodEdit,
         'punit' =>   $request->cPUnitEdit,
             ]);
-            return response()->json(['message' => 'Detalle editado', 'icon' => 'success'],200); 
+            return response()->json(['message' => 'Detalle editado', 'icon' => 'success'],200);
         }
 
         if($producto->precioDistribuidor > 0 ){
@@ -120,8 +120,8 @@ class DetalleCotizacionController extends Controller
         'punit' =>   $request->cPUnitEdit,
             ]);
         }
-        return response()->json(['message' => 'Detalle editado', 'icon' => 'success'],200); 
-    } 
+        return response()->json(['message' => 'Detalle editado', 'icon' => 'success'],200);
+    }
 
       }
 
@@ -138,7 +138,7 @@ class DetalleCotizacionController extends Controller
         'producto_id' => $request->nIdprodEdit,
         'punit' =>   $request->cPUnitEdit,
             ]);
-            return response()->json(['message' => 'Detalle editado', 'icon' => 'success'],200); 
+            return response()->json(['message' => 'Detalle editado', 'icon' => 'success'],200);
         }
 
 
@@ -155,7 +155,7 @@ class DetalleCotizacionController extends Controller
         'punit' =>   $request->cPUnitEdit,
             ]);
         }
-        return response()->json(['message' => 'Detalle editado', 'icon' => 'success'],200); 
+        return response()->json(['message' => 'Detalle editado', 'icon' => 'success'],200);
 
       }
 
@@ -166,7 +166,7 @@ class DetalleCotizacionController extends Controller
         ->where('cotizacion_id', $request->nIdCotizacion)
         ->where('EstadoNotPedido', '1')
         ->get();
-        return $dato; 
+        return $dato;
 
     }
 

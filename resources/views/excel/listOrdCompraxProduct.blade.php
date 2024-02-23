@@ -15,7 +15,7 @@
           <th>PROVEEDOR</th>
           <th>COD PRODUCT</th>
           <th>PRODUCTO</th>
-          <th>TIPO CAMBIO</th>
+          <th>MONEDA</th>
           <th>CANTIDAD</th>
             <th>PRECIO</th>
             <th>TOTAL</th>
@@ -49,8 +49,11 @@
 
                 <td>{{$data->cantidad}}</td>
                 <td>{{round($data->punit,4)}}</td>
+                @if ($data->ordencompras)
                 <td>{{round($data->cantidad * $data->punit,4) }}</td>
-
+                @else
+  <td></td>
+                    @endif
 
      
             </tr>

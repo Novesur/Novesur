@@ -620,14 +620,31 @@
                                  </template>
                             </li>
 
-                         <!--    <li class="nav-item">
-                                <template v-if="listPermisos.includes('parte_salida.list')">
-                                <router-link  class="nav-link" :to="'/parte_salida/list'">
+                
+                        </ul>
+                    </li>
+
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-circle"></i>
+                            <p>
+                                Guia de Remisión
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                 <template v-if="listPermisos.includes('guiaremision.create')">
+                                   <router-link class="nav-link" :to="'/guiaremision/create'">
+
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Consulta</p>
+                                    <p>Movimiento de Almacen</p>
                                 </router-link>
-                                </template>
-                            </li> -->
+
+                                 </template>
+                            </li>
+
+                
                         </ul>
                     </li>
 
