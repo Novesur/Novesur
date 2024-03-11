@@ -138,7 +138,8 @@ class ClienteController extends Controller
                 $cliente->atencion = mb_strtoupper($request->cAtencion);
                 $cliente->telefono = $request->cTelefono;
                 $cliente->celular = $request->cCelular;
-                $cliente->email = $request->cEmail;
+                //$cliente->email = $request->cEmail;
+                $cliente->email = $cliente->email;
                 $cliente->usuario_id = $cliente->usuario_id;
                 $cliente->tipoPrecio = $request->ctipoPrecio;
                 $cliente->save();

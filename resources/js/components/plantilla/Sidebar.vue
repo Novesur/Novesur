@@ -634,11 +634,26 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                 <template v-if="listPermisos.includes('guiaremision.create')">
-                                   <router-link class="nav-link" :to="'/guiaremision/create'">
+                                 <template v-if="listPermisos.includes('MovimientoAlmacen.create')">
+                                   <router-link class="nav-link" :to="'/MovimientoAlmacen/create'">
 
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Movimiento de Almacen</p>
+                                </router-link>
+
+                                 </template>
+                            </li>
+
+                
+                        </ul>
+
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                 <template v-if="listPermisos.includes('MovimientoAlmacen.list')">
+                                   <router-link class="nav-link" :to="'/MovimientoAlmacen/list'">
+
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Listado de Movimientos</p>
                                 </router-link>
 
                                  </template>

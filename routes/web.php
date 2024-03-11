@@ -669,12 +669,28 @@ Route::get('/administracion/personalContacto/list', 'Administracion\PersonalCont
 
 
 /* Guia de Remision  */
-Route::get('/administracion/GuiaRemision/tipotraslado', 'Administracion\GuiaRemisionController@tipoTraslado');
-Route::get('/administracion/GuiaRemision/ListModTransporte', 'Administracion\GuiaRemisionController@ListModTransporte');
-Route::post('/operacion/GuiaRemision/create', 'Administracion\GuiaRemisionController@create');
-Route::post('/administracion/GuiaRemision/addProduct', 'Administracion\GuiaRemisionController@addProduct');
-Route::get('/administracion/GuiaRemision/ListtempGuiaRemision', 'Administracion\GuiaRemisionController@ListtempGuiaRemision');
-Route::post('/administracion/GuiaRemision/eliminarTemporder', 'Administracion\GuiaRemisionController@eliminarTemporder');
+
+
+
+
+
+
+
+/* Movimiento de Almacen */
+Route::get('/administracion/MovimientoAlmacen/tipotraslado', 'Administracion\MovimientoAlmacenController@tipoTraslado');
+Route::get('/administracion/MovimientoAlmacen/ListModTransporte', 'Administracion\MovimientoAlmacenController@ListModTransporte');
+Route::post('/operacion/MovimientoAlmacen/create', 'Administracion\MovimientoAlmacenController@create');
+Route::post('/administracion/MovimientoAlmacen/addProduct', 'Administracion\MovimientoAlmacenController@addProduct');
+Route::get('/administracion/MovimientoAlmacen/ListtempGuiaRemision', 'Administracion\MovimientoAlmacenController@ListtempGuiaRemision');
+Route::post('/administracion/MovimientoAlmacen/eliminarTemporder', 'Administracion\MovimientoAlmacenController@eliminarTemporder');
+Route::get('/administracion/MovimientoAlmacen/list', 'Administracion\MovimientoAlmacenController@list'); 
+Route::get('/administracion/MovimientoAlmacen/getListDetMovAlmacen', 'Administracion\MovimientoAlmacenController@getListDetMovAlmacen');
+Route::post('/administracion/MovimientoAlmacen/procesar', 'Administracion\MovimientoAlmacenController@procesar');
+Route::post('/administracion/MovimientoAlmacen/MovimientoAlmacenPdf', 'Administracion\MovimientoAlmacenController@MovimientoAlmacenPdf');
+
+
+
+
 
 
 

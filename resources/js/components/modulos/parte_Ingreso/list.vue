@@ -607,6 +607,7 @@ export default {
           //this.inicializarPaginacion();
           // this.listMarca = response.data;
           this.listProveedorFecha = response.data;
+          console.log(response.data)
         });
     },
     getListarParteingresoxNroOrden() {

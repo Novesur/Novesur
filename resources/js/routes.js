@@ -549,7 +549,7 @@ export default new Router({
 
         ///  GUIA DE REMISION
 
-        {
+/*         {
             path: "/guiaremision/index",
             name: "/guiaremision.index",
             component: require("./components/modulos/guiaremision/index")
@@ -560,6 +560,24 @@ export default new Router({
             path: "/guiaremision/create",
             name: "guiaremision.create",
             component: require("./components/modulos/guiaremision/create")
+                .default,
+            props: true,
+        }, */
+
+        //Movimiento de Almacen
+
+        {
+            path: "/MovimientoAlmacen/create",
+            name: "MovimientoAlmacen.create",
+            component: require("./components/modulos/MovimientoAlmacen/create")
+                .default,
+            props: true,
+        },
+
+        {
+            path: "/MovimientoAlmacen/list", 
+            name: "MovimientoAlmacen.list",
+            component: require("./components/modulos/MovimientoAlmacen/list")
                 .default,
             props: true,
         },

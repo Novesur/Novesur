@@ -467,6 +467,215 @@
                             </div>
                         </div>
                                     </el-tab-pane>
+
+
+
+
+
+                                      <!-- BUSCAR POR FECHA -->
+                                      <el-tab-pane
+                                        label="Reporte Detallado"
+                                        name="tercer"
+                                    >
+                                        <form role="">
+
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label
+                                                            class="col-md-3 col-form-label"
+                                                            >Seleccione la Fecha</label
+                                                        >
+                                                        <div class="col-md-6">
+
+                                                            <el-date-picker
+                                                                v-model="
+                                                                    fillBsqReportePersonal.dFechaDetalle
+                                                                "
+                                                                type="daterange"
+                                                                range-separator="To"
+                                                                start-placeholder="Start date"
+                                                                end-placeholder="End date"
+                                                                value-format="yyyy-MM-dd"
+                                                                clearable
+                                                                :style="{
+                                                                    width: '530px',
+                                                                    height: '38px',
+                                                                }"
+                                                            >
+                                                            </el-date-picker>
+                                                      <!--       <el-date-picker
+                                                                v-model="
+                                                                    fillBsqReportePersonal.dFecha2
+                                                                "
+                                                                type="date"
+                                                                placeholder="Ingrese una Fecha"
+                                                                format="dd/MM/yyyy"
+                                                                value-format="yyyy-MM-dd"
+                                                             
+                                                            >
+                                                            </el-date-picker> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </form>
+                                        <div class="card-footer">
+                                <div class="row">
+                                    <div class="col-md-4 offset-4">
+                                        <button
+                                            class="btn btn-flat btn-info btnWidth3buttons"
+                                            @click.prevent="
+                                                getListReporteAsistenciaByDate
+                                            "
+                                        >
+                                            Buscar
+                                        </button>
+                                        <button
+                                            class="btn btn-flat btn-default btnWidth3buttons"
+                                            @click.prevent="limpiarCriteriosBsq"
+                                        >
+                                            Limpiar
+                                        </button>
+
+                                        <button
+                                            class="btn btn-flat btn-success btnWidth3buttons"
+                                            @click.prevent="reporteByDateAsistExcel"
+                                        >
+                                        <span><i class="fas fa-file-excel"></i> EXCEL</span>                                      
+                                      </button>
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card card-info">
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    Bandeja de Resultados
+                                </h3>
+                            </div>
+                            <div class="card-body table-responsive">
+                                <table
+                                    class="table table-hover table-head-fixed text-nowrap projects"
+                                >
+                                    <thead>
+                                        <tr>
+                                            <th>Fecha</th>
+                                            <th>Hora</th>
+                                            <th>Personal</th>
+                                            <th>DNI</th>
+                                            <th>Zona</th>
+                                            <th>Cargo</th>
+                                            <th>Estado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr
+                                            v-for="(
+                                                item, index
+                                            ) in listAsistenciaByDay"
+                                            :key="index"
+                                        >
+                                            <td v-text="item.fecha"></td>
+                                            <td v-text="item.tiempo"></td>
+                                            <td v-text="item.personal"></td>
+                                            <td v-text="item.DNI"></td>
+                                            <td v-text="item.zonal"></td>
+                                            <td v-text="item.cargo"></td>
+                                            <td v-text="item.estado"></td>
+                                            <!--     <td v-if="item.estado === 'A'">
+                                                Activo
+                                            </td>
+                                            <td v-else style="color: red">
+                                                Inactivo
+                                            </td>  -->
+
+                                            <!--           <td>
+                                                <router-link
+                                                    class="btn btn-info btn-sm"
+                                                    :to="{
+                                                        name: 'personal.edit',
+                                                        params: { id: item.id },
+                                                    }"
+                                                >
+                                                    <i
+                                                        class="fas fa-pencil-alt"
+                                                    ></i
+                                                    >Editar
+                                                </router-link>
+
+                                                <button
+                                                    class="btn btn-danger btn-sm"
+                                                    @click.prevent="
+                                                        setConfirmaDeletePersonal(
+                                                            item.id
+                                                        )
+                                                    "
+                                                >
+                                                    <i class="fas fa-trash"></i
+                                                    >Dar de Baja
+                                                </button>
+                                            </td> -->
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="card-footer clearfix">
+                                    <ul
+                                        class="pagination pagination-sm m-0 float-right"
+                                    >
+                                        <li
+                                            class="page-item"
+                                            v-if="pageNumber > 0"
+                                        >
+                                            <a
+                                                href=""
+                                                class="page-link"
+                                                @click.prevent="prevPage"
+                                                >Ant</a
+                                            >
+                                        </li>
+                                        <li
+                                            class="page-item"
+                                            v-for="(page, index) in pagesList"
+                                            :key="index"
+                                            :class="
+                                                page == pageNumber
+                                                    ? 'active'
+                                                    : ''
+                                            "
+                                        >
+                                            <a
+                                                href="#"
+                                                class="page-link"
+                                                @click.prevent="
+                                                    SelectPage(page)
+                                                "
+                                                >{{ page + 1 }}</a
+                                            >
+                                        </li>
+                                        <li
+                                            class="page-item"
+                                            v-if="pageNumber < pageCount - 1"
+                                        >
+                                            <a
+                                                href=""
+                                                class="page-link"
+                                                @click.prevent="nextPage"
+                                                >Post</a
+                                            >
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                                    </el-tab-pane>
+                                    
                                 </el-tabs>
                             </div>
                   
@@ -489,6 +698,7 @@ export default {
                 dFecha: "",
                 dFecha2: "",
                 cPersonal: "",
+                dFechaDetalle:""
             },
             activeName: "first",
             listPersonal: [],

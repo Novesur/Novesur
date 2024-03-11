@@ -36,6 +36,12 @@
     <td style="font-size: 14px"><strong>CANTIDAD :</strong></td>
     <td colspan="3" style="font-size: 12px">{{$InfoProduccion->cantidad}}</td>
   </tr>
+
+  <tr>
+    <td style="font-size: 14px"><strong>UNID. DE MEDIDA :</strong></td>
+    <td colspan="3" style="font-size: 12px">{{$InfoProduccion->unidmedida->nombre}}</td>
+  </tr>
+
   @if ($InfoProduccion->cliente->razonsocial == 'NINGUNO')
   <tr>
     <td style="font-size: 14px"><strong>ALMACEN:</strong></td>

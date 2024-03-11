@@ -27,6 +27,10 @@ class CreateCountableTable extends Migration
             $table->integer('countInformeValorizacion')->required();
             $table->integer('countGuiaInterna')->required();
             $table->integer('countGuiaExterna')->required();
+            $table->integer('countAlmacenGuiaExterna')->required();
+            $table->integer('countAlmacenGuiaInterna')->required();
+
+            
            
         });
     }
