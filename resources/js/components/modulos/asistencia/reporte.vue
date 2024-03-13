@@ -304,7 +304,7 @@
                                                                 placeholder="Ingrese una Fecha"
                                                                 format="dd/MM/yyyy"
                                                                 value-format="yyyy-MM-dd"
-                                                             
+
                                                             >
                                                             </el-date-picker> -->
                                                         </div>
@@ -336,7 +336,7 @@
                                             class="btn btn-flat btn-success btnWidth3buttons"
                                             @click.prevent="reporteByDateAsistExcel"
                                         >
-                                        <span><i class="fas fa-file-excel"></i> EXCEL</span>                                      
+                                        <span><i class="fas fa-file-excel"></i> EXCEL</span>
                                       </button>
 
 
@@ -479,7 +479,7 @@
                                     >
                                         <form role="">
 
-                                            <div class="row">
+                          <!--                   <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group row">
                                                         <label
@@ -504,28 +504,18 @@
                                                                 }"
                                                             >
                                                             </el-date-picker>
-                                                      <!--       <el-date-picker
-                                                                v-model="
-                                                                    fillBsqReportePersonal.dFecha2
-                                                                "
-                                                                type="date"
-                                                                placeholder="Ingrese una Fecha"
-                                                                format="dd/MM/yyyy"
-                                                                value-format="yyyy-MM-dd"
-                                                             
-                                                            >
-                                                            </el-date-picker> -->
+
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> -->
 
 
                                         </form>
                                         <div class="card-footer">
                                 <div class="row">
-                                    <div class="col-md-4 offset-4">
-                                        <button
+                                    <div class="col-md-9 offset-3">
+                               <!--          <button
                                             class="btn btn-flat btn-info btnWidth3buttons"
                                             @click.prevent="
                                                 getListReporteAsistenciaByDate
@@ -538,13 +528,27 @@
                                             @click.prevent="limpiarCriteriosBsq"
                                         >
                                             Limpiar
-                                        </button>
+                                        </button> -->
 
                                         <button
                                             class="btn btn-flat btn-success btnWidth3buttons"
-                                            @click.prevent="reporteByDateAsistExcel"
+                                            @click.prevent="getListReporteAsistenciaByDate0113"
                                         >
-                                        <span><i class="fas fa-file-excel"></i> EXCEL</span>                                      
+                                        <span><i class="fas fa-file-excel"></i> De 01 al 13</span>
+                                      </button>
+
+                                        <button
+                                            class="btn btn-flat btn-success btnWidth3buttons"
+                                            @click.prevent="reporteByDateAsistExcel1431"
+                                        >
+                                        <span><i class="fas fa-file-excel"></i> De 14 al 31</span>
+                                      </button>
+
+                                      <button
+                                            class="btn btn-flat btn-success btnWidth3buttons"
+                                            @click.prevent="reporteByTardanza"
+                                        >
+                                        <span><i class="fas fa-file-excel"></i> Control por tardanzas</span>
                                       </button>
 
 
@@ -553,135 +557,15 @@
                                 </div>
                             </div>
 
-                            <div class="card card-info">
-                            <div class="card-header">
-                                <h3 class="card-title">
-                                    Bandeja de Resultados
-                                </h3>
-                            </div>
-                            <div class="card-body table-responsive">
-                                <table
-                                    class="table table-hover table-head-fixed text-nowrap projects"
-                                >
-                                    <thead>
-                                        <tr>
-                                            <th>Fecha</th>
-                                            <th>Hora</th>
-                                            <th>Personal</th>
-                                            <th>DNI</th>
-                                            <th>Zona</th>
-                                            <th>Cargo</th>
-                                            <th>Estado</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr
-                                            v-for="(
-                                                item, index
-                                            ) in listAsistenciaByDay"
-                                            :key="index"
-                                        >
-                                            <td v-text="item.fecha"></td>
-                                            <td v-text="item.tiempo"></td>
-                                            <td v-text="item.personal"></td>
-                                            <td v-text="item.DNI"></td>
-                                            <td v-text="item.zonal"></td>
-                                            <td v-text="item.cargo"></td>
-                                            <td v-text="item.estado"></td>
-                                            <!--     <td v-if="item.estado === 'A'">
-                                                Activo
-                                            </td>
-                                            <td v-else style="color: red">
-                                                Inactivo
-                                            </td>  -->
 
-                                            <!--           <td>
-                                                <router-link
-                                                    class="btn btn-info btn-sm"
-                                                    :to="{
-                                                        name: 'personal.edit',
-                                                        params: { id: item.id },
-                                                    }"
-                                                >
-                                                    <i
-                                                        class="fas fa-pencil-alt"
-                                                    ></i
-                                                    >Editar
-                                                </router-link>
-
-                                                <button
-                                                    class="btn btn-danger btn-sm"
-                                                    @click.prevent="
-                                                        setConfirmaDeletePersonal(
-                                                            item.id
-                                                        )
-                                                    "
-                                                >
-                                                    <i class="fas fa-trash"></i
-                                                    >Dar de Baja
-                                                </button>
-                                            </td> -->
-                                        </tr>
-                                    </tbody>
-                                </table>
-
-                                <div class="card-footer clearfix">
-                                    <ul
-                                        class="pagination pagination-sm m-0 float-right"
-                                    >
-                                        <li
-                                            class="page-item"
-                                            v-if="pageNumber > 0"
-                                        >
-                                            <a
-                                                href=""
-                                                class="page-link"
-                                                @click.prevent="prevPage"
-                                                >Ant</a
-                                            >
-                                        </li>
-                                        <li
-                                            class="page-item"
-                                            v-for="(page, index) in pagesList"
-                                            :key="index"
-                                            :class="
-                                                page == pageNumber
-                                                    ? 'active'
-                                                    : ''
-                                            "
-                                        >
-                                            <a
-                                                href="#"
-                                                class="page-link"
-                                                @click.prevent="
-                                                    SelectPage(page)
-                                                "
-                                                >{{ page + 1 }}</a
-                                            >
-                                        </li>
-                                        <li
-                                            class="page-item"
-                                            v-if="pageNumber < pageCount - 1"
-                                        >
-                                            <a
-                                                href=""
-                                                class="page-link"
-                                                @click.prevent="nextPage"
-                                                >Post</a
-                                            >
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
                                     </el-tab-pane>
-                                    
+
                                 </el-tabs>
                             </div>
-                  
+
                         </div>
 
-                       
+
                     </div>
                 </div>
             </div>
@@ -703,7 +587,7 @@ export default {
             activeName: "first",
             listPersonal: [],
             listAsistencia: [],
-            listAsistenciaByDay: [],
+            listAsistenciaByDay0113: [],
 
             listRolPermisoByUsuario: JSON.parse(
                 sessionStorage.getItem("listRolPermisosByUsuario")
@@ -711,7 +595,7 @@ export default {
             pageNumber: 0,
             perPage: 10,
 
-   
+
         };
     },
     mounted() {
@@ -786,37 +670,28 @@ export default {
                 });
         },
 
-        getListReporteAsistenciaByDate() {
-            var url = "/administracion/asistencia/listAsistByDate";
+        getListReporteAsistenciaByDate0113() {
+            var url = "/administracion/asistencia/listAsistByDate0113";
             axios
-                .get(url, {
-                    params: {
-                       /*  fechaActual: this.fillBsqReportePersonal.dFecha2, */
-                       dFechainicio: !this.fillBsqReportePersonal.dFecha2
-                            ? ""
-                            : this.fillBsqReportePersonal.dFecha2[0],
-                        dFechafin: !this.fillBsqReportePersonal.dFecha2
-                            ? ""
-                            : this.fillBsqReportePersonal.dFecha2[1],
-                    },
-                })
+                .get(url)
                 .then((response) => {
-                    this.listAsistenciaByDay= response.data
+                    this.listAsistenciaByDay0113= response.data
+                    this.reporteByDateAsistExcel0113();
                 });
         },
 
-        reporteByDateAsistExcel(){
-            var url = "/operacion/Asistencia/reporteByDateAsistExcel"; 
+        reporteByDateAsistExcel0113(){
+            var url = "/operacion/asistencia/reporteByDateAsistExcel0113";
       axios
         .post(
           url,
           {
-            params: { listAsistenciaByDay: JSON.stringify(this.listAsistenciaByDay) },
+            params: { listAsistenciaByDay0113: JSON.stringify(this.listAsistenciaByDay0113) },
           },
           { responseType: "blob" }
         )
         .then((response) => {
-          FileSaver.saveAs(response.data, "AsistByDate.xlsx");
+          FileSaver.saveAs(response.data, "AsistByDate0113.xlsx");
         });
 
         },

@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/administracion/modelo/getListarModelos', 'Administracion\ModelotipoController@store');
-Route::get('/administracion/modelo/listByIdModelo', 'Administracion\ModelotipoController@listByIdModelo'); 
+Route::get('/administracion/modelo/listByIdModelo', 'Administracion\ModelotipoController@listByIdModelo');
 Route::post('/administracion/modelo/setRegistrarModelo', 'Administracion\ModelotipoController@create');
 Route::post('/administracion/modelo/setEditarModelo', 'Administracion\ModelotipoController@edit');
 
@@ -62,7 +62,7 @@ Route::get('/administracion/estadoprod/getListarEstadoprod', 'Administracion\Est
 
 //////////  Producto
 Route::get('/administracion/producto/getListarProducto', 'Administracion\ProductoController@index');
-Route::post('/administracion/producto/setRegistrarProducto', 'Administracion\ProductoController@create'); 
+Route::post('/administracion/producto/setRegistrarProducto', 'Administracion\ProductoController@create');
 Route::get('/administracion/producto/getListarProductoById', 'Administracion\ProductoController@ListarProductoById');
 Route::get('/administracion/producto/ListarProductoByIdKardex', 'Administracion\ProductoController@ListarProductoByIdKardex');
 Route::post('/administracion/producto/setEditarProductos', 'Administracion\ProductoController@edit');
@@ -265,7 +265,7 @@ Route::post('/administracion/parte_ingreso/setGrabarPIngreso', 'Administracion\P
 Route::get('/administracion/parte_ingreso/ListParteIngreso', 'Administracion\ParteIngresoController@ListParteIngreso');
 Route::post('/administracion/parte_ingreso/ProveedorFechaPdf', 'Administracion\ParteIngresoController@ProveedorFechaPdf');
 Route::get('/administracion/parte_ingreso/ListParteIngresoxNroOrden', 'Administracion\ParteIngresoController@ListParteIngresoxNroOrden');
-Route::post('/administracion/parte_ingreso/ProveedorOrdenCompraPdf', 'Administracion\ParteIngresoController@ProveedorOrdenCompraPdf'); 
+Route::post('/administracion/parte_ingreso/ProveedorOrdenCompraPdf', 'Administracion\ParteIngresoController@ProveedorOrdenCompraPdf');
 Route::get('/administracion/parte_ingreso/ListParteIngresoxProduct', 'Administracion\ParteIngresoController@ListParteIngresoxProduct');
 
 
@@ -553,11 +553,11 @@ Route::post('/administracion/ProyectoMateriales/EditModalReqMateriales', 'Admini
 Route::post('/administracion/ProyectoManoObra/addProyManObra', 'Administracion\ProyectoManoObraController@addProyManObra');
 Route::get('/administracion/ProyectoManoObra/CleanProyectManObra', 'Administracion\ProyectoManoObraController@CleanProyectManObra');
 Route::post('/administracion/ProyectoManoObra/reorderProyectManObra', 'Administracion\ProyectoManoObraController@reorderProyectManObra');
- Route::get('/administracion/ProyectoManoObra/listproyManoObra', 'Administracion\ProyectoManoObraController@listproyManoObra'); 
+ Route::get('/administracion/ProyectoManoObra/listproyManoObra', 'Administracion\ProyectoManoObraController@listproyManoObra');
  Route::get('/administracion/ProyectoManoObra/CleanProyectManObra', 'Administracion\ProyectoManoObraController@CleanProyectManObra');
  Route::post('/administracion/ProyectoManoObra/addReqMatProyManObra', 'Administracion\ProyectoManoObraController@addReqMatProyManObra');
- 
- 
+
+
 
 /* Otros Requerimientos*/
 Route::post('/administracion/ProyectOtrosReq/addOtrosReqMateriales', 'Administracion\ProyectOtrosReqController@addOtrosReqMateriales');
@@ -571,16 +571,16 @@ Route::post('/administracion/ProyectOtrosReq/addReqMatProyOtrosReq', 'Administra
 /* Informe Valorizacion */
 Route::post('/administracion/InformeValorizacion/create', 'Administracion\InformeValorizacionController@create');
 Route::get('/administracion/InformeValorizacion/index', 'Administracion\InformeValorizacionController@index');
-Route::post('/operacion/InformeValorizacion/export', 'Administracion\InformeValorizacionController@export'); 
+Route::post('/operacion/InformeValorizacion/export', 'Administracion\InformeValorizacionController@export');
 Route::post('/administracion/InformeValorizacion/setGenerarInfoValorizacionPdf', 'Administracion\InformeValorizacionController@setGenerarInfoValorizacionPdf');
 Route::post('/administracion/InformeValorizacion/ExcelDetalladoInfoValor', 'Administracion\InformeValorizacionController@ExcelDetalladoInfoValor');
 
 Route::get('/administracion/informeValorizacion/mostrarInfoReqMateriales', 'Administracion\InformeValorizacionController@mostrarInfoReqMateriales');
 Route::get('/administracion/informeValorizacion/mostrarInfoManObra', 'Administracion\InformeValorizacionController@mostrarInfoManObra');
 Route::get('/administracion/informeValorizacion/mostrarInfOtrosReq', 'Administracion\InformeValorizacionController@mostrarInfOtrosReq');
-Route::post('/administracion/InformeValorizacion/editPrecioMatInfoValor', 'Administracion\InformeValorizacionController@editPrecioMatInfoValor'); 
+Route::post('/administracion/InformeValorizacion/editPrecioMatInfoValor', 'Administracion\InformeValorizacionController@editPrecioMatInfoValor');
 Route::get('/administracion/informeValorizacion/listUnidAlquiler', 'Administracion\InformeValorizacionController@listUnidAlquiler');
-Route::post('/administracion/InformeValorizacion/getAlquiler', 'Administracion\InformeValorizacionController@getAlquiler'); 
+Route::post('/administracion/InformeValorizacion/getAlquiler', 'Administracion\InformeValorizacionController@getAlquiler');
 Route::post('/administracion/InformeValorizacion/EditOtrosReqAlquiler', 'Administracion\InformeValorizacionController@EditOtrosReqAlquiler');
 Route::post('/administracion/InformeValorizacion/editPrecioOtrosReq', 'Administracion\InformeValorizacionController@editPrecioOtrosReq');
 
@@ -652,6 +652,10 @@ Route::post('/administracion/asistencia/import', 'Administracion\AsistenciaContr
 Route::get('/administracion/asistencia/listAsistByDate', 'Administracion\AsistenciaController@listAsistByDate');
 Route::get('/administracion/asistencia/listByDatePersonal', 'Administracion\AsistenciaController@listByDatePersonal');
 Route::post('/operacion/Asistencia/reporteByDateAsistExcel', 'Administracion\AsistenciaController@reporteByDateAsistExcel');
+Route::get('/administracion/asistencia/listAsistByDate0113', 'Administracion\AsistenciaController@listAsistByDate0113');
+Route::post('/operacion/asistencia/reporteByDateAsistExcel0113', 'Administracion\AsistenciaController@reporteByDateAsistExcel0113');
+
+
 
 /* Distrito */
 Route::get('/administracion/distrito/index', 'Administracion\DistritoController@index');
@@ -683,7 +687,7 @@ Route::post('/operacion/MovimientoAlmacen/create', 'Administracion\MovimientoAlm
 Route::post('/administracion/MovimientoAlmacen/addProduct', 'Administracion\MovimientoAlmacenController@addProduct');
 Route::get('/administracion/MovimientoAlmacen/ListtempGuiaRemision', 'Administracion\MovimientoAlmacenController@ListtempGuiaRemision');
 Route::post('/administracion/MovimientoAlmacen/eliminarTemporder', 'Administracion\MovimientoAlmacenController@eliminarTemporder');
-Route::get('/administracion/MovimientoAlmacen/list', 'Administracion\MovimientoAlmacenController@list'); 
+Route::get('/administracion/MovimientoAlmacen/list', 'Administracion\MovimientoAlmacenController@list');
 Route::get('/administracion/MovimientoAlmacen/getListDetMovAlmacen', 'Administracion\MovimientoAlmacenController@getListDetMovAlmacen');
 Route::post('/administracion/MovimientoAlmacen/procesar', 'Administracion\MovimientoAlmacenController@procesar');
 Route::post('/administracion/MovimientoAlmacen/MovimientoAlmacenPdf', 'Administracion\MovimientoAlmacenController@MovimientoAlmacenPdf');
