@@ -150,6 +150,13 @@ class MovimientoAlmacenController extends Controller
 
     public function addProduct(Request $request)
     {
+        $cantStock = Kardex::where('producto_id',$request->nIdprod)->first();
+        
+
+        if(!$cantStock  || $cantStock->stock <= 0){
+
+            return response()->json([ 'message' => 'Stock vacio no permitido', 'icon' => 'error'], 200);
+        }
 
 
         $product = Producto::where(['id' => $request->nIdprod])->with('familia', 'marca', 'material', 'modelotipo', 'subfamilia', 'homologacion')->first();

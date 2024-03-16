@@ -10,4 +10,9 @@ class Asistencia extends Model
     protected $fillable = ['asistencia','fecha','tiempo','asistencia_estado_id','estado'];
     protected $table = 'asistencia';
     public $timestamps = false;
+
+
+    public function personal(){
+        return $this->belongsTo(Personal::class ,'codigo','id');
+    }
 }

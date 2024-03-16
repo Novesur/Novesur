@@ -460,6 +460,7 @@
                                                         style="width: 90%"
                                                         filterable
                                                         placeholder="Select"
+                                                        @change="getBuscaStockProducto()"
                                                     >
                                                         <v-row align="right">
                                                             <el-option
@@ -567,13 +568,38 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label
+                                                    class="col-md-4 col-form-label"
+                                                    >Stock</label
+                                                >
+                                                <div class="col-md-4">
+                                                    <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        v-int
+                                                        v-model="
+                                                            fillGuiaRemisionCreate.cStock
+                                                        "
+                                                        readonly
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                 
+                                    </div>
+
+                                    <liststock :stock= "this.listStock"></liststock>
 
                                     <div class="card-footer">
                                         <div class="row">
                                             <div class="col-md-4 offset-4">
                                                 <button
                                                     class="btn btn-flat btn-info btnWidth"
-                                                    @click.prevent="addProduct"
+                                                    @click.prevent="setAddProduct"
                                                 >
                                                     Agregar
                                                 </button>
@@ -670,7 +696,9 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
+
                                         </div>
+                                     
 
                                         <div class="card-footer">
                                             <div class="row">
@@ -739,6 +767,7 @@
 </template>
 
 <script>
+import liststock from '../../modulos/ingreso_almacen/shared/listStock.vue';
 export default {
     data() {
         return {
@@ -762,6 +791,7 @@ export default {
                 nIdModTransporte: "",
                 nIdUnidMed: "",
                 cComprobante:"",
+                cStock:"",
             },
 
             listarDetalleOrdeCompra: [],
@@ -772,6 +802,7 @@ export default {
             listTipoTraslado: [],
             listUnidMed: [],
             listModTransporte: [],
+            listStock:[],
 
             listarGuiaRemisionPaginated: [],
             estadoProv: false,
@@ -791,6 +822,10 @@ export default {
             mensajeError: [],
         };
     },
+
+    components: {
+    liststock
+  },
     mounted() {
         this.setSelectMovimiento();
         this.cargaListAlmacenEntrada();
@@ -816,6 +851,32 @@ export default {
             this.setProcesar();
         },
 
+        getBuscaStockProducto() {
+      var url = "/administracion/kardex/BuscaStockxProducto";
+      axios
+        .post(url, {
+          nIdprod: this.fillGuiaRemisionCreate.nIdprod,
+        })
+        .then((response) => {
+          this.fillGuiaRemisionCreate.cStock = response.data.stock;
+        });
+        this.getListStock();
+    },
+
+        getListStock() {
+      var url = "/administracion/parteingSalida/listStockByproduct";
+      axios
+        .get(url, {
+          params: {
+            nIdprod: this.fillGuiaRemisionCreate.nIdprod,
+          },
+        })
+        .then((response) => {
+          this.listStock = response.data;
+        });
+
+    },
+
         getListarproductosByName() {
             var url = "/administracion/detallecotizancion/listProdByName";
             axios
@@ -826,8 +887,11 @@ export default {
                 })
                 .then((response) => {
                     this.listProd = response.data;
+                
                 });
         },
+
+        
 
         getBuscaRucBD() {
             if (!this.fillGuiaRemisionCreate.nIdRuc) {
@@ -941,6 +1005,27 @@ export default {
                     this.setLimpiarTodo();
                     
                 });
+        },
+
+             setAddProduct() {
+            if (this.validaAddProduct()) {
+                this.modalShow = true;
+                return;
+            }
+            this.addProduct();
+        },
+        validaAddProduct() {
+            this.error = 0;
+            this.mensajeError = [];
+
+            if (!this.fillGuiaRemisionCreate.cCantidad) {
+                this.mensajeError.push("campo cantidad es obligatorio");
+            }
+            if (this.mensajeError.length) {
+                this.error = 1;
+            }
+
+            return this.error;
         },
         addProduct() {
             var url = "/administracion/MovimientoAlmacen/addProduct";

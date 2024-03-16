@@ -19,4 +19,10 @@ class Personal extends Model
     {
         return $this->belongsTo(Zonal::class); 
     }
+
+    public function asistencias(){
+        return $this->hasMany(Asistencia::class ,'asistencia','codigo');
+    }
+
+
 }

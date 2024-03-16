@@ -654,6 +654,9 @@ Route::get('/administracion/asistencia/listByDatePersonal', 'Administracion\Asis
 Route::post('/operacion/Asistencia/reporteByDateAsistExcel', 'Administracion\AsistenciaController@reporteByDateAsistExcel');
 Route::get('/administracion/asistencia/listAsistByDate0113', 'Administracion\AsistenciaController@listAsistByDate0113');
 Route::post('/operacion/asistencia/reporteByDateAsistExcel0113', 'Administracion\AsistenciaController@reporteByDateAsistExcel0113');
+Route::get('/administracion/asistencia/ListTardanzAsistenciaByDate0113', 'Administracion\AsistenciaController@ListTardanzAsistenciaByDate0113');
+Route::post('/operacion/asistencia/reporteTardanzAsistExcel0113', 'Administracion\AsistenciaController@reporteTardanzAsistExcel0113');
+Route::get('/administracion/asistencia/listAsistByDate1431', 'Administracion\AsistenciaController@listAsistByDate1431');
 
 
 

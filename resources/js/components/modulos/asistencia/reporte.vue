@@ -472,14 +472,14 @@
 
 
 
-                                      <!-- BUSCAR POR FECHA -->
+                                      <!-- BUSCAR POR REPORTE DETALLADO -->
                                       <el-tab-pane
                                         label="Reporte Detallado"
                                         name="tercer"
                                     >
                                         <form role="">
 
-                          <!--                   <div class="row">
+                                            <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group row">
                                                         <label
@@ -508,7 +508,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div> -->
+                                            </div>
 
 
                                         </form>
@@ -546,7 +546,7 @@
 
                                       <button
                                             class="btn btn-flat btn-success btnWidth3buttons"
-                                            @click.prevent="reporteByTardanza"
+                                            @click.prevent="getListTardanzAsistenciaByDate0113"
                                         >
                                         <span><i class="fas fa-file-excel"></i> Control por tardanzas</span>
                                       </button>
@@ -587,7 +587,10 @@ export default {
             activeName: "first",
             listPersonal: [],
             listAsistencia: [],
+            listAsistenciaByDay:[],
             listAsistenciaByDay0113: [],
+            listAsistenciaByDay1431:[],
+            listAsistenciaTardanza:[],
 
             listRolPermisoByUsuario: JSON.parse(
                 sessionStorage.getItem("listRolPermisosByUsuario")
@@ -670,6 +673,25 @@ export default {
                 });
         },
 
+        getListReporteAsistenciaByDate() {
+            var url = "/administracion/asistencia/listAsistByDate";
+            axios
+                .get(url, {
+                    params: {
+                       /*  fechaActual: this.fillBsqReportePersonal.dFecha2, */
+                       dFechainicio: !this.fillBsqReportePersonal.dFecha2
+                            ? ""
+                            : this.fillBsqReportePersonal.dFecha2[0],
+                        dFechafin: !this.fillBsqReportePersonal.dFecha2
+                            ? ""
+                            : this.fillBsqReportePersonal.dFecha2[1],
+                    },
+                })
+                .then((response) => {
+                    this.listAsistenciaByDay= response.data
+                });
+        },
+
         getListReporteAsistenciaByDate0113() {
             var url = "/administracion/asistencia/listAsistByDate0113";
             axios
@@ -695,6 +717,70 @@ export default {
         });
 
         },
+
+        reporteByDateAsistExcel0113(){
+            var url = "/operacion/asistencia/reporteByDateAsistExcel0113";
+      axios
+        .post(
+          url,
+          {
+            params: { listAsistenciaByDay0113: JSON.stringify(this.listAsistenciaByDay0113) },
+          },
+          { responseType: "blob" }
+        )
+        .then((response) => {
+          FileSaver.saveAs(response.data, "AsistByDate0113.xlsx");
+        });
+
+        },
+
+        getListTardanzAsistenciaByDate0113(){
+            var url = "/administracion/asistencia/ListTardanzAsistenciaByDate0113";
+            axios
+                .get(url, {
+                    params: {
+                        dFechainicio: !this.fillBsqReportePersonal.dFechaDetalle
+                            ? ""
+                            : this.fillBsqReportePersonal.dFechaDetalle[0],
+                        dFechafin: !this.fillBsqReportePersonal.dFechaDetalle
+                            ? ""
+                            : this.fillBsqReportePersonal.dFechaDetalle[1],
+                    }
+                })
+                .then((response) => {
+                    this.listAsistenciaTardanza= response.data
+                    this.reporteTardanzaExcel0113();
+                });
+        },
+
+        reporteTardanzaExcel0113(){
+            var url = "/operacion/asistencia/reporteTardanzAsistExcel0113";
+      axios
+        .post(
+          url,
+          {
+            params: { listAsistenciaTardanza: JSON.stringify(this.listAsistenciaTardanza) },
+          },
+          { responseType: "blob" }
+        )
+        .then((response) => {
+          FileSaver.saveAs(response.data, "AsistTardanza0113.xlsx");
+        });
+
+        },
+
+        getListTardanzAsistenciaByDate0113(){
+            var url = "/administracion/asistencia/listAsistByDate1431";
+            axios
+                .get(url)
+                .then((response) => {
+                    this.listAsistenciaByDay1431= response.data
+                    //this.reporteByDateAsistExcel0113();
+                });
+        },
+
+
+
         nextPage() {
             this.pageNumber++;
         },
