@@ -136,7 +136,7 @@
                           <i class="fas fa-file-import"></i> Procesar
                         </button>
 
-                        
+
                       </td>
                       <!--       <td>
                         <router-link class="btn btn-info btn-sm" :to="{
@@ -191,7 +191,7 @@
                           >
                             <i class="far fa-calendar-alt"></i> Actualizar
                           </button>
-                        </template> 
+                        </template>
                       </td> -->
                     </tr>
                   </tbody>
@@ -467,7 +467,7 @@ export default {
           nIdRuc: this.fillBsqMovAlmacen.nIdRuc
         })
         .then((response) => {
-          console.log(response.data);
+         this.getlistMovAlmacen()
         });
     },
 

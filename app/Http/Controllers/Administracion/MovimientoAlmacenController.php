@@ -37,7 +37,7 @@ class MovimientoAlmacenController extends Controller
 
 
 
-        //Si es externo 
+        //Si es externo
         if ($request->nIdTipoTraslado == 1) {
             $countGuia = $contador[0]->countAlmacenGuiaExterna;
 
@@ -93,7 +93,7 @@ class MovimientoAlmacenController extends Controller
             }
         }
 
-        //Si es interno 
+        //Si es interno
         if ($request->nIdTipoTraslado == 2) {
 
             //$countGuiaInterno = GuiaRemision::where('tipo_traslado_id', 2)->count();
@@ -151,7 +151,7 @@ class MovimientoAlmacenController extends Controller
     public function addProduct(Request $request)
     {
         $cantStock = Kardex::where('producto_id',$request->nIdprod)->first();
-        
+
 
         if(!$cantStock  || $cantStock->stock <= 0){
 
@@ -237,13 +237,13 @@ class MovimientoAlmacenController extends Controller
         $formatreq = date("Y-m-d");
 
         $movimiento_almacen = MovimientoAlmacen::where('id', $request->id)->first();
-     
+
 
         $detalle_movimientoalmacen = DetalleMovimientoalmacen::with('producto', 'unidmedida', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion')->where('movimiento_almacen_id', $request->id)->get();
         $datCliente = Cliente::where('ruc', $request->nIdRuc)->first();
 
 
-     
+
         // Ingresamos el kardex
         foreach ($detalle_movimientoalmacen as $dataDetMovimiento) {
 
@@ -255,7 +255,7 @@ class MovimientoAlmacenController extends Controller
 
 
                 //Actualizamos el Stock del Kardex
-                // Kardex::findOrFail($kardexSearchs->id)->update(['stock' => $dataDetMovimiento->cantidad + $kardexSearchs->stock]); 
+                // Kardex::findOrFail($kardexSearchs->id)->update(['stock' => $dataDetMovimiento->cantidad + $kardexSearchs->stock]);
 
                    $detalleKardex = new DetalleKardex();
                 $detalleKardex->kardex_id =  $kardexSearchs->id;
@@ -271,7 +271,7 @@ class MovimientoAlmacenController extends Controller
                 $detalleKardex->user_id =  $request->nIdUser;
                 $detalleKardex->cliente_id =  $datCliente->id;
                 $detalleKardex->save();
-            } 
+            }
 
             $countParteIngSali = ParteIngSali::count();
             $formatYear = date("Y");
@@ -306,9 +306,9 @@ class MovimientoAlmacenController extends Controller
             foreach ($kardexSearch as $kardexSearchs) {
 
                 $dataDetalleKardex = DetalleKardex::where('id', $kardexSearchs->id)->first();
-                
+
                             foreach ($detalle_movimientoalmacen as $dataDetMovimiento) {
-                
+
                                 $detalleParteIngreso = new DetalleParteIngSali();
                                 $detalleParteIngreso->parte_ing_sali_id = $parteIngreso->id;
                                 $detalleParteIngreso->producto_id = $dataDetMovimiento->producto_id;
@@ -343,9 +343,9 @@ class MovimientoAlmacenController extends Controller
             foreach ($kardexSearch as $kardexSearchs) {
 
                 $dataDetalleKardex = DetalleKardex::where('id', $kardexSearchs->id)->first();
-            
+
                 foreach ($detalle_movimientoalmacen as $dataDetMovimiento) {
-    
+
                     $detalleParteIngreso = new DetalleParteIngSali();
                     $detalleParteIngreso->parte_ing_sali_id = $parteSalida->id;
                     $detalleParteIngreso->producto_id = $dataDetMovimiento->producto_id;
@@ -355,7 +355,7 @@ class MovimientoAlmacenController extends Controller
                     $detalleParteIngreso->estadopedido_id = 3;
                     $detalleParteIngreso->save();
                 }
-            
+
             }
 
             //Actualizamos el estado del movimiento de almacen a Atendido
