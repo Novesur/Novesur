@@ -31,6 +31,36 @@
                       <div class="col-md-6">
                         <div class="form-group row">
                           <label class="col-md-3 col-form-label"
+                            >Tipo Orden Compra</label
+                          >
+                          <div class="col-md-9">
+                            <el-select
+                                    v-model="fillCrearOrdenCompra.nIdTipOrdenCompra"
+                                    style="width: 60%"
+                                    filterable
+                                    placeholder="Select"
+                                  >
+                                    <el-option
+                                      v-for="item in listTipoOrdenCompra"
+                                      :key="item.id"
+                                      :label="item.nombre"
+                                      :value="item.id"
+                                    >
+                                    </el-option>
+                                  </el-select> 
+                          </div>
+                        </div>
+                      </div>
+
+        
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-md-3 col-form-label"
                             >Proveedor</label
                           >
                           <div class="col-md-9">
@@ -111,7 +141,7 @@
                             >Tipo de Moneda</label
                           >
                           <div class="col-md-9">
-                          <el-select
+                            <el-select
                               v-model="fillCrearOrdenCompra.nIdTipoMoneda"
                               placeholder="Select"
                               style="width: 70%"
@@ -145,7 +175,6 @@
                       </div>
 
                       <div class="col-md-6">
-
                         <div class="form-group row">
                           <label class="col-md-3 col-form-label"
                             >Preferencias de Pago</label
@@ -166,12 +195,9 @@
                             </el-select>
                           </div>
                         </div>
-
-
                       </div>
 
-                                   <div class="col-md-6">
-
+                      <div class="col-md-6">
                         <div class="form-group row">
                           <label class="col-md-3 col-form-label"
                             >Observación</label
@@ -181,7 +207,6 @@
                               type="text"
                               class="form-control"
                               v-model="fillCrearOrdenCompra.cObservacion"
-
                             />
                           </div>
                         </div>
@@ -276,7 +301,6 @@
                                   />
                                 </div>
                               </div>
-
                             </div>
                           </div>
                         </div>
@@ -318,20 +342,16 @@
                       <tr>
                         <th>Codigo</th>
                         <th>Cantidad</th>
-                         <th>Precio</th>
+                        <th>Precio</th>
                         <th>Unid. Medida</th>
                         <th>Descripcion</th>
-
                       </tr>
                     </thead>
                     <tbody>
-                      <tr
-                        v-for="(item, index) in listartempOrder"
-                        :key="index"
-                      >
+                      <tr v-for="(item, index) in listartempOrder" :key="index">
                         <td v-text="item.codigo"></td>
                         <td v-text="item.cantidad"></td>
-                         <td v-text="item.punit"></td>
+                        <td v-text="item.punit"></td>
                         <td v-text="item.unidmedNombre"></td>
 
                         <td
@@ -347,11 +367,7 @@
                             item.material
                           "
                         ></td>
-
-
                       </tr>
-
-
                     </tbody>
                   </table>
                 </div>
@@ -428,8 +444,9 @@ export default {
         nIdprod: "",
         cPrecio: "",
         cCantidad: "",
-        nIdTipoPago:"",
-        nIdTipoMoneda:"",
+        nIdTipoPago: "",
+        nIdTipoMoneda: "",
+        nIdTipOrdenCompra:"",
         nIdUser: sessionStorage.getItem("iduser"),
         cObservacion: "",
       },
@@ -438,7 +455,8 @@ export default {
       listProd: [],
       listartempOrder: [],
       listDescripPago: [],
-      listTipoCambio : [],
+      listTipoCambio: [],
+      listTipoOrdenCompra:[],
 
       modalShow: false,
       mostrarModal: {
@@ -456,12 +474,11 @@ export default {
     this.getListarByProveedor();
     this.getListarUnidadMedida();
     this.getListarproductosByName();
-   // this.setListtemOrders();
+    this.getListTipoOrdeCompra();
     this.getlistDescricionPago();
-    this.getlistTipoCambio()
+    this.getlistTipoCambio();
     this.fillCrearOrdenCompra.cFechaEntrega = new Date();
     this.fillCrearOrdenCompra.cFechaEmision = new Date();
-
   },
   computed: {},
   methods: {
@@ -486,7 +503,7 @@ export default {
       });
     },
 
-        getlistTipoCambio() {
+    getlistTipoCambio() {
       var url = "/administracion/ordenCompra/TipoCambio";
       axios.get(url).then((response) => {
         this.listTipoCambio = response.data;
@@ -504,6 +521,16 @@ export default {
         })
         .then((response) => {
           this.listProd = response.data;
+        });
+    },
+
+    getListTipoOrdeCompra(){
+      var url = "/administracion/ordenCompra/listTipoOrdenCompra"; 
+      axios
+        .get(url)
+        .then((response) => {
+          this.listTipoOrdenCompra = response.data;
+          this.fillCrearOrdenCompra.nIdTipOrdenCompra = this.listTipoOrdenCompra[0].id;
         });
     },
 
@@ -529,20 +556,19 @@ export default {
       var url = "/administracion/ordenCompra/setGrabarOrderCompra";
       axios
         .post(url, {
-
-            cFechaEmision : this.fillCrearOrdenCompra.cFechaEmision,
-            cReferencia : this.fillCrearOrdenCompra.cReferencia,
-            nIdProveedor : this.fillCrearOrdenCompra.nIdProveedor,
-            cFechaEntrega : this.fillCrearOrdenCompra.cFechaEntrega,
-            cLEntrega: this.fillCrearOrdenCompra.cLEntrega,
-            nIdTipoPago : this.fillCrearOrdenCompra.nIdTipoPago,
-            nIdTipoMoneda : this.fillCrearOrdenCompra.nIdTipoMoneda,
-            nIdUser : this.fillCrearOrdenCompra.nIdUser,
-            cObservacion : this.fillCrearOrdenCompra.cObservacion
+          cFechaEmision: this.fillCrearOrdenCompra.cFechaEmision,
+          cReferencia: this.fillCrearOrdenCompra.cReferencia,
+          nIdProveedor: this.fillCrearOrdenCompra.nIdProveedor,
+          cFechaEntrega: this.fillCrearOrdenCompra.cFechaEntrega,
+          cLEntrega: this.fillCrearOrdenCompra.cLEntrega,
+          nIdTipoPago: this.fillCrearOrdenCompra.nIdTipoPago,
+          nIdTipoMoneda: this.fillCrearOrdenCompra.nIdTipoMoneda,
+          nIdUser: this.fillCrearOrdenCompra.nIdUser,
+          cObservacion: this.fillCrearOrdenCompra.cObservacion,
+          nIdTipOrdenCompra:this.fillCrearOrdenCompra.nIdTipOrdenCompra, 
         })
         .then((response) => {
-
-           Swal.fire({
+          Swal.fire({
             position: "center",
             icon: response.data.icon,
             title: response.data.message,
@@ -552,7 +578,6 @@ export default {
 
           this.setResetCampos();
           this.eliminarTempitemOrders();
-
         });
     },
     abrirModal() {
@@ -566,13 +591,12 @@ export default {
         this.mensajeError.push("El campo nombre es obligatorio");
       }
 
-      if(this.fillCrearOrdenCompra.cCantidad <=   0){
-         this.mensajeError.push("Cantidad no puede ser menor o igual a cero");
+      if (this.fillCrearOrdenCompra.cCantidad <= 0) {
+        this.mensajeError.push("Cantidad no puede ser menor o igual a cero");
       }
-        if(!this.fillCrearOrdenCompra.cCantidad){
-         this.mensajeError.push("Cantidad es campo obligatorio");
+      if (!this.fillCrearOrdenCompra.cCantidad) {
+        this.mensajeError.push("Cantidad es campo obligatorio");
       }
-
 
       if (this.mensajeError.length) {
         this.error = 1;
@@ -588,14 +612,14 @@ export default {
           nIdUnidMed: this.fillCrearOrdenCompra.nIdUnidMed,
           cCantidad: this.fillCrearOrdenCompra.cCantidad,
           cPrecio: this.fillCrearOrdenCompra.cPrecio,
-          CestadoDet:this.fillCrearOrdenCompra.CestadoDet,
-          cPUnit : this.fillCrearOrdenCompra.cPUnit,
+          CestadoDet: this.fillCrearOrdenCompra.CestadoDet,
+          cPUnit: this.fillCrearOrdenCompra.cPUnit,
         })
         .then((response) => {
-     this.listartempOrder = response.data.datos
-     this.setLimpiaCampos();
+          this.listartempOrder = response.data.datos;
+          this.setLimpiaCampos();
 
-        if (response.data.message == "Ya fue agregado anteriormente") {
+          if (response.data.message == "Ya fue agregado anteriormente") {
             Swal.fire({
               position: "center",
               icon: response.data.icon,
@@ -640,5 +664,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

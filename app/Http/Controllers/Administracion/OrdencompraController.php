@@ -18,8 +18,7 @@ use Carbon\Carbon;
 use App\Exports\ListPrecprodExport;
 use App\Exports\ListPrecprovExport;
 use App\Countable;
-
-
+use App\TipOrdenCompra;
 
 class OrdencompraController extends Controller
 {
@@ -62,32 +61,43 @@ class OrdencompraController extends Controller
     public function create(Request $request)
     {
 
+        
 
         $femision = date("Y-m-d", strtotime($request->cFechaEmision));
         $fentrega = date("Y-m-d", strtotime($request->cFechaEntrega));
 
-     
-
         $usuario = User::find($request->nIdUser);
     
 
-        if($usuario->almacen_id == 1){
-            $countableCentral = Countable::all();
-            $countableCentralCount = $countableCentral[0]->countordencompra;
-    
-            if($countableCentralCount == 0){
-                $codOrdCompra = 'C0001'.'-'. Carbon::parse($request->cFechaEmision)->format('Y');
-            }else{
-                $codOrdCompra = 'C'.sprintf('%04d',$countableCentralCount +1) .'-'. Carbon::parse($request->cFechaEmision)->format('Y');
+
+
+        $countableCentral = Countable::all();
+        $countableCentralCount = $countableCentral[0]->countordencompra;
+        $countablePiuraCount = $countableCentral[0]->countordencompraPiura;
+        $countordencompra_Inter = $countableCentral[0]->countordencompra_Inter;
+
+        if($request->nIdTipOrdenCompra == 1){
+            if($usuario->almacen_id == 1){
+                
+                if($countableCentralCount == 0){
+                    $codOrdCompra = 'C0001'.'-'. Carbon::parse($request->cFechaEmision)->format('Y');
+                }else{
+                    $codOrdCompra = 'C'.sprintf('%04d',$countableCentralCount +1) .'-'. Carbon::parse($request->cFechaEmision)->format('Y');
+                }
             }
+        }else{
+         
+            if($countordencompra_Inter == 0){
+                $codOrdCompra = 'I0001'.'-'. Carbon::parse($request->cFechaEmision)->format('Y');
+            }else{
+                $codOrdCompra = 'I'.sprintf('%04d',$countordencompra_Inter +1) .'-'. Carbon::parse($request->cFechaEmision)->format('Y');
+            }
+
         }
 
         if($usuario->almacen_id == 7){
-            $countablePiura = Countable::all();
-            $countablePiuraCount = $countablePiura[0]->countordencompraPiura;
-
-
-    
+            
+          
             if($countablePiuraCount == 0){
                 $codOrdCompra = 'CP0001'.'-'. Carbon::parse($request->cFechaEmision)->format('Y');
             }else{
@@ -109,6 +119,7 @@ class OrdencompraController extends Controller
             $ordenCompra->estadoordencompra_id = 2;
             $ordenCompra->observacion = $request->cObservacion;
             $ordenCompra->tipocambio_id = $request->nIdTipoMoneda;
+            $ordenCompra->tipo_ordencompra_id = $request->nIdTipOrdenCompra;
             $ordenCompra->save();
             $detordenCompra = Session::get('products');
             $allProducts = $detordenCompra->map(function ($product) use ($ordenCompra) { 
@@ -128,9 +139,16 @@ class OrdencompraController extends Controller
             Session::put('products', collect([]));
 
              /*  Si el usuario es de Sede Central */
-            if($usuario->almacen_id == 1){
-            Countable::where('id', 1)->update(['countordencompra' => $countableCentralCount +1]);
-            }
+             if($request->nIdTipOrdenCompra == 1){
+                 if($usuario->almacen_id == 1){
+                 Countable::where('id', 1)->update(['countordencompra' => $countableCentralCount +1]);
+                 }
+
+             }else{
+                if($usuario->almacen_id == 1){
+                    Countable::where('id', 1)->update(['countordencompra_Inter' => $countordencompra_Inter +1]);
+                    }
+             }
 
 
            /*  Si el usuario es de Piura */
@@ -215,7 +233,7 @@ class OrdencompraController extends Controller
     public function setDarBajaOrderCompra(Request $request){
 
      /*    $ordencompra = Ordencompra::where('codigo', $request->codigo)->first();
-        //$ordencompra->estadoordencompra_id = '1';
+      
         $ordencompra->delete(); */
        
         Ordencompra::where('codigo', $request->codigo)->delete();
@@ -281,6 +299,11 @@ class OrdencompraController extends Controller
     public function setApruebaOrdenCompra(Request $request){
         Ordencompra::where('id', $request->id)->update(['estadoordencompra_id' => $request->valor]); 
 
+    }
+
+    public function listTipoOrdenCompra(){
+        $tipoOrdenCompra = TipOrdenCompra::all();
+        return   $tipoOrdenCompra ;
     }
     
 }

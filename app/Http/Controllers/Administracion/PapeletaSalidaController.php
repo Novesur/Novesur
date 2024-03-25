@@ -27,16 +27,6 @@ class PapeletaSalidaController extends Controller
 
     public function create(Request $request)
     {
-
-
-        /*     $fechaDay= sprintf('%02s',substr($request->fecha,0, 2));
-        $fechaMes=  sprintf('%02s',substr($request->fecha,3, 1));
-        $fechaYear=  substr($request->fecha,5, 4);
-
-        $fecha =  $fechaYear . '-' . $fechaMes . '-' . $fechaDay;
-        $fechaValida = $fecha >= now()->toDateString();
- */
-
         $fecha = date("Y-m-d");
 
         $fechaValida = $fecha >= now()->toDateString();
@@ -47,7 +37,7 @@ class PapeletaSalidaController extends Controller
         $tiempoMax = Carbon::createFromTime(20, 00);
 
 
-
+        //Validamos que la Hora de ingreso de 8:30 am hasta las 8 PM
         if ($fechaValida && $now >= $tiempoMin   &&  $now  <= $tiempoMax) {
 
             $PapeletaSalida = new Papeletasalida;
@@ -59,39 +49,37 @@ class PapeletaSalidaController extends Controller
             $PapeletaSalida->estadopapeletasalida_id = '1';
             $PapeletaSalida->fundamento = nl2br(htmlentities(mb_strtoupper($request->cReferencia)));
             $PapeletaSalida->hora_emision = $request->hora;
-
             $PapeletaSalida->save();
 
-            if (empty($request->listTempClientPSalida || $request->nIdMotivo != 3)) {
-                return response()->json(['message' => 'Haga click en boton Agregar o campos de vendedor vacios', 'icon' => 'warning'], 200);
-            } else {
+            //Si motivo es compras /  Si motivo es Otros /  Si motivo es Personal
+            if ($request->nIdMotivo == 1 || $request->nIdMotivo == 5 || $request->nIdMotivo == 4) {
 
-                if ($request->nIdMotivo == 3) {
-                    $clientPapeletaSalida = Session::get('clients');
-
-                    $allclients = $clientPapeletaSalida->map(function ($PS) use ($PapeletaSalida) {
-                        return [
-                            'papeletasalida_id' => $PapeletaSalida->id,
-                            'cliente_id'      => $PS->id,
-                            'contacto' => $PS->contacto,
-                            'direccion'   => $PS->direccion,
-                        ];
-                    });
-
-
-                    ClientsPapeletaSalida::insert($allclients->toArray());
-                } else {
-                    $clientsPapeletaSalida = new ClientsPapeletaSalida;
-                    $clientsPapeletaSalida->papeletasalida_id = $PapeletaSalida->id;
-                    $clientsPapeletaSalida->cliente_id = 202;
-                    $clientsPapeletaSalida->contacto = NULL;
-                    $clientsPapeletaSalida->direccion = NULL;
-                    $clientsPapeletaSalida->save();
-                }
+                $clientsPapeletaSalida = new ClientsPapeletaSalida;
+                $clientsPapeletaSalida->papeletasalida_id = $PapeletaSalida->id;
+                $clientsPapeletaSalida->cliente_id = $request->rpapeleta;
+                $clientsPapeletaSalida->contacto = '';
+                $clientsPapeletaSalida->direccion = '';
+                $clientsPapeletaSalida->save();
                 return response()->json(['message' => 'Papeleta de Salida grabado', 'icon' => 'success'], 200);
             }
-        } else {
-            return response()->json(['message' => 'Hora y fecha de Tolerancia no permitida', 'icon' => 'info'], 200);
+
+
+            //Si motivo es Despacho /  Si motivo es Ventas
+            if ($request->nIdMotivo == 2 || $request->nIdMotivo == 3) {
+                $clientPapeletaSalida = Session::get('clients');
+                $allclients = $clientPapeletaSalida->map(function ($PS) use ($PapeletaSalida) {
+
+                    return [
+                        'papeletasalida_id' => $PapeletaSalida->id,
+                        'cliente_id'      =>  $PS->id,
+                        'contacto' => $PS->contacto,
+                        'direccion'   => $PS->direccion,
+                    ];
+                });
+
+                ClientsPapeletaSalida::insert($allclients->toArray());
+                return response()->json(['message' => 'Papeleta de Salida grabado', 'icon' => 'success'], 200);
+            }
         }
     }
 
@@ -181,7 +169,7 @@ class PapeletaSalidaController extends Controller
     public function AddTempClient(Request $request)
     {
 
-        $client = Cliente::where(['id' => $request->nIdCliente])->first();
+        $client = Cliente::where(['ruc' => $request->nIdRuc])->first();
         $clients = Session::get('clients');
         $clients = ($clients != null) ? collect($clients) : collect([]);
         $TempClientPapeletaSalida = new TempClientPapeletaSalida();

@@ -171,7 +171,7 @@
                                                     <div class="col-md-4">
                                                         <input
                                                             type="text"
-                                                            class="form-control"
+                                                            class="form-control" 
                                                             :disabled="
                                                                 isDisabled
                                                             "
@@ -903,9 +903,9 @@ export default {
                         nIdRuc: this.fillGuiaRemisionCreate.nIdRuc,
                     })
                     .then((response) => {
-                        this.fillGuiaRemisionCreate.nidCliente =
-                            response.data.razonsocial;
+                        this.fillGuiaRemisionCreate.nidCliente = response.data.razonsocial;
                         this.isDisabled = true;
+                        
                     });
             }
         },

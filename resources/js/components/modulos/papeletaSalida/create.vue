@@ -31,7 +31,7 @@
                               @change="
                                 onChangeMotivo(fillPapeletasalida.nIdMotivo)
                               "
-                              :style="{ width: '200px' }"
+                              :style="{ width: '200px' }" 
                             >
                               <el-option
                                 v-for="item in listMotivo"
@@ -131,7 +131,7 @@
                     </div>
                     <div class="card-body">
                       <div class="row">
-                        <div class="col-md-12">
+           <!--              <div class="col-md-12">
                           <div class="form-group row">
                             <label class="col-md-1 col-form-label"
                               >Cliente</label
@@ -156,7 +156,94 @@
                               </el-select>
                             </div>
                           </div>
-                        </div>
+                        </div> -->
+
+                        <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+
+                                                    <el-radio v-model="fillPapeletasalida.rpapeleta" label="3"  >
+                                                    <label
+                                                        class="col-md-2 col-form-label"
+                                                        >Cliente</label
+                                                        >
+                                                      </el-radio>
+                                                    <div class="col-md-9">
+                                                        <input
+                                                            type="text"
+                                                            class="form-control"
+                                                            v-model="
+                                                                fillPapeletasalida.nidCliente
+                                                            "
+                                                            :disabled="true"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label
+                                                        class="col-md-2 col-form-label"
+                                                        >RUC</label
+                                                    >
+                                                    <div class="col-md-4">
+                                                        <input
+                                                            type="text"
+                                                            class="form-control"
+                                                        
+                                                            v-model="
+                                                                fillPapeletasalida.nIdRuc
+                                                            "
+                                                            v-int
+                                                            :disabled="this.fillPapeletasalida.estadoMotivo"
+                                                        />
+                                                    </div>
+                                                    <span
+                                                        ><button
+                                                            class="btn btn-flat btn-success"
+                                                            @click.prevent="
+                                                                getBuscaRucBD
+                                                            "
+                                                        >
+                                                            <i
+                                                                class="fas fa-search"
+                                                            ></i>
+                                                        </button>
+                                                        <button
+                                                            class="btn btn-flat btn-info"
+                                                            @click.prevent="
+                                                                getRefresh
+                                                            "
+                                                        >
+                                                            <i
+                                                                class="fas fa-sync-alt"
+                                                            ></i>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label
+                                                        class="col-md-2 col-form-label"
+                                                        >Otros</label
+                                                    >
+                                                    <div class="col-md-9">
+                                                        <el-radio v-model="fillPapeletasalida.rpapeleta" label="680" >Cliente en Evaluacion</el-radio>
+                                                        <el-radio v-model="fillPapeletasalida.rpapeleta" label="729">Despacho</el-radio>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+
 
                         <div class="col-md-6">
                           <div class="form-group row">
@@ -318,7 +405,10 @@ export default {
         cFecha: "",
         nIdMotivo: "",
         cDireccion: "",
-        estadoMotivo: true,
+        estadoMotivo: false,
+        nIdRuc:"",
+        rpapeleta:'3',
+
 
         cCantidadModal: "",
       },
@@ -329,6 +419,7 @@ export default {
       listMotivo: [],
       estadoProv: false,
       estadoCliente: false,
+      isDisabled: false,
 
       modalCantidad: false,
 
@@ -367,6 +458,32 @@ export default {
   },
   computed: {},
   methods: {
+
+
+
+    getBuscaRucBD() {
+            if (!this.fillPapeletasalida.nIdRuc) {
+                Swal.fire("Ingrese el Ruc por favor!");
+            } else {
+                var url = "/administracion/cliente/BuscaRucBD";
+                axios
+                    .post(url, {
+                        nIdRuc: this.fillPapeletasalida.nIdRuc,
+                    })
+                    .then((response) => {
+                        this.fillPapeletasalida.nidCliente = response.data.razonsocial;
+                        this.fillPapeletasalida.rpapeleta="680"
+                        this.fillPapeletasalida.rpapeleta="3"
+                    });
+            }
+        },
+
+        getRefresh() {
+            this.fillPapeletasalida.nidCliente = "";
+            this.fillPapeletasalida.nIdRuc = "";
+            this.isDisabled = false;
+        },
+
     cargaRangoHorasPapeleta() {
       const hoy = new Date();
       // let horaActual = hoy.getHours().toString().padStart(2,'0') + ':' + hoy.getMinutes().toString().padStart(2,'0') + ':' + hoy.getSeconds().toString().padStart(2,'0');
@@ -410,8 +527,11 @@ export default {
     onChangeMotivo(event) {
       if (event == 3 || event == 2 ) {
         this.fillPapeletasalida.estadoMotivo = false;
+        this.fillPapeletasalida.rpapeleta='3'
+        
       } else {
         this.fillPapeletasalida.estadoMotivo = true;
+        this.fillPapeletasalida.rpapeleta='680'
       }
     },
 
@@ -419,9 +539,10 @@ export default {
       var url = "/administracion/papeletasalida/AddTempClient";
       axios
         .post(url, {
-          nIdCliente: this.fillPapeletasalida.nIdCliente,
+          nIdRuc: this.fillPapeletasalida.nIdRuc,
           cDireccion: this.fillPapeletasalida.cDireccion,
           cContacto: this.fillPapeletasalida.cContacto,
+
         })
         .then((response) => {
           this.listTempClientPSalida = response.data.datos;
@@ -472,6 +593,7 @@ export default {
           nIdMotivo: this.fillPapeletasalida.nIdMotivo,
           cReferencia: this.fillPapeletasalida.cReferencia,
           listTempClientPSalida: this.listTempClientPSalida,
+          rpapeleta: this.fillPapeletasalida.rpapeleta,
           hora,
           fecha
         })
@@ -534,7 +656,7 @@ export default {
       var url = "/administracion/PapeletaSalida/Motivo";
       axios.get(url).then((response) => {
         this.listMotivo = response.data;
-        this.fillPapeletasalida.nIdMotivo = this.listMotivo[3].id;
+        this.fillPapeletasalida.nIdMotivo = this.listMotivo[4].id;
         this.fillPapeletasalida.estadoMotivo = false;
       });
     },

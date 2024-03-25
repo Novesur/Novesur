@@ -303,6 +303,7 @@ Route::get('/administracion/ordenCompra/ListarPrecioxProveedorOC', 'Administraci
 Route::post('/operacion/ordenCompra/exportPrecioOcExcelxProduct', 'Administracion\OrdencompraController@exportPrecioOcExcelxProduct');
 Route::post('/operacion/ordenCompra/exportPrecioOcExcelxProveedor', 'Administracion\OrdencompraController@exportPrecioOcExcelxProveedor');
 Route::post('/administracion/ordenCompra/setApruebaOrdenCompra', 'Administracion\OrdencompraController@setApruebaOrdenCompra');
+Route::get('/administracion/ordenCompra/listTipoOrdenCompra', 'Administracion\OrdencompraController@listTipoOrdenCompra');
 
 
 
@@ -675,14 +676,6 @@ Route::post('/operacion/visita/export', 'Administracion\VisitaController@export'
 Route::get('/administracion/personalContacto/list', 'Administracion\PersonalContactoController@list');
 
 
-/* Guia de Remision  */
-
-
-
-
-
-
-
 /* Movimiento de Almacen */
 Route::get('/administracion/MovimientoAlmacen/tipotraslado', 'Administracion\MovimientoAlmacenController@tipoTraslado');
 Route::get('/administracion/MovimientoAlmacen/ListModTransporte', 'Administracion\MovimientoAlmacenController@ListModTransporte');
@@ -694,13 +687,6 @@ Route::get('/administracion/MovimientoAlmacen/list', 'Administracion\MovimientoA
 Route::get('/administracion/MovimientoAlmacen/getListDetMovAlmacen', 'Administracion\MovimientoAlmacenController@getListDetMovAlmacen');
 Route::post('/administracion/MovimientoAlmacen/procesar', 'Administracion\MovimientoAlmacenController@procesar');
 Route::post('/administracion/MovimientoAlmacen/MovimientoAlmacenPdf', 'Administracion\MovimientoAlmacenController@MovimientoAlmacenPdf');
-
-
-
-
-
-
-
 
 
 
