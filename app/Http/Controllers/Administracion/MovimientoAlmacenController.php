@@ -296,7 +296,7 @@ class MovimientoAlmacenController extends Controller
             $parteIngreso->almacen_id =   $movimiento_almacen->puntopartida_id;
             $parteIngreso->cliente_id =    $datCliente->id;
             $parteIngreso->movimiento_id =  2;
-            $parteIngreso->estadopedido_id =  3;
+            $parteIngreso->estadopedido_id =  4;
             $parteIngreso->Nroordenservicio =  '';
             $parteIngreso->tipo_orden =  'N';
             $parteIngreso->save();

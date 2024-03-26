@@ -459,7 +459,7 @@ export default {
     },
 
     procesar(id) {
-      var url = "/administracion/MovimientoAlmacen/procesar";
+      var url = "/administracion/MovimientoAlmacen/procesar"; 
       axios
         .post(url, {
           id,

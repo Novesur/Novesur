@@ -539,7 +539,7 @@
 
                                         <button
                                             class="btn btn-flat btn-success btnWidth3buttons"
-                                            @click.prevent="reporteByDateAsistExcel1431"
+                                            @click.prevent="getListTardanzAsistenciaByDate1431"
                                         >
                                         <span><i class="fas fa-file-excel"></i> De 14 al 31</span>
                                       </button>
@@ -718,21 +718,7 @@ export default {
 
         },
 
-        reporteByDateAsistExcel0113(){
-            var url = "/operacion/asistencia/reporteByDateAsistExcel0113";
-      axios
-        .post(
-          url,
-          {
-            params: { listAsistenciaByDay0113: JSON.stringify(this.listAsistenciaByDay0113) },
-          },
-          { responseType: "blob" }
-        )
-        .then((response) => {
-          FileSaver.saveAs(response.data, "AsistByDate0113.xlsx");
-        });
 
-        },
 
         getListTardanzAsistenciaByDate0113(){
             var url = "/administracion/asistencia/ListTardanzAsistenciaByDate0113";
@@ -750,7 +736,7 @@ export default {
                 .then((response) => {
                     this.listAsistenciaTardanza= response.data
                     this.reporteTardanzaExcel0113();
-                });
+                }); 
         },
 
         reporteTardanzaExcel0113(){
@@ -769,15 +755,33 @@ export default {
 
         },
 
-        getListTardanzAsistenciaByDate0113(){
+        getListTardanzAsistenciaByDate1431(){
             var url = "/administracion/asistencia/listAsistByDate1431";
             axios
                 .get(url)
                 .then((response) => {
                     this.listAsistenciaByDay1431= response.data
-                    //this.reporteByDateAsistExcel0113();
+                    this.reporteByDateAsistExcel1431();
                 });
         },
+
+        reporteByDateAsistExcel1431(){
+            var url = "/operacion/asistencia/reporteByDateAsistExcel1431";
+      axios
+        .post(
+          url,
+          {
+            params: { listAsistenciaByDay1431: JSON.stringify(this.listAsistenciaByDay1431) },
+          },
+          { responseType: "blob" }
+        )
+        .then((response) => {
+          FileSaver.saveAs(response.data, "AsistByDate1431.xlsx");
+        });
+
+        },
+
+
 
 
 

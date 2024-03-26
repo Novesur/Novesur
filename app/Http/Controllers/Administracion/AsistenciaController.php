@@ -6,6 +6,7 @@ use App\Exports\AsistenciaByDateExport;
 use App\Http\Controllers\Controller;
 use App\Imports\AsistenciaImport;
 use App\Exports\Asistencia0113Export;
+use App\Exports\Asistencia1431Export;
 use App\Exports\AsistenciaTardanzaExport;
 use App\Personal;
 use Illuminate\Http\Request;

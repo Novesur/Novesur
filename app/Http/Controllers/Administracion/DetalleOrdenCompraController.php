@@ -56,19 +56,19 @@ class DetalleOrdenCompraController extends Controller
         $detalleOc = Detalleordencompra::where('id', $request->item)->first();
         $cCantidadModal = $request->cCantidadModal;
 
-        
-        if ($cCantidadModal > $detalleOc->cantidad ) {
+
+        if ($cCantidadModal > $detalleOc->cantidad) {
             return response()->json(['message' => 'Cantidad menos de lo permitido', 'icon' => 'info'], 200);
         }
         if ($cCantidadModal <= 0) {
             return response()->json(['message' => 'Valor no permitido', 'icon' => 'info'], 200);
         } else {
             Detalleordencompra::where('id', $request->item)->update(['canting' => $cCantidadModal]);
-      /*       Detalleordencompra::where('id', $request->item)->update(['cantidadKardex' => $cCantidadModal + intval($detalleOc->canting)]); */
+            /*       Detalleordencompra::where('id', $request->item)->update(['cantidadKardex' => $cCantidadModal + intval($detalleOc->canting)]); */
             //Detalleordencompra::where('id', $request->item)->update(['cantidadKardex' => $cCantidadModal + $detalleOc->canting]);
         }
         $detalleOc = Detalleordencompra::where('id', $request->item)->first();
-/* 
+        /* 
         if ($detalleOc->cantidad == $detalleOc->cantidadKardex) {
             Detalleordencompra::where('id', $request->item)->update(['estado' => '1']);
         } */
@@ -103,7 +103,7 @@ class DetalleOrdenCompraController extends Controller
         $ordenCompra->estadoordencompra_id = $ordenCompra->estadoordencompra_id;
         $ordenCompra->observacion = $request->cObservacion;
         $ordenCompra->tipocambio_id = $ordenCompra->tipocambio_id;
-
+        $ordenCompra->tipo_ordencompra_id = $ordenCompra->tipo_ordencompra_id;
         $ordenCompra->save();
 
         $detalleOrdenCompra = new Detalleordencompra();
