@@ -21,8 +21,8 @@ class VisitaController extends Controller
         $visitaObra = new VisitasVentas;
         $visitaObra->fecha = $fecha;
         $visitaObra->tiempo = $hora;
-        $visitaObra->departamento_id = 1;
-        $visitaObra->provincia_id = 1;
+        $visitaObra->departamento_id = $request->nIdDepartamento;
+        $visitaObra->provincia_id = $request->nIdProvincia;
         $visitaObra->distrito_id = $request->nIdDistrito;
         $visitaObra->cliente_id = $request->nIdCliente;
         $visitaObra->proyecto = $request->cProyecto;

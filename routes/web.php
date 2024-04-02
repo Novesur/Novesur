@@ -665,8 +665,13 @@ Route::post('/operacion/asistencia/reporteByDateAsistExcel1431', 'Administracion
 
 
 
-/* Distrito */
-Route::get('/administracion/distrito/index', 'Administracion\DistritoController@index');
+/* Ubigeo */
+
+Route::get('/administracion/ubigeo/departamentos', 'Administracion\UbigeoController@departamentos');
+Route::get('/administracion/ubigeo/distritos', 'Administracion\UbigeoController@distritos');
+Route::get('/administracion/ubigeo/provincias', 'Administracion\UbigeoController@provincias');
+
+
 /* Estado de la Obra */
 Route::get('/administracion/EstadoObra/list', 'Administracion\EstadoObraController@list');
 /* Visita de Obra */

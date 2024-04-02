@@ -132,7 +132,7 @@
                           <i class="far fa-eye"></i> Detalle
                         </button>
 
-                        <button v-if="item.estadopedido_id === 4" class="btn btn-primary btn-sm" @click="procesar(item.id)">
+                        <button v-if="item.estadopedido_id === 4" class="btn btn-primary btn-sm" @click="procesar(item.id)"> 
                           <i class="fas fa-file-import"></i> Procesar
                         </button>
 
@@ -559,8 +559,7 @@ this.fillBsqMovAlmacen.nIdCliente = this.listDetPedido[0].id; */
         })
         .then((response) => {
           this.listMovAlmacen = response.data;
-
-          //this.inicializarPaginacion();
+      
         });
     },
 

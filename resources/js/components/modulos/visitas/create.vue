@@ -22,6 +22,83 @@
 
                             <div class="card-body">
                                 <form role="form">
+
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label
+                                                        class="col-md-2 col-form-label"
+                                                        >Departamento :</label
+                                                    >
+                                                    <div class="col-md-6">
+                                                        <el-select
+                                                            v-model="
+                                                                fillBsqVisitaCreate.nIdDepartamento
+                                                            "
+                                                            filterable
+                                                            placeholder="Seleccione una Distrito"
+                                                            :style="{
+                                                                width: '350px',
+                                                            }"
+                                                            @change="getListProvincia(fillBsqVisitaCreate.nIdDepartamento)"
+                                                        >
+                                                            <el-option
+                                                                v-for="item in this
+                                                                    .listDepartamento"
+                                                                :key="item.id"
+                                                                :label="
+                                                                    item.nombre
+                                                                "
+                                                                :value="item.id"
+                                                               
+                                                                
+                                                            >
+                                                            </el-option>
+                                                        </el-select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label
+                                                        class="col-md-2 col-form-label"
+                                                        >Provincia :</label
+                                                    >
+                                                    <div class="col-md-6">
+                                                        <el-select
+                                                            v-model="
+                                                                fillBsqVisitaCreate.nIdProvincia
+                                                            "
+                                                            filterable
+                                                            placeholder="Seleccione una Distrito"
+                                                            :style="{
+                                                                width: '350px',
+                                                            }"
+                                                            @change="getlistTipoDistrito(fillBsqVisitaCreate.nIdProvincia)"
+                                                        >
+                                                            <el-option
+                                                                v-for="item in this
+                                                                    .listProvincia"
+                                                                :key="item.id"
+                                                                :label="
+                                                                    item.nombre
+                                                                "
+                                                                :value="item.id"
+                                                            >
+                                                            </el-option>
+                                                        </el-select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class="col-md-12">
                                         <div class="row">
                                             <div class="col-md-6">
@@ -306,6 +383,8 @@ export default {
                 cNombre: "",
                 cObservacion: "",
                 nIdContacto:"",
+                nIdDepartamento:"",
+                nIdProvincia:"",
                 nIdDistrito:"",
             },
 
@@ -324,7 +403,8 @@ export default {
             listRolPermisoByUsuario: JSON.parse(
                 sessionStorage.getItem("listRolPermisosByUsuario")
             ),
-
+            listDepartamento:[],
+            listProvincia:[],
             listTipoDistrito: [],
             listCliente: [],
             listEstadoObra: [],
@@ -370,7 +450,7 @@ export default {
     },
 
     mounted() {
-        this.getlistTipoDistrito();
+        this.getListDepartamento();
         this.getlistCliente();
         this.cargaListEstadoObras();
         this.cargaListContacto();
@@ -427,12 +507,48 @@ export default {
             this.listDetPapeletaSalida = [];
         },
 
-        getlistTipoDistrito() {
-            var url = "/administracion/distrito/index";
+        getListDepartamento(){
+            var url = "/administracion/ubigeo/departamentos";
             axios.get(url).then((response) => {
+                
+                this.listDepartamento = response.data;
+             
+                
+                
+               
+            });
+        },
+
+        setLimpiaUbigeo(){
+        
+            this.fillBsqVisitaCreate.nIdProvincia="";
+            this.fillBsqVisitaCreate.nIdDistrito="";
+        },
+
+        getListProvincia(departamento){
+            var url = "/administracion/ubigeo/provincias";
+            axios.get(url,{
+                params:{
+                    departamento
+                }
+            }).then((response) => {
+                this.listProvincia = response.data;
+                this.setLimpiaUbigeo();
+                
+           
+            });
+        },
+
+        getlistTipoDistrito(idProvincia) {
+           
+            var url = "/administracion/ubigeo/distritos";
+            axios.get(url,{
+                params:{
+                    idProvincia
+                }
+            }).then((response) => {
                 this.listTipoDistrito = response.data;
-                this.fillBsqVisitaCreate.nIdDistrito =
-                    this.listTipoDistrito[0].id;
+                
             });
         },
 
@@ -517,6 +633,8 @@ export default {
 
             axios
                 .post(url, {
+                    nIdDepartamento: this.fillBsqVisitaCreate.nIdDepartamento,
+                    nIdProvincia: this.fillBsqVisitaCreate.nIdProvincia,
                     nIdDistrito: this.fillBsqVisitaCreate.nIdDistrito,
                     cDireccion: this.fillBsqVisitaCreate.cDireccion,
                     nIdCliente : this.fillBsqVisitaCreate.nIdCliente,

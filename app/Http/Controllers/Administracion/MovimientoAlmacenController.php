@@ -315,7 +315,7 @@ class MovimientoAlmacenController extends Controller
                                 $detalleParteIngreso->cantidad = $dataDetMovimiento->cantidad;
                                 $detalleParteIngreso->unidmedida_id =  $dataDetMovimiento->unidmedida_id;
                                 $detalleParteIngreso->punit = $dataDetalleKardex->costunit;
-                                $detalleParteIngreso->estadopedido_id = 3;
+                                $detalleParteIngreso->estadopedido_id = 2;
                                 $detalleParteIngreso->save();
                             }
             }
@@ -352,7 +352,7 @@ class MovimientoAlmacenController extends Controller
                     $detalleParteIngreso->cantidad = $dataDetMovimiento->cantidad;
                     $detalleParteIngreso->unidmedida_id =  $dataDetMovimiento->unidmedida_id;
                     $detalleParteIngreso->punit = $dataDetalleKardex->costunit;
-                    $detalleParteIngreso->estadopedido_id = 3;
+                    $detalleParteIngreso->estadopedido_id = 2;
                     $detalleParteIngreso->save();
                 }
 
