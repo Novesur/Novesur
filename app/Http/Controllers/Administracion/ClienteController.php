@@ -42,7 +42,7 @@ class ClienteController extends Controller
                 $cliente = new Cliente;
                 $cliente->razonsocial = mb_strtoupper($request->cRSocial);
                 $cliente->direccion = mb_strtoupper($request->cDireccion);
-                $cliente->ruc = $request->cRuc;
+                $cliente->ruc = $request->cRuc; 
                 $cliente->atencion = mb_strtoupper($request->cAtencion);
                 $cliente->telefono = $request->cTelefono;
                 $cliente->celular = $request->cCelular;
@@ -62,8 +62,9 @@ class ClienteController extends Controller
 
 
         $roluser = User::where('id', $request->nIdUser)->first();
+   
 
-        if ($roluser->roles_id == 1 || $roluser->roles_id == 4 || $roluser->roles_id == 7 || $roluser->roles_id == 9 || $roluser->roles_id == 11 || $roluser->roles_id == 5) {
+        if ($roluser->roles_id === 1 || $roluser->roles_id === 4 || $roluser->roles_id === 7 || $roluser->roles_id === 9 || $roluser->roles_id === 11 || $roluser->roles_id == 5 ) {
             if ($request->cNombre == null and $request->cRuc == null and $request->nIdVendedor == null) {
                 $dato = Cliente::with('user')->get();
                 return $dato;
@@ -79,7 +80,7 @@ class ClienteController extends Controller
                 $dato = Cliente::with('user')->where('usuario_id',  $request->nIdVendedor)->get();
             }
         } else {
-
+        
             if ($request->cNombre == null and $request->cRuc == null  && $request->nIdVendedor == null) {
                 $dato = Cliente::with('user')->where('usuario_id', $request->nIdUser)->get();
             }
@@ -90,9 +91,6 @@ class ClienteController extends Controller
                 $dato = Cliente::with('user')->where('razonsocial', 'like', '%' . $request->cNombre . '%')->where('usuario_id', $request->nIdUser)->get();
             }
         }
-
-
-
 
         return $dato;
     }

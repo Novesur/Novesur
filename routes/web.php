@@ -304,6 +304,8 @@ Route::post('/operacion/ordenCompra/exportPrecioOcExcelxProduct', 'Administracio
 Route::post('/operacion/ordenCompra/exportPrecioOcExcelxProveedor', 'Administracion\OrdencompraController@exportPrecioOcExcelxProveedor');
 Route::post('/administracion/ordenCompra/setApruebaOrdenCompra', 'Administracion\OrdencompraController@setApruebaOrdenCompra');
 Route::get('/administracion/ordenCompra/listTipoOrdenCompra', 'Administracion\OrdencompraController@listTipoOrdenCompra');
+Route::post('/administracion/ordenCompra/setGrabarOrderCompra', 'Administracion\OrdencompraController@create');
+Route::post('/administracion/ordenCompra/edit', 'Administracion\OrdencompraController@edit');
 
 
 

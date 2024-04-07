@@ -22,6 +22,26 @@ use App\TipOrdenCompra;
 
 class OrdencompraController extends Controller
 {
+
+    public function edit(Request $request){
+
+        $ordenCompra = Ordencompra::where('codigo', $request->nidOrdenCompra)->first();
+        $ordenCompra->codigo = $ordenCompra->codigo;
+        $ordenCompra->Femision = $ordenCompra->Femision;
+        $ordenCompra->Referencia = $ordenCompra->Referencia;
+        $ordenCompra->proveedor_id = $ordenCompra->proveedor_id;
+        $ordenCompra->Fentrega = $ordenCompra->Fentrega;
+        $ordenCompra->LugarEntrega = $request->cLEntrega;
+        $ordenCompra->pago_id = $request->nIdTipoPago;
+        $ordenCompra->user_id = $ordenCompra->user_id;
+        $ordenCompra->estadoordencompra_id = $ordenCompra->estadoordencompra_id;
+        $ordenCompra->observacion = $request->cObservacion;
+        $ordenCompra->tipocambio_id = $request->nIdTipoMoneda;
+        $ordenCompra->tipo_ordencompra_id = $ordenCompra->tipo_ordencompra_id;
+        $ordenCompra->save();
+
+    }
+
     public function addOrden(Request $request)
     {
       $product = Producto::where(['id' => $request->nIdprod])->with('familia', 'marca', 'material', 'modelotipo', 'subfamilia', 'homologacion')->first();

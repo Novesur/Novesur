@@ -119,7 +119,7 @@
                     </button>
                     <button
                       class="btn btn-flat btn-default btnWidth"
-                      @click.prevent="limpiarProveedorBsq"
+                      @click.prevent="limpiarClienteBsq"
                     >
                       Limpiar
                     </button>
@@ -294,7 +294,7 @@ export default {
     listarClientesPaginated() {
       let inicio = this.pageNumber * this.perPage,
         fin = inicio + this.perPage;
-      return this.listCliente.slice(inicio, fin);
+      return this.listCliente.slice(inicio,fin); 
     },
     pagesList() {
       let a = this.listCliente.length,
@@ -316,9 +316,10 @@ export default {
         this.listVendedorUser = response.data;
       });
     },
-    limpiarProveedorBsq() {
+    limpiarClienteBsq() {
       this.fillBsqProveedor.cNombre = "";
       this.fillBsqProveedor.cRuc = "";
+      this.listCliente=[]
     },
     limpiarBandejaProveedor() {
       this.listCliente = [];
