@@ -72,6 +72,27 @@
                             </div>
                           </div>
                         </div>
+
+
+                        <div class="col-md-6">
+                              <div class="form-group row">
+                                <label class="col-md-2 col-form-label"
+                                  >Fecha</label
+                                >
+                                <el-date-picker
+                                  v-model="fillBsqListPrecioOC.dFechaByProduct"
+                                  type="daterange"
+                                  range-separator="To"
+                                  start-placeholder="Start date"
+                                  end-placeholder="End date"
+                                  value-format="yyyy-MM-dd"
+                                  
+                                  :style="{ width: '630px', height: '38px' }"
+                                >
+                                </el-date-picker>
+                              </div>
+                            </div>
+
                       </div>
                     </form>
                   </div>
@@ -80,7 +101,7 @@
                       <div class="col-md-4 offset-4">
                         <button
                           class="btn btn-flat btn-info btnWidth"
-                          @click.prevent="getListPrecioOrdCompra"
+                          @click.prevent="getListPrecioOrdCompra" 
                         >
                         <i class="fas fa-search"></i>
                           Buscar
@@ -521,6 +542,7 @@ export default {
         nIdprod: "",
         nidProveedor: "",
         dFecha:"",
+        dFechaByProduct:"",
       },
       listProd: [],
       listProveedor: [],
@@ -678,9 +700,13 @@ export default {
         .get(url, {
           params: {
             nIdprod: this.fillBsqListPrecioOC.nIdprod,
+            dFechaByProduct: this.fillBsqListPrecioOC.dFechaByProduct,
+            fecha1 : this.fillBsqListPrecioOC.dFechaByProduct[0],
+            fecha2 : this.fillBsqListPrecioOC.dFechaByProduct[1]
           },
         })
         .then((response) => {
+        console.log(response.data)
           this.listOrdenPedidoXProduct = response.data;
         });
     },

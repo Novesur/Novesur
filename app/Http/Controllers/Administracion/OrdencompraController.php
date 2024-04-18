@@ -268,8 +268,39 @@ class OrdencompraController extends Controller
     }
 
     public function ListPrecioOrdCompra(Request $request){
+
+        $nIdprod = $request->nIdprod;
+        $dFechaByProduct = $request->dFechaByProduct;
+        $fecha1= $request->fecha1;
+        $fecha2= $request->fecha2;
+        $estado = is_null($request->nIdprod) && empty($dFechaByProduct);
+     
+
+        if( $estado){
+            $dato = Detalleordencompra::with('ordencompras', 'ordencompras.tipocambio', 'ordencompras.proveedor','producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion')->get(); 
+            return $dato;
+        }else{
+
+            if( $fecha1 == null &&  $fecha2 == null){
+                $dato =  Detalleordencompra::with('ordencompras', 'ordencompras.tipocambio', 'ordencompras.proveedor','producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion')
+                    ->whereHas('ordencompras', function (Builder $query) use ($nIdprod) {$query->where('producto_id', $nIdprod);
+                    })->get();
+        
+                    return $dato;
+            }
+
+            if($nIdprod === null){
+                $dato =  Detalleordencompra::with('ordencompras', 'ordencompras.tipocambio', 'ordencompras.proveedor','producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion')
+                    ->whereHas('ordencompras', function (Builder $query) use ($fecha1,$fecha2){$query->whereBetween('Femision', [$fecha1, $fecha2]);
+                })->get();
+         
+  
+                return $dato;
+            }
+        }
+
    
-       $estado = is_null($request->nIdprod);
+  /*      $estado = is_null($request->nIdprod);
      
      
        if( $estado){
@@ -278,7 +309,7 @@ class OrdencompraController extends Controller
         }else{
             $dato = Detalleordencompra::with('ordencompras', 'ordencompras.tipocambio', 'ordencompras.proveedor','producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion')->where('producto_id', $request->nIdprod)->get();
         return $dato;
-       }
+       } */
 
     }
 
