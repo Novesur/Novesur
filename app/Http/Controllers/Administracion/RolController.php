@@ -53,7 +53,7 @@ class RolController extends Controller
         if (!$request->ajax()) return redirect('/');
         $nIdRol = $request->nIdRol;
         $nIdRol = ($nIdRol == NULL) ? ($nIdRol = 0) : $nIdRol;
-        $rpta = DB::select('call sp_Rol_getListarPermisosByRol (?)', [
+        $rpta = DB::select('call sp_Rol_getListarPermisosByRol (?)', [ 
             $nIdRol
         ]);
         return $rpta;

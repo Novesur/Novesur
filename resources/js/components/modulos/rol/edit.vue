@@ -177,7 +177,7 @@ export default {
       error: 0,
       mensajeError: [],
     };
-  },
+  }, 
   mounted() {
     this.getListarPermisosByRol();
     this.getListarRoles();

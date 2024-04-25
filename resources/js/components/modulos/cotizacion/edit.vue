@@ -976,8 +976,8 @@ export default {
         return {
             fillEditarProducto: {
                 ncodCotizacion: this.$attrs.id,
-                nIdUsuario: "",
-                nIdDescripPago: "",
+                nIdUsuario: sessionStorage.getItem("iduser"), 
+                nIdDescripPago: "", 
                 nIdGarantia: "",
                 cNomClient: "",
                 cDirClient: "",
@@ -1272,7 +1272,7 @@ export default {
             axios
                 .post(url, {
                     ncodCotizacion: this.fillEditarProducto.ncodCotizacion,
-                    nIdUsuario: this.fillEditarProducto.vidUSer,
+                    vidUSer: this.fillEditarProducto.vidUSer, 
                     cValidez: this.fillEditarProducto.cValidez,
                     cEntrega: this.fillEditarProducto.cEntrega,
                     nIdTipoPago: this.fillEditarProducto.nIdTipoPago,
@@ -1399,6 +1399,7 @@ export default {
             axios
                 .post(url, {
                     item: localStorage.Codigo,
+                    nIdUsuario: this.fillEditarProducto.nIdUsuario,
                     cCantidadEdit: this.fillEditarProducto.cCantidadEdit,
                     nIdUnidMedEdit: this.fillEditarProducto.nIdUnidMedEdit,
                     nIdprodEdit: this.fillEditarProducto.nIdprodEdit,

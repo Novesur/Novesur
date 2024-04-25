@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Producto;
 use App\DetalleCotizacion;
 use App\EstadoPedido;
+use App\User;
 use Illuminate\Support\Facades\Cache;
 
 
@@ -71,12 +72,7 @@ class DetalleCotizacionController extends Controller
 
         $cotizacion = Cotizacion::with('cliente')->where('id', $detalle->cotizacion_id)->first();
 
-        //dd($producto->precioSugerido > $request->cPUnitEdit);
-
-
-
-
-
+        $rol = User::where('id',$request->nIdUsuario)->first();
 
 
         if ($cotizacion->cliente->tipoPrecio == 'Lista') {
@@ -96,6 +92,19 @@ class DetalleCotizacionController extends Controller
                         'punit' =>   $request->cPUnitEdit,
                     ]);
                 return response()->json(['message' => 'Detalle editado', 'icon' => 'success'], 200);
+            }
+
+
+          
+            if($rol->roles_id === 1 || $rol->roles_id === 9 || $rol->roles_id === 5 || $rol->roles_id === 4){
+                DetalleCotizacion::where('id', $request->item)
+                ->update([
+                    'cantidad' => $request->cCantidadEdit,
+                    'unidmedida_id' => $request->nIdUnidMedEdit,
+                    'producto_id' => $request->nIdprodEdit,
+                    'punit' =>   $request->cPUnitEdit,
+                ]);
+            return response()->json(['message' => 'Detalle editado', 'icon' => 'success'], 200);
             }
 
 
@@ -119,6 +128,8 @@ class DetalleCotizacionController extends Controller
                     ]);
                 return response()->json(['message' => 'Detalle editado', 'icon' => 'success'], 200);
             }
+
+
 
 
             /*         if($producto->precioDistribuidor > 0 ){
