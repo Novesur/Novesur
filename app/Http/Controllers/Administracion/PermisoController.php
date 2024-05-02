@@ -30,7 +30,7 @@ class PermisoController extends Controller
     }
     public function listPermisosById(Request $request)
     {
-        $dato = Permission::where('id', '=', $request->nIdPermiso)->first();
+        $dato = Permission::where('id', '=', $request->nIdPermiso)->first(); 
         return $dato;
     }
 

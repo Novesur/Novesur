@@ -38,7 +38,7 @@ class PapeletaSalidaController extends Controller
 
 
         //Validamos que la Hora de ingreso de 8:30 am hasta las 8 PM
-        if ($fechaValida && $now >= $tiempoMin   &&  $now  <= $tiempoMax) {
+        if ($fechaValida && $now >= $tiempoMin   &&  $now  <= $tiempoMax) { 
 
             $PapeletaSalida = new Papeletasalida;
             $PapeletaSalida->user_id = $request->nIdUser;
@@ -168,15 +168,31 @@ class PapeletaSalidaController extends Controller
 
     public function AddTempClient(Request $request)
     {
+      
+            // Busqueda por RUC
+        if($request->rpapeleta === '3'){
+            $client = Cliente::where(['ruc' => $request->nIdRuc])->first();
+            $clients = Session::get('clients');
+            $clients = ($clients != null) ? collect($clients) : collect([]);
+            $TempClientPapeletaSalida = new TempClientPapeletaSalida();
+            $TempClientPapeletaSalida->fill(['direccion' => $request->cDireccion,  'id' => $client->id, 'razonsocial' => $client->razonsocial, 'contacto' => $request->cContacto]);
+            $clients->push($TempClientPapeletaSalida);
+            Session::put('clients', $clients);
+            return response()->json(['datos' => $clients, 'message' => NULL]);
+        }else{
+            $client = Cliente::where(['id' => $request->rpapeleta])->first();
+            $clients = Session::get('clients');
+            $clients = ($clients != null) ? collect($clients) : collect([]);
+            $TempClientPapeletaSalida = new TempClientPapeletaSalida();
+            $TempClientPapeletaSalida->fill(['direccion' => $request->cDireccion,  'id' => $client->id, 'razonsocial' => $client->razonsocial, 'contacto' => $request->cContacto]);
+            $clients->push($TempClientPapeletaSalida);
+            Session::put('clients', $clients);
+            return response()->json(['datos' => $clients, 'message' => NULL]);
 
-        $client = Cliente::where(['ruc' => $request->nIdRuc])->first();
-        $clients = Session::get('clients');
-        $clients = ($clients != null) ? collect($clients) : collect([]);
-        $TempClientPapeletaSalida = new TempClientPapeletaSalida();
-        $TempClientPapeletaSalida->fill(['direccion' => $request->cDireccion,  'id' => $client->id, 'razonsocial' => $client->razonsocial, 'contacto' => $request->cContacto]);
-        $clients->push($TempClientPapeletaSalida);
-        Session::put('clients', $clients);
-        return response()->json(['datos' => $clients, 'message' => NULL]);
+        }
+
+            
+
     }
 
     public function CleanTempClient()

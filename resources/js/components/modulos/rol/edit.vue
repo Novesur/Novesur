@@ -165,6 +165,7 @@ export default {
       listPermisosFilter: [],
        lisRolPermisosByUsuario:[],
        lisRolPermisosByUsuarioFilter:[],
+       listRoles:[],
 
       modalShow: false,
       mostrarModal: {
