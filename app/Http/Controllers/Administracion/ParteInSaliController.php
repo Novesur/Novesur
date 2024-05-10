@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
 
-class ParteInSaliController extends Controller
+class ParteInSaliController extends Controller 
 {
     public function create(Request $request)
     {
@@ -60,7 +60,7 @@ class ParteInSaliController extends Controller
         $detalleParteIngSali->unidmedida_id =  $request->nIdUnidMed;
         $detalleParteIngSali->punit = $request->punit;
         $detalleParteIngSali->estadopedido_id = 2;
-        $detalleParteIngSali->Nroordenservicio = NULL;
+        $detalleParteIngSali->Nroordenservicio = NULL;  
         $detalleParteIngSali->tipo_orden = 'N';
         $detalleParteIngSali->save();
 

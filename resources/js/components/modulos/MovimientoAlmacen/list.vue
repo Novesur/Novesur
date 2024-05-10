@@ -132,7 +132,7 @@
                           <i class="far fa-eye"></i> Detalle
                         </button>
 
-                        <button v-if="item.estadopedido_id === 4" class="btn btn-primary btn-sm" @click="procesar(item.id)"> 
+                        <button v-if="item.estadopedido_id === 4" class="btn btn-primary btn-sm" @click="procesar(item.id,item.cliente.ruc)"> 
                           <i class="fas fa-file-import"></i> Procesar
                         </button>
 
@@ -458,13 +458,14 @@ export default {
       this.isDisabled = false;
     },
 
-    procesar(id) {
-      var url = "/administracion/MovimientoAlmacen/procesar"; 
+    procesar(id,nIdRuc) {
+   
+      var url = "/administracion/MovimientoAlmacen/procesar";  
       axios
         .post(url, {
           id,
           nIdUser: this.fillBsqMovAlmacen.nIdUser,
-          nIdRuc: this.fillBsqMovAlmacen.nIdRuc
+          nIdRuc
         })
         .then((response) => {
          this.getlistMovAlmacen()

@@ -234,10 +234,11 @@ class MovimientoAlmacenController extends Controller
     public function procesar(Request $request)
     {
 
+   
         $formatreq = date("Y-m-d");
-
+        
         $movimiento_almacen = MovimientoAlmacen::where('id', $request->id)->first();
-
+  
 
         $detalle_movimientoalmacen = DetalleMovimientoalmacen::with('producto', 'unidmedida', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion')->where('movimiento_almacen_id', $request->id)->get();
         $datCliente = Cliente::where('ruc', $request->nIdRuc)->first();
@@ -269,6 +270,7 @@ class MovimientoAlmacenController extends Controller
                 $detalleKardex->costunit =  $dataDetalleKardex->costunit;
                 $detalleKardex->movimiento_id =  1;
                 $detalleKardex->user_id =  $request->nIdUser;
+            
                 $detalleKardex->cliente_id =  $datCliente->id;
                 $detalleKardex->save();
             }
@@ -359,6 +361,7 @@ class MovimientoAlmacenController extends Controller
             }
 
             //Actualizamos el estado del movimiento de almacen a Atendido
+          
             MovimientoAlmacen::findOrFail($movimiento_almacen->id)->update(['estadopedido_id' => 3]);
         }
     }

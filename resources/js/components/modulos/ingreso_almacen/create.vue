@@ -303,7 +303,7 @@ export default {
     limpiarCriteriosBsq() {},
 
     setSaveIngAlmacen() {
-      var url = "/administracion/parteingSalida/create";  
+      var url = "/administracion/parteingSalida/create";   
       axios
         .post(url, {
           nIdUser: this.fillIngAlmacen.nIdUser,

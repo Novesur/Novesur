@@ -31,8 +31,7 @@ class ParteIngresoController extends Controller
 
         //dd($request);
         //$Oc= Ordencompra::where('id', $request->nIdOC)->first();
-        dd($request->cEstado);
-
+      
         if ($request->cEstado == 1) {
             //Ordencompra::where('id', $request->nIdOC)->update(array('estadoordencompra_id' => 2));
             Detalleordencompra::where('id', $request->nIdOC)->update(array('estado' => 2));

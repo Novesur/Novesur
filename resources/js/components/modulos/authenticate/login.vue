@@ -178,7 +178,7 @@ export default {
     },
     loginSucces() {
       this.$router.push({ name: "dashboard.index" });
-      location.reload();
+  
     },
 
     validarLogin() {

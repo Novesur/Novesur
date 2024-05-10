@@ -34,10 +34,10 @@ class PapeletaSalidaController extends Controller
         date_default_timezone_set('America/Lima');
         $now = Carbon::now();
         $tiempoMin = Carbon::createFromTime(8, 30);
-        $tiempoMax = Carbon::createFromTime(20, 00);
+        $tiempoMax = Carbon::createFromTime(22, 00);
 
 
-        //Validamos que la Hora de ingreso de 8:30 am hasta las 8 PM
+        //Validamos que la Hora de ingreso de 8:30 am hasta las 10 PM
         if ($fechaValida && $now >= $tiempoMin   &&  $now  <= $tiempoMax) { 
 
             $PapeletaSalida = new Papeletasalida;
