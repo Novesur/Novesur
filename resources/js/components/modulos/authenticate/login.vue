@@ -123,7 +123,7 @@ export default {
           cContraseña: this.fillLogin.cContraseña,
         })
         .then((response) => {
-         
+
           if (response.data.code == 401) {
             this.loginFailed();
           }
@@ -178,7 +178,8 @@ export default {
     },
     loginSucces() {
       this.$router.push({ name: "dashboard.index" });
-  
+      location.reload();
+
     },
 
     validarLogin() {

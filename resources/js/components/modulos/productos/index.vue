@@ -410,7 +410,7 @@ export default {
         nIdCodigo: "",
       },
       pageNumber: 0,
-      perPage: 70,
+      perPage: 80,
       listFamilia: [],
       listSubFamilia: [],
       listMarca: [],
