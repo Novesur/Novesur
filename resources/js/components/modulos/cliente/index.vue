@@ -64,7 +64,6 @@
                             type="text"
                             class="form-control"
                             v-model="fillBsqProveedor.cRuc"
-                            v-int
                             :maxlength="11"
                             @keyup.enter="getListarCliente"
                           />

@@ -53,6 +53,7 @@ class AsistenciaController extends Controller
 
     public function  listByDatePersonal(Request $request){
 
+      
         $personal = Personal::find($request->personal);
 
         if (!$request->ajax()) return redirect('/');
