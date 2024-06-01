@@ -873,6 +873,38 @@
                     </li>
 
 
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="far fa-bell"></i>
+                            <p>
+                                 Sistema de Alertas
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <template v-if="listPermisos.includes('alertas.create')">
+                                    <router-link class="nav-link" :to="'/alertas/create'">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Generar Alertas</p>
+                                    </router-link>
+                                </template>
+                            </li>
+
+                            <li class="nav-item">
+                                <template v-if="listPermisos.includes('asistencia.import')">
+                                    <router-link class="nav-link" :to="'/asistencia/reporte'">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Reporte Asistencias</p>
+                                    </router-link>
+                                </template>
+                            </li>
+
+                        </ul>
+                    </li>
+
+
+
 
 
 

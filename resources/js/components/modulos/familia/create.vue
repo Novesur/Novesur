@@ -158,8 +158,7 @@ export default {
         .post(url, {
           cNombre: this.fillCrearfamilia.cNombre,
         })
-        .then((response) => {
-          console.log("Se guardo");
+        .then(() => {
           this.$router.push("/familia");
         });
     },

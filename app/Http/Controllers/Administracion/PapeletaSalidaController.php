@@ -27,18 +27,83 @@ class PapeletaSalidaController extends Controller
 
     public function create(Request $request)
     {
-        $fecha = date("Y-m-d");
+      /*   $fecha = date("Y-m-d");
 
         $fechaValida = $fecha >= now()->toDateString();
 
         date_default_timezone_set('America/Lima');
         $now = Carbon::now();
         $tiempoMin = Carbon::createFromTime(8, 30);
-        $tiempoMax = Carbon::createFromTime(22, 00);
+        $tiempoMax = Carbon::createFromTime(22, 00); */
+
+
+        $hoy = getdate();
+        $HoraNow = $hoy['hours'];
+        $HoraNowFormat= str_pad($HoraNow, 2, '0', STR_PAD_LEFT);
+        $minutoNow = $hoy['minutes'];
+        $minutoNowFormat= str_pad($minutoNow, 2, '0', STR_PAD_LEFT);
+        $DayNow = $hoy['mday'];
+        $DayNowFormat= str_pad($DayNow, 2, '0', STR_PAD_LEFT);
+        $MesNow = $hoy['wday'];
+        $MesNowFormat= str_pad($MesNow, 2, '0', STR_PAD_LEFT);
+        $YearNow = $hoy['year'];
+
+$fecha = $DayNowFormat.'-'.$MesNowFormat.'-'.$YearNow;
+$tiempo = $HoraNowFormat.':'.$minutoNowFormat.':'.'00';
+$tiempoMax = '08:30:00';
+
+//Validamos que la Hora de ingreso de 8:30 am hasta las 10 PM
+
+if ($tiempo  >= $tiempoMax) {
+
+    $PapeletaSalida = new Papeletasalida;
+    $PapeletaSalida->user_id = $request->nIdUser;
+    $PapeletaSalida->fecha = Carbon::parse($request->cfecha)->format('Y-m-d');
+    $PapeletaSalida->horasalida = substr($request->tHoraSalida, 0, 8);
+    $PapeletaSalida->horaretorno = substr($request->tHoraRetorno, 0, 8);
+    $PapeletaSalida->motivopapeletasalida_id = $request->nIdMotivo;
+    $PapeletaSalida->estadopapeletasalida_id = '1';
+    $PapeletaSalida->fundamento = nl2br(htmlentities(mb_strtoupper($request->cReferencia)));
+    $PapeletaSalida->hora_emision = $request->hora;
+    $PapeletaSalida->save();
+
+             //Si motivo es compras /  Si motivo es Otros /  Si motivo es Personal
+             if ($request->nIdMotivo == 1 || $request->nIdMotivo == 5 || $request->nIdMotivo == 4) {
+
+                $clientsPapeletaSalida = new ClientsPapeletaSalida;
+                $clientsPapeletaSalida->papeletasalida_id = $PapeletaSalida->id;
+                $clientsPapeletaSalida->cliente_id = $request->rpapeleta;
+                $clientsPapeletaSalida->contacto = '';
+                $clientsPapeletaSalida->direccion = '';
+                $clientsPapeletaSalida->save();
+                return response()->json(['message' => 'Papeleta de Salida grabado', 'icon' => 'success'], 200);
+            }
+
+
+            //Si motivo es Despacho /  Si motivo es Ventas
+            if ($request->nIdMotivo == 2 || $request->nIdMotivo == 3) {
+                $clientPapeletaSalida = Session::get('clients');
+                $allclients = $clientPapeletaSalida->map(function ($PS) use ($PapeletaSalida) {
+
+                    return [
+                        'papeletasalida_id' => $PapeletaSalida->id,
+                        'cliente_id'      =>  $PS->id,
+                        'contacto' => $PS->contacto,
+                        'direccion'   => $PS->direccion,
+                    ];
+                });
+
+                ClientsPapeletaSalida::insert($allclients->toArray());
+                return response()->json(['message' => 'Papeleta de Salida grabado', 'icon' => 'success'], 200);
+            }
+
+}else{
+    return response()->json(['message' => 'Tiempo de Papeleta no valido', 'icon' => 'error'], 200);
+}
 
 
         //Validamos que la Hora de ingreso de 8:30 am hasta las 10 PM
-        if ($fechaValida && $now >= $tiempoMin   &&  $now  <= $tiempoMax) { 
+/*         if ($fechaValida && $now >= $tiempoMin   &&  $now  <= $tiempoMax) {
 
             $PapeletaSalida = new Papeletasalida;
             $PapeletaSalida->user_id = $request->nIdUser;
@@ -80,7 +145,7 @@ class PapeletaSalidaController extends Controller
                 ClientsPapeletaSalida::insert($allclients->toArray());
                 return response()->json(['message' => 'Papeleta de Salida grabado', 'icon' => 'success'], 200);
             }
-        }
+        }*/
     }
 
     public function listPapeleByVendedor(Request $request)
@@ -168,7 +233,7 @@ class PapeletaSalidaController extends Controller
 
     public function AddTempClient(Request $request)
     {
-      
+
             // Busqueda por RUC
         if($request->rpapeleta === '3'){
             $client = Cliente::where(['ruc' => $request->nIdRuc])->first();
@@ -191,7 +256,7 @@ class PapeletaSalidaController extends Controller
 
         }
 
-            
+
 
     }
 

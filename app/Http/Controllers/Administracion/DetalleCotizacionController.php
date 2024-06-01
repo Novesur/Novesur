@@ -82,6 +82,17 @@ class DetalleCotizacionController extends Controller
             }
 
 
+      
+            if($rol->roles_id === 1 || $rol->roles_id === 9 || $rol->roles_id === 5 || $rol->roles_id === 4){
+                DetalleCotizacion::where('id', $request->item)
+                ->update([
+                    'cantidad' => $request->cCantidadEdit,
+                    'unidmedida_id' => $request->nIdUnidMedEdit,
+                    'producto_id' => $request->nIdprodEdit,
+                    'punit' =>   $request->cPUnitEdit,
+                ]);
+            return response()->json(['message' => 'Detalle editado', 'icon' => 'success'], 200);
+            }
 
             if (empty($producto->precioSugerido) || $producto->precioSugerido == 0) {
                 DetalleCotizacion::where('id', $request->item)
@@ -96,16 +107,6 @@ class DetalleCotizacionController extends Controller
 
 
           
-            if($rol->roles_id === 1 || $rol->roles_id === 9 || $rol->roles_id === 5 || $rol->roles_id === 4){
-                DetalleCotizacion::where('id', $request->item)
-                ->update([
-                    'cantidad' => $request->cCantidadEdit,
-                    'unidmedida_id' => $request->nIdUnidMedEdit,
-                    'producto_id' => $request->nIdprodEdit,
-                    'punit' =>   $request->cPUnitEdit,
-                ]);
-            return response()->json(['message' => 'Detalle editado', 'icon' => 'success'], 200);
-            }
 
 
 

@@ -813,6 +813,12 @@ export default new Router({
             component: require("./components/modulos/visitas/list").default,
         },
 
+             /* ALERTAS */
+             {
+                path: "/alertas/create",
+                name: "alertas.create",
+                component: require("./components/modulos/alertas/create").default,
+            },
 
 
     ],
