@@ -26,6 +26,7 @@
             <th><b>11</b></th>
             <th><b>12</b></th>
             <th><b>13</b></th>
+          
             <th><b>Total Asistencia</b></th>
 
 
@@ -53,7 +54,8 @@
                 <td>{{$data->dia11}}</td>
                 <td>{{$data->dia12}}</td>
                 <td>{{$data->dia13}}</td>
-                <td>{{$data->total_asistencias}}</td>
+         
+                <td>{{$data->total_asistencias}}</td> 
 
 
             </tr>

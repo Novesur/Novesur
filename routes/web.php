@@ -699,6 +699,8 @@ Route::get('/administracion/MovimientoAlmacen/getListDetMovAlmacen', 'Administra
 Route::post('/administracion/MovimientoAlmacen/procesar', 'Administracion\MovimientoAlmacenController@procesar');
 Route::post('/administracion/MovimientoAlmacen/MovimientoAlmacenPdf', 'Administracion\MovimientoAlmacenController@MovimientoAlmacenPdf');
 
+/* Alertas Novesur*/
+Route::post('/administracion/alertas/create', 'Administracion\AlertaController@create');
 
 
 Route::get('/{optional?}', function () {

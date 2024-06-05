@@ -820,6 +820,12 @@ export default new Router({
                 component: require("./components/modulos/alertas/create").default,
             },
 
+            {
+                path: "/alertas/list", 
+                name: "alertas.list",
+                component: require("./components/modulos/alertas/list").default,
+            },
+
 
     ],
 

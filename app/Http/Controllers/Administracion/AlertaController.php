@@ -8,15 +8,17 @@ use Illuminate\Http\Request;
 
 class AlertaController extends Controller
 {
-    public function create(){
+    public function create(Request $request){
         $formatreq = date("Y-m-d");
         $alertasContabilidad = new AlertasContabilidad();
         $alertasContabilidad->fRegistro = $formatreq;
-        $alertasContabilidad->tipo_id = $request->nidTipo;
-        $alertasContabilidad->file_id = $oFotografia;
-        $alertasContabilidad->catarticulo_id = $request->nidcatArt;
-        $alertasContabilidad->descripcion = mb_strtoupper($request->cDescripcion);
+        $alertasContabilidad->fVencimiento = $request->cFechaVencimiento;
+        $alertasContabilidad->obligacion =  mb_strtoupper($request->cObligacion);
+        $alertasContabilidad->entidad =  mb_strtoupper($request->cEntidad);
+        $alertasContabilidad->importe = $request->cImporte; 
+        $alertasContabilidad->tipocambio_id = $request->nIdTipoMoneda;
+        $alertasContabilidad->user_id = $request->nIdUsuario;
         $alertasContabilidad->save();
-        return response()->json(['message' => 'El item no existe', 'icon' => 'warning'], 200);
+        return response()->json(['message' => 'Dato agregado', 'icon' => 'success'], 200); 
     }
 }

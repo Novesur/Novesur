@@ -83,7 +83,8 @@ class DetalleCotizacionController extends Controller
 
 
       
-            if($rol->roles_id === 1 || $rol->roles_id === 9 || $rol->roles_id === 5 || $rol->roles_id === 4){
+          /*   if($rol->roles_id === 1 || $rol->roles_id === 9 || $rol->roles_id === 5 || $rol->roles_id === 4){ */
+            if($rol->roles_id === 1 ||  $rol->roles_id === 5 ){
                 DetalleCotizacion::where('id', $request->item)
                 ->update([
                     'cantidad' => $request->cCantidadEdit,
@@ -107,9 +108,6 @@ class DetalleCotizacionController extends Controller
 
 
           
-
-
-
             if ($producto->precioSugerido > $request->cPUnitEdit) {
                 DetalleCotizacion::where('id', $request->item)
                     ->update([

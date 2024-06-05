@@ -20,7 +20,7 @@ use App\Exports\ListDetCotiExport;
 use App\Exports\ReporteVentasFechaEstadoExport;
 use App\Exports\CotizacionAnalisisExport;
 use Exception;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\DB; 
 use Illuminate\Database\Eloquent\Builder;
 use PDF;
 use Carbon\Carbon;
