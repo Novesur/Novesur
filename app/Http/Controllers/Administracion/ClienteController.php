@@ -8,7 +8,7 @@ use App\Cliente;
 use App\Cotizacion;
 use App\User;
 use App\Exports\ClientExport;
-use Facade\FlareClient\Http\Client;
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Http;
 
 class ClienteController extends Controller
@@ -42,7 +42,7 @@ class ClienteController extends Controller
                 $cliente = new Cliente;
                 $cliente->razonsocial = mb_strtoupper($request->cRSocial);
                 $cliente->direccion = mb_strtoupper($request->cDireccion);
-                $cliente->ruc = $request->cRuc; 
+                $cliente->ruc = $request->cRuc;
                 $cliente->atencion = mb_strtoupper($request->cAtencion);
                 $cliente->telefono = $request->cTelefono;
                 $cliente->celular = $request->cCelular;
@@ -62,9 +62,9 @@ class ClienteController extends Controller
 
 
         $roluser = User::where('id', $request->nIdUser)->first();
-   
 
-        if ($roluser->roles_id === 1 || $roluser->roles_id === 4 || $roluser->roles_id === 7 || $roluser->roles_id === 9 || $roluser->roles_id === 11 || $roluser->roles_id == 5 ) {
+
+        if ($roluser->roles_id === 1 || $roluser->roles_id === 4 || $roluser->roles_id === 7 || $roluser->roles_id === 9 || $roluser->roles_id === 11 || $roluser->roles_id == 5) {
             if ($request->cNombre == null and $request->cRuc == null and $request->nIdVendedor == null) {
                 $dato = Cliente::with('user')->get();
                 return $dato;
@@ -80,7 +80,7 @@ class ClienteController extends Controller
                 $dato = Cliente::with('user')->where('usuario_id',  $request->nIdVendedor)->get();
             }
         } else {
-        
+
             if ($request->cNombre == null and $request->cRuc == null  && $request->nIdVendedor == null) {
                 $dato = Cliente::with('user')->where('usuario_id', $request->nIdUser)->get();
             }
@@ -125,7 +125,7 @@ class ClienteController extends Controller
     public function edit(Request $request)
 
     {
-     
+
 
         if (strlen($request->cRuc) == 11 || strlen($request->cRuc) == 8) {
             $cliente = Cliente::where('id', $request->nIdCliente)->first();
@@ -186,52 +186,80 @@ class ClienteController extends Controller
         return $dato;
     }
 
-    public function consultaRuc(Request $request){
-        $api1 = 'https://dniruc.apisperu.com/api/v1/ruc/';
+    public function consultaRuc(Request $request)
+    {
+        /*    $api1 = 'https://dniruc.apisperu.com/api/v1/ruc/';
         $api2 = $request->cRuc;
         $api3 = '?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImpvcmdlYW50b25pbzE2QGdtYWlsLmNvbSJ9.kbXXdK2xjatEd8UbHTNfnTc1-XiYqzxghdlH4HiSjGk';
         $ruta = $api1.$api2.$api3;
         $Ruc = Http::get($ruta) ;
         $dato  = $Ruc->json();
+        return $dato; */
+
+       // https://api.apis.net.pe/v2/sunat/ruc/full?numero=20601030013&token=apis-token-8934.8jfJDAUvY-rcpH-ohHBWb3BXkI91cFFB
+        $Ruc = $request->cRuc;
+        $token = 'apis-token-8934.8jfJDAUvY-rcpH-ohHBWb3BXkI91cFFB';
+
+        $client = new Client(['base_uri' => 'https://api.apis.net.pe', 'verify' => false]);
+
+        $parameters = [
+            'http_errors' => false,
+            'connect_timeout' => 5,
+            'headers' => [
+                'Authorization' => 'Bearer ' . $token,
+                'Referer' => 'https://apis.net.pe/api-consulta-ruc',
+                'User-Agent' => 'laravel/guzzle',
+                'Accept' => 'application/json',
+            ],
+            'query' => ['numero' => $Ruc]
+        ];
+        $res = $client->request('GET', '/v2/sunat/ruc', $parameters);
+        $dato = json_decode($res->getBody()->getContents(), true);
         return $dato;
     }
 
-    public function consultaDNI(Request $request){
-        $api1 = 'https://dniruc.apisperu.com/api/v1/dni/';
-        $api2 = $request->cRuc;
-        $api3 = '?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImpvcmdlYW50b25pbzE2QGdtYWlsLmNvbSJ9.kbXXdK2xjatEd8UbHTNfnTc1-XiYqzxghdlH4HiSjGk';
+    public function consultaDNI(Request $request)
+    {
+       // https://api.apis.net.pe/v2/reniec/dni?numero=46027897&token=apis-token-8934.8jfJDAUvY-rcpH-ohHBWb3BXkI91cFFB
+
+        $api1 = 'https://api.apis.net.pe/v2/reniec/dni?numero=';
+        $api2 = $request->cRuc.'&';
+        $api3 = 'token=apis-token-8934.8jfJDAUvY-rcpH-ohHBWb3BXkI91cFFB';
         $ruta = $api1.$api2.$api3;
-        $DNI = Http::get($ruta) ;
-        $dato  = $DNI->json();
-        return $dato;
+        $Ruc = Http::get($ruta) ;
+        $dato  = $Ruc->json();
+       return $dato;
+
 
     }
 
-    public function UpdateClientVendedor(Request $request){
+    public function UpdateClientVendedor(Request $request)
+    {
         $cliente = Cliente::find($request->idClient);
-        if($cliente){
+        if ($cliente) {
             $cliente->usuario_id = $request->nIdVendedorfuture;
             $cliente->save();
             return response()->json(['message' => 'Cliente con usuario Actualizado', 'icon' => 'success'], 200);
         }
     }
 
-    public function listClientesByIdCoti(Request $request){
-        
-        $dato = Cotizacion::with('cliente','user')->where('id', $request->nIdCotizacion)->first();
-        return $dato;
+    public function listClientesByIdCoti(Request $request)
+    {
 
+        $dato = Cotizacion::with('cliente', 'user')->where('id', $request->nIdCotizacion)->first();
+        return $dato;
     }
 
-    public function listDataCliente(Request $request){
+    public function listDataCliente(Request $request)
+    {
         $dato = Cliente::with('user')->where('id', $request->nIdCliente)->first();
         return $dato;
     }
 
-    public function BuscaRucBD(Request $request){
+    public function BuscaRucBD(Request $request)
+    {
 
         $dato = Cliente::where('ruc', $request->nIdRuc)->first();
         return $dato;
-
     }
 }

@@ -24,6 +24,8 @@ class CreateAlertasContabilidadTable extends Migration
             $table->foreign('tipocambio_id')->references('id')->on('tipocambio');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('estadopedido_id');
+            $table->foreign('estadopedido_id')->references('id')->on('estadopedido');
             $table->timestamps();
             $table->softDeletes();
         });

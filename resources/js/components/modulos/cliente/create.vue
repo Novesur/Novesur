@@ -31,8 +31,12 @@
                       <div class="form-group row">
                         <label class="col-md-1 col-form-label">Razon Social</label>
                         <div class="col-md-10">
-                          <input type="text" class="form-control" v-model="fillRegistrarCliente.cRSocial"
-                            :disabled="true" />
+                          <input
+                            type="text"
+                            class="form-control"
+                            v-model="fillRegistrarCliente.cRSocial"
+                            :disabled="true"
+                          />
                         </div>
                       </div>
                     </div>
@@ -41,7 +45,11 @@
                       <div class="form-group row">
                         <label class="col-md-1 col-form-label">Dirección</label>
                         <div class="col-md-9">
-                          <input type="text" class="form-control" v-model="fillRegistrarCliente.cDireccion" />
+                          <input
+                            type="text"
+                            class="form-control"
+                            v-model="fillRegistrarCliente.cDireccion"
+                          />
                         </div>
                       </div>
                     </div>
@@ -52,28 +60,37 @@
                       <div class="form-group row">
                         <label class="col-md-2 col-form-label">RUC / DNI</label>
                         <div class="col-md-5">
-                          <input type="text" class="form-control" v-model="fillRegistrarCliente.cRuc" :maxlength="11"
-                            :disabled="disabledbtnRuc" />
+                          <input
+                            type="text"
+                            class="form-control"
+                            v-model="fillRegistrarCliente.cRuc"
+                            :maxlength="11"
+                            :disabled="disabledbtnRuc"
+                          />
                         </div>
                         <div class="text-center">
                           <span style="color: red; text-align: end">{{
-                            this.fillRegistrarCliente.cRuc.length +
-                              " " +
-                              "Caracteres"
+                            this.fillRegistrarCliente.cRuc.length + " " + "Caracteres"
                           }}</span>
                         </div>
                         <div class="col">
                           <span>
-                            <button class="btn btn-success btn-sm" @click.prevent="consultaRuc">
-                              <span><i class="fas fa-search"></i> Consultar
-                                Ruc</span>
-                            </button></span>
+                            <button
+                              class="btn btn-success btn-sm"
+                              @click.prevent="consultaRuc"
+                            >
+                              <span><i class="fas fa-search"></i> Consultar Ruc</span>
+                            </button></span
+                          >
 
                           <span>
-                            <button class="btn btn-success btn-sm" @click.prevent="consultaDNI">
-                              <span><i class="fas fa-search"></i> Consultar
-                                DNI</span>
-                            </button></span>
+                            <button
+                              class="btn btn-success btn-sm"
+                              @click.prevent="consultaDNI"
+                            >
+                              <span><i class="fas fa-search"></i> Consultar DNI</span>
+                            </button></span
+                          >
                         </div>
                       </div>
                     </div>
@@ -82,7 +99,11 @@
                       <div class="form-group row">
                         <label class="col-md-2 col-form-label">Atencion</label>
                         <div class="col-md-9">
-                          <input type="text" class="form-control" v-model="fillRegistrarCliente.cAtencion" />
+                          <input
+                            type="text"
+                            class="form-control"
+                            v-model="fillRegistrarCliente.cAtencion"
+                          />
                         </div>
                       </div>
                     </div>
@@ -93,7 +114,11 @@
                       <div class="form-group row">
                         <label class="col-md-2 col-form-label">Telefono</label>
                         <div class="col-md-9">
-                          <input type="text" class="form-control" v-model="fillRegistrarCliente.cTelefono" />
+                          <input
+                            type="text"
+                            class="form-control"
+                            v-model="fillRegistrarCliente.cTelefono"
+                          />
                         </div>
                       </div>
                     </div>
@@ -102,7 +127,11 @@
                       <div class="form-group row">
                         <label class="col-md-2 col-form-label">Celular</label>
                         <div class="col-md-8">
-                          <input type="text" class="form-control" v-model="fillRegistrarCliente.cCelular" />
+                          <input
+                            type="text"
+                            class="form-control"
+                            v-model="fillRegistrarCliente.cCelular"
+                          />
                         </div>
                       </div>
                     </div>
@@ -113,34 +142,55 @@
                       <div class="form-group row">
                         <label class="col-md-2 col-form-label">Email</label>
                         <div class="col-md-9">
-                          <input type="text" class="form-control" v-model="fillRegistrarCliente.cEmail" />
+                          <input
+                            type="text"
+                            class="form-control"
+                            v-model="fillRegistrarCliente.cEmail"
+                          />
                         </div>
                       </div>
                     </div>
 
-                    <div v-if="listRolPermisoByUsuario.includes('cliente.tipoprecio')" class="col-md-6">
+                    <div
+                      v-if="listRolPermisoByUsuario.includes('cliente.tipoprecio')"
+                      class="col-md-6"
+                    >
                       <div class="form-group row">
                         <label class="col-md-2 col-form-label">Tipo de Precio</label>
                         <div class="col-md-9">
-                          <el-select v-model="fillRegistrarCliente.ctipoPrecio" class="m-2" placeholder="Select" size="large">
-                            <el-option v-for="item in tipoPrecio" :key="item.value" :label="item.label" 
-                              :value="item.value" />
+                          <el-select
+                            v-model="fillRegistrarCliente.ctipoPrecio"
+                            class="m-2"
+                            placeholder="Select"
+                            size="large"
+                          >
+                            <el-option
+                              v-for="item in tipoPrecio"
+                              :key="item.value"
+                              :label="item.label"
+                              :value="item.value"
+                            />
                           </el-select>
                         </div>
                       </div>
                     </div>
-
                   </div>
                 </form>
               </div>
               <div class="card-footer">
                 <div class="row">
                   <div class="col-md-4 offset-4">
-                    <button class="btn btn-flat btn-info btnWidth" @click.prevent="setRegistrarCliente"
-                      :disabled="isDisabled">
+                    <button
+                      class="btn btn-flat btn-info btnWidth"
+                      @click.prevent="setRegistrarCliente"
+                      :disabled="isDisabled"
+                    >
                       Registrar
                     </button>
-                    <button class="btn btn-flat btn-default btnWidth" @click.prevent="limpiarClienteBsq">
+                    <button
+                      class="btn btn-flat btn-default btnWidth"
+                      @click.prevent="limpiarClienteBsq"
+                    >
                       Limpiar
                     </button>
                   </div>
@@ -151,7 +201,11 @@
         </div>
       </div>
     </div>
-    <div class="modal fade" :class="{ show: modalShow }" :style="modalShow ? mostrarModal : ocultarModal">
+    <div
+      class="modal fade"
+      :class="{ show: modalShow }"
+      :style="modalShow ? mostrarModal : ocultarModal"
+    >
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -159,13 +213,16 @@
             <button class="close" @click="abrirModal"></button>
           </div>
           <div class="modal-body">
-            <div class="callout callout-danger" style="padding: 5px" v-for="(item, index) in mensajeError" :key="index"
-              v-text="item"></div>
+            <div
+              class="callout callout-danger"
+              style="padding: 5px"
+              v-for="(item, index) in mensajeError"
+              :key="index"
+              v-text="item"
+            ></div>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-secondary" @click="abrirModal">
-              Cerrar
-            </button>
+            <button class="btn btn-secondary" @click="abrirModal">Cerrar</button>
           </div>
         </div>
       </div>
@@ -185,7 +242,7 @@ export default {
         cTelefono: "",
         cCelular: "",
         cEmail: "",
-        ctipoPrecio:"",
+        ctipoPrecio: "",
         nIdUser: sessionStorage.getItem("iduser"),
       },
       listRolPermisoByUsuario: JSON.parse(
@@ -205,26 +262,22 @@ export default {
       estadobutton: true,
       disabledbtnRuc: false,
 
-
-
       tipoPrecio: [
         {
-          value: 'Lista',
-          label: 'Lista',
+          value: "Lista",
+          label: "Lista",
         },
         {
-          value: 'Distribuidor',
-          label: 'Distribuidor',
+          value: "Distribuidor",
+          label: "Distribuidor",
         },
       ],
-
     };
   },
 
   mounted() {
     this.fillRegistrarCliente.ctipoPrecio = this.tipoPrecio[0].value;
   },
-
 
   computed: {
     isDisabled: function () {
@@ -270,7 +323,7 @@ export default {
           cCelular: this.fillRegistrarCliente.cCelular,
           cEmail: this.fillRegistrarCliente.cEmail,
           nIdUser: this.fillRegistrarCliente.nIdUser,
-          ctipoPrecio: this.fillRegistrarCliente.ctipoPrecio
+          ctipoPrecio: this.fillRegistrarCliente.ctipoPrecio,
         })
         .then((response) => {
           if (response.data.icon == "success") {
@@ -280,7 +333,6 @@ export default {
               title: response.data.message,
               showConfirmButton: false,
               timer: 2000,
-
             });
             this.$router.push("/cliente/index");
           } else {
@@ -385,6 +437,4 @@ export default {
 };
 </script>
 
-<style>
-
-</style>
+<style></style>
