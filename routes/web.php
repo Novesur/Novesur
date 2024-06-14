@@ -703,6 +703,10 @@ Route::post('/administracion/MovimientoAlmacen/MovimientoAlmacenPdf', 'Administr
 Route::post('/administracion/alertas/create', 'Administracion\AlertaController@create');
 Route::get('/administracion/alertas/list', 'Administracion\AlertaController@list');
 Route::post('/administracion/alertas/setEstadoAtendido', 'Administracion\AlertaController@setEstadoAtendido');
+Route::post('/operacion/alertas/ExcelAlertasByFecha', 'Administracion\AlertaController@ExcelAlertasByFecha');
+
+
+
 
 
 Route::get('/{optional?}', function () {

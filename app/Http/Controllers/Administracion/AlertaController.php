@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Administracion;
 
 use App\Http\Controllers\Controller;
 use App\AlertasContabilidad;
+use App\Exports\AlertContabilidadExport;
 use Illuminate\Http\Request;
 
 class AlertaController extends Controller
@@ -42,5 +43,10 @@ class AlertaController extends Controller
     public function setEstadoAtendido(Request $request){
 
         AlertasContabilidad::where('id', $request->id)->update(['estadopedido_id' => 3]);
+    }
+
+    public function ExcelAlertasByFecha(Request $request){
+        $listAlertasByDate = json_decode($request->params['listAlertasByDate']);
+        return (new AlertContabilidadExport)->setGenerarExcel($listAlertasByDate)->download('invoices.xlsx');
     }
 }

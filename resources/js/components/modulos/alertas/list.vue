@@ -436,7 +436,7 @@ export default {
           { responseType: "blob" }
         )
         .then((response) => {
-          FileSaver.saveAs(response.data, "AnalisisCotizacionFecha.xlsx");
+          FileSaver.saveAs(response.data, "AlertaContabilidad.xlsx");
         });
     },
 
