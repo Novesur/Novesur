@@ -481,15 +481,15 @@ export default new Router({
         },
 
         // PARTE DE INGRESO
-  
+
 
         {
             path: "/parteingreso/create2",
-            name: "parteingreso.create2", 
+            name: "parteingreso.create2",
             component: require("./components/modulos/parte_ingreso/create2")
                 .default,
                 props: true,
-        
+
         },
 
         {
@@ -575,7 +575,7 @@ export default new Router({
         },
 
         {
-            path: "/MovimientoAlmacen/list", 
+            path: "/MovimientoAlmacen/list",
             name: "MovimientoAlmacen.list",
             component: require("./components/modulos/MovimientoAlmacen/list")
                 .default,
@@ -753,7 +753,7 @@ export default new Router({
         },
 
         {
-            path: "/personal/edit/:id", 
+            path: "/personal/edit/:id",
             name: "personal.edit",
             component: require("./components/modulos/personal/edit")
                 .default,
@@ -821,7 +821,7 @@ export default new Router({
             },
 
             {
-                path: "/alertas/list", 
+                path: "/alertas/list",
                 name: "alertas.list",
                 component: require("./components/modulos/alertas/list").default,
             },

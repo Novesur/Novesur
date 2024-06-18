@@ -20,7 +20,7 @@ use App\Exports\ListDetCotiExport;
 use App\Exports\ReporteVentasFechaEstadoExport;
 use App\Exports\CotizacionAnalisisExport;
 use Exception;
-use Illuminate\Support\Facades\DB; 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
 use PDF;
 use Carbon\Carbon;
@@ -34,7 +34,7 @@ class CotizacionController extends Controller
 
 
         $client = Cliente::find($request->nIdCliente);
-      
+
 
         $product = Producto::where(['id' => $request->nIdprod])->with('familia', 'marca', 'material', 'modelotipo', 'subfamilia', 'homologacion')->first();
         $products = Session::get('products');
@@ -45,7 +45,7 @@ class CotizacionController extends Controller
             return response()->json(['datos' => $products, 'message' => 'Ya fue agregado anteriormente', 'icon' => 'error'], 200);
 
         else : */
-    
+
         if($client->tipoPrecio == "Lista")
         {
             if ($product->precioSugerido <= $request->cPUnit) {
@@ -76,7 +76,7 @@ class CotizacionController extends Controller
             }
         }
 
-      
+
     }
 
     public function addTempEditCotizacion(Request $request)
@@ -118,22 +118,22 @@ class CotizacionController extends Controller
 
     public function create(Request $request)
     {
-        
+
         $yearMaxID = date("Y");
        // $maxidCoti = Cotizacion::whereRaw('id = (select max(`id`) from cotizacion)')->first();
        $countable = Countable::all();
-       
-       $countCoti = $countable[0]->countcotizacion;
-      
 
-     
-      
+       $countCoti = $countable[0]->countcotizacion;
+
+
+
+
         if ($countCoti == 0) {
-           
+
             $maxidCoti = '0001' . '-' . $yearMaxID;
-          
+
         } else {
-           
+
             $maxidCoti = sprintf('%04d', $countCoti + 1) . '-' . $yearMaxID;
         }
 
@@ -166,8 +166,8 @@ class CotizacionController extends Controller
                     $cotizacion->fechacotiupdate =  $formatreq;
                     $cotizacion->save();
 
-                    
-    
+
+
                     $detcotizacion = Session::get('products');
                     $allProducts = $detcotizacion->map(function ($product) use ($cotizacion) {
                         return [
@@ -187,13 +187,13 @@ class CotizacionController extends Controller
                 }  else {
                     return response()->json(['message' => 'El item no existe', 'icon' => 'warning'], 200);
 
-                } 
+                }
             }
 
         } catch (Exception $e) {
             DB::rollBack();
             return response()->json(['message' => 'Verifique bien los valores ingresador por favor', 'icon' => 'warning'], 200);
-        } 
+        }
     }
 
     public function edit(Request $request)
@@ -260,7 +260,7 @@ class CotizacionController extends Controller
         $nIdtEstadoCoti2 =   $request->nIdtEstadoCoti2;
         $dFechaInicio   =   $request->dFechainicio;
         $dFechaFin      =   $request->dFechafin;
-        $anioactual = substr($dFechaInicio, 0, -6); 
+        $anioactual = substr($dFechaInicio, 0, -6);
 
         $nIdCliente   =   ($nIdCliente   ==  NULL) ? ($nIdCliente   =   '') :   $nIdCliente;
         $nIdVendedor   =   ($nIdVendedor   ==  NULL) ? ($nIdVendedor   =   '') :   $nIdVendedor;
@@ -297,7 +297,7 @@ class CotizacionController extends Controller
 
     public function ReporteVentasFechaEstado(Request $request)
     {
-        
+
         $nIdtEstadoCoti2 =   $request->nIdtEstadoCoti2;
         $dFechaInicio   =   $request->dFechainicio;
         $dFechaFin      =   $request->dFechafin;
@@ -432,7 +432,7 @@ class CotizacionController extends Controller
         if ($anioSelect >= '2022') {
 
             $dato = Cotizacion::on('mysql')->with('cliente', 'estadopedido', 'user', 'detalle')
-                ->whereBetween('fecha', [$request->fecha1, $request->fecha2])->get();
+                ->whereBetween('fecha', [$request->fecha1, $request->fecha2])->orderBy('fecha', 'desc')->get();
 
             return collect($dato)->map(function ($item, $key) {
 
@@ -571,21 +571,21 @@ class CotizacionController extends Controller
     {
 
         $listCotizacionByDate = json_decode($request->params['listCotizacionByDate']);
-     
+
         return (new CotizacionFechaExport)->setGenerarExcel($listCotizacionByDate)->download('invoices.xlsx');
     }
 
 
     public function getExcelListProductFecha(Request $request)
     {
-     
+
         $listDetProductByDate = json_decode($request->params['listDetProductByDate']);
-     
-        return (new ListDetCotiExport)->setGenerarExcel($listDetProductByDate)->download('invoices.xlsx'); 
+
+        return (new ListDetCotiExport)->setGenerarExcel($listDetProductByDate)->download('invoices.xlsx');
     }
 
 
-    
+
 
     public function exportVendedor(Request $request)
     {
@@ -599,8 +599,8 @@ class CotizacionController extends Controller
         return $dato;
     }
 
-    public function listDetalleProductosbyDate(Request $request){ 
-        
+    public function listDetalleProductosbyDate(Request $request){
+
   $nIdVendedor= $request->nIdVendedor;
   $fecha1 = $request->fecha1;
   $fecha2 = $request->fecha2;
@@ -610,11 +610,11 @@ class CotizacionController extends Controller
   $fecha2 = ($fecha2 == NULL)? ($fecha2 = ''):$fecha2;
 
 
-  $rpta = DB::select('call sp_ConsultaListadoProducts (?, ?,?)', 
+  $rpta = DB::select('call sp_ConsultaListadoProducts (?, ?,?)',
   [
     $nIdVendedor,
     $fecha1 ,
-    $fecha2 
+    $fecha2
   ]);
 
   return $rpta;
@@ -623,11 +623,11 @@ class CotizacionController extends Controller
         $fecha2 = Carbon::parse($request->fecha2)->format('Y-m-d');
         $dato = Cotizacion::with('detalle','cliente','user','estadopedido','detalle.producto','detalle.producto.marca','detalle.producto.familia','detalle.producto.material','detalle.producto.modelotipo','detalle.producto.subfamilia','detalle.producto.homologacion')->whereBetween('fecha', [$fecha1,$fecha2])->get();
         return $dato; */
-     
+
       }
 
       public function listDetalleProductosListByVendedor(Request $request){
-      
+
         $dato = Cotizacion::with('detalle','cliente','user','estadopedido','detalle.producto','detalle.producto.marca','detalle.producto.familia','detalle.producto.material','detalle.producto.modelotipo','detalle.producto.subfamilia','detalle.producto.homologacion')->where('user_id', $request->nIdVendedor)->get();
         return $dato;
 
@@ -640,7 +640,7 @@ class CotizacionController extends Controller
             ->whereHas('cotizacion', function (Builder $query) use ($fecha1, $fecha2) {$query->whereBetween('fecha',[$fecha1, $fecha2]);
             })->get();
         return $dato;
-      } 
+      }
 
       public function ExcelAnalisisCotizacionFecha(Request $request){
 

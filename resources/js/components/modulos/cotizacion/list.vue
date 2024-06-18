@@ -364,7 +364,7 @@
 
 
 
-                        
+
                         <div class="col-md-12">
                               <div class="form-group row">
                                 <label class="col-md-1 col-form-label"
@@ -372,7 +372,7 @@
                                 >
                                 <div class="col-md-5">
                                   <el-select
-                                    v-model="fillListCotizacion.nIdClient" 
+                                    v-model="fillListCotizacion.nIdClient"
                                     style="width: 100%"
                                     filterable
                                     placeholder="Select"
@@ -699,7 +699,7 @@ export default {
 
   methods: {
 
-    
+
     getPdfCotizacion(item, fecha) {
       var config = { responseType: "blob" };
       var url = "/administracion/cotizacion/CotizacionPdf";
@@ -721,7 +721,7 @@ export default {
           //window.print();
         });
     },
-    
+
     getlistVendedorAdmin() {
       var url = "/administracion/usuario/getListarVendedores";
       axios.get(url).then((response) => {
@@ -730,23 +730,23 @@ export default {
     },
 
     getlistCotizacionListByProd() {
-      var url = "/administracion/cotizacion/listCotizacionList"; 
+      var url = "/administracion/cotizacion/listCotizacionList";
       axios
         .get(url, {
           params: {
             nIdprod: this.fillListCotizacion.nIdprod,
             cSelectAnios: this.fillListCotizacion.cSelectAnios,
-         
+
           },
         })
         .then((response) => {
           this.listCotizacion = response.data;
-         
+
         });
     },
 
     getlistCotizacionListByVendedor() {
-      var url = "/administracion/cotizacion/listCotizacionListByVendedor"; 
+      var url = "/administracion/cotizacion/listCotizacionListByVendedor";
       axios
         .get(url, {
           params: {
@@ -768,7 +768,7 @@ export default {
           },
         })
         .then((response) => {
-         
+
           this.listCotizacionByDate = response.data;
         });
     },
