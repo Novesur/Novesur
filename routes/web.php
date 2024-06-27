@@ -705,6 +705,8 @@ Route::get('/administracion/alertas/list', 'Administracion\AlertaController@list
 Route::post('/administracion/alertas/setEstadoAtendido', 'Administracion\AlertaController@setEstadoAtendido');
 Route::post('/operacion/alertas/ExcelAlertasByFecha', 'Administracion\AlertaController@ExcelAlertasByFecha');
 
+/* Zona de Produccion*/
+Route::get('/administracion/ZonaProduccion/list', 'Administracion\ZonaProduccionController@list');
 
 
 

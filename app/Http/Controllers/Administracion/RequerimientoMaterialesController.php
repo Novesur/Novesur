@@ -25,7 +25,7 @@ class RequerimientoMaterialesController extends Controller
 {
     public function create(Request $request)
     {
-       
+
 
         $yearMaxID = date("Y");
         //$maxidOP = RequerimientosMateriales::whereRaw('id = (select max(`id`) from requerimiento_materiales)')->first();
@@ -59,7 +59,7 @@ class RequerimientoMaterialesController extends Controller
         } else {
             $requerimientoMateriales->almacen_id = $request->nidAlmacen;
         }
-        
+
         $requerimientoMateriales->cliente_id = $idclient;
         $requerimientoMateriales->fecha = $formatreq;
         $requerimientoMateriales->fechainicio = $dateIni;
@@ -68,10 +68,12 @@ class RequerimientoMaterialesController extends Controller
         $requerimientoMateriales->user_id = $request->nIdUser;
         $requerimientoMateriales->cantInfoProd = $request->cCantprod;
         $requerimientoMateriales->referencia = mb_strtoupper($request->cReferencia);
+        $requerimientoMateriales->zona_produccion_id = $request->nIdZonaProduccion;
+
         $requerimientoMateriales->save();
 
         Countable::where('id', 1)->update(['countreqmateriales' => $countMaxreqmateriales +1 ]);
-      
+
         $MaterialOrdenProd = Session::get('materialReqMatprod');
         $allMaterialreqMat = $MaterialOrdenProd->map(function ($MaterialOP) use ($requerimientoMateriales) {
             $formatreq = date("Y-m-d");
@@ -132,7 +134,7 @@ class RequerimientoMaterialesController extends Controller
 
     public function addOrden(Request $request)
     {
-       
+
         $product = Producto::where(['id' => $request->nIdmaterial])->with('familia', 'marca', 'material', 'modelotipo', 'subfamilia', 'homologacion')->first();
         $products = Session::get('materialReqMatprod');
         $products = ($products != null) ? collect($products) : collect([]);
@@ -142,7 +144,7 @@ class RequerimientoMaterialesController extends Controller
         if($request->cCantMaterial == 0){
             return response()->json([ 'message' => 'El valor no puede ser cero', 'icon' => 'error'], 200);
         }
-   
+
 
         $exists = $products->firstWhere("producto_id", $product->id);
         if (!empty($exists)) :
@@ -181,7 +183,7 @@ class RequerimientoMaterialesController extends Controller
 
     public function CleanMaterialReqMObra()
     {
-        Session::put('MaterialReqMObra', null); 
+        Session::put('MaterialReqMObra', null);
         $dato = session()->get('MaterialReqMObra') ?? collect([]);
         return response()->json(['datos' => $dato]);
     }
@@ -202,7 +204,7 @@ class RequerimientoMaterialesController extends Controller
 
     public function CleanRequerimientos()
     {
-        Session::put('OtrosReqMateriales', null); 
+        Session::put('OtrosReqMateriales', null);
         $dato = session()->get('OtrosReqMateriales') ?? collect([]);
         return response()->json(['datos' => $dato]);
     }
@@ -211,16 +213,16 @@ class RequerimientoMaterialesController extends Controller
     {
 
         if (is_null($request->dFecha)  && is_null($request->nIdprod)) {
-            $dato = RequerimientosMateriales::with('producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion', 'unidmedida', 'cliente')->get();
+            $dato = RequerimientosMateriales::with('producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion', 'unidmedida', 'cliente','zona_produccion')->get();
             return $dato;
         }
         if (is_null($request->dFecha)) {
-            $dato = RequerimientosMateriales::with('producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion', 'unidmedida', 'cliente')->where('producto_id', $request->nIdprod)->get();
+            $dato = RequerimientosMateriales::with('producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion', 'unidmedida', 'cliente','zona_produccion')->where('producto_id', $request->nIdprod)->get();
             return $dato;
         }
 
         if (is_null($request->nIdprod)) {
-            $dato = RequerimientosMateriales::with('producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion', 'unidmedida', 'cliente')->whereBetween('fecha', [$request->dFecha[0],$request->dFecha[1]])->get();
+            $dato = RequerimientosMateriales::with('producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion', 'unidmedida', 'cliente','zona_produccion')->whereBetween('fecha', [$request->dFecha[0],$request->dFecha[1]])->get();
             return $dato;
         }
     }
@@ -229,16 +231,16 @@ class RequerimientoMaterialesController extends Controller
     {
 
         $idReqMateriales = $request->get("params")['idReqMatProduc'];
-        $RequerimientosMateriales = RequerimientosMateriales::with('producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion', 'unidmedida', 'cliente')->where('id', $idReqMateriales)->first();
-        
+        $RequerimientosMateriales = RequerimientosMateriales::with('producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion', 'unidmedida', 'cliente','zona_produccion')->where('id', $idReqMateriales)->first();
+
         $MaterialReqMateriales = MaterialReqMateriales::with('producto','producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion')
         ->where(
             ['pk_ReqMateriales' => $idReqMateriales],
             ['estado' => 'R'])
        ->get();
-      
-       
-      
+
+
+
         $ManoObraReqmateriales = ManoObraReqmateriales::where('pk_ReqMateriales', $idReqMateriales)->where('estado', 'R')->get();
         $OtrosRequerimientosReqMateriales = OtrosRequerimientosReqMateriales::where('pk_ReqMateriales', $idReqMateriales)->where('estado', 'R')->get();
         $logo = asset('img/logo.gif');
@@ -261,7 +263,7 @@ class RequerimientoMaterialesController extends Controller
         $id = (int)trim($request->item);
         $items = session()->get('materialReqMatprod') ?? collect([]);
         $exits = $items->firstWhere("producto_id", $id);
-      
+
         if (!empty($exits)) :
             $items =  $items->whereNotIn("producto_id", [$id]);
             session()->put('materialReqMatprod', $items);
@@ -301,7 +303,7 @@ class RequerimientoMaterialesController extends Controller
     }
 
     public function EditModalReqMateriales(Request $request){
-        
+
         $MaterialReqMateriales = MaterialReqMateriales::find($request->item);
         if($MaterialReqMateriales) {
             $MaterialReqMateriales->cantInfProd = $request->cCantprodEdit;
@@ -315,9 +317,9 @@ class RequerimientoMaterialesController extends Controller
     }
 
     public function EditModalManoObra(Request $request){
-        
+
          $ManoObraReqmateriales = ManoObraReqmateriales::find($request->item);
-        
+
          if($ManoObraReqmateriales) {
              $ManoObraReqmateriales->personalInfoProd = strtoupper($request->cPersonalModal);
              $ManoObraReqmateriales->diasInfoProd = $request->cDiasMObraModal;
@@ -333,7 +335,7 @@ class RequerimientoMaterialesController extends Controller
 
      public function EditModalOtrosReq(Request $request){
         $OtrosRequerimientosReqMateriales = OtrosRequerimientosReqMateriales::find($request->item);
-       
+
         if($OtrosRequerimientosReqMateriales) {
             $OtrosRequerimientosReqMateriales->descripcionInfoProd = strtoupper($request->cDescripModal);
             $OtrosRequerimientosReqMateriales->cantidadInfoProd = $request->cCantidadModal;
@@ -342,5 +344,5 @@ class RequerimientoMaterialesController extends Controller
      }
 
 
-    
+
 }

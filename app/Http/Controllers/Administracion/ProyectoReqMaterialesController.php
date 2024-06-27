@@ -48,7 +48,7 @@ class ProyectoReqMaterialesController extends Controller
         $proyectoReqMateriales->fecha = $fecha;
         $proyectoReqMateriales->centro_costos_id = $request->nIdCcostos;
         $proyectoReqMateriales->cliente = $request->nIdClient;
-        $proyectoReqMateriales->detservicio = mb_strtoupper($request->detservicio);  
+        $proyectoReqMateriales->detservicio = mb_strtoupper($request->detservicio);
         $proyectoReqMateriales->fechainicio = $dateIni;
         $proyectoReqMateriales->fechafinal = $dateFinal;
         $proyectoReqMateriales->duracion = $request->cDuracion;
@@ -99,7 +99,7 @@ class ProyectoReqMaterialesController extends Controller
         $OtrosRequerimientos = Session::get('OtrosProyReqMateriales');
 
 
-     
+
         $allOtrosReque =  $OtrosRequerimientos->map(function ($OtrosRequerimientos) use ($proyectoReqMateriales) {
             return [
                 'pk_proyecto_reqmateriales' => $proyectoReqMateriales->id,
@@ -186,7 +186,7 @@ class ProyectoReqMaterialesController extends Controller
 
     public function listbyId(Request $request)
     {
-     
+
    /*      $countable = Countable::all();
         $countMaxInformeValorizacion = $countable[0]->countInformeValorizacion;
         $yearMaxID = date("Y");
@@ -200,7 +200,7 @@ class ProyectoReqMaterialesController extends Controller
 
         $datos = ProyectoMateriales::with('producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion', 'unidmedida')->where('pk_proyecto_reqmateriales', $request->item)->get();
         return $datos;
- 
+
     }
 
 

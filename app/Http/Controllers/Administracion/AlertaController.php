@@ -30,22 +30,23 @@ class AlertaController extends Controller
 
         $fecha1 = $request->fecha1;
         $fecha2 = $request->fecha2;
-
-        if($request->dFecha === null){
-            $dato = AlertasContabilidad::with('tipocambio','user')->where('estadopedido_id',$request->rEstados)->get();
+        if (is_null($fecha1) and is_null($fecha2)) {
+            $dato = AlertasContabilidad::with('tipocambio', 'user')->where('estadopedido_id', $request->rEstados)->get();
             return $dato;
-        }else{
-            $dato = AlertasContabilidad::with('tipocambio','user')->whereBetween('fVencimiento', [$fecha1, $fecha2])->where('estadopedido_id',$request->rEstados)->get();
+        } else {
+            $dato = AlertasContabilidad::with('tipocambio', 'user')->whereBetween('fVencimiento', [$fecha1, $fecha2])->orderBy('fVencimiento', 'DESC')->where('estadopedido_id', $request->rEstados)->get();
             return $dato;
         }
     }
 
-    public function setEstadoAtendido(Request $request){
+    public function setEstadoAtendido(Request $request)
+    {
 
         AlertasContabilidad::where('id', $request->id)->update(['estadopedido_id' => 3]);
     }
 
-    public function ExcelAlertasByFecha(Request $request){
+    public function ExcelAlertasByFecha(Request $request)
+    {
         $listAlertasByDate = json_decode($request->params['listAlertasByDate']);
         return (new AlertContabilidadExport)->setGenerarExcel($listAlertasByDate)->download('invoices.xlsx');
     }

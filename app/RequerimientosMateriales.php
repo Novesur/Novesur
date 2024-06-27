@@ -27,4 +27,8 @@ class RequerimientosMateriales extends Model
     {
         return $this->belongsTo(Almacen::class);
     }
+    public function zona_produccion()
+    {
+        return $this->belongsTo(ZonaProduccion::class);
+    }
 }

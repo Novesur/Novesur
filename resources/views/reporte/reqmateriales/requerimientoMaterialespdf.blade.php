@@ -59,6 +59,10 @@
     <td><strong style="font-size: 14px">REFERENCIA :</strong></td>
     <td colspan="3" style="font-size: 12px">{{$RequerimientosMateriales->referencia}}</td>
   </tr>
+  <tr>
+    <td><strong style="font-size: 14px">ZONA DE PRODUCCION :</strong></td>
+    <td colspan="3" style="font-size: 12px">{{mb_strtoupper($RequerimientosMateriales->zona_produccion->nombre)}}</td>
+  </tr>
 </table>
 <table width="100%" border="1">
     <tr>

@@ -318,6 +318,7 @@ export default {
         })
         .then((response) => {
                this.listOrdenProduc = response.data;
+               console.log(response.data)
 
         });
     },

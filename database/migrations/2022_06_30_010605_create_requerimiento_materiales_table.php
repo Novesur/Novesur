@@ -33,6 +33,8 @@ class CreateRequerimientoMaterialesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->decimal('cantInfoProd', 8, 2)->required();
             $table->string('referencia')->nullable();
+            $table->unsignedBigInteger('zona_produccion_id');
+            $table->foreign('zona_produccion_id')->references('id')->on('zona_produccion');
             $table->timestamps();
             $table->softDeletes();
 

@@ -4,7 +4,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Requerimientos de Materiales</h1>
+            <h1 class="m-0 text-dark">Requerimientos de Materiales2</h1>
           </div>
         </div>
       </div>
@@ -22,9 +22,7 @@
           <div class="container-fluid">
             <div class="card card-info">
               <div class="card-header">
-                <h3 class="card-title">
-                  Formulario Requerimiento de Materiales
-                </h3>
+                <h3 class="card-title">Formulario Requerimiento de Materiales</h3>
               </div>
               <div class="card-body">
                 <form role="form">
@@ -32,38 +30,37 @@
                     <div class="row">
                       <div class="col-md-9">
                         <div class="form-group row">
-                          <label class="col-md-2 col-form-label"
-                            >Producto</label
-                          >
-                          <div class="col-md-10"> 
+                          <label class="col-md-2 col-form-label">Producto</label>
+                          <div class="col-md-10">
                             <el-select
                               v-model="fillCrearReqMateriales.nIdproduct"
                               style="width: 800px"
                               filterable
                               placeholder="Select"
                             >
-                            <v-row align="right">
-                              <el-option
-                                v-for="item in listProd"
-                                :key="item.id"
-                                :label="
-                                  item.codigo + ' - '
-                                 + item.familia.nombre +
-                                        ' , ' +
-                                        item.subfamilia.nombre + 
-                                        ' , Modelo: ' +
-                                        item.modelotipo.nombre +
-                                        ' , Marca : ' +
-                                        item.marca.nombre +
-                                        ' , Material : ' +
-                                        item.material.nombre +
-                                        ' ,' +
-                                        item.homologacion.nombre
-                                "
-                                :value="item.id"
-                              >
-                              </el-option>
-                            </v-row>
+                              <v-row align="right">
+                                <el-option
+                                  v-for="item in listProd"
+                                  :key="item.id"
+                                  :label="
+                                    item.codigo +
+                                    ' - ' +
+                                    item.familia.nombre +
+                                    ' , ' +
+                                    item.subfamilia.nombre +
+                                    ' , Modelo: ' +
+                                    item.modelotipo.nombre +
+                                    ' , Marca : ' +
+                                    item.marca.nombre +
+                                    ' , Material : ' +
+                                    item.material.nombre +
+                                    ' ,' +
+                                    item.homologacion.nombre
+                                  "
+                                  :value="item.id"
+                                >
+                                </el-option>
+                              </v-row>
                             </el-select>
                           </div>
                         </div>
@@ -75,9 +72,7 @@
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-md-3 col-form-label"
-                            >Cantidad</label
-                          >
+                          <label class="col-md-3 col-form-label">Cantidad</label>
                           <div class="col-md-3">
                             <input
                               type="text"
@@ -91,16 +86,13 @@
 
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-md-2 col-form-label"
-                            >Unid. Medida</label
-                          >
+                          <label class="col-md-2 col-form-label">Unid. Medida</label>
                           <div class="col-md-6">
                             <el-select
                               v-model="fillCrearReqMateriales.nIdUnidMed"
                               placeholder="Select"
                               style="width: 70%"
                             >
-                            
                               <el-option
                                 v-for="item in listUnidMed"
                                 :key="item.id"
@@ -108,7 +100,6 @@
                                 :value="item.id"
                               >
                               </el-option>
-                           
                             </el-select>
                           </div>
                         </div>
@@ -117,40 +108,35 @@
                   </div>
 
                   <div class="col-md-12">
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-md-3 col-form-label"
-                          >Cliente-Ref</label
-                        >
-                        <div class="col-md-9">
-                          <el-select
-                            v-model="fillCrearReqMateriales.nIdTipoPago"
-                            placeholder="Select"
-                            style="width: 70%"
-                            @change="onChangeClient($event)"
-                          >
-                            <el-option
-                              v-for="item in listDescripPago"
-                              :key="item.id"
-                              :label="item.label"
-                              :value="item.value"
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-md-3 col-form-label">Cliente-Ref</label>
+                          <div class="col-md-6">
+                            <el-select
+                              v-model="fillCrearReqMateriales.nIdTipoPago"
+                              placeholder="Select"
+                              style="width: 70%"
+                              @change="onChangeClient($event)"
                             >
-                            </el-option>
-                          </el-select>
+                              <el-option
+                                v-for="item in listDescripPago"
+                                :key="item.id"
+                                :label="item.label"
+                                :value="item.value"
+                              >
+                              </el-option>
+                            </el-select>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  <div
-                    v-if="fillCrearReqMateriales.nIdTipoPago == 1"
-                    class="col-md-9"
-                  >
+                  <div v-if="fillCrearReqMateriales.nIdTipoPago == 1" class="col-md-9">
                     <div class="col-md-8">
                       <div class="form-group row">
-                        <label class="col-md-3 col-form-label"
-                          >Para Stock</label
-                        >
+                        <label class="col-md-3 col-form-label">Para Stock</label>
                         <div class="col-md-9">
                           <el-select
                             v-model="fillCrearReqMateriales.nidAlmacen"
@@ -171,10 +157,7 @@
                     </div>
                   </div>
 
-                  <div
-                    v-if="fillCrearReqMateriales.nIdTipoPago == 2"
-                    class="col-md-12"
-                  >
+                  <div v-if="fillCrearReqMateriales.nIdTipoPago == 2" class="col-md-12">
                     <div class="col-md-6">
                       <div class="form-group row">
                         <label class="col-md-3 col-form-label"
@@ -221,9 +204,7 @@
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-md-3 col-form-label"
-                            >Fecha Inicio</label
-                          >
+                          <label class="col-md-3 col-form-label">Fecha Inicio</label>
                           <div class="col-md-6">
                             <el-date-picker
                               v-model="fillCrearReqMateriales.FInicio"
@@ -240,9 +221,7 @@
                       <div class="col-md-6">
                         <div class="col-md-6">
                           <div class="form-group row">
-                            <label class="col-md-3 col-form-label"
-                              >Fecha Final</label
-                            >
+                            <label class="col-md-3 col-form-label">Fecha Final</label>
                             <div class="col-md-6">
                               <el-date-picker
                                 v-model="fillCrearReqMateriales.FFinal"
@@ -264,18 +243,15 @@
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-md-3 col-form-label"
-                            >Duracion (Días)</label
-                          >
-                           <div class="col-md-3" v-if="calculoFechas != 'NaN'">
+                          <label class="col-md-3 col-form-label">Duracion (Días)</label>
+                          <div class="col-md-3" v-if="calculoFechas != 'NaN'">
                             <input
                               type="text"
                               class="form-control"
                               v-model="fillCrearReqMateriales.cDuracion"
-                             
                             />
-                          </div> 
-                      <!--     <div class="col-md-3">
+                          </div>
+                          <!--     <div class="col-md-3">
                             <p v-if="calculoFechas">
                               {{ String(calculoFechas).padStart(2, 0) }} Día(s)
                             </p>
@@ -285,25 +261,50 @@
                     </div>
                   </div>
 
-
                   <div class="col-md-12">
                     <div class="row">
                       <div class="col-md-9">
-                      <div class="form-group row">
-                        <label class="col-md-2 col-form-label">Referencia</label>
-                        <div class="col-md-9">
-                          <input
-                            type="text"
-                            class="form-control"
-                            v-model="fillCrearReqMateriales.cReferencia"
-                           
-                          />
+                        <div class="form-group row">
+                          <label class="col-md-2 col-form-label">Referencia</label>
+                          <div class="col-md-9">
+                            <input
+                              type="text"
+                              class="form-control"
+                              v-model="fillCrearReqMateriales.cReferencia"
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>
-                      </div>
-                    </div>
+                  </div>
 
+
+
+                  <div class="col-md-12">
+                    <div class="row">
+                  <div class="col-md-9">
+                        <div class="form-group row">
+                          <label class="col-md-2 col-form-label"
+                            >Zona de Producción</label
+                          >
+                          <div class="col-md-6">
+                            <el-select
+                              v-model="fillCrearReqMateriales.nIdZonaProduccion"
+                              placeholder="Select"
+                              style="width: 70%"
+                            >
+                              <el-option
+                                v-for="item in listZonaProduccion"
+                                :key="item.id"
+                                :label="item.nombre"
+                                :value="item.id"
+                              >
+                              </el-option>
+                            </el-select>
+                          </div>
+                        </div>
+                      </div>
+                    </div></div>
 
                   <!-- INICIO  DE REQUERIMIENTOS DE MATERIALES -->
 
@@ -313,9 +314,7 @@
                         <div class="col-md-12">
                           <div class="card card-primary">
                             <div class="card-header">
-                              <h3 class="card-title">
-                                REQUERIMIENTOS DE MATERIALES
-                              </h3>
+                              <h3 class="card-title">REQUERIMIENTOS DE MATERIALES</h3>
                             </div>
                             <div class="card-body">
                               <div class="form-group row">
@@ -330,58 +329,49 @@
                                     filterable
                                     placeholder="Select"
                                   >
-                                  <v-row align="right">
-                                    <el-option
-                                      v-for="item in listProd"
-                                      :key="item.id"
-                                      :label="
-                                        item.codigo +
-                                        ' - ' +
-                                        item.familia.nombre+
-                                        ' , ' +
-                                        item.subfamilia.nombre + 
-                                        ' , Modelo: ' +
-                                        item.modelotipo.nombre +
-                                        ' , Marca : ' +
-                                        item.marca.nombre +
-                                        ' , Material : ' +
-                                        item.material.nombre +
-                                        ' ,' +
-                                        item.homologacion.nombre
-                                      "
-                                      :value="item.id"
-                                    >
-                                    </el-option>
-                                  </v-row>
+                                    <v-row align="right">
+                                      <el-option
+                                        v-for="item in listProd"
+                                        :key="item.id"
+                                        :label="
+                                          item.codigo +
+                                          ' - ' +
+                                          item.familia.nombre +
+                                          ' , ' +
+                                          item.subfamilia.nombre +
+                                          ' , Modelo: ' +
+                                          item.modelotipo.nombre +
+                                          ' , Marca : ' +
+                                          item.marca.nombre +
+                                          ' , Material : ' +
+                                          item.material.nombre +
+                                          ' ,' +
+                                          item.homologacion.nombre
+                                        "
+                                        :value="item.id"
+                                      >
+                                      </el-option>
+                                    </v-row>
                                   </el-select>
-                                  
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <label class="col-md-2 col-form-label"
-                                  >CANTIDAD</label
-                                >
+                                <label class="col-md-2 col-form-label">CANTIDAD</label>
                                 <div class="col-md-3">
                                   <input
                                     type="text"
                                     class="form-control"
-                                    v-model="
-                                      fillCrearReqMateriales.cCantMaterial
-                                    "
+                                    v-model="fillCrearReqMateriales.cCantMaterial"
                                   />
                                 </div>
                               </div>
 
                               <div class="col-md-6">
                                 <div class="form-group row">
-                                  <label class="col-md-4 col-form-label"
-                                    >MEDIDA</label
-                                  >
+                                  <label class="col-md-4 col-form-label">MEDIDA</label>
                                   <div class="col-md-4">
                                     <el-select
-                                      v-model="
-                                        fillCrearReqMateriales.nIdUnidMedMat
-                                      "
+                                      v-model="fillCrearReqMateriales.nIdUnidMedMat"
                                       placeholder="Select"
                                       style="width: 70%"
                                     >
@@ -430,13 +420,7 @@
                 </div>
 
                 <div class="card-body table-responsive">
-                  <table
-                    class="
-                      table table-hover table-head-fixed
-                      text-nowrap
-                      projects
-                    "
-                  >
+                  <table class="table table-hover table-head-fixed text-nowrap projects">
                     <thead>
                       <tr>
                         <th>Codigo</th>
@@ -447,10 +431,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr
-                        v-for="(item, index) in listartempProduccion"
-                        :key="index"
-                      >
+                      <tr v-for="(item, index) in listartempProduccion" :key="index">
                         <td v-text="item.codigo"></td>
                         <td v-text="item.cantidad"></td>
 
@@ -471,9 +452,7 @@
                         <td>
                           <button
                             class="btn btn-danger btn-sm"
-                            @click.prevent="
-                              DeletListReqMateriales(item.producto_id)
-                            "
+                            @click.prevent="DeletListReqMateriales(item.producto_id)"
                           >
                             <i class="fas fa-trash-alt"></i> Eliminar
                           </button>
@@ -605,9 +584,7 @@
           </div>
 
           <div class="card-body table-responsive">
-            <table
-              class="table table-hover table-head-fixed text-nowrap projects"
-            >
+            <table class="table table-hover table-head-fixed text-nowrap projects">
               <thead>
                 <tr>
                   <th>Personal</th>
@@ -644,10 +621,7 @@
         <div class="card card-primary">
           <div class="col-md-12">
             <div class="card">
-              <div
-                class="card-header"
-                style="background-color: #9b59b6; color: white"
-              >
+              <div class="card-header" style="background-color: #9b59b6; color: white">
                 <h3 class="card-title">OTROS REQUERIMIENTOS</h3>
               </div>
               <div class="card-body">
@@ -699,33 +673,24 @@
 
         <!--  Bandeja de Resultados -->
         <div class="card card-light">
-          <div
-            class="card-header"
-            style="background-color: #9b59b6; color: white"
-          >
+          <div class="card-header" style="background-color: #9b59b6; color: white">
             <h3 class="card-title">Bandeja de Resultados</h3>
           </div>
 
           <div class="card-body table-responsive">
-            <table
-              class="table table-hover table-head-fixed text-nowrap projects"
-            >
+            <table class="table table-hover table-head-fixed text-nowrap projects">
               <thead>
                 <tr>
                   <th>Descripción</th>
                   <th>Cantidad</th>
                   <th>Acción</th>
-                  
                 </tr>
               </thead>
               <tbody>
-                <tr
-                  v-for="(item, index) in listartempRequerimientos"
-                  :key="index"
-                >
+                <tr v-for="(item, index) in listartempRequerimientos" :key="index">
                   <td v-text="item.descripcion"></td>
                   <td v-text="item.cantidad"></td>
-                      <td>
+                  <td>
                     <button
                       class="btn btn-danger btn-sm"
                       @click.prevent="DeletListOtrosReq(item.descripcion)"
@@ -783,9 +748,7 @@
             ></div>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-secondary" @click="abrirModal">
-              Cerrar
-            </button>
+            <button class="btn btn-secondary" @click="abrirModal">Cerrar</button>
           </div>
         </div>
       </div>
@@ -824,8 +787,8 @@ export default {
         nIdUnidMed: "",
         nIdUnidMedMat: "",
         radTipoTiempo: "1",
-        estado:"",
-       
+        nIdZonaProduccion: "",
+        estado: "",
       },
       listAlmacen: [],
       listUnidMed: [],
@@ -833,6 +796,7 @@ export default {
       listartempProduccion: [],
       listartempMobra: [],
       listartempRequerimientos: [],
+      listZonaProduccion: [],
       listDescripPago: [
         {
           value: "1",
@@ -861,7 +825,6 @@ export default {
     };
   },
 
-
   mounted() {
     this.getListarByProveedor();
     this.getListarproductosByName();
@@ -869,22 +832,22 @@ export default {
     this.defaultDiaHora();
     this.getListarUnidadMedida();
     this.getListarAlmacen();
+    this.getListarZonaProduccion();
   },
 
   methods: {
-
-    calculoFecha(){
-
-if (
+    calculoFecha() {
+      if (
         this.fillCrearReqMateriales.FFinal != null &&
         this.fillCrearReqMateriales.FInicio != null
       ) {
-       let valorfecha =
+        let valorfecha =
           new Date(this.fillCrearReqMateriales.FFinal).getTime() -
           new Date(this.fillCrearReqMateriales.FInicio).getTime();
-        this.fillCrearReqMateriales.cDuracion = String(valorfecha / 86400000 + 1).padStart(2, 0)
-     
-      } 
+        this.fillCrearReqMateriales.cDuracion = String(
+          valorfecha / 86400000 + 1
+        ).padStart(2, 0);
+      }
     },
     onChange(e) {
       if (e == 1) {
@@ -912,6 +875,13 @@ if (
       this.fillCrearReqMateriales.cCantidadReq = 0;
       this.fillCrearReqMateriales.cDiasMObra = 0;
       this.fillCrearReqMateriales.cHorasMObra = 0;
+    },
+
+    getListarZonaProduccion() {
+      var url = "/administracion/ZonaProduccion/list";
+      axios.get(url).then((response) => {
+        this.listZonaProduccion = response.data;
+      });
     },
 
     consultaRuc() {
@@ -946,7 +916,7 @@ if (
           cPersonal: this.fillCrearReqMateriales.cPersonal,
           cDiasMObra: this.fillCrearReqMateriales.cDiasMObra,
           cHorasMObra: this.fillCrearReqMateriales.cHorasMObra,
-          estado: 'R',
+          estado: "R",
         })
         .then((response) => {
           this.listartempMobra = response.data.datos;
@@ -968,29 +938,23 @@ if (
         .post(url, {
           cDescripcion: this.fillCrearReqMateriales.cDescripcion,
           cCantidadReq: this.fillCrearReqMateriales.cCantidadReq,
-          estado: 'R',
+          estado: "R",
         })
         .then((response) => {
-        
-
           if (response.data.message == "El valor no puede ser cero ni vacio") {
-              Swal.fire({
-                position: "center",
-                icon: response.data.icon,
-                title: response.data.message,
-                showConfirmButton: false,
-                timer: 1500,
-              });
-            }else{
-
-              this.listartempRequerimientos = response.data.datos;
+            Swal.fire({
+              position: "center",
+              icon: response.data.icon,
+              title: response.data.message,
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          } else {
+            this.listartempRequerimientos = response.data.datos;
             this.setLimpiaRequerimientos();
             this.fillCrearReqMateriales.cCantidadReq = 0;
-
-            }
-
+          }
         });
-
     },
 
     setLimpiaRequerimientos() {
@@ -1009,30 +973,27 @@ if (
         });
     },
 
-    DeletListReqMaNObra(item){
-             var url = "/administracion/RequerimientoMateriales/reorderReqManObra";
+    DeletListReqMaNObra(item) {
+      var url = "/administracion/RequerimientoMateriales/reorderReqManObra";
       axios
         .post(url, {
           item: item,
         })
         .then((response) => {
-              this.listartempMobra = response.data.datos;
+          this.listartempMobra = response.data.datos;
         });
-
     },
 
-    DeletListOtrosReq(item){
-            var url = "/administracion/RequerimientoMateriales/reorderOtrosReq";
+    DeletListOtrosReq(item) {
+      var url = "/administracion/RequerimientoMateriales/reorderOtrosReq";
       axios
         .post(url, {
           item: item,
         })
         .then((response) => {
-               this.listartempRequerimientos = response.data.datos;
+          this.listartempRequerimientos = response.data.datos;
         });
     },
-
-    
 
     getListarByProveedor() {
       var url = "/administracion/proveedor/getListarProveedorById";
@@ -1070,6 +1031,7 @@ if (
         this.listAlmacen = response.data;
       });
     },
+
     getListarproductosByName() {
       var url = "/administracion/detallecotizancion/listProdByName";
       axios
@@ -1095,8 +1057,7 @@ if (
     },
 
     setGrabarReqMateriales() {
-     
-      var url = "/administracion/RequerimientoMateriales/create";   
+      var url = "/administracion/RequerimientoMateriales/create";
       axios
         .post(url, {
           nIdproduct: this.fillCrearReqMateriales.nIdproduct,
@@ -1108,13 +1069,13 @@ if (
           nIdUser: this.fillCrearReqMateriales.nIdUser,
           Duracionfechas: this.fillCrearReqMateriales.cDuracion,
           nIdUnidMed: this.fillCrearReqMateriales.nIdUnidMed,
-          cReferencia : this.fillCrearReqMateriales.cReferencia,
-          
-         
+          cReferencia: this.fillCrearReqMateriales.cReferencia,
+          nIdZonaProduccion: this.fillCrearReqMateriales.nIdZonaProduccion,
+
           //Requerimientos de Materiales ////
           nIdmaterial: this.fillCrearReqMateriales.nIdmaterial,
           cCantMaterial: this.fillCrearReqMateriales.cCantMaterial,
-          
+
           //Fin de Requerimientos de Materiales ////
 
           //// Requerimientos de Mano de Obra /////
@@ -1138,7 +1099,7 @@ if (
           this.setCleanMaterial();
           this.setCleanManoObra();
           this.setCleanRequerimientos();
-        }); 
+        });
     },
     abrirModal() {
       this.modalShow = !this.modalShow;
@@ -1176,19 +1137,16 @@ if (
       return this.error;
     },
     setAddReqMaterial() {
-
       var url = "/administracion/RequerimientoMateriales/addOrden";
-    
+
       axios
         .post(url, {
           nIdmaterial: this.fillCrearReqMateriales.nIdmaterial,
           cCantMaterial: this.fillCrearReqMateriales.cCantMaterial,
           nIdUnidMedMat: this.fillCrearReqMateriales.nIdUnidMedMat,
-          estado: 'R',
+          estado: "R",
         })
         .then((response) => {
-      
-
           if (response.data.message == "Ya fue agregado anteriormente") {
             Swal.fire({
               position: "center",
@@ -1197,29 +1155,26 @@ if (
               showConfirmButton: false,
               timer: 1500,
             });
-          }else{
+          } else {
             this.listartempProduccion = response.data.datos;
-          this.setLimpiaMaterial();
-          this.fillCrearReqMateriales.cCantMaterial = 0;
+            this.setLimpiaMaterial();
+            this.fillCrearReqMateriales.cCantMaterial = 0;
           }
 
-  
           if (response.data.message == "El valor no puede ser cero") {
-      Swal.fire({
-        position: "center",
-        icon: response.data.icon,
-        title: response.data.message,
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    }else{
-      this.listartempProduccion = response.data.datos;
-          this.setLimpiaMaterial();
-          this.fillCrearReqMateriales.cCantMaterial = 0;
-    }
-  
+            Swal.fire({
+              position: "center",
+              icon: response.data.icon,
+              title: response.data.message,
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          } else {
+            this.listartempProduccion = response.data.datos;
+            this.setLimpiaMaterial();
+            this.fillCrearReqMateriales.cCantMaterial = 0;
+          }
         });
-
     },
 
     setLimpiaMaterial() {
@@ -1292,17 +1247,14 @@ if (
         this.fillCrearReqMateriales.FFinal != null &&
         this.fillCrearReqMateriales.FInicio != null
       ) {
-       let valorfecha =
+        let valorfecha =
           new Date(this.fillCrearReqMateriales.FFinal).getTime() -
           new Date(this.fillCrearReqMateriales.FInicio).getTime();
-        return String(valorfecha / 86400000 + 1).padStart(2, 0)
-     
-      } 
-
+        return String(valorfecha / 86400000 + 1).padStart(2, 0);
+      }
     },
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>
