@@ -13,16 +13,11 @@
       <div class="card">
         <div class="card-header">
           <div class="card-tools">
-            <router-link
-              class="btn btn-info btn-sm"
-              :to="'/papeletaSalida/create'"
-            >
+            <router-link class="btn btn-info btn-sm" :to="'/papeletaSalida/create'">
               <i class="fas fa-plus-square"></i>Regresar
             </router-link>
 
-            <template
-              v-if="listRolPermisoByUsuario.includes('Papeleta.Reporte.excel')"
-            >
+            <template v-if="listRolPermisoByUsuario.includes('Papeleta.Reporte.excel')">
               <button
                 class="btn btn-success btn-sm"
                 @click.prevent="getExcelpapeletaSalida"
@@ -47,23 +42,19 @@
                       <div class="col-md-12">
                         <div class="row">
                           <template
-                            v-if="
-                              listRolPermisoByUsuario.includes(
-                                'admin.listado_coti'
-                              )
-                            "
+                            v-if="listRolPermisoByUsuario.includes('admin.listado_coti')"
                           >
                             <div class="col-md-6">
                               <div class="form-group row">
-                                <label class="col-md-3 col-form-label"
-                                  >Vendedor</label
-                                >
+                                <label class="col-md-3 col-form-label">Vendedor</label>
                                 <div class="col-md-6">
                                   <el-select
                                     v-model="fillBsqPapeletaSalida.nIdVendedor"
                                     filterable
                                     placeholder="Seleccione una Vendedor"
-                                    :style="{ width: '350px' }"
+                                    :style="{
+                                      width: '350px',
+                                    }"
                                     clearable
                                   >
                                     <el-option
@@ -88,15 +79,15 @@
                           <template v-else>
                             <div class="col-md-6">
                               <div class="form-group row">
-                                <label class="col-md-3 col-form-label"
-                                  >Vendedor</label
-                                >
+                                <label class="col-md-3 col-form-label">Vendedor</label>
                                 <div class="col-md-6">
                                   <el-select
                                     v-model="fillBsqPapeletaSalida.nIdVendedor"
                                     filterable
                                     placeholder="Seleccione una Vendedor"
-                                    :style="{ width: '350px' }"
+                                    :style="{
+                                      width: '350px',
+                                    }"
                                   >
                                     <el-option
                                       v-for="item in listVendedorUser"
@@ -119,15 +110,15 @@
 
                           <div class="col-md-6">
                             <div class="form-group row">
-                              <label class="col-md-1 col-form-label"
-                                >Motivo</label
-                              >
+                              <label class="col-md-1 col-form-label">Motivo</label>
                               <div class="col-md-8">
                                 <el-select
                                   v-model="fillBsqPapeletaSalida.nIdMotivo"
                                   filterable
                                   placeholder="Seleccione un cliente"
-                                  :style="{ width: '700px' }"
+                                  :style="{
+                                    width: '700px',
+                                  }"
                                   clearable
                                 >
                                   <el-option
@@ -147,9 +138,7 @@
                           <div class="row">
                             <div class="col-md-6">
                               <div class="form-group row">
-                                <label class="col-md-2 col-form-label"
-                                  >Fecha</label
-                                >
+                                <label class="col-md-2 col-form-label">Fecha</label>
                                 <el-date-picker
                                   v-model="fillBsqPapeletaSalida.dFecha"
                                   type="daterange"
@@ -158,7 +147,10 @@
                                   end-placeholder="End date"
                                   value-format="yyyy-MM-dd"
                                   clearable
-                                  :style="{ width: '530px', height: '38px' }"
+                                  :style="{
+                                    width: '530px',
+                                    height: '38px',
+                                  }"
                                 >
                                 </el-date-picker>
                               </div>
@@ -193,85 +185,68 @@
 
                         <div class="card-body table-responsive">
                           <table
-                            class="
-                              table table-hover table-head-fixed
-                              text-nowrap
-                              projects
-                            "
+                            class="table table-hover table-head-fixed text-nowrap projects"
                           >
                             <thead>
                               <tr>
-                               <!--  <th></th> -->
-                                <th >Fecha</th>
+                                <!--  <th></th> -->
+                                <th>Fecha</th>
                                 <th>Fecha de Salida</th>
-                                <th>Hora de emisión </th>
+                                <th>Hora de emisión</th>
                                 <th>Vendedor</th>
                                 <th>Hora Salida</th>
                                 <th>Hora Retorno</th>
                                 <th>Estado</th>
                                 <th>Motivo</th>
-                                <th>Observación</th>
+
                                 <th>Acción</th>
                               </tr>
-
                             </thead>
                             <tbody>
-                              
                               <tr
                                 v-for="(item, index) in listCotizacionPaginated"
                                 :key="index"
                               >
-                           <!--    <td>
+                                <!--    <td>
                                 <button class="btn btn-primary "   @click.prevent="
                                       addTagPapeleta(item.id)
                                     " type="button">+</button>
                               </td> -->
                                 <!-- <td>{{ item.fecha | moment("DD - MM - Y") }}</td> -->
-                                <td @click.prevent="getlistClientxIndex(item.id )">
+                                <td @click.prevent="getlistClientxIndex(item.id)">
                                   {{
                                     item.created_at.substring(0, 10)
                                       | moment("DD - MM - Y")
                                   }}
                                 </td>
-                                <td @click.prevent="getlistClientxIndex(item.id )">
+                                <td @click.prevent="getlistClientxIndex(item.id)">
                                   {{ item.fecha | moment("DD - MM - Y") }}
-
                                 </td>
 
                                 <td>
                                   {{ item.hora_emision }}
                                 </td>
-                                <td @click.prevent="getlistClientxIndex(item.id )">{{ item.user.fullname }}
-
-
-
+                                <td @click.prevent="getlistClientxIndex(item.id)">
+                                  {{ item.user.fullname }}
                                 </td>
 
                                 <td v-text="item.horasalida"></td>
                                 <td v-text="item.horaretorno"></td>
-                                <td
-                                  v-text="item.estado_papeleta_salida.nombre"
-                                ></td>
+                                <td v-text="item.estado_papeleta_salida.nombre"></td>
 
-                                <td
-                                  v-text="item.motivopapeletasalida.nombre"
-                                ></td>
-                                <td v-text="item.observacion"></td>
+                                <td v-text="item.motivopapeletasalida.nombre"></td>
 
                                 <td>
                                   <button
                                     class="btn btn-primary btn-sm"
-                                    @click.prevent="
-                                      abrirModalbyVendedor(item.id)
-                                    "
+                                    @click.prevent="abrirModalbyVendedor(item.id)"
                                   >
-                                    <i class="far fa-eye"></i> Detalle
+                                    <i class="far fa-eye"></i>
+                                    Detalle
                                   </button>
 
                                   <button
-                                    @click.prevent="
-                                      getPdfPSalidabyVendedor(item.id)
-                                    "
+                                    @click.prevent="getPdfPSalidabyVendedor(item.id)"
                                     class="btn btn-danger btn-sm"
                                   >
                                     <span><i class="far fa-file-pdf"></i></span>
@@ -280,24 +255,19 @@
 
                                   <template
                                     v-if="
-                                      listRolPermisoByUsuario.includes(
-                                        'papeleta.admin'
-                                      )
+                                      listRolPermisoByUsuario.includes('papeleta.admin')
                                     "
                                   >
                                     <button
                                       class="btn btn-success btn-sm"
-                                      @click.prevent="
-                                        aprobarPartidaSalida(item.id)
-                                      "
+                                      @click.prevent="aprobarPartidaSalida(item.id)"
                                     >
-                                      <i class="far fa-thumbs-up"></i> Aprobar
+                                      <i class="far fa-thumbs-up"></i>
+                                      Aprobar
                                     </button>
                                     <button
                                       class="btn btn-info btn-sm"
-                                      @click.prevent="
-                                        abrirAnularVendedor(item.id)
-                                      "
+                                      @click.prevent="abrirAnularVendedor(item.id)"
                                     >
                                       <i class="far fa-calendar-check"></i>
                                       Anular
@@ -308,7 +278,6 @@
                                     <td></td>
                                   </template>
 
-
                                   <template
                                     v-if="
                                       listRolPermisoByUsuario.includes(
@@ -318,7 +287,7 @@
                                   >
                                     <button
                                       class="btn btn-secondary btn-sm"
-                                      @click.prevent="ObservacionPapeleta(item.id)"
+                                      @click.prevent="ModalObservacion(item.id)"
                                     >
                                       <i class="far fa-pen-to-square"></i>
                                       Observación
@@ -335,30 +304,22 @@
 
                             /> -->
                                 </td>
-
-
                               </tr>
 
-                                        <th >Cliente</th>
-                                <tr >
-                                        <div v-for="(item, index) in listClientxId"
-                                                                        :key="index">
-                                            <td   >{{ item.cliente.razonsocial }}</td>
-
-                                        </div>
-                                 </tr>
-
+                              <th>Cliente</th>
+                              <tr>
+                                <div v-for="(item, index) in listClientxId" :key="index">
+                                  <td>
+                                    {{ item.cliente.razonsocial }}
+                                  </td>
+                                </div>
+                              </tr>
                             </tbody>
                           </table>
                           <div class="card-footer">
-                            <ul
-                              class="pagination pagination-sm m-0 float-right"
-                            >
+                            <ul class="pagination pagination-sm m-0 float-right">
                               <li class="page-item" v-if="pageNumber > 0">
-                                <a
-                                  href="#"
-                                  class="page-link"
-                                  @click.prevent="prevPage"
+                                <a href="#" class="page-link" @click.prevent="prevPage"
                                   >Ant</a
                                 >
                               </li>
@@ -376,14 +337,8 @@
                                   {{ page + 1 }}</a
                                 >
                               </li>
-                              <li
-                                class="page-item"
-                                v-if="pageNumber < pageCount - 1"
-                              >
-                                <a
-                                  href="#"
-                                  class="page-link"
-                                  @click.prevent="nextPage"
+                              <li class="page-item" v-if="pageNumber < pageCount - 1">
+                                <a href="#" class="page-link" @click.prevent="nextPage"
                                   >Post</a
                                 >
                               </li>
@@ -398,24 +353,20 @@
                     <el-tab-pane label="Por Cliente" name="second">
                       <div class="col-md-12">
                         <template
-                          v-if="
-                            listRolPermisoByUsuario.includes(
-                              'admin.listado_coti'
-                            )
-                          "
+                          v-if="listRolPermisoByUsuario.includes('admin.listado_coti')"
                         >
                           <div class="row">
                             <div class="col-md-6">
                               <div class="form-group row">
-                                <label class="col-md-3 col-form-label"
-                                  >Cliente</label
-                                >
+                                <label class="col-md-3 col-form-label">Cliente</label>
                                 <div class="col-md-6">
                                   <el-select
                                     v-model="fillBsqPapeletaSalida.nIdClient"
                                     filterable
                                     placeholder="Seleccione una Cliente"
-                                    :style="{ width: '350px' }"
+                                    :style="{
+                                      width: '350px',
+                                    }"
                                     clearable
                                   >
                                     <el-option
@@ -434,15 +385,15 @@
                         <template v-else>
                           <div class="col-md-6">
                             <div class="form-group row">
-                              <label class="col-md-3 col-form-label"
-                                >Cliente</label
-                              >
+                              <label class="col-md-3 col-form-label">Cliente</label>
                               <div class="col-md-6">
                                 <el-select
                                   v-model="fillBsqPapeletaSalida.nIdClient"
                                   filterable
                                   placeholder="Seleccione una Cliente"
-                                  :style="{ width: '350px' }"
+                                  :style="{
+                                    width: '350px',
+                                  }"
                                   clearable
                                 >
                                   <el-option
@@ -484,11 +435,7 @@
                         </div>
                         <div class="card-body table-responsive">
                           <table
-                            class="
-                              table table-hover table-head-fixed
-                              text-nowrap
-                              projects
-                            "
+                            class="table table-hover table-head-fixed text-nowrap projects"
                             id="tablaprueba"
                           >
                             <thead>
@@ -499,29 +446,18 @@
                                 <th>Hora Retorno</th>
                               </tr>
                             </thead>
-                            <tbody  >
-                              <tr    
+                            <tbody>
+                              <tr
                                 v-for="(item, index) in listPapeleByClient"
                                 :key="index"
-
-                             
                               >
-                                <td >
-                                  {{
-                                    item.papeletasalida.fecha
-                                      | moment("DD - MM - Y")
-                                  }}
+                                <td>
+                                  {{ item.papeletasalida.fecha | moment("DD - MM - Y") }}
                                 </td>
-                                <td
-                                  v-text="item.papeletasalida.user.fullname"
-                                ></td>
+                                <td v-text="item.papeletasalida.user.fullname"></td>
 
-                                <td
-                                  v-text="item.papeletasalida.horaretorno"
-                                ></td>
-                                <td
-                                  v-text="item.papeletasalida.horasalida"
-                                ></td>
+                                <td v-text="item.papeletasalida.horaretorno"></td>
+                                <td v-text="item.papeletasalida.horasalida"></td>
 
                                 <button
                                   class="btn btn-primary btn-sm"
@@ -529,14 +465,13 @@
                                     abrirModalbyVendedor(item.papeletasalida.id)
                                   "
                                 >
-                                  <i class="far fa-eye"></i> Detalle
+                                  <i class="far fa-eye"></i>
+                                  Detalle
                                 </button>
 
                                 <button
                                   @click.prevent="
-                                    getPdfPSalidabyVendedor(
-                                      item.papeletasalida.id
-                                    )
+                                    getPdfPSalidabyVendedor(item.papeletasalida.id)
                                   "
                                   class="btn btn-danger btn-sm"
                                 >
@@ -544,19 +479,12 @@
                                   PDF
                                 </button>
                               </tr>
-
-
                             </tbody>
                           </table>
                           <div class="card-footer">
-                            <ul
-                              class="pagination pagination-sm m-0 float-right"
-                            >
+                            <ul class="pagination pagination-sm m-0 float-right">
                               <li class="page-item" v-if="pageNumber > 0">
-                                <a
-                                  href="#"
-                                  class="page-link"
-                                  @click.prevent="prevPage"
+                                <a href="#" class="page-link" @click.prevent="prevPage"
                                   >Ant</a
                                 >
                               </li>
@@ -574,14 +502,8 @@
                                   {{ page + 1 }}</a
                                 >
                               </li>
-                              <li
-                                class="page-item"
-                                v-if="pageNumber < pageCount - 1"
-                              >
-                                <a
-                                  href="#"
-                                  class="page-link"
-                                  @click.prevent="nextPage"
+                              <li class="page-item" v-if="pageNumber < pageCount - 1">
+                                <a href="#" class="page-link" @click.prevent="nextPage"
                                   >Post</a
                                 >
                               </li>
@@ -600,6 +522,7 @@
       </div>
     </div>
 
+    <!-- Listado de Detalle de Cotizaciones -->
     <div
       class="modal fade"
       :class="{ show: modalShow }"
@@ -613,12 +536,8 @@
             <button class="close" @click="abrirModal(item.id)"></button>
           </div>
           <div class="modal-body">
-            <!-- Listado de Detalle de Cotizaciones -->
-
             <div class="card-body table-responsive">
-              <table
-                class="table table-hover table-head-fixed text-nowrap projects"
-              >
+              <table class="table table-hover table-head-fixed text-nowrap projects">
                 <thead>
                   <tr>
                     <th>Cliente</th>
@@ -627,10 +546,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr
-                    v-for="(item, index) in this.listModalVendedorAdmin"
-                    :key="index"
-                  >
+                  <tr v-for="(item, index) in this.listModalVendedorAdmin" :key="index">
                     <td v-text="item.cliente.razonsocial"></td>
 
                     <td v-text="item.contacto"></td>
@@ -641,28 +557,78 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-secondary" @click="abrirModal">
+            <button class="btn btn-secondary" @click="abrirModal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin de Listado de Detalle de Cotizaciones -->
+
+    <!-- Listado de Detalle de Cotizaciones -->
+    <div
+      class="modal fade"
+      :class="{ show: modalObservacion }"
+      :style="modalObservacion ? mostrarModal : ocultarModal"
+    >
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Observacion</h5>
+
+            <button class="close" @click="abrirModalObservacion(item.id)"></button>
+          </div>
+          <div class="modal-body">
+            <div class="card-body table-responsive">
+              <table class="table table-hover table-head-fixed text-nowrap projects">
+                <thead>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group row">
+                        <label class="col-md-1 col-form-label">Observación</label>
+
+                        <div class="col-md-8">
+                          <input
+                            type="text"
+                            class="form-control"
+                            v-model="fillBsqPapeletaSalida.nIdObservacion"
+                          />
+                        </div>
+                        <div class="col-md-2">
+                          <button class="btn btn-success" @click="setGrabarObservacion()">
+                            Guardar
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <tr>
+                    <th>Listado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(item, index) in this.listObservaciones" :key="index">
+                    <td v-text="item.observacion"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" @click="abrirModalObservacion">
               Cerrar
             </button>
           </div>
         </div>
       </div>
     </div>
+    <!-- Fin de Listado de Detalle de Cotizaciones -->
   </div>
 </template>
 
 <script>
-
-
-
-
 import FileSaver from "file-saver";
 
-
-
 export default {
-
-
   data() {
     return {
       fillBsqPapeletaSalida: {
@@ -694,11 +660,13 @@ export default {
       listPapeleByVendedor: [],
       listPapeleByClient: [],
       listClientxId: [],
+      listObservaciones: [],
       listRolPermisoByUsuario: JSON.parse(
         sessionStorage.getItem("listRolPermisosByUsuario")
       ),
-        valormotivo:"",
+      valormotivo: "",
       modalShow: false,
+      modalObservacion: false,
       modalEstado: false,
       mostrarModal: {
         display: "block",
@@ -779,28 +747,19 @@ export default {
     },
   },
   methods: {
-
-
-    ObservacionPapeleta(id) {
-        this.valormotivo = prompt('Ingrese la observacion')
-
-        var url = "/administracion/papeletasalida/ObservacionUpdate";
-        axios.post(url,{
-            valormotivo : this.valormotivo,
-            idpapeleta: id
-        }).then((response)=>{
-     this.getlistPapeleByVendedor();
-        })
+    ModalObservacion(itemId) {
+      this.modalObservacion = !this.modalObservacion;
+      this.fillBsqPapeletaSalida.itemid = itemId;
+      this.setListObservaciones(itemId);
     },
 
-
     getExcelpapeletaSalida() {
-      var url = "/operacion/papeletaSalida/export"; 
+      var url = "/operacion/papeletaSalida/export";
       axios
         .post(
           url,
           {
-            nIdMotivo : this.fillBsqPapeletaSalida.nIdMotivo,
+            nIdMotivo: this.fillBsqPapeletaSalida.nIdMotivo,
             nIdVendedor: this.fillBsqPapeletaSalida.nIdVendedor,
             dFechainicio: !this.fillBsqPapeletaSalida.dFecha
               ? ""
@@ -838,6 +797,35 @@ export default {
       this.fillBsqPapeletaSalida.itemid = item;
     },
 
+    abrirModalObservacion(id) {
+      this.modalObservacion = !this.modalObservacion;
+    },
+
+    setGrabarObservacion() {
+      var url = "/administracion/papeletasalida/setGrabarObservacion";
+      axios
+        .post(url, {
+          itemid: this.fillBsqPapeletaSalida.itemid,
+          observacion: this.fillBsqPapeletaSalida.nIdObservacion,
+        })
+        .then(() => {
+          this.setListObservaciones(this.fillBsqPapeletaSalida.itemid);
+          this.fillBsqPapeletaSalida.nIdObservacion = "";
+        });
+    },
+
+    setListObservaciones(itemId) {
+      var url = "/administracion/papeletaSalida/getListObservacionById";
+      axios
+        .get(url, {
+          params: {
+            id: itemId,
+          },
+        })
+        .then((response) => {
+          this.listObservaciones = response.data;
+        });
+    },
     abrirEstadobyVendedor(item) {
       this.modalEstado = !this.modalEstado;
       this.fillBsqPapeletaSalida.itemid = item;
@@ -864,11 +852,7 @@ export default {
               this.getlistPapeleByVendedor();
             });
 
-          Swal.fire(
-            "Anulado!",
-            "Tu Papeleta de Salida fue dado de Baja.",
-            "success"
-          );
+          Swal.fire("Anulado!", "Tu Papeleta de Salida fue dado de Baja.", "success");
         }
       });
     },
@@ -894,11 +878,7 @@ export default {
               this.getlistPapeleByVendedor();
             });
 
-          Swal.fire(
-            "Aprobado!",
-            "Tu Papeleta de Salida fue  aprobado.",
-            "success"
-          );
+          Swal.fire("Aprobado!", "Tu Papeleta de Salida fue  aprobado.", "success");
         }
       });
     },
@@ -970,7 +950,6 @@ export default {
           },
         })
         .then((response) => {
-
           this.listPapeleByClient = response.data;
         });
     },
@@ -1002,7 +981,9 @@ export default {
           config
         )
         .then((response) => {
-          var oMyBlob = new Blob([response.data], { type: "application/pdf" });
+          var oMyBlob = new Blob([response.data], {
+            type: "application/pdf",
+          });
           var url = URL.createObjectURL(oMyBlob);
           window.open(url);
           //window.print();
@@ -1029,15 +1010,16 @@ export default {
         });
     },
 
-    getlistClientxIndex(papeletaId){
-
-        var url = "/administracion/papeletasalida/getlistClientxIndex";
-        axios.post(url,{
-            papeletaId: papeletaId,
-        }).then((response)=>{
-     console.log(response.data)
-     this.listClientxId  = response.data
+    getlistClientxIndex(papeletaId) {
+      var url = "/administracion/papeletasalida/getlistClientxIndex";
+      axios
+        .post(url, {
+          papeletaId: papeletaId,
         })
+        .then((response) => {
+          console.log(response.data);
+          this.listClientxId = response.data;
+        });
     },
 
     nextPage() {
@@ -1048,7 +1030,7 @@ export default {
     },
     selectPage(page) {
       this.pageNumber = page;
-      this.listClientxId =[]
+      this.listClientxId = [];
     },
 
     inicializarPaginacion() {
@@ -1058,5 +1040,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

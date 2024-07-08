@@ -4,9 +4,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Documento sin título</title>
 </head>
+<link href="../style/style.css" rel="stylesheet" type="text/css" />
 
 <body>
-<table width="100%" border="0">
+<table width="100%" >
   <tr>
 
     <td width="18%" rowspan="2"><img src="{{$logo}}" width="285" height="81" alt="fghf" /></td>
@@ -66,6 +67,7 @@
       <td><center><b>RAZON SOCIAL</b></center></td>
       <td><center><b>DIRECCION</b></center></td>
       <td><center><b>CONTACTO</b></center></td>
+
     </tr>
     @if($clientpapeletasalida) @foreach ($clientpapeletasalida as $data)
   <tr>
@@ -75,6 +77,13 @@
   </tr>
          @endforeach @endif
 </table>
+
+<H4>OBSERVACION</H4>
+<UL>
+    @if($observacionPapeleta) @foreach ($observacionPapeleta as $dataObserv)
+    <li>{{$dataObserv->observacion}}</li>
+    @endforeach @endif
+</UL>
 <br>
 <table width="100%" border="0">
   <tr>

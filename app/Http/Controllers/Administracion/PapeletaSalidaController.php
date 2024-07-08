@@ -8,6 +8,7 @@ use App\Detallepapeletasalida;
 use App\Exports\PapeletaExport;
 use App\Http\Controllers\Controller;
 use App\Motivopapeletasalida;
+use App\ObservacionPapeleta;
 use App\Papeletasalida;
 use App\TempClientPapeletaSalida;
 use Illuminate\Http\Request;
@@ -202,6 +203,7 @@ if ($tiempo  >= $tiempoMax) {
         $idPapeletaS = $request->get("params")['item'];
         $Papeletasalida = Papeletasalida::with('user', 'motivopapeletasalida', 'estadoPapeletaSalida')->where('id', $idPapeletaS)->first();
         $clientpapeletasalida = ClientsPapeletaSalida::with('cliente', 'papeletasalida')->where('papeletasalida_id', $idPapeletaS)->get();
+        $observacionPapeleta= ObservacionPapeleta::where('papeletasalida_id',$idPapeletaS)->get();
         $logo = asset('img/logo.gif');
         $productos01 = asset('img/banner01.png');
         $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('reporte.papeletaSalida.reporte', [
@@ -209,6 +211,7 @@ if ($tiempo  >= $tiempoMax) {
             'productos01' => $productos01,
             'Papeletasalida' => $Papeletasalida,
             'clientpapeletasalida' => $clientpapeletasalida,
+            'observacionPapeleta' => $observacionPapeleta
         ]);
         return $pdf->download('invoice.pdf');
     }
@@ -327,5 +330,18 @@ if ($tiempo  >= $tiempoMax) {
     {
         $dato = ClientsPapeletaSalida::with('cliente')->where('papeletasalida_id', $request->papeletaId)->get();
         return $dato;
+    }
+
+    public function getListObservacionById(Request $request){
+       $dato = ObservacionPapeleta::where('papeletasalida_id',$request->id)->get();
+        return $dato;
+    }
+
+    public function setGrabarObservacion(Request $request){
+        $observacionPapeleta = new ObservacionPapeleta;
+        $observacionPapeleta->papeletasalida_id = $request->itemid;
+        $observacionPapeleta->observacion = $request->observacion;
+        $observacionPapeleta->save();
+
     }
 }

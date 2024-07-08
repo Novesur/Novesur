@@ -24,4 +24,8 @@ class Papeletasalida extends Model
     {
         return $this->belongsTo(EstadoPapeletaSalida::class);
     }
+
+
+
+
 }
