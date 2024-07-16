@@ -165,9 +165,11 @@ if ($tiempo  >= $tiempoMax) {
             return $dato;
         }
         if ($request->nIdMotivo == null &&  $request->nIdVendedor == null) {
-            $dato = Papeletasalida::with('user', 'estadoPapeletaSalida', 'motivopapeletasalida')->whereBetween('fecha', [$dFechainicio, $dFechafin])->get();
+
+            $dato = Papeletasalida::with('user', 'estadoPapeletaSalida', 'motivopapeletasalida','clientsPapeletaSalida')->whereBetween('fecha', [$dFechainicio, $dFechafin]) ->orderBy('fecha', 'desc')->get();
             return $dato;
-        }
+                }
+
         if ($request->nIdMotivo == null) {
             $dato = Papeletasalida::with('user', 'estadoPapeletaSalida', 'motivopapeletasalida')->where('user_id', $request->nIdVendedor)->whereBetween('fecha', [$dFechainicio, $dFechafin])->get();
             return $dato;
@@ -329,6 +331,8 @@ if ($tiempo  >= $tiempoMax) {
     public function getlistClientxIndex(Request $request)
     {
         $dato = ClientsPapeletaSalida::with('cliente')->where('papeletasalida_id', $request->papeletaId)->get();
+
+
         return $dato;
     }
 

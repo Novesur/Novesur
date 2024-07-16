@@ -203,117 +203,112 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <tr
-                                v-for="(item, index) in listCotizacionPaginated"
-                                :key="index"
-                              >
-                                <!--    <td>
+                              <template v-for="(item, index) in listCotizacionPaginated">
+                                <tr>
+                                  <!--    <td>
                                 <button class="btn btn-primary "   @click.prevent="
                                       addTagPapeleta(item.id)
                                     " type="button">+</button>
                               </td> -->
-                                <!-- <td>{{ item.fecha | moment("DD - MM - Y") }}</td> -->
-                                <td @click.prevent="getlistClientxIndex(item.id)">
-                                  {{
-                                    item.created_at.substring(0, 10)
-                                      | moment("DD - MM - Y")
-                                  }}
-                                </td>
-                                <td @click.prevent="getlistClientxIndex(item.id)">
-                                  {{ item.fecha | moment("DD - MM - Y") }}
-                                </td>
+                                  <!-- <td>{{ item.fecha | moment("DD - MM - Y") }}</td> -->
 
-                                <td>
-                                  {{ item.hora_emision }}
-                                </td>
-                                <td @click.prevent="getlistClientxIndex(item.id)">
-                                  {{ item.user.fullname }}
-                                </td>
-
-                                <td v-text="item.horasalida"></td>
-                                <td v-text="item.horaretorno"></td>
-                                <td v-text="item.estado_papeleta_salida.nombre"></td>
-
-                                <td v-text="item.motivopapeletasalida.nombre"></td>
-
-                                <td>
-                                  <button
-                                    class="btn btn-primary btn-sm"
-                                    @click.prevent="abrirModalbyVendedor(item.id)"
+                                  <td
+                                    @click.prevent="getlistClientxIndex(item.id, index)"
+                                    :class="[item.collapse ? agrega : restar]"
+                                    style="cursor: pointer"
                                   >
-                                    <i class="far fa-eye"></i>
-                                    Detalle
-                                  </button>
-
-                                  <button
-                                    @click.prevent="getPdfPSalidabyVendedor(item.id)"
-                                    class="btn btn-danger btn-sm"
-                                  >
-                                    <span><i class="far fa-file-pdf"></i></span>
-                                    PDF
-                                  </button>
-
-                                  <template
-                                    v-if="
-                                      listRolPermisoByUsuario.includes('papeleta.admin')
-                                    "
-                                  >
-                                    <button
-                                      class="btn btn-success btn-sm"
-                                      @click.prevent="aprobarPartidaSalida(item.id)"
-                                    >
-                                      <i class="far fa-thumbs-up"></i>
-                                      Aprobar
-                                    </button>
-                                    <button
-                                      class="btn btn-info btn-sm"
-                                      @click.prevent="abrirAnularVendedor(item.id)"
-                                    >
-                                      <i class="far fa-calendar-check"></i>
-                                      Anular
-                                    </button>
-                                  </template>
-
-                                  <template v-else>
-                                    <td></td>
-                                  </template>
-
-                                  <template
-                                    v-if="
-                                      listRolPermisoByUsuario.includes(
-                                        'observacion.papeleta'
-                                      )
-                                    "
-                                  >
-                                    <button
-                                      class="btn btn-secondary btn-sm"
-                                      @click.prevent="ModalObservacion(item.id)"
-                                    >
-                                      <i class="far fa-pen-to-square"></i>
-                                      Observación
-                                    </button>
-                                  </template>
-                                </td>
-
-                                <td id="ag_opcionales" class="Inputobservacion">
-                                  <!--            <input
-                              type="text"
-                               v-model="fillBsqPapeletaSalida.nIdObservacion "
-                              class="form-control form-control-sm"
-
-
-                            /> -->
-                                </td>
-                              </tr>
-
-                              <th>Cliente</th>
-                              <tr>
-                                <div v-for="(item, index) in listClientxId" :key="index">
-                                  <td>
-                                    {{ item.cliente.razonsocial }}
+                                    {{
+                                      item.created_at.substring(0, 10)
+                                        | moment("DD - MM - Y")
+                                    }}
                                   </td>
-                                </div>
-                              </tr>
+                                  <td>
+                                    {{ item.fecha | moment("DD - MM - Y") }}
+                                  </td>
+
+                                  <td>
+                                    {{ item.hora_emision }}
+                                  </td>
+                                  <td>
+                                    {{ item.user.fullname }}
+                                  </td>
+
+                                  <td v-text="item.horasalida"></td>
+                                  <td v-text="item.horaretorno"></td>
+                                  <td v-text="item.estado_papeleta_salida.nombre"></td>
+
+                                  <td v-text="item.motivopapeletasalida.nombre"></td>
+
+                                  <td>
+                                    <!--         <button
+                                      class="btn btn-primary btn-sm"
+                                      @click.prevent="
+                                        abrirModalbyVendedor(item.papeletasalida.id)
+                                      "
+                                    >
+                                      <i class="far fa-eye"></i>
+                                      Detalle2
+                                    </button> -->
+
+                                    <button
+                                      @click.prevent="getPdfPSalidabyVendedor(item.id)"
+                                      class="btn btn-danger btn-sm"
+                                    >
+                                      <span><i class="far fa-file-pdf"></i></span>
+                                      PDF
+                                    </button>
+
+                                    <template
+                                      v-if="
+                                        listRolPermisoByUsuario.includes('papeleta.admin')
+                                      "
+                                    >
+                                      <button
+                                        class="btn btn-success btn-sm"
+                                        @click.prevent="aprobarPartidaSalida(item.id)"
+                                      >
+                                        <i class="far fa-thumbs-up"></i>
+                                        Aprobar
+                                      </button>
+                                      <button
+                                        class="btn btn-info btn-sm"
+                                        @click.prevent="abrirAnularVendedor(item.id)"
+                                      >
+                                        <i class="far fa-calendar-check"></i>
+                                        Anular
+                                      </button>
+                                    </template>
+
+                                    <template v-else>
+                                      <td></td>
+                                    </template>
+
+                                    <template
+                                      v-if="
+                                        listRolPermisoByUsuario.includes(
+                                          'observacion.papeleta'
+                                        )
+                                      "
+                                    >
+                                      <button
+                                        class="btn btn-secondary btn-sm"
+                                        @click.prevent="ModalObservacion(item.id)"
+                                      >
+                                        <i class="far fa-pen-to-square"></i>
+                                        Observación
+                                      </button>
+                                    </template>
+                                  </td>
+                                </tr>
+                                <tr
+                                  v-if="item.collapse"
+                                  v-for="(itemclient, index) in item.clientes"
+                                >
+                                  <td colspan="9" style="background-color: #f0f8ff">
+                                    {{ itemclient.cliente.razonsocial }}
+                                  </td>
+                                </tr>
+                              </template>
                             </tbody>
                           </table>
                           <div class="card-footer">
@@ -459,7 +454,7 @@
                                 <td v-text="item.papeletasalida.horaretorno"></td>
                                 <td v-text="item.papeletasalida.horasalida"></td>
 
-                                <button
+                                <!--      <button
                                   class="btn btn-primary btn-sm"
                                   @click.prevent="
                                     abrirModalbyVendedor(item.papeletasalida.id)
@@ -467,7 +462,7 @@
                                 >
                                   <i class="far fa-eye"></i>
                                   Detalle
-                                </button>
+                                </button> -->
 
                                 <button
                                   @click.prevent="
@@ -523,7 +518,7 @@
     </div>
 
     <!-- Listado de Detalle de Cotizaciones -->
-    <div
+    <!--     <div
       class="modal fade"
       :class="{ show: modalShow }"
       :style="modalShow ? mostrarModal : ocultarModal"
@@ -561,7 +556,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- Fin de Listado de Detalle de Cotizaciones -->
 
     <!-- Listado de Detalle de Cotizaciones -->
@@ -668,14 +663,17 @@ export default {
       modalShow: false,
       modalObservacion: false,
       modalEstado: false,
+      agrega: "fas fa-plus",
+      restar: "fas fa-window-minimize",
       mostrarModal: {
         display: "block",
-        background: "#0000006b",
+        //background: "#0000006b",
         position: "fixed",
       },
       ocultarModal: {
         display: "none",
       },
+
       pageNumber: 0,
       perPage: 10,
 
@@ -787,11 +785,11 @@ export default {
         this.EstadoBotonEditar = false;
       }
     },
-    abrirModalbyVendedor(item) {
+    /*     abrirModalbyVendedor(item) {
       this.modalShow = !this.modalShow;
       this.fillBsqPapeletaSalida.itemid = item;
       this.BuscaClientePapeletaS(item);
-    },
+    }, */
     abrirModal(item) {
       this.modalShow = !this.modalShow;
       this.fillBsqPapeletaSalida.itemid = item;
@@ -936,8 +934,13 @@ export default {
           },
         })
         .then((response) => {
-          this.listPapeleByVendedor = response.data;
-          //console.log(response.data)
+          this.listPapeleByVendedor = response.data.map(function (item) {
+            return {
+              ...item,
+              clientes: [],
+              collapse: false,
+            };
+          });
         });
     },
 
@@ -1010,15 +1013,16 @@ export default {
         });
     },
 
-    getlistClientxIndex(papeletaId) {
+    getlistClientxIndex(papeletaId, index) {
+      this.listPapeleByVendedor[index].collapse = !this.listPapeleByVendedor[index]
+        .collapse;
       var url = "/administracion/papeletasalida/getlistClientxIndex";
       axios
         .post(url, {
           papeletaId: papeletaId,
         })
         .then((response) => {
-          console.log(response.data);
-          this.listClientxId = response.data;
+          this.listPapeleByVendedor[index].clientes = response.data;
         });
     },
 
@@ -1040,4 +1044,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.accordion {
+  width: 100%;
+  display: block;
+}
+</style>
