@@ -25,6 +25,7 @@ class CreateClienteTable extends Migration
             $table->foreign('usuario_id')->references('id')->on('users');
             $table->unsignedBigInteger('usuario_id');
             $table->enum('tipoPrecio', ['Lista', 'Distribuidor']);
+            $table->string('update_by_user',50)->nullable();
             $table->timestamps();
         });
     }

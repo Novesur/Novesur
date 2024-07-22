@@ -18,8 +18,51 @@
             </router-link>
           </div>
         </div>
+
         <div class="card-body">
           <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <label class="col-md-1 col-form-label">DESCRIPCION DEL MEDIDOR</label>
+
+                  <div class="col-md-10">
+                    <el-select
+                      v-model="fillBsqMovAlmacen.nIdprod"
+                      style="width: 90%"
+                      filterable
+                      placeholder="Select"
+                      @change="getListStock()"
+                    >
+                      <v-row align="right">
+                        <el-option
+                          v-for="item in listProd"
+                          :key="item.id"
+                          :label="
+                            item.codigo +
+                            ' - ' +
+                            item.familia.nombre +
+                            ' , ' +
+                            item.subfamilia.nombre +
+                            ' , Modelo: ' +
+                            item.modelotipo.nombre +
+                            ' , Marca : ' +
+                            item.marca.nombre +
+                            ' , Material : ' +
+                            item.material.nombre +
+                            ' ,' +
+                            item.homologacion.nombre
+                          "
+                          :value="item.id"
+                        >
+                        </el-option>
+                      </v-row>
+                    </el-select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <liststock :stock="this.listStock"></liststock>
             <div class="card card-info">
               <div class="card-header">
                 <h3 class="card-title">Criterios de Busqueda</h3>
@@ -32,13 +75,25 @@
                         <div class="form-group row">
                           <label class="col-md-2 col-form-label">RUC</label>
                           <div class="col-md-4">
-                            <input type="text" class="form-control" :disabled="isDisabled"
-                              v-model="fillBsqMovAlmacen.nIdRuc" v-int />
+                            <input
+                              type="text"
+                              class="form-control"
+                              :disabled="isDisabled"
+                              v-model="fillBsqMovAlmacen.nIdRuc"
+                              v-int
+                            />
                           </div>
-                          <span><button class="btn btn-flat btn-success" @click.prevent="getBuscaRucBD">
+                          <span
+                            ><button
+                              class="btn btn-flat btn-success"
+                              @click.prevent="getBuscaRucBD"
+                            >
                               <i class="fas fa-search"></i>
                             </button>
-                            <button class="btn btn-flat btn-info" @click.prevent="getRefresh">
+                            <button
+                              class="btn btn-flat btn-info"
+                              @click.prevent="getRefresh"
+                            >
                               <i class="fas fa-sync-alt"></i>
                             </button>
                           </span>
@@ -49,8 +104,13 @@
                         <div class="form-group row">
                           <label class="col-md-1 col-form-label">Cliente</label>
                           <div class="col-md-8">
-                            <input type="text" class="form-control" :disabled="isDisabled"
-                              v-model="fillBsqMovAlmacen.nIdCliente" v-int />
+                            <input
+                              type="text"
+                              class="form-control"
+                              :disabled="isDisabled"
+                              v-model="fillBsqMovAlmacen.nIdCliente"
+                              v-int
+                            />
                           </div>
                         </div>
                       </div>
@@ -61,12 +121,19 @@
                         <div class="col-md-6">
                           <div class="form-group row">
                             <label class="col-md-2 col-form-label">Fecha</label>
-                            <el-date-picker v-model="fillBsqMovAlmacen.dFecha" type="daterange" range-separator="To"
-                              start-placeholder="Start date" end-placeholder="End date" value-format="yyyy-MM-dd"
-                              clearable :style="{
-              width: '530px',
-              height: '38px',
-            }">
+                            <el-date-picker
+                              v-model="fillBsqMovAlmacen.dFecha"
+                              type="daterange"
+                              range-separator="To"
+                              start-placeholder="Start date"
+                              end-placeholder="End date"
+                              value-format="yyyy-MM-dd"
+                              clearable
+                              :style="{
+                                width: '530px',
+                                height: '38px',
+                              }"
+                            >
                             </el-date-picker>
                           </div>
                         </div>
@@ -78,16 +145,23 @@
               <div class="card-footer">
                 <div class="row">
                   <div class="col-md-4 offset-4">
-                    <button class="btn btn-flat btn-info btnWidth" @click.prevent="getlistMovAlmacen">
+                    <button
+                      class="btn btn-flat btn-info btnWidth"
+                      @click.prevent="getlistMovAlmacen"
+                    >
                       Buscar
                     </button>
-                    <button class="btn btn-flat btn-default btnWidth" @click.prevent="limpiarCriteriosBsq">
+                    <button
+                      class="btn btn-flat btn-default btnWidth"
+                      @click.prevent="limpiarCriteriosBsq"
+                    >
                       Limpiar
                     </button>
                   </div>
                 </div>
               </div>
             </div>
+
             <div class="card card-info">
               <div class="card-header">
                 <h3 class="card-title">Bandeja de Resultados</h3>
@@ -132,11 +206,13 @@
                           <i class="far fa-eye"></i> Detalle
                         </button>
 
-                        <button v-if="item.estadopedido_id === 4" class="btn btn-primary btn-sm" @click="procesar(item.id,item.cliente.ruc)"> 
+                        <button
+                          v-if="item.estadopedido_id === 4"
+                          class="btn btn-primary btn-sm"
+                          @click="procesar(item.id, item.cliente.ruc)"
+                        >
                           <i class="fas fa-file-import"></i> Procesar
                         </button>
-
-
                       </td>
                       <!--       <td>
                         <router-link class="btn btn-info btn-sm" :to="{
@@ -201,10 +277,15 @@
                     <li class="page-item" v-if="pageNumber > 0">
                       <a href="#" class="page-link" @click.prevent="prevPage">Ant</a>
                     </li>
-                    <li class="page-item" v-for="(page, index) in pagesList" :key="index"
-                      :class="[page == pageNumber ? 'active' : '']">
+                    <li
+                      class="page-item"
+                      v-for="(page, index) in pagesList"
+                      :key="index"
+                      :class="[page == pageNumber ? 'active' : '']"
+                    >
                       <a href="#" class="page-link" @click.prevent="selectPage(page)">
-                        {{ page + 1 }}</a>
+                        {{ page + 1 }}</a
+                      >
                     </li>
                     <li class="page-item" v-if="pageNumber < pageCount - 1">
                       <a href="#" class="page-link" @click.prevent="nextPage">Post</a>
@@ -218,7 +299,11 @@
       </div>
     </div>
 
-    <div class="modal fade" :class="{ show: modalShow }" :style="modalShow ? mostrarModal : ocultarModal">
+    <div
+      class="modal fade"
+      :class="{ show: modalShow }"
+      :style="modalShow ? mostrarModal : ocultarModal"
+    >
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -249,16 +334,19 @@
                   <tr v-for="(item, index) in listDetPedido" :key="index">
                     <td v-text="item.producto.codigo"></td>
 
-                    <td v-text="item.producto.familia.nombre +
-              ',' +
-              item.producto.subfamilia.nombre +
-              ', MODELO :' +
-              item.producto.modelotipo.nombre +
-              ', MATERIAL :' +
-              item.producto.material.nombre +
-              ', MARCA :' +
-              item.producto.marca.nombre
-              "></td>
+                    <td
+                      v-text="
+                        item.producto.familia.nombre +
+                        ',' +
+                        item.producto.subfamilia.nombre +
+                        ', MODELO :' +
+                        item.producto.modelotipo.nombre +
+                        ', MATERIAL :' +
+                        item.producto.material.nombre +
+                        ', MARCA :' +
+                        item.producto.marca.nombre
+                      "
+                    ></td>
 
                     <td v-text="item.unidmedida.nombre"></td>
                     <td v-text="item.cantidad"></td>
@@ -270,9 +358,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-secondary" @click="abrirModal">
-              Cerrar
-            </button>
+            <button class="btn btn-secondary" @click="abrirModal">Cerrar</button>
           </div>
         </div>
       </div>
@@ -280,10 +366,17 @@
 
     <!--  MODAL DE ESTADO DE COTIZACION -->
 
-    <div class="modal fade" :class="{ show: modalEstado }" :style="modalEstado ? mostrarModal : ocultarModal"
-      @keydown.esc="dialog = false">
-      <div class="modal-dialog modal-dialog-center modal-dialog-scrollable d-flex align-items-center" role="document"
-        style="top: 50% !important">
+    <div
+      class="modal fade"
+      :class="{ show: modalEstado }"
+      :style="modalEstado ? mostrarModal : ocultarModal"
+      @keydown.esc="dialog = false"
+    >
+      <div
+        class="modal-dialog modal-dialog-center modal-dialog-scrollable d-flex align-items-center"
+        role="document"
+        style="top: 50% !important"
+      >
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Cambiar Estado de Cotizacion</h5>
@@ -292,27 +385,43 @@
           <div class="modal-body">
             <!-- Listado de Detalle de Cotizaciones -->
             <div class="col">
-              <el-select v-model="fillBsqMovAlmacen.nIdtEstadoCoti" filterable placeholder="Seleccione un estado"
-                :style="{ width: '400px' }" @change="onChange()">
-                <el-option v-for="item in listEstadoCoti2" :key="item.id" :label="item.nombre" :value="item.id">
+              <el-select
+                v-model="fillBsqMovAlmacen.nIdtEstadoCoti"
+                filterable
+                placeholder="Seleccione un estado"
+                :style="{ width: '400px' }"
+                @change="onChange()"
+              >
+                <el-option
+                  v-for="item in listEstadoCoti2"
+                  :key="item.id"
+                  :label="item.nombre"
+                  :value="item.id"
+                >
                 </el-option>
               </el-select>
             </div>
 
             <template v-if="fillBsqMovAlmacen.nIdtEstadoCoti == 2">
               <div class="col" :style="'padding-top : 20px'">
-                <input type="text" class="form-control" placeholder="Motivo del Rechazo"
-                  v-model="fillBsqMovAlmacen.cMotivoRechazo" />
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Motivo del Rechazo"
+                  v-model="fillBsqMovAlmacen.cMotivoRechazo"
+                />
               </div>
             </template>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-primary" @click="setEditarPedido" :disabled="EstadoBotonEditar">
+            <button
+              class="btn btn-primary"
+              @click="setEditarPedido"
+              :disabled="EstadoBotonEditar"
+            >
               Editar
             </button>
-            <button class="btn btn-secondary" @click="abrirEstado">
-              Cerrar
-            </button>
+            <button class="btn btn-secondary" @click="abrirEstado">Cerrar</button>
           </div>
         </div>
       </div>
@@ -321,6 +430,7 @@
 </template>
 
 <script>
+import liststock from "../../modulos/ingreso_almacen/shared/listStock.vue";
 export default {
   data() {
     return {
@@ -334,6 +444,7 @@ export default {
         cMotivoRechazo: "",
         nIdRuc: "",
         nIdUser: sessionStorage.getItem("iduser"),
+        nIdprod: "",
       },
       EstadoBotonEditar: true,
       txtrechazo: {
@@ -346,6 +457,8 @@ export default {
       listCliente: [],
       listEstadoCoti: [],
       listEstadoCoti2: [],
+      listProd: [],
+      listStock: [],
       modalShow: false,
       modalEstado: false,
       mostrarModal: {
@@ -395,11 +508,13 @@ export default {
       },
     };
   },
-
+  components: {
+    liststock,
+  },
   mounted() {
     this.getListDetMovAlmacen();
     this.getlistVendedorAdmin();
-    //this.cargaFechaActual();
+    this.getListarproductosByName();
     this.getlistVendedorxUsu();
     this.getlistEstadoPedido();
     this.getlistEstadoPedidoTodos();
@@ -431,7 +546,6 @@ export default {
     },
   },
   methods: {
-
     getBuscaRucBD() {
       if (!this.fillBsqMovAlmacen.nIdRuc) {
         Swal.fire("Ingrese el Ruc por favor!");
@@ -439,18 +553,33 @@ export default {
         var url = "/administracion/cliente/BuscaRucBD";
         axios
           .post(url, {
-            nIdRuc: this.fillBsqMovAlmacen.nIdRuc
+            nIdRuc: this.fillBsqMovAlmacen.nIdRuc,
           })
           .then((response) => {
-            this.fillBsqMovAlmacen.nIdCliente =
-              response.data.razonsocial;
+            this.fillBsqMovAlmacen.nIdCliente = response.data.razonsocial;
             this.isDisabled = true;
           });
       }
     },
+    getListarproductosByName() {
+      var url = "/administracion/detallecotizancion/listProdByName";
+      axios.get(url).then((response) => {
+        this.listProd = response.data;
+      });
+    },
 
-
-
+    getListStock() {
+      var url = "/administracion/parteingSalida/listStockByproduct";
+      axios
+        .get(url, {
+          params: {
+            nIdprod: this.fillBsqMovAlmacen.nIdprod,
+          },
+        })
+        .then((response) => {
+          this.listStock = response.data;
+        });
+    },
 
     getRefresh() {
       this.fillBsqMovAlmacen.nIdCliente = "";
@@ -458,17 +587,17 @@ export default {
       this.isDisabled = false;
     },
 
-    procesar(id,nIdRuc) {
-   
-      var url = "/administracion/MovimientoAlmacen/procesar";  
+    procesar(id, nIdRuc) {
+      var url = "/administracion/MovimientoAlmacen/procesar";
       axios
         .post(url, {
           id,
           nIdUser: this.fillBsqMovAlmacen.nIdUser,
-          nIdRuc
+          nIdRuc,
         })
         .then((response) => {
-         this.getlistMovAlmacen()
+          this.getlistMovAlmacen();
+          this.getListStock();
         });
     },
 
@@ -513,11 +642,6 @@ export default {
         })
         .then((response) => {
           this.listDetPedido = response.data;
-          console.log(response.data);
-
-          /*
-
-this.fillBsqMovAlmacen.nIdCliente = this.listDetPedido[0].id; */
         });
     },
     getlistVendedorAdmin() {
@@ -560,7 +684,6 @@ this.fillBsqMovAlmacen.nIdCliente = this.listDetPedido[0].id; */
         })
         .then((response) => {
           this.listMovAlmacen = response.data;
-      
         });
     },
 
@@ -573,8 +696,7 @@ this.fillBsqMovAlmacen.nIdCliente = this.listDetPedido[0].id; */
           },
         })
         .then((response) => {
-          (this.fillBsqMovAlmacen.nIdCliente = ""),
-            (this.listCliente = response.data);
+          (this.fillBsqMovAlmacen.nIdCliente = ""), (this.listCliente = response.data);
         });
     },
     BuscaCotizacionList(item) {
@@ -599,8 +721,7 @@ this.fillBsqMovAlmacen.nIdCliente = this.listDetPedido[0].id; */
         })
         .then((response) => {
           //this.fillBsqMovAlmacen.nIdtEstadoCoti =  response.data.estadopedido.nombre ;
-          this.fillBsqMovAlmacen.nIdtEstadoCoti =
-            response.data.estadopedido_id;
+          this.fillBsqMovAlmacen.nIdtEstadoCoti = response.data.estadopedido_id;
         });
     },
     getlistEstadoPedidoTodos() {

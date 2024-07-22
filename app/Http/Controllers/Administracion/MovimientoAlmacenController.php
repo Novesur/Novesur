@@ -22,6 +22,7 @@ use App\ModalidadTransporte;
 use App\Http\Controllers\Controller;
 use App\Kardex;
 use App\ParteIngSali;
+use App\Partesalida;
 use App\TempMovAlmacen;
 use Illuminate\Http\Request;
 
@@ -234,11 +235,11 @@ class MovimientoAlmacenController extends Controller
     public function procesar(Request $request)
     {
 
-   
-        $formatreq = date("Y-m-d");
-        
+
+         $formatreq = date("Y-m-d");
+
         $movimiento_almacen = MovimientoAlmacen::where('id', $request->id)->first();
-  
+
 
         $detalle_movimientoalmacen = DetalleMovimientoalmacen::with('producto', 'unidmedida', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion')->where('movimiento_almacen_id', $request->id)->get();
         $datCliente = Cliente::where('ruc', $request->nIdRuc)->first();
@@ -270,7 +271,7 @@ class MovimientoAlmacenController extends Controller
                 $detalleKardex->costunit =  $dataDetalleKardex->costunit;
                 $detalleKardex->movimiento_id =  1;
                 $detalleKardex->user_id =  $request->nIdUser;
-            
+
                 $detalleKardex->cliente_id =  $datCliente->id;
                 $detalleKardex->save();
             }
@@ -316,8 +317,10 @@ class MovimientoAlmacenController extends Controller
                                 $detalleParteIngreso->producto_id = $dataDetMovimiento->producto_id;
                                 $detalleParteIngreso->cantidad = $dataDetMovimiento->cantidad;
                                 $detalleParteIngreso->unidmedida_id =  $dataDetMovimiento->unidmedida_id;
-                                $detalleParteIngreso->punit = $dataDetalleKardex->costunit;
+                                $detalleParteIngreso->punit = 0;
                                 $detalleParteIngreso->estadopedido_id = 2;
+                                $detalleParteIngreso->Nroordenservicio = NULL;
+                                $detalleParteIngreso->tipo_orden = 'N';
                                 $detalleParteIngreso->save();
                             }
             }
@@ -353,18 +356,21 @@ class MovimientoAlmacenController extends Controller
                     $detalleParteIngreso->producto_id = $dataDetMovimiento->producto_id;
                     $detalleParteIngreso->cantidad = $dataDetMovimiento->cantidad;
                     $detalleParteIngreso->unidmedida_id =  $dataDetMovimiento->unidmedida_id;
-                    $detalleParteIngreso->punit = $dataDetalleKardex->costunit;
+                    $detalleParteIngreso->punit = 0;
                     $detalleParteIngreso->estadopedido_id = 2;
+                    $detalleParteIngreso->Nroordenservicio = NULL;
+                    $detalleParteIngreso->tipo_orden = 'N';
                     $detalleParteIngreso->save();
                 }
 
             }
 
             //Actualizamos el estado del movimiento de almacen a Atendido
-          
+
             MovimientoAlmacen::findOrFail($movimiento_almacen->id)->update(['estadopedido_id' => 3]);
         }
     }
+
 
 
 }

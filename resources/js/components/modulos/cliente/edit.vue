@@ -29,9 +29,7 @@
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group row">
-                        <label class="col-md-1 col-form-label"
-                          >Razon Social</label
-                        >
+                        <label class="col-md-1 col-form-label">Razon Social</label>
                         <div class="col-md-10">
                           <input
                             type="text"
@@ -76,12 +74,14 @@
                     <div class="col-md-6">
                       <div class="form-group row">
                         <label class="col-md-2 col-form-label">Atencion</label>
-                        <div v-if="listRolPermisoByUsuario.includes('cliente.editarCampos')" class="col-md-9">
+                        <div
+                          v-if="listRolPermisoByUsuario.includes('cliente.editarCampos')"
+                          class="col-md-9"
+                        >
                           <input
                             type="text"
                             class="form-control"
                             v-model="fillEditarCliente.cAtencion"
-                            
                           />
                         </div>
                         <div v-else class="col-md-9">
@@ -89,7 +89,7 @@
                             type="text"
                             class="form-control"
                             v-model="fillEditarCliente.cAtencion"
-                             readonly
+                            readonly
                           />
                         </div>
                       </div>
@@ -100,14 +100,17 @@
                     <div class="col-md-6">
                       <div class="form-group row">
                         <label class="col-md-2 col-form-label">Telefono</label>
-                        <div   v-if="listRolPermisoByUsuario.includes('cliente.editarCampos')"  class="col-md-9">
+                        <div
+                          v-if="listRolPermisoByUsuario.includes('cliente.editarCampos')"
+                          class="col-md-9"
+                        >
                           <input
                             type="text"
                             class="form-control"
                             v-model="fillEditarCliente.cTelefono"
                           />
                         </div>
-                        <div   v-else class="col-md-9">
+                        <div v-else class="col-md-9">
                           <input
                             type="text"
                             class="form-control"
@@ -115,12 +118,14 @@
                             readonly
                           />
                         </div>
-
                       </div>
                     </div>
-                   
+
                     <div class="col-md-6">
-                      <div  v-if="listRolPermisoByUsuario.includes('cliente.editarCampos')"  class="form-group row">
+                      <div
+                        v-if="listRolPermisoByUsuario.includes('cliente.editarCampos')"
+                        class="form-group row"
+                      >
                         <label class="col-md-2 col-form-label">Celular</label>
                         <div class="col-md-8">
                           <input
@@ -131,14 +136,13 @@
                         </div>
                       </div>
 
-                      <div  v-else  class="form-group row">
+                      <div v-else class="form-group row">
                         <label class="col-md-2 col-form-label">Celular</label>
                         <div class="col-md-8">
                           <input
                             type="text"
                             class="form-control"
                             v-model="fillEditarCliente.cCelular"
-                          
                             readonly
                           />
                         </div>
@@ -160,74 +164,84 @@
                       </div>
                     </div>
 
-         
-
-
-                    
-
-                        <div class="col-md-6">
+                    <div class="col-md-6">
                       <div class="form-group row">
                         <label class="col-md-2 col-form-label">Vendedor Actual</label>
                         <div class="col-md-9">
                           <input
                             type="text"
                             class="form-control"
-                             readonly
+                            readonly
                             v-model="fillEditarCliente.VendedorActual"
                           />
                         </div>
                       </div>
                     </div>
                   </div>
-            
-   
-                    
 
-                   <template  v-if="listRolPermisoByUsuario.includes('cliente.traladar')">
-                       <div class="row">
-                        <div class="col-md-6">
+                  <template v-if="listRolPermisoByUsuario.includes('cliente.traladar')">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-md-2 col-form-label">Tipo de Precio</label>
+                          <div class="col-md-9">
+                            <el-select
+                              v-model="fillEditarCliente.ctipoPrecio"
+                              class="m-2"
+                              placeholder="Select"
+                              size="large"
+                            >
+                              <el-option
+                                v-for="item in tipoPrecio"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value"
+                              />
+                            </el-select>
+                          </div>
+                        </div>
+                      </div>
+
                       <div class="form-group row">
-                        <label class="col-md-2 col-form-label">Tipo de Precio</label>
-                        <div class="col-md-9">
-                          <el-select v-model="fillEditarCliente.ctipoPrecio" class="m-2" placeholder="Select" size="large">
-                            <el-option v-for="item in tipoPrecio" :key="item.value" :label="item.label" 
-                              :value="item.value" />
+                        <label class="col-md-3 col-form-label"
+                          >Seleccionar Vendedor</label
+                        >
+                        <div class="col-md-6">
+                          <el-select
+                            v-model="fillEditarCliente.nIdVendedorfuture"
+                            filterable
+                            placeholder="Seleccione una Vendedor"
+                            :style="{ width: '350px' }"
+                            clearable
+                          >
+                            <el-option
+                              v-for="item in listVendedorFuturo"
+                              :key="item.id"
+                              :label="
+                                item.firstname +
+                                ' ' +
+                                item.secondname +
+                                ' ' +
+                                item.lastname
+                              "
+                              :value="item.id"
+                            >
+                            </el-option>
                           </el-select>
                         </div>
                       </div>
+                      <span
+                        ><button
+                          type="button"
+                          class="btn btn-primary"
+                          @click.prevent="
+                            setUpdateClienteVendedor(fillEditarCliente.nIdCliente)
+                          "
+                        >
+                          Cambiar
+                        </button></span
+                      >
                     </div>
-
-                          <div class="form-group row">
-                            <label class="col-md-3 col-form-label"
-                              >Seleccionar Vendedor</label
-                            >
-                                      <div class="col-md-6">
-                              <el-select
-                                v-model="fillEditarCliente.nIdVendedorfuture"
-                                filterable
-                                placeholder="Seleccione una Vendedor"
-                                :style="{ width: '350px' }"
-
-                                clearable
-                              >
-                                <el-option
-                                  v-for="item in listVendedorFuturo"
-                                  :key="item.id"
-                                  :label="
-                                    item.firstname +
-                                    ' ' +
-                                    item.secondname +
-                                    ' ' +
-                                    item.lastname
-                                  "
-                                  :value="item.id"
-                                >
-                                </el-option>
-                              </el-select>
-                            </div>
-                          </div><span><button type="button" class="btn btn-primary" @click.prevent="setUpdateClienteVendedor(fillEditarCliente.nIdCliente)">Cambiar</button></span>
-                       </div>
-
                   </template>
                 </form>
               </div>
@@ -275,9 +289,7 @@
             ></div>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-secondary" @click="abrirModal">
-              Cerrar
-            </button>
+            <button class="btn btn-secondary" @click="abrirModal">Cerrar</button>
           </div>
         </div>
       </div>
@@ -291,6 +303,7 @@ export default {
     return {
       fillEditarCliente: {
         nIdCliente: this.$attrs.id,
+        nIdUser: sessionStorage.getItem("iduser"),
         cRSocial: "",
         cDireccion: "",
         cRuc: "",
@@ -298,23 +311,23 @@ export default {
         cTelefono: "",
         cCelular: "",
         cEmail: "",
-        VendedorActual :"",
-        nIdVendedorfuture:"",
-        ctipoPrecio:"",
+        VendedorActual: "",
+        nIdVendedorfuture: "",
+        ctipoPrecio: "",
       },
-      listVendedorFuturo :[],
-          listRolPermisoByUsuario: JSON.parse(
+      listVendedorFuturo: [],
+      listRolPermisoByUsuario: JSON.parse(
         sessionStorage.getItem("listRolPermisosByUsuario")
       ),
 
       tipoPrecio: [
         {
-          value: 'Lista',
-          label: 'Lista',
+          value: "Lista",
+          label: "Lista",
         },
         {
-          value: 'Distribuidor',
-          label: 'Distribuidor',
+          value: "Distribuidor",
+          label: "Distribuidor",
         },
       ],
       modalShow: false,
@@ -332,10 +345,8 @@ export default {
   mounted() {
     this.getClienteById();
     this.getlistVendedores();
-  }, 
+  },
   methods: {
-
-
     getlistVendedores() {
       var url = "/administracion/usuario/getListarUsusarios";
       axios.get(url).then((response) => {
@@ -344,13 +355,12 @@ export default {
       });
     },
 
-setUpdateClienteVendedor(idClient){
-
+    setUpdateClienteVendedor(idClient) {
       var url = "/administracion/cliente/UpdateClientVendedor";
       axios
         .post(url, {
           idClient: idClient,
-          nIdVendedorfuture : this.fillEditarCliente.nIdVendedorfuture
+          nIdVendedorfuture: this.fillEditarCliente.nIdVendedorfuture,
         })
         .then((response) => {
           if (response.data.icon == "success") {
@@ -361,22 +371,18 @@ setUpdateClienteVendedor(idClient){
               showConfirmButton: false,
               timer: 2000,
             });
-             this.$router.push("/cliente/index");
-          }else{
-                    Swal.fire({
+            this.$router.push("/cliente/index");
+          } else {
+            Swal.fire({
               position: "center",
               icon: "error",
               title: "Verifique bien por favor",
               showConfirmButton: false,
               timer: 2000,
             });
-
           }
         });
-
-
-},
-
+    },
 
     abrirModal() {
       this.modalShow = !this.modalShow;
@@ -417,10 +423,8 @@ setUpdateClienteVendedor(idClient){
           this.fillEditarCliente.cTelefono = response.data.telefono;
           this.fillEditarCliente.cCelular = response.data.celular;
           this.fillEditarCliente.cEmail = response.data.email;
-          this.fillEditarCliente.VendedorActual = response.data.user.fullname
-          this.fillEditarCliente.ctipoPrecio = response.data.tipoPrecio
-
-
+          this.fillEditarCliente.VendedorActual = response.data.user.fullname;
+          this.fillEditarCliente.ctipoPrecio = response.data.tipoPrecio;
         });
     },
 
@@ -436,7 +440,8 @@ setUpdateClienteVendedor(idClient){
           cTelefono: this.fillEditarCliente.cTelefono,
           cCelular: this.fillEditarCliente.cCelular,
           cEmail: this.fillEditarCliente.cEmail,
-          ctipoPrecio : this.fillEditarCliente.ctipoPrecio
+          ctipoPrecio: this.fillEditarCliente.ctipoPrecio,
+          nIdUser: this.fillEditarCliente.nIdUser,
         })
         .then((response) => {
           if (response.data.icon == "success") {
@@ -447,19 +452,17 @@ setUpdateClienteVendedor(idClient){
               showConfirmButton: false,
               timer: 2000,
             });
-             this.$router.push("/cliente/index");
-          }else{
-                    Swal.fire({
+            this.$router.push("/cliente/index");
+          } else {
+            Swal.fire({
               position: "center",
               icon: response.data.icon,
               title: response.data.message,
               showConfirmButton: false,
               timer: 2000,
             });
-
           }
         });
-
     },
     validarProveedor() {
       this.error = 0;
@@ -483,5 +486,4 @@ setUpdateClienteVendedor(idClient){
 };
 </script>
 
-<style>
-</style>
+<style></style>

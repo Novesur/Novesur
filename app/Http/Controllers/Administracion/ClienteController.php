@@ -49,6 +49,7 @@ class ClienteController extends Controller
                 $cliente->email = $request->cEmail;
                 $cliente->usuario_id = $request->nIdUser;
                 $cliente->tipoPrecio = $request->ctipoPrecio;
+                $cliente->update_by_user = $request->nIdUser;
                 $cliente->save();
                 return response()->json(['message' => 'Nuevo Cliente agregado', 'icon' => 'success'], 200);
             }
@@ -125,7 +126,7 @@ class ClienteController extends Controller
     public function edit(Request $request)
 
     {
-
+        $usuario= user::where('id',$request->nIdUser)->first();
 
         if (strlen($request->cRuc) == 11 || strlen($request->cRuc) == 8) {
             $cliente = Cliente::where('id', $request->nIdCliente)->first();
@@ -140,6 +141,7 @@ class ClienteController extends Controller
                 $cliente->email = $cliente->email;
                 $cliente->usuario_id = $cliente->usuario_id;
                 $cliente->tipoPrecio = $request->ctipoPrecio;
+                $cliente->update_by_user = $usuario->firstname .' '. $usuario->secondname .' '. $usuario->lastname;
                 $cliente->save();
                 return response()->json(['message' => 'Se edito correctamente', 'icon' => 'success'], 200);
             }

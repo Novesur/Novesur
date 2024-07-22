@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ParteIngSali extends Model
 {
+
+    const Compra = 'C';
+    const Servicio = 'S';
+    const Ninguno = 'N';
+
      protected $table = 'parte_ing_sali';
      use SoftDeletes;
 
@@ -24,6 +29,6 @@ class ParteIngSali extends Model
           'cliente_id',
           'movimiento_id',
           'estadopedido_id',
-         
+
       ];
 }
