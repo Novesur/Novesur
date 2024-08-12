@@ -71,6 +71,7 @@ class MovimientoAlmacenController extends Controller
                 $MovimientoAlmacen->observaciones =  $request->cObservacion;
                 $MovimientoAlmacen->estadopedido_id =  4;
                 $MovimientoAlmacen->user_id =  $request->nIdUser;
+                $MovimientoAlmacen->nbultos =  $request->cNBultos;
                 $MovimientoAlmacen->save();
 
                 $detGuiaRemision = Session::get('products');
@@ -301,7 +302,7 @@ class MovimientoAlmacenController extends Controller
             $parteIngreso->movimiento_id =  2;
             $parteIngreso->estadopedido_id =  4;
             $parteIngreso->Nroordenservicio =  '';
-            $parteIngreso->tipo_orden =  'N';
+            $parteIngreso->tipo_orden =  ParteIngSali::Ninguno;
             $parteIngreso->save();
 
             $kardexSearch = Kardex::where('producto_id', $dataDetMovimiento->producto_id)->get();

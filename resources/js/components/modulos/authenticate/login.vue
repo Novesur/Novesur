@@ -9,9 +9,7 @@
       <!-- /.login-logo -->
       <div class="card">
         <div class="card-body login-card-body">
-          <p class="login-box-msg">
-            Ingresa tus credenciales para iniciar Sesión
-          </p>
+          <p class="login-box-msg">Ingresa tus credenciales para iniciar Sesión</p>
 
           <form action="../../index3.html" method="post">
             <div class="input-group mb-3">
@@ -56,7 +54,7 @@
             </div>
           </div>
 
-         <!--  <div class="social-auth-links text-center mb-5">
+          <!--  <div class="social-auth-links text-center mb-5">
               <div class="form-group row">
                           <label class="col-md-3 col-form-label">Seleccione el año</label>
 
@@ -77,10 +75,7 @@
           </div> -->
 
           <div class="social-auth-links text-center mb-3">
-            <button
-              class="btn btn-block btn-primary btn-flat"
-              @click.prevent="login"
-            >
+            <button class="btn btn-block btn-primary btn-flat" @click.prevent="login">
               ingresar
             </button>
           </div>
@@ -98,9 +93,9 @@ export default {
       fillLogin: {
         cUsuario: "",
         cContraseña: "",
-       /*  cSelectAnios:"2022", */
+        /*  cSelectAnios:"2022", */
       },
-  /*      rangoAnios: [
+      /*      rangoAnios: [
       {label: '2021', value: '2021' },
       { label: '2022', value: '2022' },
     ], */
@@ -119,11 +114,11 @@ export default {
       var url = "/authenticate/login";
       axios
         .post(url, {
+          headers: { "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content") },
           cUsuario: this.fillLogin.cUsuario,
           cContraseña: this.fillLogin.cContraseña,
         })
         .then((response) => {
-
           if (response.data.code == 401) {
             this.loginFailed();
           }
@@ -179,7 +174,6 @@ export default {
     loginSucces() {
       this.$router.push({ name: "dashboard.index" });
       location.reload();
-
     },
 
     validarLogin() {

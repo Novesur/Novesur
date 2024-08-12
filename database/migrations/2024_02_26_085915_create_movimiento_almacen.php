@@ -39,6 +39,7 @@ class CreateMovimientoAlmacen extends Migration
             $table->foreign('estadopedido_id')->references('id')->on('estadopedido');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('nbultos')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

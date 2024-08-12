@@ -200,6 +200,23 @@
                       </div>
                     </div>
                   </div>
+
+                  <div class="col-md-12">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-md-2 col-form-label">Nro de Bultos</label>
+                          <div class="col-md-2">
+                            <input
+                              type="text"
+                              class="form-control"
+                              v-model="fillGuiaRemisionCreate.cNBultos"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </form>
               </div>
 
@@ -596,6 +613,7 @@ export default {
         nIdUnidMed: "",
         cComprobante: "",
         cStock: "",
+        cNBultos: "",
       },
 
       listarDetalleOrdeCompra: [],
@@ -780,6 +798,7 @@ export default {
           cPesoTotal: this.fillGuiaRemisionCreate.cPesoTotal,
           cObservacion: this.fillGuiaRemisionCreate.cObservacion,
           nIdUser: this.fillGuiaRemisionCreate.nIdUser,
+          cNBultos: this.fillGuiaRemisionCreate.cNBultos,
         })
         .then((response) => {
           Swal.fire({

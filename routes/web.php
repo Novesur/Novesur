@@ -119,6 +119,9 @@ Route::get('/administracion/usuario/getListarVendedores', 'Administracion\Usuari
 Route::get('/administracion/usuario/getListarGradoAcad', 'Administracion\UsuarioController@getListarGradoAcad');
 
 
+
+
+
 /// Roles
 Route::get('/administracion/rol/listRoles', 'Administracion\RolController@index');
 Route::get('/administracion/rol/listRolByUSer', 'Administracion\RolController@listRolByUSer');

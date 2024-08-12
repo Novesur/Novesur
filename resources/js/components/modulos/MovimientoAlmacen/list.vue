@@ -107,7 +107,7 @@
                             <input
                               type="text"
                               class="form-control"
-                              :disabled="isDisabled"
+                              :disabled="true"
                               v-model="fillBsqMovAlmacen.nIdCliente"
                               v-int
                             />
@@ -212,6 +212,13 @@
                           @click="procesar(item.id, item.cliente.ruc)"
                         >
                           <i class="fas fa-file-import"></i> Procesar
+                        </button>
+                        <button
+                          v-else
+                          class="btn btn-danger btn-sm"
+                          @click="abrirModal(item.id)"
+                        >
+                          <i class="far fa-file-pdf"></i> Guia Remision
                         </button>
                       </td>
                       <!--       <td>
@@ -469,7 +476,7 @@ export default {
       ocultarModal: {
         display: "none",
       },
-      isDisabled: false,
+      isDisabled: true,
       pageNumber: 0,
       perPage: 10,
       listRolPermisoByUsuario: JSON.parse(

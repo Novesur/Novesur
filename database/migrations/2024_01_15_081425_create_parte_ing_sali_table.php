@@ -37,6 +37,7 @@ class CreateParteIngSaliTable extends Migration
             $table->foreign('estadopedido_id')->references('id')->on('estadopedido');
             $table->string('Nroordenservicio',20)->nullable();
             $table->enum('tipo_orden', ['C', 'S', 'N']); // C = Compra , S = Servicio , N = Ninguno
+            $table->integer('nbultos')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

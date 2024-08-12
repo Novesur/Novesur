@@ -3,12 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 
-class User  extends Authenticatable
+class User  extends Authenticatable implements JWTSubject
 {
     use Notifiable;
     protected $fillable = ['firstanme', 'secondname', 'lastname', 'username', 'email', 'roles_id', 'almacen_id', 'password','gradousers_id','asistencia','zonal_id','dni'];
@@ -46,5 +47,20 @@ class User  extends Authenticatable
     public function zonal()
     {
         return $this->belongsTo(Zonal::class);
+    }
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }
