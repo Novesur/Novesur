@@ -603,6 +603,14 @@
                 <tbody>
                   <tr v-for="(item, index) in this.listObservaciones" :key="index">
                     <td v-text="item.observacion"></td>
+                    <td>
+                      <button
+                        class="btn btn-danger"
+                        @click="setEliminarObservacion(item.id, item.papeletasalida_id)"
+                      >
+                        Eliminar
+                      </button>
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -751,6 +759,18 @@ export default {
       this.setListObservaciones(itemId);
     },
 
+    setEliminarObservacion(idObservacion, papeletaId) {
+
+      var url = "/administracion/papeletasalida/EliminarObservacion";
+      axios
+        .post(url, {
+          idObservacion,
+        })
+        .then(() => {
+          this.setListObservaciones(papeletaId);
+        });
+    },
+
     getExcelpapeletaSalida() {
       var url = "/operacion/papeletaSalida/export";
       axios
@@ -822,6 +842,7 @@ export default {
         })
         .then((response) => {
           this.listObservaciones = response.data;
+          console.log(response.data);
         });
     },
     abrirEstadobyVendedor(item) {

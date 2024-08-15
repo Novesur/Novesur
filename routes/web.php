@@ -361,6 +361,7 @@ Route::post('/administracion/papeletasalida/ObservacionUpdate', 'Administracion\
 Route::post('/administracion/papeletasalida/getlistClientxIndex', 'Administracion\PapeletaSalidaController@getlistClientxIndex');
 Route::get('/administracion/papeletaSalida/getListObservacionById', 'Administracion\PapeletaSalidaController@getListObservacionById');
 Route::post('/administracion/papeletasalida/setGrabarObservacion', 'Administracion\PapeletaSalidaController@setGrabarObservacion');
+Route::post('/administracion/papeletasalida/EliminarObservacion', 'Administracion\PapeletaSalidaController@EliminarObservacion');
 
 
 

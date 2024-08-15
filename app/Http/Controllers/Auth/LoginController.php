@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Tymon\JWTAuth\Facades\JWTAuth;
+//use Tymon\JWTAuth\Facades\JWTAuth;
 
 class LoginController extends Controller
 {
@@ -18,14 +18,16 @@ class LoginController extends Controller
         $rpta = Auth::attempt(['username' => $cUsuario, 'password' => $cContraseña]);
 
 
-        if ($rpta && $token = JWTAuth::attempt(['username' => $cUsuario, 'password' => $cContraseña])) {
+       // if ($rpta && $token = JWTAuth::attempt(['username' => $cUsuario, 'password' => $cContraseña])) {
+
+            if ($rpta) {
             return response()->json(
                 [
                     'AutUser' => Auth::user(),
                     'code' => 200,
                 ],
             );
-            return $this->respondWithToken($token);
+            //return $this->respondWithToken($token);
         } else {
             return response()->json([
                 'code' => 401
@@ -44,7 +46,7 @@ class LoginController extends Controller
     }
 
 
-    public function me()
+/*     public function me()
     {
         return response()->json(JWTAuth::user());
     }
@@ -61,5 +63,5 @@ class LoginController extends Controller
             'token_type' => 'bearer',
             'expires_in' => JWTAuth::factory()->getTTL() * 60
         ]);
-    }
+    } */
 }

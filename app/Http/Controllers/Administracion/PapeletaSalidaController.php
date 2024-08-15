@@ -348,4 +348,8 @@ if ($tiempo  >= $tiempoMax) {
         $observacionPapeleta->save();
 
     }
+
+    public function EliminarObservacion(Request $request){
+       ObservacionPapeleta::where('id',$request->idObservacion)->delete();
+    }
 }

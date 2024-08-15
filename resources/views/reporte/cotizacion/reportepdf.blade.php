@@ -11,7 +11,7 @@
     <style>
         @page {
             margin: 1.3rem;
-            margin-top: 1.9rem;
+            margin-top: 1rem;
             padding: 1rem;
         }
 
@@ -68,6 +68,28 @@
         .page-break {
             page-break-before: always;
         }
+        table{
+            border:none
+        }
+        th,
+/* td {
+  padding: 2px;
+  text-align: left;
+  border: 0px solid #ddd;
+}
+
+        .table-listado {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+th,
+.td-listado {
+  padding: 4px;
+  text-align: left;
+  border: 1px solid #ddd;
+} */
     </style>
 </head>
 
@@ -79,13 +101,13 @@
 
     <table width="100%" border="0" >
         <tr>
-            <td> <img src="{{ $logo }}" alt="" alt=""
+            <td> <img src="{{ $logo }}"
                     style=" width: 200px; height: 70px; padding-left: 25px" /></td>
             <td> <img src="{{ $productos01 }}" alt=""
                     style=" width: 400px; height: 40px; padding-left: 25px" /></td>
         </tr>
         <tr>
-            <td colspan="2" align="left" style="font-size: 9px; padding-left:60px">
+            <td colspan="2" align="left" style="font-size: 9px; padding-left:60px;">
                 <h2> RUC : 20492421406 </h2>
             </td>
         </tr>
@@ -103,7 +125,7 @@
 
             <td colspan="4" align="center"
                 style="border: 1px; background-color: rgb(109, 172, 243);width: -10px;padding-top: 0rem">
-                <h3><strong>COTIZACION Nº {{ $coti->codigo }}</strong></h3>
+                <h3><center><strong>COTIZACION Nº {{ $coti->codigo }}</strong></center></h3>
             </td>
 
         </tr>
@@ -202,22 +224,22 @@
             continuación</center>
     </h6>
 
-    <table width="100%" border="1">
+    <table width="100%" border="1" >
         <tr>
-            <td align="center" style="background-color:rgba(238, 229, 229, 0.719); font-size: 12px"><strong>Nro</strong>
+            <td align="center" style="background-color:rgba(238, 229, 229, 0.719); font-size: 12px" ><strong>Nro</strong>
             </td>
-            <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 12px">
+            <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 12px" >
                 <strong>CANT</strong>
             </td>
-            <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 12px">
+            <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 12px" >
                 <strong>CODIGO</strong>
             </td>
-            <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 12px"><strong>DESCRIPCION
+            <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 12px" ><strong>DESCRIPCION
                     DEL PRODUCTO</strong></td>
-            <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 12px">
+            <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 12px" >
                 <strong>P/UNIT</strong>
             </td>
-            <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 12px"><strong>Total
+            <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 12px" ><strong>Total
                     S/IGV</strong></td>
         </tr>
 
@@ -227,18 +249,18 @@
         @if ($detcoti)
             @foreach ($detcoti as $data)
                 <tr>
-                    <td align="center" style="font-size:1em">@php
+                    <td align="center" style="font-size:1em" >@php
                         echo $i = $i + 1;
                     @endphp</td>
                     </td>
-                    <td align="center" style="font-size: 10px">{{ $data->cantidad }}</td>
-                    <td align="center" style="font-size: 10px">{{ $data->producto->codigo }}</td>
-                    <td align="center" style="font-size: 10px">
+                    <td align="center" style="font-size: 10px" >{{ $data->cantidad }}</td>
+                    <td align="center" style="font-size: 10px" >{{ $data->producto->codigo }}</td>
+                    <td align="center" style="font-size: 10px" >
                         {{ $data->producto->familia->nombre . ' ' . $data->producto->subfamilia->nombre . ', MODELO ' . $data->producto->modelotipo->nombre . ', MATERIAL ' . $data->producto->material->nombre . ', MARCA ' . $data->producto->marca->nombre . ', - ' . $data->producto->homologacion->nombre }}
                     </td>
-                    <td align="center" style="font-size: 10px">S/. {{ number_format($data->punit, 2) }}</td>
+                    <td align="center" style="font-size: 10px" >S/. {{ number_format($data->punit, 2) }}</td>
 
-                    <td align="right" style="font-size: 9px">S/.
+                    <td align="right" style="font-size: 9px" >S/.
                         {{ number_format($data->cantidad * $data->punit, 2) }}
                     </td>
 
@@ -255,47 +277,47 @@
             $total = $subtotal + $IGV;
         @endphp
         <tr>
-            <td colspan="4" rowspan="3" align="center">&nbsp;</td>
+            <td colspan="4" rowspan="3" align="center" >&nbsp;</td>
             <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 10px">
                 <strong>SUBTOTAL</strong>
             </td>
-            <td align="right" style="font-size: 9px">S/. {{ number_format($subtotal, 2) }}</td>
+            <td align="right" style="font-size: 9px" >S/. {{ number_format($subtotal, 2) }}</td>
         </tr>
 
-        <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 10px"><strong>IGV
+        <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 10px" ><strong>IGV
                 18%</strong></td>
         <td align="right" style="font-size: 10px">S/.{{ number_format($IGV, 2) }}</td>
         </tr>
         <tr>
-            <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 10px"><strong>TOTAL
+            <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 10px" ><strong>TOTAL
                     GENERAL</strong></td>
-            <td align="right" style="background-color: rgba(238, 229, 229, 0.719,font-size:0.8em);font-size: 9px">S/.
+            <td align="right" style="background-color: rgba(238, 229, 229, 0.719,font-size:0.8em);font-size: 9px" >S/.
                 {{ number_format($total, 2) }}</td>
         </tr>
 
     </table>
 
-    <table width="100%" border="1" align="center" style="margin-top: 5px">
+    <table width="100%" border="1" align="center" style="margin-top: 5px" >
 
         <tr>
-            <td colspan="3" align="center" style="font-size: 12px"><strong>CUENTAS CORRIENTES INVERSIONES
+            <td colspan="3" align="center" style="font-size: 12px" ><strong>CUENTAS CORRIENTES INVERSIONES
                     NOVESUR</strong></td>
         </tr>
         <tr>
-            <td align="center" style="background-color: lightgreen ;font-size: 11px"><strong>BANCO</strong></td>
-            <td align="center" style="background-color: lightgreen;font-size: 11px"><strong>CTE. SOLES</strong></td>
-            <td align="center" style="background-color: lightgreen;font-size: 11px"><strong>CTA. INTERBANCARIO
+            <td align="center" style="background-color: lightgreen ;font-size: 11px" ><strong>BANCO</strong></td>
+            <td align="center" style="background-color: lightgreen;font-size: 11px" ><strong>CTE. SOLES</strong></td>
+            <td align="center" style="background-color: lightgreen;font-size: 11px" ><strong>CTA. INTERBANCARIO
                     CCI</strong></td>
         </tr>
         <tr>
-            <td align="center"><strong style="color: red">BCP</strong></td>
-            <td align="center">193-1760590-0-36</td>
-            <td align="center">CCI 002-193-001760590036-18</td>
+            <td align="center"  ><strong style="color: red">BCP</strong></td>
+            <td align="center" >193-1760590-0-36</td>
+            <td align="center" >CCI 002-193-001760590036-18</td>
         </tr>
         <tr>
-            <td align="center"><strong style="color: blue">BBVA</strong></td>
-            <td align="center">0011-0933-0100025143</td>
-            <td align="center">CCI 011-933-000100025143-97</td>
+            <td align="center" ><strong style="color: blue">BBVA</strong></td>
+            <td align="center" >0011-0933-0100025143</td>
+            <td align="center" >CCI 011-933-000100025143-97</td>
         </tr>
     </table>
     <br>
@@ -356,19 +378,24 @@
 
     </table>
 
-    <h6 style="font-weight:normal; margin-bottom: 0px">Atentamente</h6>
+    <div style=" margin-bottom: 0px;font-weight:normal">
 
-    <h6 style=" position: center; margin-top: 0px;font-weight:normal; margin-left: 40px">
-        {{ $coti->user->gradousers->cod . ' ' . $coti->user->firstname . ' ' . $coti->user->secondname }}<br />
-        Coordinador Comercial
-    </h6>
-    <footer>
-        <h6 style="text-align: center; margin-bottom: 0px;font-weight:normal">Jr. Monte Abeto 376 Urb. Monterrico Sur -
-            santiago de Surco<br>
-            Ventas@novesur.com / www.novesur.com<span style="text-align: center"></span><span
-                style="text-align: right"></span><span style="text-align: justify"></span><span
-                style="text-align: center"></span></h6>
-    </footer>
+        <h6 style="font-weight:normal; margin-top: 0px;">Atentamente</h6>
+
+        <h6 style=" position: center; margin-top: 0px;font-weight:normal; margin-left: 40px">
+            {{ $coti->user->gradousers->cod . ' ' . $coti->user->firstname . ' ' . $coti->user->secondname }}<br />
+            Coordinador Comercial
+        </h6>
+        <footer style="padding-bottom: 0px" >
+            <h6 class="text-align: center; ">Jr. Monte Abeto 376 Urb. Monterrico Sur -
+                santiago de Surco<br>
+                Ventas@novesur.com / www.novesur.com<span style="text-align: center"></span><span
+                    style="text-align: right"></span><span style="text-align: justify"></span><span
+                    style="text-align: center"></span></h6>
+        </footer>
+
+    </div>
+
 </body>
 
 
