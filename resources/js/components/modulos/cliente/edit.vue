@@ -248,7 +248,19 @@
                     </div>
                     <div class="row">
                       <div class="col-md-6">
-                        <!-- //// -->
+                        <div class="form-group row">
+                          <label class="col-md-2 col-form-label"
+                            >Ultima Edicion por :</label
+                          >
+                          <div class="col-md-8">
+                            <input
+                              type="text"
+                              class="form-control"
+                              v-model="fillEditarCliente.UpdateBy"
+                              readonly
+                            />
+                          </div>
+                        </div>
                       </div>
 
                       <div class="col-md-6">
@@ -337,6 +349,7 @@ export default {
         nIdVendedorfuture: "",
         ctipoPrecio: "",
         ObservacionCliente: "",
+        UpdateBy: "",
       },
       listVendedorFuturo: [],
       listRolPermisoByUsuario: JSON.parse(
@@ -452,6 +465,7 @@ export default {
           this.fillEditarCliente.ctipoPrecio = response.data.tipoPrecio;
           this.fillEditarCliente.ObservacionCliente =
             response.data.observacion_edit_cliente;
+          this.fillEditarCliente.UpdateBy = response.data.update_by_user;
         });
     },
 
