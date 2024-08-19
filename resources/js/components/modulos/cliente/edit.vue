@@ -40,7 +40,9 @@
                         </div>
                       </div>
                     </div>
+                  </div>
 
+                  <div class="row">
                     <div class="col-md-12">
                       <div class="form-group row">
                         <label class="col-md-1 col-form-label">Dirección</label>
@@ -202,45 +204,65 @@
                         </div>
                       </div>
 
-                      <div class="form-group row">
-                        <label class="col-md-3 col-form-label"
-                          >Seleccionar Vendedor</label
-                        >
-                        <div class="col-md-6">
-                          <el-select
-                            v-model="fillEditarCliente.nIdVendedorfuture"
-                            filterable
-                            placeholder="Seleccione una Vendedor"
-                            :style="{ width: '350px' }"
-                            clearable
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-md-2 col-form-label"
+                            >Seleccionar Vendedor</label
                           >
-                            <el-option
-                              v-for="item in listVendedorFuturo"
-                              :key="item.id"
-                              :label="
-                                item.firstname +
-                                ' ' +
-                                item.secondname +
-                                ' ' +
-                                item.lastname
-                              "
-                              :value="item.id"
+                          <div class="col-md-6">
+                            <el-select
+                              v-model="fillEditarCliente.nIdVendedorfuture"
+                              filterable
+                              placeholder="Seleccione una Vendedor"
+                              :style="{ width: '350px' }"
+                              clearable
                             >
-                            </el-option>
-                          </el-select>
+                              <el-option
+                                v-for="item in listVendedorFuturo"
+                                :key="item.id"
+                                :label="
+                                  item.firstname +
+                                  ' ' +
+                                  item.secondname +
+                                  ' ' +
+                                  item.lastname
+                                "
+                                :value="item.id"
+                              >
+                              </el-option>
+                            </el-select>
+                          </div>
+                          <span
+                            ><button
+                              type="button"
+                              class="btn btn-primary"
+                              @click.prevent="
+                                setUpdateClienteVendedor(fillEditarCliente.nIdCliente)
+                              "
+                            >
+                              Cambiar
+                            </button></span
+                          >
                         </div>
                       </div>
-                      <span
-                        ><button
-                          type="button"
-                          class="btn btn-primary"
-                          @click.prevent="
-                            setUpdateClienteVendedor(fillEditarCliente.nIdCliente)
-                          "
-                        >
-                          Cambiar
-                        </button></span
-                      >
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <!-- //// -->
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-md-2 col-form-label">Observación</label>
+                          <div class="col-md-10">
+                            <input
+                              type="text"
+                              class="form-control"
+                              v-model="fillEditarCliente.ObservacionCliente"
+                            />
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </template>
                 </form>
@@ -314,6 +336,7 @@ export default {
         VendedorActual: "",
         nIdVendedorfuture: "",
         ctipoPrecio: "",
+        ObservacionCliente: "",
       },
       listVendedorFuturo: [],
       listRolPermisoByUsuario: JSON.parse(
@@ -361,6 +384,8 @@ export default {
         .post(url, {
           idClient: idClient,
           nIdVendedorfuture: this.fillEditarCliente.nIdVendedorfuture,
+          ObservacionCliente: this.fillEditarCliente.ObservacionCliente,
+          nIdUser: this.fillEditarCliente.nIdUser,
         })
         .then((response) => {
           if (response.data.icon == "success") {
@@ -425,6 +450,8 @@ export default {
           this.fillEditarCliente.cEmail = response.data.email;
           this.fillEditarCliente.VendedorActual = response.data.user.fullname;
           this.fillEditarCliente.ctipoPrecio = response.data.tipoPrecio;
+          this.fillEditarCliente.ObservacionCliente =
+            response.data.observacion_edit_cliente;
         });
     },
 

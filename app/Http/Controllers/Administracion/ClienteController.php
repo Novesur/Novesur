@@ -142,6 +142,7 @@ class ClienteController extends Controller
                 $cliente->usuario_id = $cliente->usuario_id;
                 $cliente->tipoPrecio = $request->ctipoPrecio;
                 $cliente->update_by_user = $usuario->firstname .' '. $usuario->secondname .' '. $usuario->lastname;
+                $cliente->observacion_edit_cliente = $cliente->observacion_edit_cliente ;
                 $cliente->save();
                 return response()->json(['message' => 'Se edito correctamente', 'icon' => 'success'], 200);
             }
@@ -238,8 +239,11 @@ class ClienteController extends Controller
     public function UpdateClientVendedor(Request $request)
     {
         $cliente = Cliente::find($request->idClient);
+        $usuario= user::where('id',$request->nIdUser)->first();
         if ($cliente) {
             $cliente->usuario_id = $request->nIdVendedorfuture;
+            $cliente->observacion_edit_cliente = mb_strtoupper($request->ObservacionCliente) ;
+            $cliente->update_by_user = mb_strtoupper($usuario->firstname .' '. $usuario->secondname .' '. $usuario->lastname);
             $cliente->save();
             return response()->json(['message' => 'Cliente con usuario Actualizado', 'icon' => 'success'], 200);
         }

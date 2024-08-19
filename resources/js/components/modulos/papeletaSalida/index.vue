@@ -304,8 +304,14 @@
                                   v-if="item.collapse"
                                   v-for="(itemclient, index) in item.clientes"
                                 >
-                                  <td colspan="9" style="background-color: #f0f8ff">
+                                  <td colspan="2" style="background-color: #f0f8ff">
                                     {{ itemclient.cliente.razonsocial }}
+                                  </td>
+                                  <td colspan="2" style="background-color: #f0f8ff">
+                                    {{ itemclient.direccion }}
+                                  </td>
+                                  <td colspan="2" style="background-color: #f0f8ff">
+                                    {{ itemclient.contacto }}
                                   </td>
                                 </tr>
                               </template>
@@ -760,7 +766,6 @@ export default {
     },
 
     setEliminarObservacion(idObservacion, papeletaId) {
-
       var url = "/administracion/papeletasalida/EliminarObservacion";
       axios
         .post(url, {
@@ -962,6 +967,7 @@ export default {
               collapse: false,
             };
           });
+          console.log(this.listPapeleByVendedor);
         });
     },
 
