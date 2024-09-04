@@ -18,6 +18,7 @@ class AsistenciaImport implements ToModel, WithHeadingRow, WithBatchInserts, Wit
        $fecha = trim(date('Y-m-d', strtotime(substr($row['fechahora'], 0, 10))));
 
 
+
        $tiempo =  trim(substr($row['fechahora'],11, 20)) ;
 
 

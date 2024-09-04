@@ -32,14 +32,14 @@ export default new Router({
     routes: [
         /// Login
         {
-            path: "/login",
+            path: "/",
             name: "login",
             component: require("./components/modulos/authenticate/login")
                 .default,
         },
 
         {
-            path: "/",
+            path: "/login",
             name: "dashboard.index",
             component: require("./components/modulos/dashboard/index").default,
         },
@@ -482,14 +482,12 @@ export default new Router({
 
         // PARTE DE INGRESO
 
-
         {
             path: "/parteingreso/create2",
             name: "parteingreso.create2",
             component: require("./components/modulos/parte_ingreso/create2")
                 .default,
-                props: true,
-
+            props: true,
         },
 
         {
@@ -549,7 +547,7 @@ export default new Router({
 
         ///  GUIA DE REMISION
 
-/*         {
+        /*         {
             path: "/guiaremision/index",
             name: "/guiaremision.index",
             component: require("./components/modulos/guiaremision/index")
@@ -755,8 +753,7 @@ export default new Router({
         {
             path: "/personal/edit/:id",
             name: "personal.edit",
-            component: require("./components/modulos/personal/edit")
-                .default,
+            component: require("./components/modulos/personal/edit").default,
             props: true,
         },
 
@@ -784,20 +781,23 @@ export default new Router({
         {
             path: "/asistencia/import",
             name: "asistencia.import",
-            component: require("./components/modulos/asistencia/import").default,
+            component: require("./components/modulos/asistencia/import")
+                .default,
         },
 
         {
             path: "/asistencia/reporte",
             name: "asistencia.reporte",
-            component: require("./components/modulos/asistencia/reporte").default,
+            component: require("./components/modulos/asistencia/reporte")
+                .default,
         },
 
         /* INGRESO DE ALMACEN */
         {
             path: "/ingreso_almacen/create",
             name: "ingreso_almacen.create",
-            component: require("./components/modulos/ingreso_almacen/create").default,
+            component: require("./components/modulos/ingreso_almacen/create")
+                .default,
         },
 
         /* GESTION DE VENTAS */
@@ -813,20 +813,18 @@ export default new Router({
             component: require("./components/modulos/visitas/list").default,
         },
 
-             /* ALERTAS */
-             {
-                path: "/alertas/create",
-                name: "alertas.create",
-                component: require("./components/modulos/alertas/create").default,
-            },
+        /* ALERTAS */
+        {
+            path: "/alertas/create",
+            name: "alertas.create",
+            component: require("./components/modulos/alertas/create").default,
+        },
 
-            {
-                path: "/alertas/list",
-                name: "alertas.list",
-                component: require("./components/modulos/alertas/list").default,
-            },
-
-
+        {
+            path: "/alertas/list",
+            name: "alertas.list",
+            component: require("./components/modulos/alertas/list").default,
+        },
     ],
 
     mode: "history",

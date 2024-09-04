@@ -330,15 +330,20 @@ th,
             <td width="90%" style="font-size: 10px">{{ $coti->validezoferta }}</td>
         </tr>
         <tr>
-            <td style="font-size: 11px"><strong>Entrega :</strong></td>
+            <td style="font-size: 11px"><strong>Plazo de entrega :</strong></td>
             <td style="font-size: 10px">{{ $coti->Entrega }}</td>
         </tr>
         <tr>
-            <td style="font-size: 11px"><strong>Forma de pago :</strong></td>
+            <td style="font-size: 11px"><strong>Condición de venta :</strong></td>
             <td style="font-size: 10px"> {{ $coti->tipopago->nombre }}</td>
         </tr>
+
         <tr>
-            <td style="font-size: 11px"><strong>Condicion de pago :</strong></td>
+            <td style="font-size: 11px"><strong>Condición de Pago :</strong></td>
+            <td style="font-size: 10px"> {{ $coti->pago->nombre }}</td>
+        </tr>
+                <tr>
+            <td style="font-size: 11px"><strong>Referencia :</strong></td>
             <td style="font-size: 10px">- TODA COMISON GENERADA POR DEPOSITOS EN AGENTES DE BANCO
                 <strong>(PROVINCIA)</strong>, SERÁ ASUMIDA POR EL CLIENTE
             </td>
@@ -352,10 +357,6 @@ th,
                     </div>
 
             </td>
-        </tr>
-        <tr>
-            <td style="font-size: 11px"><strong>Pago :</strong></td>
-            <td style="font-size: 10px"> {{ $coti->pago->nombre }}</td>
         </tr>
         <tr>
             <td style="font-size: 11px"><strong>Flete :</strong></td>
