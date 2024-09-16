@@ -32,7 +32,7 @@ class CreateOrdencomprasTable extends Migration
             $table->unsignedBigInteger('tipocambio_id');
             $table->foreign('tipocambio_id')->references('id')->on('tipocambio');
             $table->unsignedBigInteger('tipo_ordencompra_id');
-            $table->foreign('tipo_ordencompra_id')->references('id')->on('tipo_ordencompra');
+            $table->foreign('tipo_ordencompra_id')->references('id')->on('tipo_ordencompra');  */
             $table->timestamps();
             $table->softDeletes();
         });

@@ -66,6 +66,23 @@
                       </div>
                     </div>
                   </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-md-2 col-form-label">Tipo </label>
+                        <div class="col-md-9">
+                            <el-select v-model="fillBsqProveedor.nIdtipoCompra
+                                                        " placeholder="Seleccione un Tipo" clearable>
+                                                        <el-option v-for="item in listTipoCompra" :key="item.id"
+                                                            :label="item.nombre" :value="item.id">
+                                                        </el-option>
+                                                    </el-select>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
                 </form>
               </div>
               <div class="card-footer">
@@ -198,7 +215,9 @@ export default {
       fillBsqProveedor: {
         cNombre: "",
         cRuc: "",
+        nIdtipoCompra:"",
       },
+      listTipoCompra: [],
       listProveedor: [],
       listProveedor: [],
           listRolPermisoByUsuario: JSON.parse(
@@ -208,6 +227,9 @@ export default {
       perPage: 10,
     };
   },
+  mounted() {
+        this.getListTipoCompra();
+    },
   computed: {
     pageCount() {
       let a = this.listProveedor.length,
@@ -233,6 +255,18 @@ export default {
     },
   },
   methods: {
+
+    getListTipoCompra() {
+            var url = "/administracion/ordenCompra/listTipoOrdenCompra";
+            axios.get(url,{
+                params:{
+                    nIdProveedor: this.fillBsqProveedor.nIdProveedor
+                }
+            }).then((response) => {
+                this.listTipoCompra = response.data;
+            });
+        },
+
     limpiarProveedorBsq() {
       this.fillBsqProveedor.cNombre = "";
       this.fillBsqProveedor.cRuc = "";
@@ -248,6 +282,7 @@ export default {
           params: {
             cNombre: this.fillBsqProveedor.cNombre,
             cRuc: this.fillBsqProveedor.cRuc,
+            nIdtipoCompra : this.fillBsqProveedor.nIdtipoCompra
           },
         })
         .then((response) => {

@@ -78,6 +78,7 @@ Route::get('/administracion/KardexDetalle/listProveedor', 'Administracion\Kardex
 Route::get('/administracion/proveedor/ListarProveedorByRuc', 'Administracion\ProveedorController@ListarProveedorByRuc');
 Route::get('/administracion/proveedor/ListProveedor', 'Administracion\ProveedorController@ListProveedor');
 Route::post('/operacion/Proveedor/export', 'Administracion\ProveedorController@export');
+Route::get('/administracion/proveedor/ListTipoCompra', 'Administracion\ProveedorController@ListTipoCompra');
 
 
 

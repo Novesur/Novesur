@@ -6,6 +6,7 @@ use App\Exports\ProveedorExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Proveedor;
+use App\TipoCompra;
 
 class ProveedorController extends Controller
 {
@@ -23,7 +24,13 @@ class ProveedorController extends Controller
             return $dato;
         }
 
+
         if (empty($request->cRuc) && empty($request->cNombre)) {
+            $dato = Proveedor::where('tipo_ordencompra_id', $request->nIdtipoCompra)->get();
+            return $dato;
+        }
+
+        if (empty($request->cRuc) && empty($request->cNombre) && $request->nIdtipoCompra) {
             $dato = Proveedor::all();
             return $dato;
         }
@@ -39,10 +46,16 @@ class ProveedorController extends Controller
             return response()->json(['message' => 'Ya fue agregado anteriormente', 'icon' => 'error'], 200);
         }else{
 
+
             $proveedor = new Proveedor;
             //dd($request->all());
-            $proveedor->nombre = mb_strtoupper($request->cNombre);
-            $proveedor->ruc = $request->cRuc;
+            if($request->nIdtipoCompra == 1){
+                $proveedor->nombre = mb_strtoupper($request->cNombreNacional);
+                $proveedor->ruc = $request->cRuc;
+            }else{
+                $proveedor->nombre = mb_strtoupper($request->cNombreImportado);
+                $proveedor->ruc = $request->cCodigo;
+            }
             $proveedor->direccion = mb_strtoupper($request->cDireccion);
             $proveedor->telefono = $request->cTelefono;
             $proveedor->email = $request->cEmail;
@@ -50,6 +63,8 @@ class ProveedorController extends Controller
             $proveedor->nrocuenta1 = mb_strtoupper($request->cCuentaNro1);
             $proveedor->nrocuenta2 = mb_strtoupper($request->cCuentaNro2);
             $proveedor->nrocuenta3 = mb_strtoupper($request->cCuentaNro3);
+            $proveedor->tipo_ordencompra_id = $request->nIdtipoCompra;
+            $proveedor->swift = $request->swift;
             $proveedor->save();
             return response()->json(['message' => 'Nuevo Proveedor grabado', 'icon' => 'success'], 200);
         }
@@ -67,12 +82,19 @@ class ProveedorController extends Controller
 
     public function edit(Request $request)
     {
+
         if (!$request->ajax()) return redirect('/');
         $nIdProveedor = $request->nIdProveedor;
         $proveedor = Proveedor::where('id', $nIdProveedor)->first();
         if ($proveedor) {
             $proveedor->nombre = $request->cNombre;
-            $proveedor->ruc = $request->cRuc;
+            if($request->nIdtipoCompra == 1){
+                $proveedor->ruc = $request->cRuc;
+
+            }else{
+                $proveedor->ruc = $request->cCodigo;
+            }
+
             $proveedor->direccion = $request->cDireccion;
             $proveedor->telefono = $request->cTelefono;
             $proveedor->email = $request->cEmail;
@@ -80,6 +102,8 @@ class ProveedorController extends Controller
             $proveedor->nrocuenta1 = mb_strtoupper($request->cCuentaNro1);
             $proveedor->nrocuenta2 = mb_strtoupper($request->cCuentaNro2);
             $proveedor->nrocuenta3 = mb_strtoupper($request->cCuentaNro3);
+            $proveedor->tipo_ordencompra_id = $request->nIdtipoCompra;
+            $proveedor->swift = $request->swift;
             $proveedor->save();
         }
     }
@@ -109,6 +133,11 @@ class ProveedorController extends Controller
 
         $listProveedor = json_decode($request->params['listProveedor']);
         return (new ProveedorExport)->setGenerarExcel($listProveedor)->download('invoices.xlsx');
+    }
+
+    public function ListTipoCompra(){
+        $dato=TipoCompra::all();
+        return $dato;
     }
 
 }

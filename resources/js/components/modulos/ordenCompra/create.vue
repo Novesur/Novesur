@@ -26,7 +26,7 @@
               </div>
               <div class="card-body">
                 <form role="form">
-                  <div class="col-md-12">
+         <!--          <div class="col-md-12">
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
@@ -47,14 +47,14 @@
                                       :value="item.id"
                                     >
                                     </el-option>
-                                  </el-select> 
+                                  </el-select>
                           </div>
                         </div>
                       </div>
 
-        
+
                     </div>
-                  </div>
+                  </div> -->
 
                   <div class="col-md-12">
                     <div class="row">
@@ -446,7 +446,7 @@ export default {
         cCantidad: "",
         nIdTipoPago: "",
         nIdTipoMoneda: "",
-        nIdTipOrdenCompra:"",
+      /*   nIdTipOrdenCompra:"", */
         nIdUser: sessionStorage.getItem("iduser"),
         cObservacion: "",
       },
@@ -456,7 +456,7 @@ export default {
       listartempOrder: [],
       listDescripPago: [],
       listTipoCambio: [],
-      listTipoOrdenCompra:[],
+      //listTipoOrdenCompra:[],
 
       modalShow: false,
       mostrarModal: {
@@ -474,7 +474,7 @@ export default {
     this.getListarByProveedor();
     this.getListarUnidadMedida();
     this.getListarproductosByName();
-    this.getListTipoOrdeCompra();
+    //this.getListTipoOrdeCompra();
     this.getlistDescricionPago();
     this.getlistTipoCambio();
     this.fillCrearOrdenCompra.cFechaEntrega = new Date();
@@ -524,15 +524,15 @@ export default {
         });
     },
 
-    getListTipoOrdeCompra(){
-      var url = "/administracion/ordenCompra/listTipoOrdenCompra"; 
+/*     getListTipoOrdeCompra(){
+      var url = "/administracion/ordenCompra/listTipoOrdenCompra";
       axios
         .get(url)
         .then((response) => {
           this.listTipoOrdenCompra = response.data;
           this.fillCrearOrdenCompra.nIdTipOrdenCompra = this.listTipoOrdenCompra[0].id;
         });
-    },
+    }, */
 
     getListarUnidadMedida() {
       var url = "/administracion/KardexDetalle/listUnidMed";
@@ -565,7 +565,7 @@ export default {
           nIdTipoMoneda: this.fillCrearOrdenCompra.nIdTipoMoneda,
           nIdUser: this.fillCrearOrdenCompra.nIdUser,
           cObservacion: this.fillCrearOrdenCompra.cObservacion,
-          nIdTipOrdenCompra:this.fillCrearOrdenCompra.nIdTipOrdenCompra, 
+          //nIdTipOrdenCompra:this.fillCrearOrdenCompra.nIdTipOrdenCompra,
         })
         .then((response) => {
           Swal.fire({

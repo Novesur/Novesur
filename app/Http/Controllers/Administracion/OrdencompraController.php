@@ -10,6 +10,7 @@ use App\User;
 use App\TempOrdenCompra;
 use App\Tipocambio;
 use App\UnidMedida;
+use App\Proveedor;
 use Illuminate\Http\Request;
 use PDF;
 use Illuminate\Support\Facades\Session;
@@ -26,6 +27,7 @@ class OrdencompraController extends Controller
     public function edit(Request $request){
 
         $ordenCompra = Ordencompra::where('codigo', $request->nidOrdenCompra)->first();
+        $proveedor = Proveedor::where('id', $ordenCompra->proveedor_id)->first();
         $ordenCompra->codigo = $ordenCompra->codigo;
         $ordenCompra->Femision = $ordenCompra->Femision;
         $ordenCompra->Referencia = $ordenCompra->Referencia;
@@ -37,7 +39,7 @@ class OrdencompraController extends Controller
         $ordenCompra->estadoordencompra_id = $ordenCompra->estadoordencompra_id;
         $ordenCompra->observacion = $request->cObservacion;
         $ordenCompra->tipocambio_id = $request->nIdTipoMoneda;
-        $ordenCompra->tipo_ordencompra_id = $ordenCompra->tipo_ordencompra_id;
+        $ordenCompra->tipo_ordencompra_id = $proveedor->tipo_compra_id;
         $ordenCompra->save();
 
     }
@@ -66,7 +68,7 @@ class OrdencompraController extends Controller
     }
 
     public  function ListtempOrden()
-    { 
+    {
         $dato = session()->get('products') ?? collect([]);
         return response()->json(['datos' => $dato]);
     }
@@ -81,13 +83,13 @@ class OrdencompraController extends Controller
     public function create(Request $request)
     {
 
-        
+
 
         $femision = date("Y-m-d", strtotime($request->cFechaEmision));
         $fentrega = date("Y-m-d", strtotime($request->cFechaEntrega));
 
         $usuario = User::find($request->nIdUser);
-    
+
 
 
 
@@ -95,10 +97,11 @@ class OrdencompraController extends Controller
         $countableCentralCount = $countableCentral[0]->countordencompra;
         $countablePiuraCount = $countableCentral[0]->countordencompraPiura;
         $countordencompra_Inter = $countableCentral[0]->countordencompra_Inter;
+        $proveedor = Proveedor::where('id', $request->nIdProveedor)->first();
 
-        if($request->nIdTipOrdenCompra == 1){
+        if($proveedor->tipo_ordencompra_id == 1){
             if($usuario->almacen_id == 1){
-                
+
                 if($countableCentralCount == 0){
                     $codOrdCompra = 'C0001'.'-'. Carbon::parse($request->cFechaEmision)->format('Y');
                 }else{
@@ -106,7 +109,7 @@ class OrdencompraController extends Controller
                 }
             }
         }else{
-         
+
             if($countordencompra_Inter == 0){
                 $codOrdCompra = 'I0001'.'-'. Carbon::parse($request->cFechaEmision)->format('Y');
             }else{
@@ -116,8 +119,8 @@ class OrdencompraController extends Controller
         }
 
         if($usuario->almacen_id == 7){
-            
-          
+
+
             if($countablePiuraCount == 0){
                 $codOrdCompra = 'CP0001'.'-'. Carbon::parse($request->cFechaEmision)->format('Y');
             }else{
@@ -142,7 +145,7 @@ class OrdencompraController extends Controller
             $ordenCompra->tipo_ordencompra_id = $request->nIdTipOrdenCompra;
             $ordenCompra->save();
             $detordenCompra = Session::get('products');
-            $allProducts = $detordenCompra->map(function ($product) use ($ordenCompra) { 
+            $allProducts = $detordenCompra->map(function ($product) use ($ordenCompra) {
                 return [
                     'ordencompras_id'   => $ordenCompra->id,
                     'producto_id'       => $product->producto_id,
@@ -150,11 +153,11 @@ class OrdencompraController extends Controller
                     'cantidadKardex'    => 0,
                     'unidmedida_id'     => $product->unidmedida_id,
                     'punit'             => $product->punit,
-                    'estado'            => 2, 
-                    'canting'            => 0, 
+                    'estado'            => 2,
+                    'canting'            => 0,
                 ];
             });
-            
+
             Detalleordencompra::insert($allProducts->toArray());
             Session::put('products', collect([]));
 
@@ -173,8 +176,8 @@ class OrdencompraController extends Controller
 
            /*  Si el usuario es de Piura */
             if($usuario->almacen_id == 7){
-                
-                Countable::where('id', 1)->update(['countordencompraPiura' => $countablePiuraCount +1]); 
+
+                Countable::where('id', 1)->update(['countordencompraPiura' => $countablePiuraCount +1]);
                 }
 
             return response()->json(['message' => 'Grabado', 'icon' => 'success'], 200);
@@ -200,12 +203,13 @@ class OrdencompraController extends Controller
                    return $dato;
     }
 
-    public function ListXProveedor(Request $request) 
+    public function ListXProveedor(Request $request)
     {
     /*     $anio = date("Y");
        $factual = date("Y-m-d");
  */
-        
+//dd($request);
+
         if ($request->nidProveedor == null && $request->dFecha == null ) {
             $dato = Ordencompra::with('proveedor', 'user', 'estadoordencompra', 'pago')
             ->orderBy('Femision','desc')->get();
@@ -213,18 +217,37 @@ class OrdencompraController extends Controller
             ->whereBetween('Femision', [ $anio.'-'.'01-01', $factual])->get(); */
             return $dato;
 
-        }elseif($request->dFecha == null){
+        }
+        elseif ($request->dFecha == null && $request->nIdtipoCompra == null) {
+            $dato = Ordencompra::with('proveedor', 'user', 'estadoordencompra', 'pago')
+            ->where('proveedor_id', $request->nidProveedor)->get();
+            return $dato;
+        }
+
+
+        elseif($request->dFecha == null){
             $dato = Ordencompra::with('proveedor', 'user', 'estadoordencompra', 'pago')
             ->where('proveedor_id', $request->nidProveedor)
+            ->where('tipo_ordencompra_id',$request->nIdtipoCompra)
             ->orderBy('Femision','desc')->get();
             return $dato;
         }
-        
+
         elseif ($request->nidProveedor == null) {
+            $dato = Ordencompra::with('proveedor', 'user', 'estadoordencompra', 'pago')
+            ->where('tipo_ordencompra_id',$request->nIdtipoCompra)
+            ->whereBetween('Femision', [$request->dFecha[0], $request->dFecha[1]])->get();
+            return $dato;
+        }
+
+        elseif ($request->nidProveedor == null && $request->nIdtipoCompra == null) {
             $dato = Ordencompra::with('proveedor', 'user', 'estadoordencompra', 'pago')
             ->whereBetween('Femision', [$request->dFecha[0], $request->dFecha[1]])->get();
             return $dato;
         }
+
+
+
     }
 
     public function setGenerarOrderPedidoPdf(Request $request)
@@ -235,7 +258,7 @@ class OrdencompraController extends Controller
        // dd($orderCompra);
         $DetalleOrderCompra = Detalleordencompra::with('ordencompras', 'unidmedida', 'producto')->where('ordencompras_id', $valor)->get();
         $logo = asset('img/logo.gif');
-        $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('reporte.cotizacion.ordencomprapdf', [ 
+        $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('reporte.cotizacion.ordencomprapdf', [
             'logo' => $logo,
             'orderCompra' => $orderCompra,
             'DetalleOrderCompra' => $DetalleOrderCompra,
@@ -253,9 +276,9 @@ class OrdencompraController extends Controller
     public function setDarBajaOrderCompra(Request $request){
 
      /*    $ordencompra = Ordencompra::where('codigo', $request->codigo)->first();
-      
+
         $ordencompra->delete(); */
-       
+
         Ordencompra::where('codigo', $request->codigo)->delete();
     }
 
@@ -274,10 +297,10 @@ class OrdencompraController extends Controller
         $fecha1= $request->fecha1;
         $fecha2= $request->fecha2;
         $estado = is_null($request->nIdprod) && empty($dFechaByProduct);
-     
+
 
         if( $estado){
-            $dato = Detalleordencompra::with('ordencompras', 'ordencompras.tipocambio', 'ordencompras.proveedor','producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion')->get(); 
+            $dato = Detalleordencompra::with('ordencompras', 'ordencompras.tipocambio', 'ordencompras.proveedor','producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion')->get();
             return $dato;
         }else{
 
@@ -285,7 +308,7 @@ class OrdencompraController extends Controller
                 $dato =  Detalleordencompra::with('ordencompras', 'ordencompras.tipocambio', 'ordencompras.proveedor','producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion')
                     ->whereHas('ordencompras', function (Builder $query) use ($nIdprod) {$query->where('producto_id', $nIdprod);
                     })->get();
-        
+
                     return $dato;
             }
 
@@ -293,18 +316,18 @@ class OrdencompraController extends Controller
                 $dato =  Detalleordencompra::with('ordencompras', 'ordencompras.tipocambio', 'ordencompras.proveedor','producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion')
                     ->whereHas('ordencompras', function (Builder $query) use ($fecha1,$fecha2){$query->whereBetween('Femision', [$fecha1, $fecha2]);
                 })->get();
-         
-  
+
+
                 return $dato;
             }
         }
 
-   
+
   /*      $estado = is_null($request->nIdprod);
-     
-     
+
+
        if( $estado){
-           $dato = Detalleordencompra::with('ordencompras', 'ordencompras.tipocambio', 'ordencompras.proveedor','producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion')->get(); 
+           $dato = Detalleordencompra::with('ordencompras', 'ordencompras.tipocambio', 'ordencompras.proveedor','producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion')->get();
             return $dato;
         }else{
             $dato = Detalleordencompra::with('ordencompras', 'ordencompras.tipocambio', 'ordencompras.proveedor','producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion')->where('producto_id', $request->nIdprod)->get();
@@ -323,9 +346,9 @@ class OrdencompraController extends Controller
             $dato = Ordencompra::with('proveedor','tipocambio','detalle','detalle.producto', 'detalle.producto.marca', 'detalle.producto.familia', 'detalle.producto.material', 'detalle.producto.modelotipo', 'detalle.producto.subfamilia', 'detalle.producto.homologacion')
             ->where('proveedor_id',$nidProveedor)->get();
             return $dato;
-         
+
         }
-        
+
         if($fecha1  && $fecha2 ){
             $dato = Ordencompra::with('proveedor','tipocambio','detalle','detalle.producto', 'detalle.producto.marca', 'detalle.producto.familia', 'detalle.producto.material', 'detalle.producto.modelotipo', 'detalle.producto.subfamilia', 'detalle.producto.homologacion')
             ->whereBetween('Femision',[$fecha1,$fecha2])->get();
@@ -333,22 +356,22 @@ class OrdencompraController extends Controller
         }
     }
 
-    public function exportPrecioOcExcelxProduct(Request $request){ 
+    public function exportPrecioOcExcelxProduct(Request $request){
         $listOrdenPedidoXProduct = json_decode($request->params['listOrdenPedidoXProduct']);
-    
+
         return (new ListPrecprodExport)->setGenerarExcel($listOrdenPedidoXProduct)->download('invoices.xlsx');
 
     }
 
-    public function exportPrecioOcExcelxProveedor(Request $request){ 
+    public function exportPrecioOcExcelxProveedor(Request $request){
         $listOrdCompraxProveedor = json_decode($request->params['listOrdCompraxProveedor']);
 
- 
-        return (new ListPrecprovExport)->setGenerarExcel($listOrdCompraxProveedor)->download('invoices.xlsx'); 
+
+        return (new ListPrecprovExport)->setGenerarExcel($listOrdCompraxProveedor)->download('invoices.xlsx');
     }
 
     public function setApruebaOrdenCompra(Request $request){
-        Ordencompra::where('id', $request->id)->update(['estadoordencompra_id' => $request->valor]); 
+        Ordencompra::where('id', $request->id)->update(['estadoordencompra_id' => $request->valor]);
 
     }
 
@@ -356,5 +379,5 @@ class OrdencompraController extends Controller
         $tipoOrdenCompra = TipOrdenCompra::all();
         return   $tipoOrdenCompra ;
     }
-    
+
 }
