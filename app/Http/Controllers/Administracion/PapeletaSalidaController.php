@@ -36,7 +36,9 @@ class PapeletaSalidaController extends Controller
         $now = Carbon::now();
         $tiempoMin = Carbon::createFromTime(8, 30);
         $tiempoMax = Carbon::createFromTime(22, 00); */
+        $femision = $request->hora;
 
+       // dd(substr($femision, 0,7));
 
         $hoy = getdate();
         $HoraNow = $hoy['hours'];
@@ -65,7 +67,7 @@ if ($tiempo  >= $tiempoMax) {
     $PapeletaSalida->motivopapeletasalida_id = $request->nIdMotivo;
     $PapeletaSalida->estadopapeletasalida_id = '1';
     $PapeletaSalida->fundamento = nl2br(htmlentities(mb_strtoupper($request->cReferencia)));
-    $PapeletaSalida->hora_emision = $request->hora;
+    $PapeletaSalida->hora_emision =  substr($femision, 0,7);
     $PapeletaSalida->save();
 
              //Si motivo es compras /  Si motivo es Otros /  Si motivo es Personal

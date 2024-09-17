@@ -244,10 +244,10 @@
                           class="btn btn-info btn-sm"
                           @click="abrirEstado(item.codigo)"
                         >
-                          <i class="far fa-calendar-check"></i> Estado 
+                          <i class="far fa-calendar-check"></i> Estado
                         </button>
 
-                        <button 
+                        <button
                           class="btn btn-primary btn-sm"
                           @click="abrirModal(item.codigo)"
                         >
@@ -275,7 +275,7 @@
                           }"
                         >
                         <i class="fab fa-telegram-plane"></i> Nota de Pedido
-                        </router-link> 
+                        </router-link>
                         </template>
 
                         <template v-if="item.estadodias <= 30">
@@ -512,7 +512,7 @@ export default {
         display: "none",
       },
       pageNumber: 0,
-      perPage: 15,
+      perPage: 30,
       listRolPermisoByUsuario: JSON.parse(
         sessionStorage.getItem("listRolPermisosByUsuario")
       ),
@@ -598,7 +598,7 @@ export default {
       } else {
         this.EstadoBotonEditar = false;
       }
-    }, 
+    },
     abrirModal(item) {
       this.modalShow = !this.modalShow;
       this.fillBsqCotizacion.itemid = item;
@@ -659,7 +659,7 @@ export default {
     },
 
     getlistCotizacionBy() {
-      var url = "/administracion/cotizacion/ListCotizacionesby"; 
+      var url = "/administracion/cotizacion/ListCotizacionesby";
       axios
         .get(url, {
           params: {

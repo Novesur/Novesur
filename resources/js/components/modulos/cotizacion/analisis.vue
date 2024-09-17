@@ -238,7 +238,7 @@ export default {
                 display: "none",
             },
             pageNumber: 0,
-            perPage: 20,
+            perPage: 30,
             listRolPermisoByUsuario: JSON.parse(
                 sessionStorage.getItem("listRolPermisosByUsuario")
             ),
