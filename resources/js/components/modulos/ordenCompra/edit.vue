@@ -193,6 +193,26 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label
+                                                        class="col-md-3 col-form-label"
+                                                        >Documentos a
+                                                        enviar</label
+                                                    >
+                                                    <div class="col-md-9">
+                                                        <el-input
+                                                            type="textarea"
+                                                            :rows="2"
+                                                            placeholder="Documentos a enviar"
+                                                            v-model="
+                                                                fillEditOrdenCompra.cDocEnvio
+                                                            "
+                                                        >
+                                                        </el-input>
+                                                    </div>
+                                                </div>
+                                            </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-group row">
@@ -495,25 +515,27 @@
                                     </table>
                                 </div>
                             </div>
-                          
-              <div class="card-footer">
-                <div class="row">
-                  <div class="col-md-4 offset-4">
-                    <button
-                      class="btn btn-flat btn-info btnWidth"
-                      @click.prevent="setEditOrderCompra"
-                    >
-                      Editar
-                    </button>
-                    <button
-                      class="btn btn-flat btn-default btnWidth"
-                      @click.prevent="eliminarTempitemOrders"
-                    >
-                      Limpiar
-                    </button>
-                  </div>
-                </div>
-              </div> 
+
+                            <div class="card-footer">
+                                <div class="row">
+                                    <div class="col-md-4 offset-4">
+                                        <button
+                                            class="btn btn-flat btn-info btnWidth"
+                                            @click.prevent="setEditOrderCompra"
+                                        >
+                                            Editar
+                                        </button>
+                                        <button
+                                            class="btn btn-flat btn-default btnWidth"
+                                            @click.prevent="
+                                                eliminarTempitemOrders
+                                            "
+                                        >
+                                            Limpiar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -758,7 +780,8 @@ export default {
                 cPUnitEdit: "",
                 cTotalEdit: "",
                 cObservacion: "",
-                nIdTipoMoneda:"",
+                nIdTipoMoneda: "",
+                cDocEnvio: "",
             },
 
             listUnidMed: [],
@@ -782,11 +805,11 @@ export default {
         };
     },
     mounted() {
-      this.getListarUnidadMedida();
-      this.getListarproductosByName();
-      this.getlistDescricionPago();
-      this.getlistTipoCambio();
-      this.getCargaDatosOrdenCompra();
+        this.getListarUnidadMedida();
+        this.getListarproductosByName();
+        this.getlistDescricionPago();
+        this.getlistTipoCambio();
+        this.getCargaDatosOrdenCompra();
     },
     computed: {},
     methods: {
@@ -817,7 +840,6 @@ export default {
                     this.fillEditOrdenCompra.nIdprodEdit =
                         response.data.producto_id;
                     this.fillEditOrdenCompra.cPUnitEdit = response.data.punit;
-
                 });
         },
 
@@ -825,7 +847,7 @@ export default {
             //alert(localStorage.Codigo,)
 
             var url =
-                "/administracion/DetalleordenCompra/ModalSaveItemsDetalleOC"; 
+                "/administracion/DetalleordenCompra/ModalSaveItemsDetalleOC";
             axios
                 .post(url, {
                     id: localStorage.Codigo,
@@ -840,12 +862,13 @@ export default {
                 });
         },
         getlistTipoCambio() {
-      var url = "/administracion/ordenCompra/TipoCambio";
-      axios.get(url).then((response) => {
-        this.listTipoCambio = response.data;
-        this.fillEditOrdenCompra.nIdTipoMoneda = this.listTipoCambio[0].id;
-      });
-    },
+            var url = "/administracion/ordenCompra/TipoCambio";
+            axios.get(url).then((response) => {
+                this.listTipoCambio = response.data;
+                this.fillEditOrdenCompra.nIdTipoMoneda =
+                    this.listTipoCambio[0].id;
+            });
+        },
 
         getCargaDatosOrdenCompra() {
             var url = "/administracion/ordenCompra/CargaDatosOrdenCompra";
@@ -854,7 +877,7 @@ export default {
                     nidOrdenCompra: this.fillEditOrdenCompra.nidOrdenCompra,
                 })
                 .then((response) => {
-                  console.log(response.data)
+                    console.log(response.data);
                     this.fillEditOrdenCompra.cProveedor =
                         response.data.ordencompras.proveedor.nombre;
                     this.fillEditOrdenCompra.cReferencia =
@@ -864,10 +887,15 @@ export default {
                     this.fillEditOrdenCompra.cFechaEntrega =
                         response.data.ordencompras.Fentrega;
 
-                    this.fillEditOrdenCompra.cLEntrega = response.data.ordencompras.LugarEntrega;
-                    this.fillEditOrdenCompra.nIdTipoPago = response.data.ordencompras.pago_id;
-                    this.fillEditOrdenCompra.cObservacion = response.data.ordencompras.observacion;
-                        this.fillEditOrdenCompra.nIdTipoMoneda= response.data.ordencompras.tipocambio_id
+                    this.fillEditOrdenCompra.cLEntrega =
+                        response.data.ordencompras.LugarEntrega;
+                    this.fillEditOrdenCompra.nIdTipoPago =
+                        response.data.ordencompras.pago_id;
+                    this.fillEditOrdenCompra.cObservacion =
+                        response.data.ordencompras.observacion;
+                    this.fillEditOrdenCompra.nIdTipoMoneda =
+                        response.data.ordencompras.tipocambio_id;
+                        this.fillEditOrdenCompra.cDocEnvio =response.data.ordencompras.documento_enviar;
 
                     this.getListaDetalleOrdenCompra();
                 });
@@ -994,7 +1022,7 @@ export default {
                     cLEntrega: this.fillEditOrdenCompra.cLEntrega,
                     nIdTipoPago: this.fillEditOrdenCompra.nIdTipoPago,
                     cObservacion: this.fillEditOrdenCompra.cObservacion,
-                    nIdTipoMoneda: this.fillEditOrdenCompra.nIdTipoMoneda
+                    nIdTipoMoneda: this.fillEditOrdenCompra.nIdTipoMoneda,
                 })
                 .then((response) => {
                     this.getListaDetalleOrdenCompra();
@@ -1009,8 +1037,8 @@ export default {
 
             this.setLimpiaCampos();
         },
-        setEditOrderCompra(){
-          var url = "/administracion/ordenCompra/edit";
+        setEditOrderCompra() {
+            var url = "/administracion/ordenCompra/edit";
             axios
                 .post(url, {
                     nidOrdenCompra: this.fillEditOrdenCompra.nidOrdenCompra,
@@ -1022,7 +1050,7 @@ export default {
                     cLEntrega: this.fillEditOrdenCompra.cLEntrega,
                     nIdTipoPago: this.fillEditOrdenCompra.nIdTipoPago,
                     cObservacion: this.fillEditOrdenCompra.cObservacion,
-                    nIdTipoMoneda: this.fillEditOrdenCompra.nIdTipoMoneda
+                    nIdTipoMoneda: this.fillEditOrdenCompra.nIdTipoMoneda,
                 })
                 .then((response) => {
                     this.getListaDetalleOrdenCompra();
@@ -1036,7 +1064,6 @@ export default {
                 });
 
             this.setLimpiaCampos();
-
         },
 
         setLimpiaCampos() {

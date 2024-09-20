@@ -21,9 +21,9 @@ class CreateProveedorTable extends Migration
             $table->string('telefono',150)-> required();
             $table->string('email')-> required();
             $table->string('contacto',50)-> required();
-            $table->string('nrocuenta1',50);
-            $table->string('nrocuenta2',50);
-            $table->string('nrocuenta3',50);
+            $table->string('nrocuenta1',150);
+            $table->string('nrocuenta2',150);
+            $table->string('nrocuenta3',150);
             $table->timestamps();
         });
     }

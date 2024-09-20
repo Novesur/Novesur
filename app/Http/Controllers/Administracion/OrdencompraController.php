@@ -103,17 +103,17 @@ class OrdencompraController extends Controller
             if($usuario->almacen_id == 1){
 
                 if($countableCentralCount == 0){
-                    $codOrdCompra = 'C0001'.'-'. Carbon::parse($request->cFechaEmision)->format('Y');
+                    $codOrdCompra = 'OCN0001'.'-'. Carbon::parse($request->cFechaEmision)->format('Y');
                 }else{
-                    $codOrdCompra = 'C'.sprintf('%04d',$countableCentralCount +1) .'-'. Carbon::parse($request->cFechaEmision)->format('Y');
+                    $codOrdCompra = 'OCN'.sprintf('%04d',$countableCentralCount +1) .'-'. Carbon::parse($request->cFechaEmision)->format('Y');
                 }
             }
         }else{
 
             if($countordencompra_Inter == 0){
-                $codOrdCompra = 'I0001'.'-'. Carbon::parse($request->cFechaEmision)->format('Y');
+                $codOrdCompra = 'OCI0001'.'-'. Carbon::parse($request->cFechaEmision)->format('Y');
             }else{
-                $codOrdCompra = 'I'.sprintf('%04d',$countordencompra_Inter +1) .'-'. Carbon::parse($request->cFechaEmision)->format('Y');
+                $codOrdCompra = 'OCI'.sprintf('%04d',$countordencompra_Inter +1) .'-'. Carbon::parse($request->cFechaEmision)->format('Y');
             }
 
         }
@@ -143,6 +143,7 @@ class OrdencompraController extends Controller
             $ordenCompra->observacion = $request->cObservacion;
             $ordenCompra->tipocambio_id = $request->nIdTipoMoneda;
             $ordenCompra->tipo_ordencompra_id = $request->nIdTipOrdenCompra;
+            $ordenCompra->documento_enviar = $request->cDocEnvio;
             $ordenCompra->save();
             $detordenCompra = Session::get('products');
             $allProducts = $detordenCompra->map(function ($product) use ($ordenCompra) {

@@ -76,11 +76,11 @@
 
     </tr>
     <tr>
-      <td colspan="5" align="center" valign="middle" style="font-size: 10px"><strong>REFERENCIA : </strong>{{$orderCompra->Referencia}} </td>
+      <td colspan="4" align="center" valign="middle" style="font-size: 10px"><strong>REFERENCIA : </strong>{{$orderCompra->Referencia}} </td>
     </tr>
     <tr>
       <td colspan="2" align="center" valign="middle">&nbsp;</td>
-      <td align="left" valign="middle" style="margin-left: 50px" style="font-size: 10px"><strong>FECHA EMISION</strong></td>
+      <td align="left" valign="middle" style="margin-left: 10px" style="font-size: 10px"><strong>FECHA EMISION</strong></td>
       <td style="padding-right:100px; font-size: 10px"> {{date('d-m-Y', strtotime($orderCompra->Femision))}}</td>
     </tr>
 
@@ -138,13 +138,16 @@
       <td style="font-size: 10px"> {{$orderCompra->user->firstname}} {{$orderCompra->user->secondname}} {{$orderCompra->user->lastname }}</td>
     </tr>
     <tr>
-      <td align="left" style="font-size: 11px"><strong>NRO CTA01 S/. :</strong></td>
-      <td style="font-size: 10px">{{$orderCompra->proveedor->nrocuenta1}}</td>
-
+        <td align="left" style="font-size: 10px"><strong>NRO CTA01 S/. :</strong></td>
+        <td colspan="2" style="font-size: 9">{{$orderCompra->proveedor->nrocuenta1}}</td>
+      </tr>
+    <tr>
+      <td align="left" style="font-size: 10px"><strong>NRO CTA02 S/. :</strong></td>
+      <td colspan="2" style="font-size: 9px">{{$orderCompra->proveedor->nrocuenta2}}</td>
     </tr>
     <tr>
-      <td align="left" style="font-size: 11px"><strong>NRO CTA02 S/. :</strong></td>
-      <td style="font-size: 10px">{{$orderCompra->proveedor->nrocuenta2}}</td>
+      <td align="left" style="font-size: 10px"><strong>NRO CTA03 S/. :</strong></td>
+      <td colspan="2" style="font-size: 9px">{{$orderCompra->proveedor->nrocuenta3}}</td>
     </tr>
 
   </table>
@@ -212,6 +215,11 @@
       <td width="20%" style="font-size: 11px"><strong>Observaciones : </strong></td>
       <td colspan="2" class="campo-tabla">{{$orderCompra->observacion}}</td>
     </tr>
+
+    <tr>
+        <td width="20%" style="font-size: 11px"><strong>Doc. a enviar :</strong></td>
+        <td colspan="2" class="campo-tabla">{{$orderCompra->documento_enviar}}</td>
+      </tr>
     <tr>
       <td style="font-size: 11px"><strong>CONDICIONES:</strong></td>
       <td colspan="2">&nbsp;</td>
@@ -255,7 +263,7 @@
   <img src="{{URL::asset('/img/firma_piura.png')}}" width="200" height="104">
   @endif
   @if($orderCompra->estadoordencompra_id == 2)
-  
+
 
   <p>&nbsp;</p>
   @endif
@@ -297,7 +305,7 @@
       @if($orderCompra->user->almacen_id == 7)
       <td align="center"><strong>Lusi Principe Bayona</strong></td>
       @endif
-    
+
     </tr>
 
     <tr>
