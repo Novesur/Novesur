@@ -84,6 +84,7 @@ class OrdencompraController extends Controller
     {
 
 
+       // dd($request);
 
         $femision = date("Y-m-d", strtotime($request->cFechaEmision));
         $fentrega = date("Y-m-d", strtotime($request->cFechaEntrega));
@@ -102,10 +103,12 @@ class OrdencompraController extends Controller
         if($proveedor->tipo_ordencompra_id == 1){
             if($usuario->almacen_id == 1){
 
+
                 if($countableCentralCount == 0){
                     $codOrdCompra = 'OCN0001'.'-'. Carbon::parse($request->cFechaEmision)->format('Y');
                 }else{
-                    $codOrdCompra = 'OCN'.sprintf('%04d',$countableCentralCount +1) .'-'. Carbon::parse($request->cFechaEmision)->format('Y');
+                    $codOrdCompra = 'OCN'.sprintf('%04d',$countableCentralCount + 1) .'-'. Carbon::parse($request->cFechaEmision)->format('Y');
+                    //dd($codOrdCompra );
                 }
             }
         }else{
@@ -117,6 +120,8 @@ class OrdencompraController extends Controller
             }
 
         }
+
+       // dd($codOrdCompra );
 
         if($usuario->almacen_id == 7){
 
@@ -162,17 +167,20 @@ class OrdencompraController extends Controller
             Detalleordencompra::insert($allProducts->toArray());
             Session::put('products', collect([]));
 
+             $proveedor = Proveedor::where('id', $request->nIdProveedor)->first();
+
+            //dd($proveedor->tipo_ordencompra_id);
              /*  Si el usuario es de Sede Central */
-             if($request->nIdTipOrdenCompra == 1){
+             if($proveedor->tipo_ordencompra_id == 1){
                  if($usuario->almacen_id == 1){
                  Countable::where('id', 1)->update(['countordencompra' => $countableCentralCount +1]);
-                 }
+                }
 
-             }else{
+            }else{
                 if($usuario->almacen_id == 1){
                     Countable::where('id', 1)->update(['countordencompra_Inter' => $countordencompra_Inter +1]);
-                    }
-             }
+                }
+            }
 
 
            /*  Si el usuario es de Piura */
