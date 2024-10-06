@@ -255,6 +255,7 @@ class CotizacionController extends Controller
 
     public function ListCotizacionesby(Request $request)
     {
+
         $nIdCliente   =    $request->nIdCliente;
         $nIdVendedor    =   $request->nIdVendedor;
         $nIdtEstadoCoti2 =   $request->nIdtEstadoCoti2;
