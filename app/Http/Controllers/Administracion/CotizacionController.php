@@ -481,7 +481,7 @@ class CotizacionController extends Controller
     public function listCotizacionListByVendedor(Request $request)
     {
 
-        $dato = Cotizacion::with('cliente', 'estadopedido', 'user', 'detalle')->where('user_id', $request->nIdVendedor)->get();
+        $dato = Cotizacion::with('cliente', 'estadopedido', 'user', 'detalle')->where('user_id', $request->nIdVendedor)->orderBy('fecha', 'desc')->get();
 
 
         return collect($dato)->map(function ($item, $key) {
@@ -505,7 +505,7 @@ class CotizacionController extends Controller
     public function listCotizacionListByClient(Request $request)
     {
 
-        $dato = Cotizacion::with('cliente', 'estadopedido', 'user', 'detalle')->where('cliente_id', $request->nIdClient)->get();
+        $dato = Cotizacion::with('cliente', 'estadopedido', 'user', 'detalle')->where('cliente_id', $request->nIdClient)->orderBy('fecha', 'desc')->get();
 
 
         return collect($dato)->map(function ($item, $key) {
