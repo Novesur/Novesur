@@ -220,7 +220,7 @@ th,
     </table>
 
     <h6 style="margin: 0.5em">
-        <center style="text-transform: uppercase">De nuestra consideración: Hacemos llegar  nuestra propuesta económica, según se muestra a
+        <center style="text-transform: uppercase">De nuestra consideración; Hacemos llegar  nuestra propuesta económica, según se muestra a
             continuación</center>
     </h6>
 
