@@ -147,7 +147,7 @@ class OrdencompraController extends Controller
             $ordenCompra->estadoordencompra_id = 2;
             $ordenCompra->observacion = $request->cObservacion;
             $ordenCompra->tipocambio_id = $request->nIdTipoMoneda;
-            $ordenCompra->tipo_ordencompra_id = $request->nIdTipOrdenCompra;
+            $ordenCompra->tipo_ordencompra_id = $proveedor->tipo_ordencompra_id;
             $ordenCompra->documento_enviar = $request->cDocEnvio;
             $ordenCompra->save();
             $detordenCompra = Session::get('products');

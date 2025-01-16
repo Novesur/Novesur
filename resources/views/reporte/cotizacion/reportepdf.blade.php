@@ -220,7 +220,7 @@ th,
     </table>
 
     <h6 style="margin: 0.5em">
-        <center>De nuestra consideración: Hacemos llegar con la presente nuestra propuesta económica, según se muestra a
+        <center style="text-transform: uppercase">De nuestra consideración: Hacemos llegar  nuestra propuesta económica, según se muestra a
             continuación</center>
     </h6>
 
@@ -327,7 +327,7 @@ th,
         </tr>
         <tr>
             <td width="23%" style="font-size: 11px"><strong>Validez de Oferta :</strong></td>
-            <td width="90%" style="font-size: 10px">{{ $coti->validezoferta }}</td>
+            <td width="90%" style="font-size: 10px; text-transform: uppercase">{{ $coti->validezoferta }}</td>
         </tr>
         <tr>
             <td style="font-size: 11px"><strong>Plazo de entrega :</strong></td>
@@ -353,7 +353,7 @@ th,
             <td style="font-size: 11px">&nbsp;</td>
             <td style="font-size: 10px">
 
-                    <div>- El incumplimiento del pago generara interés a la tasa vigente del sistema Bancario
+                    <div style="text-transform: uppercase">- El incumplimiento del pago generara interés a la tasa vigente del sistema Bancario
                     </div>
 
             </td>
@@ -364,12 +364,12 @@ th,
         </tr>
         <tr>
             <td style="font-size: 11px"><strong>Documentacion :</strong></td>
-            <td style="font-size: 10px">{{ $coti->documentacion }}</td>
+            <td style="font-size: 10px ; text-transform: uppercase">{{ $coti->documentacion }}</td>
         </tr>
         <tr>
             <td style="font-size: 11px"><strong>Garantia : </strong></td>
-            <td style="font-size: 10px">{{ $coti->garantia->nombre }} por defectos de fabricaciòn (no cubre los
-                originados por mala manipulaciòn, vandalismo, golpes, mala instalaciòn POR TERCEROS, mala operaciòn,
+            <td style="font-size: 10px; text-transform: uppercase">{{ $coti->garantia->nombre }} por defectos de fabricaciòn (no cubre los
+                originados por mala manipulaciòn, vandalismo, golpes, mala instalaciòn <strong>por terceros</strong> , mala operaciòn,
                 exceso de presiòn y temperaturas)</td>
         </tr>
         <tr>
@@ -381,11 +381,11 @@ th,
 
     <div style=" margin-bottom: 0px;font-weight:normal">
 
-        <h6 style="font-weight:normal; margin-top: 0px;">Atentamente</h6>
+        <h6 style="font-weight:normal; margin-top: 0px; text-transform: uppercase">Atentamente</h6>
 
         <h6 style=" position: center; margin-top: 0px;font-weight:normal; margin-left: 40px">
             {{ $coti->user->gradousers->cod . ' ' . $coti->user->firstname . ' ' . $coti->user->secondname }}<br />
-            Coordinador Comercial
+            <strong style="text-transform: uppercase">Coordinador Comercial</strong>
         </h6>
         <footer style="padding-bottom: 0px" >
             <h6 class="text-align: center; ">Jr. Monte Abeto 376 Urb. Monterrico Sur -

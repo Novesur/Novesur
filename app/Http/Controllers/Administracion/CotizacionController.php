@@ -385,12 +385,14 @@ class CotizacionController extends Controller
             $coti = Cotizacion::on('mysql')->with('cliente', 'user', 'tipopago', 'estadopedido', 'pago', 'garantia')->where('codigo', $valor)->first();
             $detcoti = DetalleCotizacion::with('unidmedida', 'producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia')->where('cotizacion_id', $coti->id)->get();
             $logo = asset('img/logo.gif');
+            $qr= asset('img/QR.jpeg');
             $productos01 = asset('img/banner01.png');
             $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('reporte.cotizacion.reportepdf', [
                 'logo' => $logo,
                 'productos01' => $productos01,
                 'coti' => $coti,
                 'detcoti' => $detcoti,
+                'qr'=>$qr,
             ]);
             return $pdf->download('invoice.pdf');
         }
@@ -401,12 +403,14 @@ class CotizacionController extends Controller
             $detcoti = DetalleCotizacion::with('unidmedida', 'producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia')->where('cotizacion_id', $coti->id)->get();
 
             $logo = asset('img/logo02.png');
+            $qr= asset('img/QR.jpeg');
             $productos01 = asset('img/banner01.png');
             $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('reporte.cotizacion.reportepdf', [
                 'logo' => $logo,
                 'productos01' => $productos01,
                 'coti' => $coti,
                 'detcoti' => $detcoti,
+                'qr'=>$qr,
             ]);
             return $pdf->download('invoice.pdf');
         }

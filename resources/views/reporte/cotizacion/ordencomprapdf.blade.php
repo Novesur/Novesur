@@ -95,7 +95,7 @@
       <td align="left" style="font-size: 11px"><strong>SEÑOR(ES) :</strong></td>
       <td style="font-size: 10px">{{$orderCompra->proveedor->nombre}}</td>
 
-      <td><strong style="font-size: 11px">SEÑOR(ES) ::</strong></td>
+      <td><strong style="font-size: 11px">SEÑOR(ES) :</strong></td>
       <td style="font-size: 11px"> INVERSIONES NOVESUR S.A.C.</td>
     </tr>
     <tr>
@@ -136,19 +136,35 @@
       <td style="font-size: 10px">{{$orderCompra->proveedor->contacto}}</td>
       <td style="font-size: 11px"><strong>CONTACTO :</strong></td>
       <td style="font-size: 10px"> {{$orderCompra->user->firstname}} {{$orderCompra->user->secondname}} {{$orderCompra->user->lastname }}</td>
+
     </tr>
     <tr>
         <td align="left" style="font-size: 10px"><strong>NRO CTA01 S/. :</strong></td>
-        <td colspan="2" style="font-size: 9">{{$orderCompra->proveedor->nrocuenta1}}</td>
+        <td colspan="4" style="font-size: 8">{{$orderCompra->proveedor->nrocuenta1}}</td>
+
       </tr>
+
     <tr>
+      @if($orderCompra->tipo_ordencompra_id == 1)
       <td align="left" style="font-size: 10px"><strong>NRO CTA02 S/. :</strong></td>
       <td colspan="2" style="font-size: 9px">{{$orderCompra->proveedor->nrocuenta2}}</td>
+      @else
+      <td align="left" style="font-size: 10px"><strong></strong></td>
+      @endif
+
+
     </tr>
     <tr>
+      @if($orderCompra->tipo_ordencompra_id == 1)
       <td align="left" style="font-size: 10px"><strong>NRO CTA03 S/. :</strong></td>
       <td colspan="2" style="font-size: 9px">{{$orderCompra->proveedor->nrocuenta3}}</td>
+      @else
+      <td align="left" style="font-size: 10px"><strong></strong></td>
+      @endif
+
     </tr>
+
+
 
   </table>
 
@@ -193,6 +209,8 @@
     $IGV = $subtotal * 0.18;
     $total = $subtotal + $IGV;
     @endphp
+
+@if($orderCompra->tipo_ordencompra_id == 1)
     <tr>
       <td colspan="4" rowspan="3" align="center">&nbsp;</td>
       <td align="center" style="background-color: rgba(238, 229, 229, 0.719);" class="campo-tabla"><strong>SUBTOTAL</strong></td>
@@ -206,6 +224,13 @@
       <td align="center" style="background-color: rgba(238, 229, 229, 0.719);" class="campo-tabla"><strong>TOTAL GENERAL</strong></td>
       <td align="right" style="font-size: 10px">{{$orderCompra->tipocambio->signo}}{{number_format($total,2)}}</td>
     </tr>
+@else
+<tr>
+    <td colspan="4"  align="center">&nbsp;</td>
+    <td align="center" style="background-color: rgba(238, 229, 229, 0.719);" class="campo-tabla"><strong>TOTAL</strong></td>
+    <td align="right" style="font-size: 10px">{{$orderCompra->tipocambio->signo}} {{number_format($subtotal,2)}}</td>
+  </tr>
+@endif
 
   </table>
   <br>
@@ -247,7 +272,7 @@
     </tr>
     <tr>
       <td style="font-size: 11px"><b>NOTA</b> :</td>
-      <td colspan="2">En la GUIAS DE REMISIÓN y FACTURAS, deberán indicar el número de esta Orden de Compra.</td>
+      <td colspan="2">En   @if($orderCompra->tipo_ordencompra_id == 1) GUIAS DE REMISIÓN y FACTURAS @else las FACTURAS @endif,  deberán indicar el número de esta Orden de Compra.</td>
     </tr>
     <tr>
       <td>&nbsp;</td>
@@ -269,13 +294,17 @@
   @endif
   <table width="100%" border="0">
     <tr>
-      @if($orderCompra->estadoordencompra_id == 1 && $orderCompra->user->almacen_id == 1 )
-      <td width="33%" align="center">&nbsp;</td>
+      @if($orderCompra->user->almacen_id == 1 && $orderCompra->tipo_ordencompra_id === 2)
+      <td width="33%" align="center">
+        <img src="{{URL::asset('/img/Firma_Yossi.png')}}" alt="firma" style="width: 200px; height: 100px">
+      </td>
       <td width="25%" align="center">&nbsp;</td>
       <td width="40%" align="center">
         <img src="{{URL::asset('/img/firma-sello.gif')}}" alt="firma" style="width: 320px; height: 150px">
       </td>
-      @else
+
+      @endif
+      @if($orderCompra->tipo_ordencompra_id === 1 && $orderCompra->user->almacen_id != 1)
       <p>&nbsp;</p>
       <p>&nbsp;</p>
       <td width="33%" align="center">&nbsp;</td>

@@ -749,7 +749,10 @@
             </div>
         </div>
 
-        <div
+    </div>
+
+
+    <div
             class="modal fade"
             :class="{ show: modalShow }"
             :style="modalShow ? mostrarModal : ocultarModal"
@@ -777,7 +780,6 @@
                 </div>
             </div>
         </div>
-    </div>
 </template>
 <script>
 import listStock from "../ingreso_almacen/shared/listStock.vue";

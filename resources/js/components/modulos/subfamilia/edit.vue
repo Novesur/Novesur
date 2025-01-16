@@ -41,7 +41,7 @@
                                   class="form control"
                                   style="width: 410px"
                                   @keydown.enter.prevent="setRegistrarSubFamilia"
-                                  v-model="fillEditarSubFamilia.Cnombre"
+                                  v-model="fillEditarSubFamilia.cNombre"
                                 />
                               </div>
                             </div>
@@ -114,7 +114,7 @@ export default {
     return {
       fillEditarSubFamilia: {
         nIdSubfamilia: this.$attrs.id,
-        Cnombre: "",
+        cNombre: "",
       },
       modalShow: false,
       mostrarModal: {
@@ -141,14 +141,14 @@ export default {
           },
         })
         .then((response) => {
-          this.fillEditarSubFamilia.Cnombre = response.data[0].nombre;
+          this.fillEditarSubFamilia.cNombre = response.data[0].nombre;
         });
     },
     abrirModal() {
       this.modalShow = !this.modalShow;
     },
     limpiarCriteriosBsq() {
-      this.fillEditarSubFamilia.Cnombre = "";
+      this.fillEditarSubFamilia.cNombre = "";
     },
     setRegistrarSubFamilia() {
       if (this.validarRegistrarDiametro()) {
@@ -160,7 +160,7 @@ export default {
     validarRegistrarDiametro() {
       this.error = 0;
       this.mensajeError = [];
-      if (!this.fillEditarSubFamilia.Cnombre) {
+      if (!this.fillEditarSubFamilia.cNombre) {
         this.mensajeError.push("El campor Nombre es un campo obligatorio");
       }
 
@@ -175,7 +175,7 @@ export default {
         .post(url, {
 
             nIdSubfamilia: this.fillEditarSubFamilia.nIdSubfamilia,
-          cNombre: this.fillEditarSubFamilia.Cnombre,
+          cNombre: this.fillEditarSubFamilia.cNombre,
         })
         .then((response) => {
           Swal.fire({

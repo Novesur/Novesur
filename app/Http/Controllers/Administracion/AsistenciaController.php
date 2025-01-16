@@ -53,7 +53,7 @@ class AsistenciaController extends Controller
 
     public function  listByDatePersonal(Request $request){
 
-      
+
         $personal = Personal::find($request->personal);
 
         if (!$request->ajax()) return redirect('/');
@@ -100,7 +100,7 @@ public function ListTardanzAsistenciaByDate0113(Request $request){
             $reporteTardanza0113 = Personal::query()->with(['asistencias'=>function($query)use($dFechainicio, $dFechafin){
                 $query->whereBetween('asistencia.fecha', [now()->parse($dFechainicio)->format('Y-m-d'), now()->parse($dFechafin)->format('Y-m-d')]);
 
-           }])
+           }])->where('estado','A')
            ->has('asistencias')
            ->get();
 
