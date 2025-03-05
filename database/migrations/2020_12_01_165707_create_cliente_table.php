@@ -27,7 +27,6 @@ class CreateClienteTable extends Migration
             $table->enum('tipoPrecio', ['Lista', 'Distribuidor']);
             $table->string('update_by_user',50)->nullable();
             $table->string('observacion_edit_cliente',50)->nullable();
-            $table->string('email',150)->nullable();
             $table->timestamps();
         });
     }

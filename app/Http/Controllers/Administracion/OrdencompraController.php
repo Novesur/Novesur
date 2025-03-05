@@ -36,10 +36,10 @@ class OrdencompraController extends Controller
         $ordenCompra->LugarEntrega = $request->cLEntrega;
         $ordenCompra->pago_id = $request->nIdTipoPago;
         $ordenCompra->user_id = $ordenCompra->user_id;
-        $ordenCompra->estadoordencompra_id = $ordenCompra->estadoordencompra_id;
+        $ordenCompra->estadoordencompra_id = $proveedor->tipo_ordencompra_id;
         $ordenCompra->observacion = $request->cObservacion;
         $ordenCompra->tipocambio_id = $request->nIdTipoMoneda;
-        $ordenCompra->tipo_ordencompra_id = $proveedor->tipo_compra_id;
+        $ordenCompra->tipo_ordencompra_id = $proveedor->tipo_ordencompra_id;
         $ordenCompra->save();
 
     }
