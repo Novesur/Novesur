@@ -28330,7 +28330,7 @@ var render = function render() {
     staticClass: "card-body table-responsive"
   }, [_c("table", {
     staticClass: "table table-hover table-head-fixed text-nowrap projects"
-  }, [_c("thead", [_c("tr", [_c("th", [_vm._v("Fecha")]), _vm._v(" "), _c("th", [_vm._v("Cotizacion")]), _vm._v(" "), _c("th", [_vm._v("Cod Product")]), _vm._v(" "), _c("th", [_vm._v("Producto")]), _vm._v(" "), _c("th", [_vm._v("Vendedor")])])]), _vm._v(" "), _c("tbody", _vm._l(_vm.listCotizacionPaginatedbyDate, function (item, index) {
+  }, [_c("thead", [_c("tr", [_c("th", [_vm._v("Fecha")]), _vm._v(" "), _c("th", [_vm._v("Cotizacion")]), _vm._v(" "), _c("th", [_vm._v("Cod Product")]), _vm._v(" "), _c("th", [_vm._v("Producto")]), _vm._v(" "), _c("th", [_vm._v("Vendedor")]), _vm._v(" "), _c("th", [_vm._v("Cliente")])])]), _vm._v(" "), _c("tbody", _vm._l(_vm.listCotizacionPaginatedbyDate, function (item, index) {
     return _c("tr", {
       key: index
     }, [_c("td", [_vm._v("\n                                                        " + _vm._s(_vm._f("moment")(item.cotizacion.fecha, "DD - MM - Y")) + "\n                                                    ")]), _vm._v(" "), _c("td", [_vm._v("\n                                                        " + _vm._s(item.cotizacion.codigo) + "\n                                                    ")]), _vm._v(" "), _c("td", [_vm._v("\n                                                        " + _vm._s(item.producto.codigo) + "\n                                                    ")]), _vm._v(" "), _c("td", {
@@ -28341,7 +28341,7 @@ var render = function render() {
       domProps: {
         textContent: _vm._s(item.cotizacion.user.fullname)
       }
-    })]);
+    }), _vm._v(" "), _c("td", [_vm._v("\n                                                        " + _vm._s(item.cotizacion.cliente.razonsocial) + "\n                                                    ")])]);
   }), 0)]), _vm._v(" "), _c("div", {
     staticClass: "card-footer"
   }, [_c("ul", {

@@ -16,19 +16,23 @@
             <th><b>Cotizacion</b></th>
             <th><b>Cod Producto</b></th>
             <th><b>Cantidad</b></th>
+            <th><b>Precio Unitario</b></th>
              <th><b>Producto</b></th>
             <th><b>Vendedor</b></th>
+            <th><b>cliente</b></th>
         </tr>
         </thead>
         <tbody>
 
        @foreach($listAnalisisDetProductByDate as $data)
             <tr>
-           
+
                 <td>{{date('d-m-Y', strtotime($data->cotizacion->fecha))}}</td>
+                <td>{{$data->cotizacion->codigo}}</td>
                 <td>{{$data->producto->codigo}}</td>
                 <td>{{$data->cantidad}}</td>
-                <td>{{$data->producto->familia->nombre}} , 
+                <td>{{$data->punit}}</td>
+                <td>{{$data->producto->familia->nombre}} ,
                     {{$data->producto->subfamilia->nombre}}
                      ,MODELO {{$data->producto->modelotipo->nombre}}
                      ,MARCA {{$data->producto->marca->nombre}}
@@ -36,6 +40,7 @@
                      {{$data->producto->homologacion->nombre}}
                     </td>
                 <td>{{$data->cotizacion->user->fullname}}</td>
+                <td>{{$data->cotizacion->cliente->razonsocial}}</td>
 
 
             </tr>

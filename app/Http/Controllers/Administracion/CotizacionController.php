@@ -642,7 +642,7 @@ class CotizacionController extends Controller
       public function AnalisisCotizacionListByDate(Request $request){
         $fecha1 = $request->fecha1;
         $fecha2 = $request->fecha2;
-        $dato =  DetalleCotizacion::with('cotizacion','cotizacion.user','producto','producto','producto.marca','producto.familia','producto.material','producto.modelotipo','producto.subfamilia','producto.homologacion')
+        $dato =  DetalleCotizacion::with('cotizacion','cotizacion.user','cotizacion.cliente','producto','producto','producto.marca','producto.familia','producto.material','producto.modelotipo','producto.subfamilia','producto.homologacion')
             ->whereHas('cotizacion', function (Builder $query) use ($fecha1, $fecha2) {$query->whereBetween('fecha',[$fecha1, $fecha2]);
             })->get();
         return $dato;

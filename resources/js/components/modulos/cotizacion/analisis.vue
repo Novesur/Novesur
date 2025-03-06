@@ -135,6 +135,7 @@
                                                         <th>Cod Product</th>
                                                         <th>Producto</th>
                                                         <th>Vendedor</th>
+                                                        <th>Cliente</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -165,6 +166,10 @@
                                                         ">
                                                         </td>
                                                         <td v-text="item.cotizacion.user.fullname"></td>
+
+                                                        <td>
+                                                            {{ item.cotizacion.cliente.razonsocial }}
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -389,6 +394,7 @@ export default {
                     },
                 })
                 .then((response) => {
+
                     this.listAnalisisDetProductByDate = response.data;
                 });
         },
