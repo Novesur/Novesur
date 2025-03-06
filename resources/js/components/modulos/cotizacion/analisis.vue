@@ -63,7 +63,7 @@
                                                     <div class="col">
                                                         <template v-if="
                                                             listRolPermisoByUsuario.includes(
-                                                                'cliente.Excel'
+                                                                'cotizacion_analisis.Excel'
                                                             )
                                                         ">
                                                             <button class="btn btn-flat btn-success"

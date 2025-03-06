@@ -7803,6 +7803,7 @@ __webpack_require__.r(__webpack_exports__);
           cSelectAnios: this.fillListCotizacion.cSelectAnios
         }
       }).then(function (response) {
+        console.log(response.data);
         _this2.listCotizacion = response.data;
       });
     },
@@ -28310,7 +28311,7 @@ var render = function render() {
     }
   }, [_vm._v("\n                                                        Buscar\n                                                    ")])]), _vm._v(" "), _c("div", {
     staticClass: "col"
-  }, [_vm.listRolPermisoByUsuario.includes("cliente.Excel") ? [_c("button", {
+  }, [_vm.listRolPermisoByUsuario.includes("cotizacion_analisis.Excel") ? [_c("button", {
     staticClass: "btn btn-flat btn-success",
     on: {
       click: function click($event) {
@@ -31653,11 +31654,7 @@ var render = function render() {
       domProps: {
         textContent: _vm._s(item.cotizacion.estadopedido.nombre)
       }
-    }), _vm._v(" "), _c("td", {
-      domProps: {
-        textContent: _vm._s(item.cotizacion.user.fullname)
-      }
-    }), _vm._v(" "), _c("td", [_c("button", {
+    }), _vm._v(" "), _c("td", [_vm._v(" " + _vm._s(item.cotizacion.user ? item.cotizacion.user.fullname : ""))]), _vm._v(" "), _c("td", [_c("button", {
       staticClass: "btn btn-danger btn-sm",
       on: {
         click: function click($event) {
@@ -31891,11 +31888,7 @@ var render = function render() {
       domProps: {
         textContent: _vm._s(item.estadopedido.nombre)
       }
-    }), _vm._v(" "), _c("td", {
-      domProps: {
-        textContent: _vm._s(item.user.fullname)
-      }
-    }), _vm._v(" "), _c("td", [_vm._v("\n                                                            " + _vm._s(_vm._f("formatPrice")(item.detalle_sum)) + "\n                                                        ")]), _vm._v(" "), _c("td", [_c("button", {
+    }), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.cotizacion.user ? item.cotizacion.user.fullname : ""))]), _vm._v(" "), _c("td", [_vm._v("\n                                                            " + _vm._s(_vm._f("formatPrice")(item.detalle_sum)) + "\n                                                        ")]), _vm._v(" "), _c("td", [_c("button", {
       staticClass: "btn btn-danger btn-sm",
       on: {
         click: function click($event) {

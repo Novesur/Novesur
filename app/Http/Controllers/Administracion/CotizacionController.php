@@ -421,6 +421,7 @@ class CotizacionController extends Controller
 
         if ($request->cSelectAnios >= '2022') {
             $dato = DetalleCotizacion::on('mysql')->with('cotizacion', 'cotizacion.cliente', 'cotizacion.estadopedido', 'cotizacion.user')->where('producto_id', $request->nIdprod)->get();
+
             return $dato;
         }
         if ($request->cSelectAnios == '2021') {

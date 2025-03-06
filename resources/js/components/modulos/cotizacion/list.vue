@@ -262,13 +262,8 @@
                                                                 "
                                                             ></td>
                                                             <td
-                                                                v-text="
-                                                                    item
-                                                                        .cotizacion
-                                                                        .user
-                                                                        .fullname
-                                                                "
-                                                            ></td>
+                                                            > {{ item.cotizacion.user ? item.cotizacion.user.fullname: '' }}</td>
+
                                                             <td>
                                                                 <button
                                                                     @click.prevent="
@@ -628,11 +623,8 @@
                                                                 "
                                                             ></td>
                                                             <td
-                                                                v-text="
-                                                                    item.user
-                                                                        .fullname
-                                                                "
-                                                            ></td>
+                                                            >{{ item.cotizacion.user ? item.cotizacion.user.fullname: '' }}</td>
+
 
                                                             <td>
                                                                 {{
@@ -972,6 +964,7 @@ export default {
                     },
                 })
                 .then((response) => {
+                console.log(response.data)
                     this.listCotizacion = response.data;
                 });
         },
