@@ -610,6 +610,9 @@ export default {
       if (!this.fillPapeletasalida.tHoraRetorno) {
         this.mensajeError.push("La Hora de retorno es obligatorio");
       }
+      if (!this.fillPapeletasalida.cDireccion) {
+        this.mensajeError.push("El campo Dirección es obligatorio");
+      }
 
       if (this.mensajeError.length) {
         this.error = 1;

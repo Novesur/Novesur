@@ -622,8 +622,12 @@
                                                                         .nombre
                                                                 "
                                                             ></td>
-                                                            <td
-                                                            >{{ item.cotizacion.user ? item.cotizacion.user.fullname: '' }}</td>
+                                                 <!--            <td
+                                                            >{{ item.cotizacion.user ? item.cotizacion.user.fullname: '' }}</td> -->
+
+                                                            <td v-if="item.user" v-text="item.user.fullname "></td>
+                                                            <td v-else></td>
+
 
 
                                                             <td>
@@ -992,6 +996,7 @@ export default {
                 })
                 .then((response) => {
                     this.listCotizacionByDate = response.data;
+                    console.log(response.data)
                 });
         },
 

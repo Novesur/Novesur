@@ -510,7 +510,9 @@ class CotizacionController extends Controller
     public function listCotizacionListByClient(Request $request)
     {
 
+
         $dato = Cotizacion::with('cliente', 'estadopedido', 'user', 'detalle')->where('cliente_id', $request->nIdClient)->orderBy('fecha', 'desc')->get();
+
 
 
         return collect($dato)->map(function ($item, $key) {

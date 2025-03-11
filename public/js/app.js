@@ -7827,6 +7827,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         _this4.listCotizacionByDate = response.data;
+        console.log(response.data);
       });
     },
     getlistCotizacionListByDate: function getlistCotizacionListByDate() {
@@ -16108,6 +16109,9 @@ __webpack_require__.r(__webpack_exports__);
       }
       if (!this.fillPapeletasalida.tHoraRetorno) {
         this.mensajeError.push("La Hora de retorno es obligatorio");
+      }
+      if (!this.fillPapeletasalida.cDireccion) {
+        this.mensajeError.push("El campo Dirección es obligatorio");
       }
       if (this.mensajeError.length) {
         this.error = 1;
@@ -31888,7 +31892,11 @@ var render = function render() {
       domProps: {
         textContent: _vm._s(item.estadopedido.nombre)
       }
-    }), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.cotizacion.user ? item.cotizacion.user.fullname : ""))]), _vm._v(" "), _c("td", [_vm._v("\n                                                            " + _vm._s(_vm._f("formatPrice")(item.detalle_sum)) + "\n                                                        ")]), _vm._v(" "), _c("td", [_c("button", {
+    }), _vm._v(" "), item.user ? _c("td", {
+      domProps: {
+        textContent: _vm._s(item.user.fullname)
+      }
+    }) : _c("td"), _vm._v(" "), _c("td", [_vm._v("\n                                                            " + _vm._s(_vm._f("formatPrice")(item.detalle_sum)) + "\n                                                        ")]), _vm._v(" "), _c("td", [_c("button", {
       staticClass: "btn btn-danger btn-sm",
       on: {
         click: function click($event) {
