@@ -251,7 +251,7 @@
                           <span>
                             <button
                               class="btn btn-flat btn-success"
-                              @click.prevent="setAddTempClient"
+                              @click.prevent="setAgregarPapeletaSalida"
                             >
                               Agregar
                             </button>
@@ -307,7 +307,7 @@
                   <div class="col-md-4 offset-4">
                     <button
                       class="btn btn-flat btn-info btnWidth"
-                      @click.prevent="setRegistrarPapeletaSalida"
+                      @click.prevent="setGrabarPapeletaSalida"
                     >
                       Guardar
                     </button>
@@ -544,12 +544,12 @@ export default {
     },
 
     limpiarCriteriosBsq() {},
-    setRegistrarPapeletaSalida() {
+    setAgregarPapeletaSalida() {
       if (this.validaPapeletaSalida()) {
         this.modalShow = true;
         return;
       }
-      this.setGrabarPapeletaSalida();
+      this.setAddTempClient();
     },
 
     setGrabarPapeletaSalida() {

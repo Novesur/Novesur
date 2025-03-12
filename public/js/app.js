@@ -16049,12 +16049,12 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     limpiarCriteriosBsq: function limpiarCriteriosBsq() {},
-    setRegistrarPapeletaSalida: function setRegistrarPapeletaSalida() {
+    setAgregarPapeletaSalida: function setAgregarPapeletaSalida() {
       if (this.validaPapeletaSalida()) {
         this.modalShow = true;
         return;
       }
-      this.setGrabarPapeletaSalida();
+      this.setAddTempClient();
     },
     setGrabarPapeletaSalida: function setGrabarPapeletaSalida() {
       var _this6 = this;
@@ -48747,7 +48747,7 @@ var render = function render() {
     on: {
       click: function click($event) {
         $event.preventDefault();
-        return _vm.setAddTempClient.apply(null, arguments);
+        return _vm.setAgregarPapeletaSalida.apply(null, arguments);
       }
     }
   }, [_vm._v("\n                            Agregar\n                          ")]), _vm._v(" "), _c("button", {
@@ -48793,7 +48793,7 @@ var render = function render() {
     on: {
       click: function click($event) {
         $event.preventDefault();
-        return _vm.setRegistrarPapeletaSalida.apply(null, arguments);
+        return _vm.setGrabarPapeletaSalida.apply(null, arguments);
       }
     }
   }, [_vm._v("\n                    Guardar\n                  ")]), _vm._v(" "), _c("button", {
