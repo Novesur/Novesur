@@ -181,7 +181,6 @@
                                     type="text"
                                     class="form-control"
                                     v-model="fillPapeletasalida.nIdRuc"
-                                    v-int
                                     :disabled="this.fillPapeletasalida.estadoMotivo"
                                   />
                                 </div>
@@ -203,17 +202,17 @@
                             </div>
                           </div>
                         </div>
-
+<!-- 
                         <div class="col-md-12">
                           <div class="row">
                             <div class="col-md-6">
                               <div class="form-group row">
                                 <label class="col-md-2 col-form-label">Otros</label>
                                 <div class="col-md-9">
-                                  <el-radio v-model="rpapeleta" label="680"
+                                  <el-radio v-model="rpapeleta" label="6"
                                     >Cliente en Evaluacion</el-radio
                                   >
-                                  <el-radio v-model="rpapeleta" label="729"
+                                  <el-radio v-model="rpapeleta" label="2"
                                     >Despacho</el-radio
                                   >
                                 </div>
@@ -221,7 +220,7 @@
                             </div>
                           </div>
                         </div>
-
+ -->
                         <div class="col-md-6">
                           <div class="form-group row">
                             <label class="col-md-2 col-form-label">Contacto</label>
@@ -553,7 +552,7 @@ export default {
     },
 
     setGrabarPapeletaSalida() {
-      var url = "/administracion/papeletasalida/create";
+      var url = "/administracion/papeletasalida/create"; 
       let today = new Date();
       const hora = today.toLocaleTimeString();
       const fecha = today.toLocaleDateString();
@@ -618,7 +617,7 @@ export default {
         this.error = 1;
       }
 
-      return this.error;
+      return this.error; 
     },
 
     setResetCampos() {

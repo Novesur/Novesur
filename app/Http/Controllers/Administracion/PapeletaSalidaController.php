@@ -83,21 +83,28 @@ if ($tiempo  >= $tiempoMax) {
             }
 
 
-            //Si motivo es Despacho /  Si motivo es Ventas
-            if ($request->nIdMotivo == 2 || $request->nIdMotivo == 3) {
-                $clientPapeletaSalida = Session::get('clients');
-                $allclients = $clientPapeletaSalida->map(function ($PS) use ($PapeletaSalida) {
+            //Si motivo es Despacho /  Si motivo es Ventas o Evaluadion 
 
-                    return [
-                        'papeletasalida_id' => $PapeletaSalida->id,
-                        'cliente_id'      =>  $PS->id,
-                        'contacto' => $PS->contacto,
-                        'direccion'   => $PS->direccion,
-                    ];
-                });
+            if ($request->nIdMotivo == 2 || $request->nIdMotivo == 3 || $request->nIdMotivo == 6) {
+                $validaCampos = empty($request->listTempClientPSalida);
+                if(!$validaCampos){
 
-                ClientsPapeletaSalida::insert($allclients->toArray());
-                return response()->json(['message' => 'Papeleta de Salida grabado', 'icon' => 'success'], 200);
+                    $clientPapeletaSalida = Session::get('clients');
+                    $allclients = $clientPapeletaSalida->map(function ($PS) use ($PapeletaSalida) {
+    
+                        return [
+                            'papeletasalida_id' => $PapeletaSalida->id,
+                            'cliente_id'      =>  $PS->id,
+                            'contacto' => $PS->contacto,
+                            'direccion'   => $PS->direccion,
+                        ];
+                    });
+    
+                    ClientsPapeletaSalida::insert($allclients->toArray());
+                    return response()->json(['message' => 'Papeleta de Salida grabado', 'icon' => 'success'], 200);
+                }else{
+                    return response()->json(['message' => 'Agregue todo los datos del cliente requeridos a la lista por favor', 'icon' => 'error'], 200);
+                }
             }
 
 }else{

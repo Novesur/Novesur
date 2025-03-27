@@ -36,7 +36,7 @@ class OrdencompraController extends Controller
         $ordenCompra->LugarEntrega = $request->cLEntrega;
         $ordenCompra->pago_id = $request->nIdTipoPago;
         $ordenCompra->user_id = $ordenCompra->user_id;
-        $ordenCompra->estadoordencompra_id = $proveedor->tipo_ordencompra_id;
+        $ordenCompra->estadoordencompra_id = 2;
         $ordenCompra->observacion = $request->cObservacion;
         $ordenCompra->tipocambio_id = $request->nIdTipoMoneda;
         $ordenCompra->tipo_ordencompra_id = $proveedor->tipo_ordencompra_id;
@@ -221,6 +221,7 @@ class OrdencompraController extends Controller
 
         if ($request->nidProveedor == null && $request->dFecha == null ) {
             $dato = Ordencompra::with('proveedor', 'user', 'estadoordencompra', 'pago')
+            ->where('tipo_ordencompra_id',$request->nIdtipoCompra)
             ->orderBy('Femision','desc')->get();
     /*         $dato = Ordencompra::with('proveedor', 'user', 'estadoordencompra', 'pago')
             ->whereBetween('Femision', [ $anio.'-'.'01-01', $factual])->get(); */

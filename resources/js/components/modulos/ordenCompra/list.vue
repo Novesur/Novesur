@@ -144,7 +144,7 @@
 
                                                             <!--
                                 </template> -->
-                                                            <template v-if="
+                                                         <!--    <template v-if="
                                                                 listRolPermisoByUsuario.includes(
                                                                     'ordencompra.aprobar'
                                                                 )
@@ -166,7 +166,7 @@
                                                                             class="far fa-hand-point-down"></i>Desaprobado
                                                                     </button>
                                                                 </template>
-                                                            </template>
+                                                            </template> -->
                                                             <template v-if="
                                                                 listRolPermisoByUsuario.includes(
                                                                     'cotizacion.create'
@@ -565,7 +565,7 @@ export default {
         },
 
         getListarOrdenCompraxProveedor() {
-            var url = "/administracion/ordenCompra/ListXProveedor";
+            var url = "/administracion/ordenCompra/ListXProveedor"; 
             axios
                 .get(url, {
                     params: {
@@ -613,7 +613,6 @@ export default {
                     config
                 )
                 .then((response) => {
-                    console.log(response.data);
                     var oMyBlob = new Blob([response.data], { type: "application/pdf" });
                     var url = URL.createObjectURL(oMyBlob);
                     window.open(url);

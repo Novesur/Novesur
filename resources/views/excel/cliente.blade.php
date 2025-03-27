@@ -12,6 +12,7 @@
         <tr>
             <th><b>Vendedor</b></th>
             <th><b>Razon Social</b></th>
+            <th><b>Dirección</b></th>
             <th><b>Ruc</b></th>
             <th><b>Atencion</b></th>
             <th><b>Telefono</b></th>
@@ -32,6 +33,7 @@
                 <td>{{$data->user->fullname}}</td>
                 @endif
                 <td>{{$data->razonsocial}}</td>
+                <td>{{$data->direccion}}</td>
                 <td>{{$data->ruc}}</td>
                 <td>{{$data->atencion}}</td>
                 <td>{{$data->telefono}}</td>

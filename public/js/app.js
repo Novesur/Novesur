@@ -14830,7 +14830,6 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
           idOrderPedido: idOrderPedido
         }
       }, config).then(function (response) {
-        console.log(response.data);
         var oMyBlob = new Blob([response.data], {
           type: "application/pdf"
         });
@@ -45721,27 +45720,7 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "fas fa-pencil-alt"
-    }), _vm._v(" Editar\n                                                        ")]), _vm._v(" "), _vm.listRolPermisoByUsuario.includes("ordencompra.aprobar") ? [item.estadoordencompra_id == 1 ? [_c("button", {
-      staticClass: "btn btn-success btn-sm",
-      on: {
-        click: function click($event) {
-          $event.preventDefault();
-          return _vm.SetCambiarAprobacion(item.id, 2);
-        }
-      }
-    }, [_c("i", {
-      staticClass: "fas fa-hand-point-up"
-    }), _vm._v(" Aprobado\n                                                                ")])] : [_c("button", {
-      staticClass: "btn btn-secondary btn-sm",
-      on: {
-        click: function click($event) {
-          $event.preventDefault();
-          return _vm.SetCambiarAprobacion(item.id, 1);
-        }
-      }
-    }, [_c("i", {
-      staticClass: "far fa-hand-point-down"
-    }), _vm._v("Desaprobado\n                                                                ")])]] : _vm._e(), _vm._v(" "), _vm.listRolPermisoByUsuario.includes("cotizacion.create") ? void 0 : _vm._e()], 2)]);
+    }), _vm._v(" Editar\n                                                        ")]), _vm._v(" "), _vm.listRolPermisoByUsuario.includes("cotizacion.create") ? void 0 : _vm._e()], 2)]);
   }), 0)]), _vm._v(" "), _c("div", {
     staticClass: "card-footer clearfix"
   }, [_c("ul", {
@@ -48612,9 +48591,6 @@ var render = function render() {
       rawName: "v-model",
       value: _vm.fillPapeletasalida.nIdRuc,
       expression: "fillPapeletasalida.nIdRuc"
-    }, {
-      name: "int",
-      rawName: "v-int"
     }],
     staticClass: "form-control",
     attrs: {
@@ -48651,40 +48627,6 @@ var render = function render() {
   }, [_c("i", {
     staticClass: "fas fa-sync-alt"
   })])])])])])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-12"
-  }, [_c("div", {
-    staticClass: "row"
-  }, [_c("div", {
-    staticClass: "col-md-6"
-  }, [_c("div", {
-    staticClass: "form-group row"
-  }, [_c("label", {
-    staticClass: "col-md-2 col-form-label"
-  }, [_vm._v("Otros")]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-9"
-  }, [_c("el-radio", {
-    attrs: {
-      label: "680"
-    },
-    model: {
-      value: _vm.rpapeleta,
-      callback: function callback($$v) {
-        _vm.rpapeleta = $$v;
-      },
-      expression: "rpapeleta"
-    }
-  }, [_vm._v("Cliente en Evaluacion")]), _vm._v(" "), _c("el-radio", {
-    attrs: {
-      label: "729"
-    },
-    model: {
-      value: _vm.rpapeleta,
-      callback: function callback($$v) {
-        _vm.rpapeleta = $$v;
-      },
-      expression: "rpapeleta"
-    }
-  }, [_vm._v("Despacho")])], 1)])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-6"
   }, [_c("div", {
     staticClass: "form-group row"
@@ -48750,7 +48692,7 @@ var render = function render() {
         return _vm.setAgregarPapeletaSalida.apply(null, arguments);
       }
     }
-  }, [_vm._v("\n                            Agregar\n                          ")]), _vm._v(" "), _c("button", {
+  }, [_vm._v("\n                              Agregar\n                            ")]), _vm._v(" "), _c("button", {
     staticClass: "btn btn-flat btn-info",
     on: {
       click: function click($event) {
@@ -48758,14 +48700,14 @@ var render = function render() {
         return _vm.setResetCamposClientTemp.apply(null, arguments);
       }
     }
-  }, [_vm._v("\n                            Limpiar\n                          ")])])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                              Limpiar\n                            ")])])])])]), _vm._v(" "), _c("div", {
     staticClass: "card-body table-responsive"
   }, [_c("table", {
     staticClass: "table table-hover table-head-fixed text-nowrap projects"
   }, [_vm._m(3), _vm._v(" "), _c("tbody", _vm._l(_vm.listTempClientPSalida, function (item, index) {
     return _c("tr", {
       key: index
-    }, [_c("td", [_vm._v("\n                            " + _vm._s(item.razonsocial) + "\n                          ")]), _vm._v(" "), _c("td", {
+    }, [_c("td", [_vm._v("\n                              " + _vm._s(item.razonsocial) + "\n                            ")]), _vm._v(" "), _c("td", {
       domProps: {
         textContent: _vm._s(item.direccion)
       }
@@ -48781,7 +48723,7 @@ var render = function render() {
           return _vm.getEliminarClientTemp(item.id);
         }
       }
-    }, [_vm._m(4, true), _vm._v("\n                            Eliminar\n                          ")])]);
+    }, [_vm._m(4, true), _vm._v("\n                              Eliminar\n                            ")])]);
   }), 0)])])])])]), _vm._v(" "), _c("div", {
     staticClass: "card-footer"
   }, [_c("div", {
@@ -48796,7 +48738,7 @@ var render = function render() {
         return _vm.setGrabarPapeletaSalida.apply(null, arguments);
       }
     }
-  }, [_vm._v("\n                    Guardar\n                  ")]), _vm._v(" "), _c("button", {
+  }, [_vm._v("\n                      Guardar\n                    ")]), _vm._v(" "), _c("button", {
     staticClass: "btn btn-flat btn-default btnWidth",
     on: {
       click: function click($event) {
@@ -48804,7 +48746,7 @@ var render = function render() {
         return _vm.setResetCampos.apply(null, arguments);
       }
     }
-  }, [_vm._v("\n                    Limpiar\n                  ")])])])])])])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                      Limpiar\n                    ")])])])])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "modal fade",
     "class": {
       show: _vm.modalShow
