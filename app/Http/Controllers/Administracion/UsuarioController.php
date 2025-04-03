@@ -36,6 +36,7 @@ class UsuarioController extends Controller
         $user->password = Hash::make($request->cPassword);
         $user->gradousers_id = $request->nIdGradoAcad;
         $user->zonal_id = $request->nIdZonal;
+        $user->estado_edit_cliente = 0;
         $user->save();
     }
 
@@ -55,23 +56,24 @@ class UsuarioController extends Controller
 
         if (!$request->ajax()) return redirect('/');
 
-        $Usuario = User::where('id', $request->nIdUsuario)->first();
+        $usuario = User::where('id', $request->nIdUsuario)->first();
 
-        if ($Usuario) {
-            $Usuario->firstname = strtoupper($request->cFirstname);
-            $Usuario->secondname = strtoupper($request->cSecondname);
-            $Usuario->lastname = strtoupper($request->cLastname);
-            $Usuario->username = $request->cUsername;
-            $Usuario->email = $request->cEmail;
-            $Usuario->celular = $request->cCelular;
-            $Usuario->roles_id = $request->nIdRol;
-            $Usuario->almacen_id =  $Usuario->almacen_id;
+        if ($usuario) {
+            $usuario->firstname = strtoupper($request->cFirstname);
+            $usuario->secondname = strtoupper($request->cSecondname);
+            $usuario->lastname = strtoupper($request->cLastname);
+            $usuario->username = $request->cUsername;
+            $usuario->email = $request->cEmail;
+            $usuario->celular = $request->cCelular;
+            $usuario->roles_id = $request->nIdRol;
+            $usuario->almacen_id =  $usuario->almacen_id;
             if (trim($request->cPassword) != NULL) {
-                $Usuario->password = Hash::make($request->cPassword);
+                $usuario->password = Hash::make($request->cPassword);
             }
-            $Usuario->gradousers_id = $request->nIdGradoAcad;
-            $Usuario->zonal_id = $request->nIdZonal;
-            $Usuario->save(); 
+            $usuario->gradousers_id = $request->nIdGradoAcad;
+            $usuario->zonal_id = $request->nIdZonal;
+            $usuario->estado_edit_cliente = $usuario->estado_edit_cliente;
+            $usuario->save();
         }
     }
 

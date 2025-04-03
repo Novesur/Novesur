@@ -413,6 +413,15 @@ export default new Router({
                 .default,
         },
 
+        /* COTIZACION LIBRE */
+        {
+            path: "/cotizacion_libre/create/:id",
+            name: "cotizacion_libre.create",
+            component: require("./components/modulos/cotizacion_libre/create")
+                .default,
+            props: true,
+        },
+
         /// REPORTE DE COTIZACION EN PDF
 
         {

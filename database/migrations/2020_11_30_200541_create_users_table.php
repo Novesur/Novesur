@@ -30,6 +30,7 @@ class CreateUsersTable extends Migration
             $table->foreign('gradousers_id')->references('id')->on('gradousers');
             $table->unsignedBigInteger('zonal_id');
             $table->foreign('zonal_id')->references('id')->on('zonal');
+            $table->tinyInteger('estado_edit_cliente')->default(0);
             $table->timestamps();
             $table->softDeletes();
 

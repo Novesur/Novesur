@@ -8381,6 +8381,359 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/modulos/cotizacion_libre/create.vue?vue&type=script&lang=js":
+/*!*****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/modulos/cotizacion_libre/create.vue?vue&type=script&lang=js ***!
+  \*****************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ingreso_almacen_shared_listStock_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../ingreso_almacen/shared/listStock.vue */ "./resources/js/components/modulos/ingreso_almacen/shared/listStock.vue");
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      fillregistrarCotizacionLibre: {
+        nIdCliente: this.$attrs.id,
+        nIdUsuario: "",
+        nIdDescripPago: "",
+        nIdGarantia: "",
+        cNomClient: "",
+        cDirClient: "",
+        cRucClient: "",
+        cAtencion: "",
+        cFonoClient: "",
+        cCantidad: "",
+        cEmail: "",
+        cVendedor: "",
+        cEmailVendedor: "",
+        cCeluVendedor: "",
+        cCentral: "01-2822376",
+        vidUSer: "",
+        nIdUnidMed: "",
+        nIdTipoPago: "",
+        nIdprod: "",
+        cPUnit: "",
+        cValidez: "",
+        cEntrega: "",
+        cFPago: "",
+        cFlete: "",
+        Docu: "",
+        cGarantia: "",
+        cTotal: "",
+        cEstado: "",
+        cPuntoLlegada: "",
+        cTransporte: "",
+        Cconsignado: "",
+        cObservacion: "",
+        ctipoPrecio: "",
+        cStock: ""
+      },
+      listUnidMed: [],
+      listTipoPago: [],
+      listProd: [],
+      listDescripPago: [],
+      listGarantia: [],
+      listarProductosPaginated: [],
+      listStock: [],
+      modalShow: false,
+      mostrarModal: {
+        display: "block",
+        background: "#0000006b"
+      },
+      ocultarModal: {
+        display: "none"
+      },
+      error: 0,
+      mensajeError: []
+    };
+  },
+  components: {
+    listStock: _ingreso_almacen_shared_listStock_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  mounted: function mounted() {
+    this.getClienteById();
+    this.getListarUnidadMedida();
+    this.getListarproductosByName();
+    this.getListarTipoPago();
+    this.setListtempCotizacion();
+    this.cargaDatosPredeterminados();
+    this.getlistDescricionPago();
+    this.getListGarantia();
+  },
+  methods: {
+    getlistDescricionPago: function getlistDescricionPago() {
+      var _this = this;
+      var url = "/administracion/pago/index";
+      axios.get(url).then(function (response) {
+        _this.listDescripPago = response.data;
+        _this.fillregistrarCotizacionLibre.nIdDescripPago = _this.listDescripPago[0].id;
+      });
+    },
+    getListGarantia: function getListGarantia() {
+      var _this2 = this;
+      var url = "/administracion/garantia/index";
+      axios.get(url).then(function (response) {
+        _this2.listGarantia = response.data;
+        _this2.fillregistrarCotizacionLibre.nIdGarantia = _this2.listGarantia[0].id;
+      });
+    },
+    abrirModal: function abrirModal() {
+      this.modalShow = !this.modalShow;
+    },
+    getClienteById: function getClienteById() {
+      var _this3 = this;
+      var url = "/administracion/cliente/listClientesById";
+      axios.get(url, {
+        params: {
+          nIdCliente: this.fillregistrarCotizacionLibre.nIdCliente
+        }
+      }).then(function (response) {
+        _this3.fillregistrarCotizacionLibre.cNomClient = response.data.razonsocial;
+        _this3.fillregistrarCotizacionLibre.cDirClient = response.data.direccion;
+        _this3.fillregistrarCotizacionLibre.cRucClient = response.data.ruc;
+        _this3.fillregistrarCotizacionLibre.cAtencion = response.data.atencion;
+        _this3.fillregistrarCotizacionLibre.cFonoClient = response.data.telefono;
+        _this3.fillregistrarCotizacionLibre.cEmail = response.data.email;
+        _this3.fillregistrarCotizacionLibre.ctipoPrecio = response.data.tipoPrecio;
+        _this3.fillregistrarCotizacionLibre.vidUSer = JSON.parse(sessionStorage.getItem("iduser"));
+        _this3.getUsuarioById();
+        //console.log(this.fillregistrarCotizacionLibre.vidUSer);
+      });
+    },
+    getUsuarioById: function getUsuarioById() {
+      var _this4 = this;
+      var url = "/administracion/usuario/listUsuarioById";
+      axios.get(url, {
+        params: {
+          nIdUsuario: this.fillregistrarCotizacionLibre.vidUSer
+        }
+      }).then(function (response) {
+        _this4.fillregistrarCotizacionLibre.cVendedor = response.data.fullname;
+        _this4.fillregistrarCotizacionLibre.cEmailVendedor = response.data.email;
+        _this4.fillregistrarCotizacionLibre.cCeluVendedor = response.data.celular;
+        //console.log(response.data);
+      });
+    },
+    limpiarCotizacionBsq: function limpiarCotizacionBsq() {
+      this.fillregistrarCotizacionLibre.cEntrega = "";
+      this.fillregistrarCotizacionLibre.cValidez = "";
+      this.fillregistrarCotizacionLibre.cFPago = "";
+      this.fillregistrarCotizacionLibre.cFlete = "";
+      this.fillregistrarCotizacionLibre.Docu = "";
+      this.fillregistrarCotizacionLibre.cGarantia = "";
+      this.fillregistrarCotizacionLibre.cCantidad = "";
+      this.fillregistrarCotizacionLibre.cMedida = "";
+      this.fillregistrarCotizacionLibre.cDescripcion = "";
+      this.fillregistrarCotizacionLibre.cPUnit = "";
+      this.fillregistrarCotizacionLibre.cTotal = "";
+    },
+    getListarUnidadMedida: function getListarUnidadMedida() {
+      var _this5 = this;
+      var url = "/administracion/KardexDetalle/listUnidMed";
+      axios.get(url).then(function (response) {
+        _this5.listUnidMed = response.data;
+        _this5.fillregistrarCotizacionLibre.nIdUnidMed = _this5.listUnidMed[7].id;
+      });
+    },
+    getListarTipoPago: function getListarTipoPago() {
+      var _this6 = this;
+      var url = "/administracion/cotizacion/listTipoPago";
+      axios.get(url).then(function (response) {
+        _this6.listTipoPago = response.data;
+        _this6.fillregistrarCotizacionLibre.nIdTipoPago = _this6.listTipoPago[0].id;
+      });
+    },
+    getListarproductosByName: function getListarproductosByName() {
+      var _this7 = this;
+      var url = "/administracion/detallecotizancion/listProdByName";
+      axios.get(url, {
+        params: {
+          nIdprod: this.fillregistrarCotizacionLibre.nIdprod
+        }
+      }).then(function (response) {
+        _this7.listProd = response.data;
+      });
+    },
+    setRegistrarCotizacionLibre: function setRegistrarCotizacionLibre() {
+      if (this.validarCotizacion()) {
+        this.modalShow = true;
+        return;
+      }
+      this.setAddTempCotizacion();
+    },
+    validarCotizacion: function validarCotizacion() {
+      this.error = 0;
+      this.mensajeError = [];
+      if (!this.fillregistrarCotizacionLibre.cValidez) {
+        this.mensajeError.push("La validacion de Oferta es un campo obligatorio");
+      }
+      if (!this.fillregistrarCotizacionLibre.cEntrega) {
+        this.mensajeError.push("El Campo Entrega es un campo obligatorio");
+      }
+      if (!this.fillregistrarCotizacionLibre.cFlete) {
+        this.mensajeError.push("El Campo Flete es un campo obligatorio");
+      }
+      if (!this.fillregistrarCotizacionLibre.Docu) {
+        this.mensajeError.push("El Campo Documento es un campo obligatorio");
+      }
+      if (!this.fillregistrarCotizacionLibre.cCantidad) {
+        this.mensajeError.push("El Campo Cantidad es un campo obligatorio");
+      }
+      if (!this.fillregistrarCotizacionLibre.nIdUnidMed) {
+        this.mensajeError.push("El Campo Medida es un campo obligatorio");
+      }
+      if (!this.fillregistrarCotizacionLibre.nIdprod) {
+        this.mensajeError.push("El Campo Medidor es un campo obligatorio");
+      }
+      if (!this.fillregistrarCotizacionLibre.cPUnit) {
+        this.mensajeError.push("El Campo P.Unit es un campo obligatorio");
+      }
+      if (this.mensajeError.length) {
+        this.error = 1;
+      }
+      return this.error;
+    },
+    setAddTempCotizacion: function setAddTempCotizacion() {
+      var _this8 = this;
+      var url = "cotizacionLibre/addTempCotizacionLibre";
+      axios.post(url, {
+        cCantidad: this.fillregistrarCotizacionLibre.cCantidad,
+        nIdUnidMed: this.fillregistrarCotizacionLibre.nIdUnidMed,
+        nIdprod: this.fillregistrarCotizacionLibre.nIdprod,
+        cPUnit: this.fillregistrarCotizacionLibre.cPUnit,
+        cTotal: this.fillregistrarCotizacionLibre.cTotal,
+        nIdCliente: this.fillregistrarCotizacionLibre.nIdCliente
+      }).then(function (response) {
+        if (response.data.icon == "error") {
+          Swal.fire({
+            position: "center",
+            icon: response.data.icon,
+            title: response.data.message,
+            showConfirmButton: false,
+            timer: 1500
+          });
+        } else {
+          _this8.listarProductosPaginated = response.data.datos;
+          _this8.limpiaItems();
+        }
+
+        /*          if (response.data.message == "Ya fue agregado anteriormente") {
+        Swal.fire({
+        position: "center",
+        icon: response.data.icon,
+        title: response.data.message,
+        showConfirmButton: false,
+        timer: 1500,
+        });
+        } */
+      });
+    },
+    setGrabarCotizacion: function setGrabarCotizacion() {
+      var _this9 = this;
+      var url = "/administracion/tempcotizacion/grabaCotizacion";
+      axios.post(url, {
+        nIdCliente: this.fillregistrarCotizacionLibre.nIdCliente,
+        nIdUsuario: this.fillregistrarCotizacionLibre.vidUSer,
+        cEstado: 3,
+        cValidez: this.fillregistrarCotizacionLibre.cValidez,
+        cEntrega: this.fillregistrarCotizacionLibre.cEntrega,
+        nIdTipoPago: this.fillregistrarCotizacionLibre.nIdTipoPago,
+        nIdDescripPago: this.fillregistrarCotizacionLibre.nIdDescripPago,
+        cFPago: this.fillregistrarCotizacionLibre.cFPago,
+        cFlete: this.fillregistrarCotizacionLibre.cFlete,
+        Docu: this.fillregistrarCotizacionLibre.Docu,
+        nIdGarantia: this.fillregistrarCotizacionLibre.nIdGarantia,
+        cGarantia: this.fillregistrarCotizacionLibre.cGarantia,
+        cPuntoLlegada: this.fillregistrarCotizacionLibre.cPuntoLlegada,
+        cTransporte: this.fillregistrarCotizacionLibre.cTransporte,
+        Cconsignado: this.fillregistrarCotizacionLibre.Cconsignado,
+        cObservacion: this.fillregistrarCotizacionLibre.cObservacion,
+        listarProductosPaginated: this.listarProductosPaginated
+      }).then(function (response) {
+        if (response.data.icon == "warning") {
+          Swal.fire({
+            position: "center",
+            icon: response.data.icon,
+            title: response.data.message,
+            showConfirmButton: false,
+            timer: 3000
+          });
+        } else {
+          Swal.fire({
+            position: "center",
+            icon: response.data.icon,
+            title: response.data.message,
+            showConfirmButton: false,
+            timer: 3000
+          });
+          _this9.eliminarTempitemCoti();
+          _this9.fillregistrarCotizacionLibre.nIdprod = "";
+        }
+      });
+    },
+    setListtempCotizacion: function setListtempCotizacion() {
+      var _this10 = this;
+      var url = "/administracion/tempcotizacion/ListtempCotizacion";
+      axios.get(url, {}).then(function (response) {
+        _this10.listarProductosPaginated = response.data.datos;
+      });
+    },
+    eliminarTempitemCoti: function eliminarTempitemCoti() {
+      var _this11 = this;
+      var url = "/administracion/tempcotizacion/eliminarTempitemCoti";
+      axios.post(url).then(function (response) {
+        _this11.setListtempCotizacion();
+      });
+    },
+    setCalculaTotal: function setCalculaTotal() {
+      var a = parseFloat(this.fillregistrarCotizacionLibre.cCantidad);
+      var b = parseFloat(this.fillregistrarCotizacionLibre.cPUnit);
+      var c = a * b;
+      this.fillregistrarCotizacionLibre.cTotal = parseFloat(c).toFixed(2);
+    },
+    limpiaItems: function limpiaItems() {
+      this.fillregistrarCotizacionLibre.cCantidad = "";
+      this.fillregistrarCotizacionLibre.cMedida = "";
+      this.fillregistrarCotizacionLibre.cDescripcion = "";
+      this.fillregistrarCotizacionLibre.cPUnit = "";
+      this.fillregistrarCotizacionLibre.cTotal = "";
+    },
+    borradoItems: function borradoItems(item) {
+      var _this12 = this;
+      var url = "/administracion/tempcotizacion/reorder";
+      axios.post(url, {
+        item: item
+      }).then(function (response) {
+        _this12.listarProductosPaginated = response.data.datos;
+        // this.fillregistrarCotizacionLibre.nIdprod = '';
+
+        //console.log(item);
+      });
+    },
+    cargaDatosPredeterminados: function cargaDatosPredeterminados() {
+      this.fillregistrarCotizacionLibre.cValidez = "15 días";
+      this.fillregistrarCotizacionLibre.Docu = "Factura, guía y carta de Garantía";
+      this.fillregistrarCotizacionLibre.cFlete = "NOVESUR";
+    },
+    getListStock: function getListStock() {
+      var _this13 = this;
+      var url = "/administracion/parteingSalida/listStockByproduct";
+      axios.get(url, {
+        params: {
+          nIdprod: this.fillregistrarCotizacionLibre.nIdprod
+        }
+      }).then(function (response) {
+        _this13.listStock = response.data;
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/modulos/dashboard/index.vue?vue&type=script&lang=js":
 /*!*********************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/modulos/dashboard/index.vue?vue&type=script&lang=js ***!
@@ -27696,7 +28049,7 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "fas fa-plus-square"
-  }), _vm._v(" Nuevo Clientes\n            ")])] : _vm._e(), _vm._v(" "), _vm.listRolPermisoByUsuario.includes("cliente.Excel") ? [_c("button", {
+  }), _vm._v(" Nuevo\n                            Clientes\n                        ")])] : _vm._e(), _vm._v(" "), _vm.listRolPermisoByUsuario.includes("cliente.Excel") ? [_c("button", {
     staticClass: "btn btn-success btn-sm",
     on: {
       click: function click($event) {
@@ -27731,7 +28084,7 @@ var render = function render() {
       name: "model",
       rawName: "v-model",
       value: _vm.fillBsqProveedor.cNombre,
-      expression: "fillBsqProveedor.cNombre"
+      expression: "\n                                                        fillBsqProveedor.cNombre\n                                                    "
     }],
     staticClass: "form-control",
     attrs: {
@@ -27763,7 +28116,7 @@ var render = function render() {
       name: "model",
       rawName: "v-model",
       value: _vm.fillBsqProveedor.cRuc,
-      expression: "fillBsqProveedor.cRuc"
+      expression: "\n                                                        fillBsqProveedor.cRuc\n                                                    "
     }],
     staticClass: "form-control",
     attrs: {
@@ -27805,7 +28158,7 @@ var render = function render() {
       callback: function callback($$v) {
         _vm.$set(_vm.fillBsqProveedor, "nIdVendedor", $$v);
       },
-      expression: "fillBsqProveedor.nIdVendedor"
+      expression: "\n                                                            fillBsqProveedor.nIdVendedor\n                                                        "
     }
   }, _vm._l(_vm.listVendedorUser, function (item) {
     return _c("el-option", {
@@ -27829,7 +28182,7 @@ var render = function render() {
         return _vm.getListarCliente.apply(null, arguments);
       }
     }
-  }, [_vm._v("\n                    Buscar\n                  ")]), _vm._v(" "), _c("button", {
+  }, [_vm._v("\n                                        Buscar\n                                    ")]), _vm._v(" "), _c("button", {
     staticClass: "btn btn-flat btn-default btnWidth",
     on: {
       click: function click($event) {
@@ -27837,13 +28190,13 @@ var render = function render() {
         return _vm.limpiarClienteBsq.apply(null, arguments);
       }
     }
-  }, [_vm._v("\n                    Limpiar\n                  ")])])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                                        Limpiar\n                                    ")])])])])]), _vm._v(" "), _c("div", {
     staticClass: "card card-info"
   }, [_vm._m(3), _vm._v(" "), _c("div", {
     staticClass: "card-body table-responsive"
   }, [_c("table", {
     staticClass: "table table-hover table-head-fixed text-nowrap projects"
-  }, [_c("thead", [_c("tr", [_c("th", [_vm._v("Cotizar")]), _vm._v(" "), _c("th", [_vm._v("Acciones")]), _vm._v(" "), _c("th", [_vm._v("Vendedor")]), _vm._v(" "), _vm.listRolPermisoByUsuario.includes("cliente.fcreacion") ? _c("th", [_vm._v("F.Creacion")]) : _vm._e(), _vm._v(" "), _c("th", [_vm._v("Razon Social")]), _vm._v(" "), _c("th", [_vm._v("Ruc")]), _vm._v(" "), _c("th", [_vm._v("Atencion")]), _vm._v(" "), _c("th", [_vm._v("Telefono")]), _vm._v(" "), _c("th", [_vm._v("Celular")]), _vm._v(" "), _c("th", [_vm._v("Email")])])]), _vm._v(" "), _c("tbody", _vm._l(_vm.listarClientesPaginated, function (item, index) {
+  }, [_c("thead", [_c("tr", [_c("th", [_vm._v("Cotizar")]), _vm._v(" "), _c("th", [_vm._v("Acciones")]), _vm._v(" "), _c("th", [_vm._v("Vendedor")]), _vm._v(" "), _vm.listRolPermisoByUsuario.includes("cliente.fcreacion") ? _c("th", [_vm._v("\n                                            F.Creacion\n                                        ")]) : _vm._e(), _vm._v(" "), _c("th", [_vm._v("Razon Social")]), _vm._v(" "), _c("th", [_vm._v("Ruc")]), _vm._v(" "), _c("th", [_vm._v("Atencion")]), _vm._v(" "), _c("th", [_vm._v("Telefono")]), _vm._v(" "), _c("th", [_vm._v("Celular")]), _vm._v(" "), _c("th", [_vm._v("Email")])])]), _vm._v(" "), _c("tbody", _vm._l(_vm.listarClientesPaginated, function (item, index) {
     return _c("tr", {
       key: index
     }, [_c("td", [_vm.listRolPermisoByUsuario.includes("cotizacion.create") ? [_c("router-link", {
@@ -27858,7 +28211,7 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "far fa-clipboard"
-    }), _vm._v(" Cotizar\n                        ")])] : _vm._e()], 2), _vm._v(" "), _vm.listRolPermisoByUsuario.includes("cliente.editar") ? [_c("td", [_c("router-link", {
+    }), _vm._v("\n                                                    Cotizar\n                                                ")])] : _vm._e()], 2), _vm._v(" "), _vm.listRolPermisoByUsuario.includes("cliente.editar") ? [_c("td", [_c("router-link", {
       staticClass: "btn btn-info btn-sm",
       attrs: {
         to: {
@@ -27870,7 +28223,7 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "fas fa-pencil-alt"
-    }), _vm._v("Editar\n                        ")])], 1)] : _vm._e(), _vm._v(" "), _c("td", [_vm._v("\n                      " + _vm._s(item.user == null ? "Dado de Baja" : item.user.fullname) + "\n                    ")]), _vm._v(" "), _vm.listRolPermisoByUsuario.includes("cliente.fcreacion") ? _c("td", [_vm._v(_vm._s(_vm._f("moment")(item.created_at.slice(0, 10), "DD - MM - Y")))]) : _vm._e(), _vm._v(" "), _c("td", {
+    }), _vm._v("Editar\n                                                ")])], 1)] : _vm._e(), _vm._v(" "), _c("td", [_vm._v("\n                                            " + _vm._s(item.user == null ? "Dado de Baja" : item.user.fullname) + "\n                                        ")]), _vm._v(" "), _vm.listRolPermisoByUsuario.includes("cliente.fcreacion") ? _c("td", [_vm._v("\n                                            " + _vm._s(_vm._f("moment")(item.created_at.slice(0, 10), "DD - MM - Y")) + "\n                                        ")]) : _vm._e(), _vm._v(" "), _c("td", {
       domProps: {
         textContent: _vm._s(item.razonsocial)
       }
@@ -27961,7 +28314,7 @@ var staticRenderFns = [function () {
     _c = _vm._self._c;
   return _c("span", [_c("i", {
     staticClass: "fas fa-file-excel"
-  }), _vm._v(" EXCEL")]);
+  }), _vm._v("\n                                EXCEL")]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
@@ -27977,7 +28330,7 @@ var staticRenderFns = [function () {
     staticClass: "card-header"
   }, [_c("h3", {
     staticClass: "card-title"
-  }, [_vm._v("Bandeja de Resultados")])]);
+  }, [_vm._v("\n                                Bandeja de Resultados\n                            ")])]);
 }];
 render._withStripped = true;
 
@@ -32832,6 +33185,1015 @@ var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("thead", [_c("tr", [_c("th", [_vm._v("Producto")]), _vm._v(" "), _c("th", [_vm._v("Cantidad")]), _vm._v(" "), _c("th", [_vm._v("P.Unit")]), _vm._v(" "), _c("th", [_vm._v("Total")]), _vm._v(" "), _c("th", [_vm._v("Unidad Medida")])])]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/modulos/cotizacion_libre/create.vue?vue&type=template&id=7e7ca498":
+/*!***************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/modulos/cotizacion_libre/create.vue?vue&type=template&id=7e7ca498 ***!
+  \***************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "content-header"
+  }, [_c("div", {
+    staticClass: "container-fluid"
+  }, [_c("div", {
+    staticClass: "float-right"
+  }, [_c("router-link", {
+    staticClass: "btn btn-info btn-sm",
+    attrs: {
+      to: "/cliente/index"
+    }
+  }, [_c("i", {
+    staticClass: "fas fa-angle-double-left"
+  }), _vm._v(" Regresar\n            ")])], 1), _vm._v(" "), _vm._m(0)]), _vm._v(" "), _c("div", {
+    staticClass: "content container-fluid"
+  }, [_c("div", {
+    staticClass: "card-body"
+  }, [_c("form", {
+    attrs: {
+      role: "form"
+    }
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-7"
+  }, [_c("div", {
+    staticClass: "card card-primary"
+  }, [_vm._m(1), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-2 col-form-label"
+  }, [_vm._v("SEÑORES")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-8"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillregistrarCotizacionLibre.cNomClient,
+      expression: "\n                                                fillregistrarCotizacionLibre.cNomClient\n                                            "
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      readonly: true
+    },
+    domProps: {
+      value: _vm.fillregistrarCotizacionLibre.cNomClient
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillregistrarCotizacionLibre, "cNomClient", $event.target.value);
+      }
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-2 col-form-label"
+  }, [_vm._v("DIRECCION")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-10"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillregistrarCotizacionLibre.cDirClient,
+      expression: "\n                                                fillregistrarCotizacionLibre.cDirClient\n                                            "
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      readonly: true
+    },
+    domProps: {
+      value: _vm.fillregistrarCotizacionLibre.cDirClient
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillregistrarCotizacionLibre, "cDirClient", $event.target.value);
+      }
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-2 col-form-label"
+  }, [_vm._v("RUC")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-8"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillregistrarCotizacionLibre.cRucClient,
+      expression: "\n                                                fillregistrarCotizacionLibre.cRucClient\n                                            "
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      readonly: true
+    },
+    domProps: {
+      value: _vm.fillregistrarCotizacionLibre.cRucClient
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillregistrarCotizacionLibre, "cRucClient", $event.target.value);
+      }
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-2 col-form-label"
+  }, [_vm._v("ATENCION")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-8"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillregistrarCotizacionLibre.cAtencion,
+      expression: "\n                                                fillregistrarCotizacionLibre.cAtencion\n                                            "
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      readonly: true
+    },
+    domProps: {
+      value: _vm.fillregistrarCotizacionLibre.cAtencion
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillregistrarCotizacionLibre, "cAtencion", $event.target.value);
+      }
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-2 col-form-label"
+  }, [_vm._v("TELEFONO")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-8"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillregistrarCotizacionLibre.cFonoClient,
+      expression: "\n                                                fillregistrarCotizacionLibre.cFonoClient\n                                            "
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      readonly: true
+    },
+    domProps: {
+      value: _vm.fillregistrarCotizacionLibre.cFonoClient
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillregistrarCotizacionLibre, "cFonoClient", $event.target.value);
+      }
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-2 col-form-label"
+  }, [_vm._v("EMAIL")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-8"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillregistrarCotizacionLibre.cEmail,
+      expression: "\n                                                fillregistrarCotizacionLibre.cEmail\n                                            "
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      readonly: true
+    },
+    domProps: {
+      value: _vm.fillregistrarCotizacionLibre.cEmail
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillregistrarCotizacionLibre, "cEmail", $event.target.value);
+      }
+    }
+  })])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-5"
+  }, [_c("div", {
+    staticClass: "card card-primary"
+  }, [_vm._m(2), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-3 col-form-label"
+  }, [_vm._v("VENDEDOR")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-9"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillregistrarCotizacionLibre.cVendedor,
+      expression: "\n                                                fillregistrarCotizacionLibre.cVendedor\n                                            "
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      readonly: true
+    },
+    domProps: {
+      value: _vm.fillregistrarCotizacionLibre.cVendedor
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillregistrarCotizacionLibre, "cVendedor", $event.target.value);
+      }
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-3 col-form-label"
+  }, [_vm._v("CELULAR")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-9"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillregistrarCotizacionLibre.cCeluVendedor,
+      expression: "\n                                                fillregistrarCotizacionLibre.cCeluVendedor\n                                            "
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      readonly: true
+    },
+    domProps: {
+      value: _vm.fillregistrarCotizacionLibre.cCeluVendedor
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillregistrarCotizacionLibre, "cCeluVendedor", $event.target.value);
+      }
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-3 col-form-label"
+  }, [_vm._v("CENTRAL")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-9"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillregistrarCotizacionLibre.cCentral,
+      expression: "\n                                                fillregistrarCotizacionLibre.cCentral\n                                            "
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      readonly: true
+    },
+    domProps: {
+      value: _vm.fillregistrarCotizacionLibre.cCentral
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillregistrarCotizacionLibre, "cCentral", $event.target.value);
+      }
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-3 col-form-label"
+  }, [_vm._v("EMAIL")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-9"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillregistrarCotizacionLibre.cEmailVendedor,
+      expression: "\n                                                fillregistrarCotizacionLibre.cEmailVendedor\n                                            "
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      readonly: true
+    },
+    domProps: {
+      value: _vm.fillregistrarCotizacionLibre.cEmailVendedor
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillregistrarCotizacionLibre, "cEmailVendedor", $event.target.value);
+      }
+    }
+  })])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "content container-fluid"
+  }, [_c("form", {
+    attrs: {
+      role: "form"
+    }
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-12"
+  }, [_c("div", {
+    staticClass: "card card-primary"
+  }, [_vm._m(3), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-2 col-form-label"
+  }, [_vm._v("VALIDEZ DE\n                                                    OFERTA")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-3"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillregistrarCotizacionLibre.cValidez,
+      expression: "\n                                                            fillregistrarCotizacionLibre.cValidez\n                                                        "
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text"
+    },
+    domProps: {
+      value: _vm.fillregistrarCotizacionLibre.cValidez
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillregistrarCotizacionLibre, "cValidez", $event.target.value);
+      }
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-2 col-form-label"
+  }, [_vm._v("ENTREGA")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-8"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillregistrarCotizacionLibre.cEntrega,
+      expression: "\n                                                            fillregistrarCotizacionLibre.cEntrega\n                                                        "
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text"
+    },
+    domProps: {
+      value: _vm.fillregistrarCotizacionLibre.cEntrega
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillregistrarCotizacionLibre, "cEntrega", $event.target.value);
+      }
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-2 col-form-label"
+  }, [_vm._v("CONDICIÓN DE\n                                                    PAGO")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-4"
+  }, [_c("el-select", {
+    staticStyle: {
+      width: "70%"
+    },
+    attrs: {
+      placeholder: "Select"
+    },
+    model: {
+      value: _vm.fillregistrarCotizacionLibre.nIdTipoPago,
+      callback: function callback($$v) {
+        _vm.$set(_vm.fillregistrarCotizacionLibre, "nIdTipoPago", $$v);
+      },
+      expression: "\n                                                            fillregistrarCotizacionLibre.nIdTipoPago\n                                                        "
+    }
+  }, _vm._l(_vm.listTipoPago, function (item) {
+    return _c("el-option", {
+      key: item.id,
+      attrs: {
+        label: item.nombre,
+        value: item.id
+      }
+    });
+  }), 1)], 1)]), _vm._v(" "), _c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-2 col-form-label"
+  }, [_vm._v("CONDICIÓN DE\n                                                    PAGO")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-4"
+  }, [_c("el-select", {
+    staticStyle: {
+      width: "70%"
+    },
+    attrs: {
+      placeholder: "Select"
+    },
+    model: {
+      value: _vm.fillregistrarCotizacionLibre.nIdDescripPago,
+      callback: function callback($$v) {
+        _vm.$set(_vm.fillregistrarCotizacionLibre, "nIdDescripPago", $$v);
+      },
+      expression: "\n                                                            fillregistrarCotizacionLibre.nIdDescripPago\n                                                        "
+    }
+  }, _vm._l(_vm.listDescripPago, function (item) {
+    return _c("el-option", {
+      key: item.id,
+      attrs: {
+        label: item.nombre,
+        value: item.id
+      }
+    });
+  }), 1)], 1)]), _vm._v(" "), _c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-2 col-form-label"
+  }, [_vm._v("FLETE")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-8"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillregistrarCotizacionLibre.cFlete,
+      expression: "\n                                                            fillregistrarCotizacionLibre.cFlete\n                                                        "
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      maxlength: "20"
+    },
+    domProps: {
+      value: _vm.fillregistrarCotizacionLibre.cFlete
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillregistrarCotizacionLibre, "cFlete", $event.target.value);
+      }
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-2 col-form-label"
+  }, [_vm._v("DOCUMENTACION")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-8"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillregistrarCotizacionLibre.Docu,
+      expression: "\n                                                            fillregistrarCotizacionLibre.Docu\n                                                        "
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text"
+    },
+    domProps: {
+      value: _vm.fillregistrarCotizacionLibre.Docu
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillregistrarCotizacionLibre, "Docu", $event.target.value);
+      }
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-2 col-form-label"
+  }, [_vm._v("GARANTIA")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-4"
+  }, [_c("el-select", {
+    staticStyle: {
+      width: "70%"
+    },
+    attrs: {
+      placeholder: "Select"
+    },
+    model: {
+      value: _vm.fillregistrarCotizacionLibre.nIdGarantia,
+      callback: function callback($$v) {
+        _vm.$set(_vm.fillregistrarCotizacionLibre, "nIdGarantia", $$v);
+      },
+      expression: "\n                                                            fillregistrarCotizacionLibre.nIdGarantia\n                                                        "
+    }
+  }, _vm._l(_vm.listGarantia, function (item) {
+    return _c("el-option", {
+      key: item.id,
+      attrs: {
+        label: item.nombre,
+        value: item.id
+      }
+    });
+  }), 1)], 1)]), _vm._v(" "), _c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-2 col-form-label"
+  }, [_vm._v("OBSERVACIÓN")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-8"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillregistrarCotizacionLibre.cObservacion,
+      expression: "\n                                                            fillregistrarCotizacionLibre.cObservacion\n                                                        "
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      maxlength: 255
+    },
+    domProps: {
+      value: _vm.fillregistrarCotizacionLibre.cObservacion
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillregistrarCotizacionLibre, "cObservacion", $event.target.value);
+      }
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-2 col-form-label"
+  }, [_vm._v("PUNTO DE LLEGADA\n                                                    CONSIGNADO :")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-8"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillregistrarCotizacionLibre.cPuntoLlegada,
+      expression: "\n                                                            fillregistrarCotizacionLibre.cPuntoLlegada\n                                                        "
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      maxlength: 100
+    },
+    domProps: {
+      value: _vm.fillregistrarCotizacionLibre.cPuntoLlegada
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillregistrarCotizacionLibre, "cPuntoLlegada", $event.target.value);
+      }
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-2 col-form-label"
+  }, [_vm._v("EMP. DE\n                                                    TRANSPORTE")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-8"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillregistrarCotizacionLibre.cTransporte,
+      expression: "\n                                                            fillregistrarCotizacionLibre.cTransporte\n                                                        "
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text"
+    },
+    domProps: {
+      value: _vm.fillregistrarCotizacionLibre.cTransporte
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillregistrarCotizacionLibre, "cTransporte", $event.target.value);
+      }
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-2 col-form-label"
+  }, [_vm._v("CONSIGNADO")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-8"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillregistrarCotizacionLibre.Cconsignado,
+      expression: "\n                                                            fillregistrarCotizacionLibre.Cconsignado\n                                                        "
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text"
+    },
+    domProps: {
+      value: _vm.fillregistrarCotizacionLibre.Cconsignado
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillregistrarCotizacionLibre, "Cconsignado", $event.target.value);
+      }
+    }
+  })])])])])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "content container-fluid"
+  }, [_c("form", {
+    attrs: {
+      role: "form"
+    }
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-6"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-4 col-form-label"
+  }, [_vm._v("CANTIDAD")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-4"
+  }, [_c("input", {
+    directives: [{
+      name: "int",
+      rawName: "v-int"
+    }, {
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillregistrarCotizacionLibre.cCantidad,
+      expression: "\n                                                    fillregistrarCotizacionLibre.cCantidad\n                                                "
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text"
+    },
+    domProps: {
+      value: _vm.fillregistrarCotizacionLibre.cCantidad
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillregistrarCotizacionLibre, "cCantidad", $event.target.value);
+      }
+    }
+  })])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-2 col-form-label"
+  }, [_vm._v("MEDIDA")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-4"
+  }, [_c("el-select", {
+    staticStyle: {
+      width: "70%"
+    },
+    attrs: {
+      placeholder: "Select"
+    },
+    model: {
+      value: _vm.fillregistrarCotizacionLibre.nIdUnidMed,
+      callback: function callback($$v) {
+        _vm.$set(_vm.fillregistrarCotizacionLibre, "nIdUnidMed", $$v);
+      },
+      expression: "\n                                                    fillregistrarCotizacionLibre.nIdUnidMed\n                                                "
+    }
+  }, _vm._l(_vm.listUnidMed, function (item) {
+    return _c("el-option", {
+      key: item.id,
+      attrs: {
+        label: item.nombre,
+        value: item.id
+      }
+    });
+  }), 1)], 1)])])]), _vm._v(" "), _c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-12"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-2 col-form-label"
+  }, [_vm._v("DESCRIPCION DEL MEDIDOR")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-10"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillregistrarCotizacionLibre.nIdprod,
+      expression: "\n                                                fillregistrarCotizacionLibre.nIdprod\n                                            "
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text"
+    },
+    domProps: {
+      value: _vm.fillregistrarCotizacionLibre.nIdprod
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillregistrarCotizacionLibre, "nIdprod", $event.target.value);
+      }
+    }
+  })])])])]), _vm._v(" "), _c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-6"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-4 col-form-label"
+  }, [_vm._v("P/UNIT")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillregistrarCotizacionLibre.cPUnit,
+      expression: "\n                                                    fillregistrarCotizacionLibre.cPUnit\n                                                "
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      onchange: this.setCalculaTotal()
+    },
+    domProps: {
+      value: _vm.fillregistrarCotizacionLibre.cPUnit
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillregistrarCotizacionLibre, "cPUnit", $event.target.value);
+      }
+    }
+  })])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-2 col-form-label"
+  }, [_vm._v("TOTAL S/IGV")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-4"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillregistrarCotizacionLibre.cTotal,
+      expression: "\n                                                    fillregistrarCotizacionLibre.cTotal\n                                                "
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      readonly: true,
+      onchange: this.setCalculaTotal()
+    },
+    domProps: {
+      value: _vm.fillregistrarCotizacionLibre.cTotal
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillregistrarCotizacionLibre, "cTotal", $event.target.value);
+      }
+    }
+  })])])])]), _vm._v(" "), _c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-6"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-4 col-form-label"
+  }, [_vm._v("STOCK")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-2"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillregistrarCotizacionLibre.cStock,
+      expression: "\n                                                    fillregistrarCotizacionLibre.cStock\n                                                "
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      readonly: true
+    },
+    domProps: {
+      value: _vm.fillregistrarCotizacionLibre.cStock
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillregistrarCotizacionLibre, "cStock", $event.target.value);
+      }
+    }
+  })])])])]), _vm._v(" "), _c("div", {
+    staticClass: "card-footer"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-4 offset-4"
+  }, [_c("button", {
+    staticClass: "btn btn-flat btn-info btnWidth",
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.setRegistrarCotizacionLibre.apply(null, arguments);
+      }
+    }
+  }, [_vm._v("\n                                            Agregar\n                                        ")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-flat btn-default btnWidth",
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.limpiarCotizacionBsq.apply(null, arguments);
+      }
+    }
+  }, [_vm._v("\n                                            Limpiar\n                                        ")])])])]), _vm._v(" "), _c("div", {
+    staticClass: "card card-info"
+  }, [_vm._m(4), _vm._v(" "), _c("div", {
+    staticClass: "card-body table-responsive"
+  }, [_c("table", {
+    staticClass: "table table-hover table-head-fixed text-nowrap projects"
+  }, [_vm._m(5), _vm._v(" "), _c("tbody", _vm._l(_vm.listarProductosPaginated, function (item, index) {
+    return _c("tr", {
+      key: index
+    }, [_c("td", {
+      domProps: {
+        textContent: _vm._s(Number(index))
+      }
+    }), _vm._v(" "), _c("td", {
+      domProps: {
+        textContent: _vm._s(item.cantidad)
+      }
+    }), _vm._v(" "), _c("td", {
+      domProps: {
+        textContent: _vm._s(item.unidmedNombre)
+      }
+    }), _vm._v(" "), _c("td", {
+      domProps: {
+        textContent: _vm._s(item.codigo)
+      }
+    }), _vm._v(" "), _c("td", {
+      domProps: {
+        textContent: _vm._s(item.productoFamilia + " " + item.productoSubfamilia + ", MARCA :" + item.productoMarca + ", MODELO/TIPO :" + item.productoModelotipo + ", MATERIAL :" + item.material)
+      }
+    }), _vm._v(" "), _c("td", {
+      domProps: {
+        textContent: _vm._s(item.homologacion)
+      }
+    }), _vm._v(" "), _c("td", {
+      domProps: {
+        textContent: _vm._s(item.punit)
+      }
+    }), _vm._v(" "), _c("td", {
+      domProps: {
+        textContent: _vm._s(item.total)
+      }
+    }), _vm._v(" "), _c("td", [_c("button", {
+      staticClass: "btn btn-info btn-sm",
+      on: {
+        click: function click($event) {
+          $event.preventDefault();
+          return _vm.borradoItems(item.producto_id);
+        }
+      }
+    }, [_vm._v("\n                                                        Eliminar\n                                                    ")])])]);
+  }), 0)])]), _vm._v(" "), _c("div", {
+    staticClass: "card-footer"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-4 offset-4"
+  }, [_c("button", {
+    staticClass: "btn btn-flat btn-info btnWidth",
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.setGrabarCotizacion.apply(null, arguments);
+      }
+    }
+  }, [_vm._v("\n                                                Guardar\n                                            ")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-flat btn-default btnWidth",
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.eliminarTempitemCoti.apply(null, arguments);
+      }
+    }
+  }, [_vm._v("\n                                                Limpiar\n                                            ")])])])])])])])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "modal fade",
+    "class": {
+      show: _vm.modalShow
+    },
+    style: _vm.modalShow ? _vm.mostrarModal : _vm.ocultarModal
+  }, [_c("div", {
+    staticClass: "modal-dialog",
+    attrs: {
+      role: "document"
+    }
+  }, [_c("div", {
+    staticClass: "modal-content"
+  }, [_c("div", {
+    staticClass: "modal-header"
+  }, [_c("h5", {
+    staticClass: "modal-title"
+  }, [_vm._v("Sistemas Novesur")]), _vm._v(" "), _c("button", {
+    staticClass: "close",
+    on: {
+      click: _vm.abrirModal
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "modal-body"
+  }, _vm._l(_vm.mensajeError, function (item, index) {
+    return _c("div", {
+      key: index,
+      staticClass: "callout callout-danger",
+      staticStyle: {
+        padding: "5px"
+      },
+      domProps: {
+        textContent: _vm._s(item)
+      }
+    });
+  }), 0), _vm._v(" "), _c("div", {
+    staticClass: "modal-footer"
+  }, [_c("button", {
+    staticClass: "btn btn-secondary",
+    on: {
+      click: _vm.abrirModal
+    }
+  }, [_vm._v("\n                        Cerrar\n                    ")])])])])])]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "row mb-2"
+  }, [_c("div", {
+    staticClass: "col-sm-6"
+  }, [_c("h1", {
+    staticClass: "m-0 text-dark"
+  }, [_vm._v("Generar Cotizacion libre")])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "card-header"
+  }, [_c("h3", {
+    staticClass: "card-title"
+  }, [_vm._v("CLIENTES")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "card-header"
+  }, [_c("h3", {
+    staticClass: "card-title"
+  }, [_vm._v("VENDEDOR")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "card-header"
+  }, [_c("h3", {
+    staticClass: "card-title"
+  }, [_vm._v("\n                                                CONDICIONES COMERCIALES\n                                            ")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "card-header"
+  }, [_c("h3", {
+    staticClass: "card-title"
+  }, [_vm._v("\n                                        Bandeja de Resultados\n                                    ")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("ITEM")]), _vm._v(" "), _c("th", [_vm._v("CANT")]), _vm._v(" "), _c("th", [_vm._v("MEDIDA")]), _vm._v(" "), _c("th", [_vm._v("CODIGO")]), _vm._v(" "), _c("th", [_vm._v("\n                                                    DESCRIPCION DEL PRODUCTO\n                                                ")]), _vm._v(" "), _c("th", [_vm._v("HOMOLOGADO")]), _vm._v(" "), _c("th", [_vm._v("P/UNIT")]), _vm._v(" "), _c("th", [_vm._v("TOTAL S/IGV")]), _vm._v(" "), _c("th", [_vm._v("Acciones")])])]);
 }];
 render._withStripped = true;
 
@@ -182973,6 +184335,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/modulos/cotizacion_libre/create.vue":
+/*!*********************************************************************!*\
+  !*** ./resources/js/components/modulos/cotizacion_libre/create.vue ***!
+  \*********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _create_vue_vue_type_template_id_7e7ca498__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./create.vue?vue&type=template&id=7e7ca498 */ "./resources/js/components/modulos/cotizacion_libre/create.vue?vue&type=template&id=7e7ca498");
+/* harmony import */ var _create_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./create.vue?vue&type=script&lang=js */ "./resources/js/components/modulos/cotizacion_libre/create.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _create_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _create_vue_vue_type_template_id_7e7ca498__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _create_vue_vue_type_template_id_7e7ca498__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/modulos/cotizacion_libre/create.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/modulos/cotizacion_libre/create.vue?vue&type=script&lang=js":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/modulos/cotizacion_libre/create.vue?vue&type=script&lang=js ***!
+  \*********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_create_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./create.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/modulos/cotizacion_libre/create.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_create_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/modulos/cotizacion_libre/create.vue?vue&type=template&id=7e7ca498":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/components/modulos/cotizacion_libre/create.vue?vue&type=template&id=7e7ca498 ***!
+  \***************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_create_vue_vue_type_template_id_7e7ca498__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../../node_modules/vue-loader/lib??vue-loader-options!./create.vue?vue&type=template&id=7e7ca498 */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/modulos/cotizacion_libre/create.vue?vue&type=template&id=7e7ca498");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_create_vue_vue_type_template_id_7e7ca498__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_create_vue_vue_type_template_id_7e7ca498__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/modulos/dashboard/index.vue":
 /*!*************************************************************!*\
   !*** ./resources/js/components/modulos/dashboard/index.vue ***!
@@ -189142,6 +190573,12 @@ function verificarAcceso(to, from, next) {
     path: "/cotizacion/analisis",
     name: "cotizacion.analisis",
     component: __webpack_require__(/*! ./components/modulos/cotizacion/analisis */ "./resources/js/components/modulos/cotizacion/analisis.vue")["default"]
+  }, /* COTIZACION LIBRE */
+  {
+    path: "/cotizacion_libre/create/:id",
+    name: "cotizacion_libre.create",
+    component: __webpack_require__(/*! ./components/modulos/cotizacion_libre/create */ "./resources/js/components/modulos/cotizacion_libre/create.vue")["default"],
+    props: true
   },
   /// REPORTE DE COTIZACION EN PDF
 

@@ -126,24 +126,46 @@ class ClienteController extends Controller
     public function edit(Request $request)
 
     {
+
         $usuario= user::where('id',$request->nIdUser)->first();
 
         if (strlen($request->cRuc) == 11 || strlen($request->cRuc) == 8) {
             $cliente = Cliente::where('id', $request->nIdCliente)->first();
+            $usuario = User::where('id',$request->nIdUser)->first();
+
             if ($cliente) {
-                $cliente->razonsocial = mb_strtoupper($request->cRSocial);
-                $cliente->direccion = mb_strtoupper($request->cDireccion);
-                $cliente->ruc = $request->cRuc;
-                $cliente->atencion = mb_strtoupper($request->cAtencion);
-                $cliente->telefono = $request->cTelefono;
-                $cliente->celular = $request->cCelular;
-                //$cliente->email = $request->cEmail;
-                $cliente->email = $cliente->email;
-                $cliente->usuario_id = $cliente->usuario_id;
-                $cliente->tipoPrecio = $request->ctipoPrecio;
-                $cliente->update_by_user = $usuario->firstname .' '. $usuario->secondname .' '. $usuario->lastname;
-                $cliente->observacion_edit_cliente = $cliente->observacion_edit_cliente ;
-                $cliente->save();
+
+                //dd($usuario->estado_edit_cliente);
+                if($usuario->estado_edit_cliente === 0){
+                    $cliente->razonsocial = mb_strtoupper($request->cRSocial);
+                    $cliente->direccion = mb_strtoupper($request->cDireccion);
+                    $cliente->ruc = $request->cRuc;
+                    $cliente->atencion = mb_strtoupper($request->cAtencion);
+                    $cliente->telefono = $cliente->telefono;
+                    $cliente->celular = $cliente->celular;
+                    //$cliente->email = $request->cEmail;
+                    $cliente->email = $cliente->email;
+                    $cliente->usuario_id = $cliente->usuario_id;
+                    $cliente->tipoPrecio = $cliente->tipoPrecio;
+                    $cliente->update_by_user = $usuario->firstname .' '. $usuario->secondname .' '. $usuario->lastname;
+                    $cliente->observacion_edit_cliente = $cliente->observacion_edit_cliente ;
+                    $cliente->save();
+
+                }
+                if($usuario->estado_edit_cliente === 1){
+                    $cliente->razonsocial = mb_strtoupper($request->cRSocial);
+                    $cliente->direccion = mb_strtoupper($request->cDireccion);
+                    $cliente->ruc = $request->cRuc;
+                    $cliente->atencion = mb_strtoupper($request->cAtencion);
+                    $cliente->telefono = $request->cTelefono;
+                    $cliente->celular = $request->cCelular;
+                    $cliente->email = $request->cEmail;
+                    $cliente->usuario_id = $cliente->usuario_id;
+                    $cliente->tipoPrecio = $request->ctipoPrecio;
+                    $cliente->update_by_user = $usuario->firstname .' '. $usuario->secondname .' '. $usuario->lastname;
+                    $cliente->observacion_edit_cliente = $cliente->observacion_edit_cliente ;
+                    $cliente->save();
+                }
                 return response()->json(['message' => 'Se edito correctamente', 'icon' => 'success'], 200);
             }
         } else {

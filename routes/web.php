@@ -212,7 +212,8 @@ Route::post('/operacion/cotizacionProduct/getExcelListProductFecha', 'Administra
 Route::get('/administracion/cotizacion/AnalisisCotizacionListByDate', 'Administracion\CotizacionController@AnalisisCotizacionListByDate');
 Route::post('/operacion/cotizacionProduct/ExcelAnalisisCotizacionFecha', 'Administracion\CotizacionController@ExcelAnalisisCotizacionFecha');
 
-
+/* Cotizacion Libre */
+Route::post('cotizacionLibre/addTempCotizacionLibre', 'Administracion\CotizacionLibreController@addTempCotizacionLibre');
 
 
 /// Exportados en formato Excel
