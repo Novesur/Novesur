@@ -54,6 +54,6 @@ class CotizacionLibre extends Model
     }
     public function detalle()
     {
-        return $this->hasMany(DetalleCotizacion::class,"cotizacion_id");
+        return $this->hasMany(CotizacionLibreDetalle::class,"cotizacionlibre_id");
     }
 }

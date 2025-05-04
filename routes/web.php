@@ -172,6 +172,7 @@ Route::post('/administracion/cliente/UpdateClientVendedor', 'Administracion\Clie
 Route::get('/administracion/cliente/listClientesByIdCoti', 'Administracion\ClienteController@listClientesByIdCoti');
 Route::post('/administracion/cliente/listDataCliente', 'Administracion\ClienteController@listDataCliente');
 Route::post('/administracion/cliente/BuscaRucBD', 'Administracion\ClienteController@BuscaRucBD');
+Route::get('/administracion/cliente/listGetClienteVendedor_CotiLibre', 'Administracion\ClienteController@listGetClienteVendedor_CotiLibre');
 
 
 
@@ -213,7 +214,24 @@ Route::get('/administracion/cotizacion/AnalisisCotizacionListByDate', 'Administr
 Route::post('/operacion/cotizacionProduct/ExcelAnalisisCotizacionFecha', 'Administracion\CotizacionController@ExcelAnalisisCotizacionFecha');
 
 /* Cotizacion Libre */
-Route::post('cotizacionLibre/addTempCotizacionLibre', 'Administracion\CotizacionLibreController@addTempCotizacionLibre');
+Route::post('/administracion/cotizacionLibre/addTempCotizacionLibre', 'Administracion\CotizacionLibreController@addTempCotizacionLibre');
+Route::post('/administracion/tempcotizacionLibre/reorder', 'Administracion\CotizacionLibreController@reorder');
+Route::post('/administracion/cotizacionLibre/create', 'Administracion\CotizacionLibreController@create');
+Route::post('/administracion/cotizacionLibre/eliminarTempitemCoti', 'Administracion\CotizacionLibreController@eliminarTempitemCoti');
+Route::get('/administracion/cotizacionLibre/listDetalleProductosbyDate', 'Administracion\CotizacionLibreController@listDetalleProductosbyDate');
+Route::get('/administracion/cotizacionLibre/ListCotizacionesby', 'Administracion\CotizacionLibreController@ListCotizacionesby');
+Route::post('/administracion/cotizacionLibre/addTempEditCotizacion', 'Administracion\CotizacionLibreController@addTempEditCotizacion');
+Route::post('/administracion/cotizacionLibre/EditCotizacion', 'Administracion\CotizacionLibreController@edit');
+Route::post('/administracion/cotizacionLibre/dellTempEditCotizacion', 'Administracion\CotizacionLibreController@dellTempEditCotizacion');
+Route::post('/administracion/cotizacionLibre/CotizacionPdf', 'Administracion\CotizacionLibreController@CotizacionPdf');
+
+/* Cotizacion Libre Detalle */
+
+Route::get('/administracion/detallecotizancionLibre/listDetCotizacionBy', 'Administracion\CotizacionLibreDetalleController@listDetCotizacionBy');
+Route::post('/administracion/detallecotizancionLibre/DatosItemDetalleCotixItem', 'Administracion\CotizacionLibreDetalleController@DatosItemDetalleCotixItem');
+Route::post('/administracion/detallecotizancionLibre/EditDatosItem', 'Administracion\CotizacionLibreDetalleController@EditDatosItem');
+
+
 
 
 /// Exportados en formato Excel

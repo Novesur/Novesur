@@ -2,13 +2,20 @@
     <div class="content-header">
         <div class="container-fluid">
             <div class="float-right">
-                <router-link class="btn btn-info btn-sm" :to="'/cliente/index'">
+                <router-link
+                    class="btn btn-info btn-sm"
+                    :to="'/cotizacion/index'"
+                >
                     <i class="fas fa-angle-double-left"></i> Regresar
                 </router-link>
             </div>
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Generar Cotizacion</h1>
+                    <h3>
+                        Cotizacion Nro :
+                        {{ this.fillEditarProducto.ncodCotizacion | fourchar }}
+                    </h3>
+                    <h1 class="m-0 text-dark">Editar Cotizacion</h1>
                 </div>
             </div>
         </div>
@@ -33,7 +40,7 @@
                                                 type="text"
                                                 class="form-control"
                                                 v-model="
-                                                    fillregistrarCotizacion.cNomClient
+                                                    fillEditarProducto.cNomClient
                                                 "
                                                 :readonly="true"
                                             />
@@ -50,7 +57,7 @@
                                                 class="form-control"
                                                 :readonly="true"
                                                 v-model="
-                                                    fillregistrarCotizacion.cDirClient
+                                                    fillEditarProducto.cDirClient
                                                 "
                                             />
                                         </div>
@@ -65,7 +72,7 @@
                                                 type="text"
                                                 class="form-control"
                                                 v-model="
-                                                    fillregistrarCotizacion.cRucClient
+                                                    fillEditarProducto.cRucClient
                                                 "
                                                 :readonly="true"
                                             />
@@ -81,7 +88,7 @@
                                                 type="text"
                                                 class="form-control"
                                                 v-model="
-                                                    fillregistrarCotizacion.cAtencion
+                                                    fillEditarProducto.cAtencion
                                                 "
                                                 :readonly="true"
                                             />
@@ -97,7 +104,7 @@
                                                 type="text"
                                                 class="form-control"
                                                 v-model="
-                                                    fillregistrarCotizacion.cFonoClient
+                                                    fillEditarProducto.cFonoClient
                                                 "
                                                 :readonly="true"
                                             />
@@ -113,7 +120,7 @@
                                                 type="text"
                                                 class="form-control"
                                                 v-model="
-                                                    fillregistrarCotizacion.cEmail
+                                                    fillEditarProducto.cEmail
                                                 "
                                                 :readonly="true"
                                             />
@@ -141,7 +148,7 @@
                                                 class="form-control"
                                                 :readonly="true"
                                                 v-model="
-                                                    fillregistrarCotizacion.cVendedor
+                                                    fillEditarProducto.cVendedor
                                                 "
                                             />
                                         </div>
@@ -157,7 +164,7 @@
                                                 class="form-control"
                                                 :readonly="true"
                                                 v-model="
-                                                    fillregistrarCotizacion.cCeluVendedor
+                                                    fillEditarProducto.cCeluVendedor
                                                 "
                                             />
                                         </div>
@@ -173,7 +180,7 @@
                                                 class="form-control"
                                                 :readonly="true"
                                                 v-model="
-                                                    fillregistrarCotizacion.cCentral
+                                                    fillEditarProducto.cCentral
                                                 "
                                             />
                                         </div>
@@ -189,7 +196,7 @@
                                                 class="form-control"
                                                 :readonly="true"
                                                 v-model="
-                                                    fillregistrarCotizacion.cEmailVendedor
+                                                    fillEditarProducto.cEmailVendedor
                                                 "
                                             />
                                         </div>
@@ -222,7 +229,7 @@
                                                             type="text"
                                                             class="form-control"
                                                             v-model="
-                                                                fillregistrarCotizacion.cValidez
+                                                                fillEditarProducto.cValidez
                                                             "
                                                         />
                                                     </div>
@@ -238,7 +245,7 @@
                                                             type="text"
                                                             class="form-control"
                                                             v-model="
-                                                                fillregistrarCotizacion.cEntrega
+                                                                fillEditarProducto.cEntrega
                                                             "
                                                         />
                                                     </div>
@@ -247,13 +254,13 @@
                                                 <div class="form-group row">
                                                     <label
                                                         class="col-md-2 col-form-label"
-                                                        >TIPO DE
+                                                        >CONDICIÓN DE
                                                         PAGO</label
                                                     >
                                                     <div class="col-md-4">
                                                         <el-select
                                                             v-model="
-                                                                fillregistrarCotizacion.nIdTipoPago
+                                                                fillEditarProducto.nIdTipoPago
                                                             "
                                                             placeholder="Select"
                                                             style="width: 70%"
@@ -280,7 +287,7 @@
                                                     <div class="col-md-4">
                                                         <el-select
                                                             v-model="
-                                                                fillregistrarCotizacion.nIdDescripPago
+                                                                fillEditarProducto.nIdDescripPago
                                                             "
                                                             placeholder="Select"
                                                             style="width: 70%"
@@ -308,9 +315,8 @@
                                                             type="text"
                                                             class="form-control"
                                                             v-model="
-                                                                fillregistrarCotizacion.cFlete
+                                                                fillEditarProducto.cFlete
                                                             "
-                                                            maxlength="20"
                                                         />
                                                     </div>
                                                 </div>
@@ -325,7 +331,7 @@
                                                             type="text"
                                                             class="form-control"
                                                             v-model="
-                                                                fillregistrarCotizacion.Docu
+                                                                fillEditarProducto.Docu
                                                             "
                                                         />
                                                     </div>
@@ -339,7 +345,7 @@
                                                     <div class="col-md-4">
                                                         <el-select
                                                             v-model="
-                                                                fillregistrarCotizacion.nIdGarantia
+                                                                fillEditarProducto.nIdGarantia
                                                             "
                                                             placeholder="Select"
                                                             style="width: 70%"
@@ -360,14 +366,14 @@
                                                 <div class="form-group row">
                                                     <label
                                                         class="col-md-2 col-form-label"
-                                                        >OBSERVACIÓN</label
+                                                        >OBSERVACION</label
                                                     >
                                                     <div class="col-md-8">
                                                         <input
                                                             type="text"
                                                             class="form-control"
                                                             v-model="
-                                                                fillregistrarCotizacion.cObservacion
+                                                                fillEditarProducto.cObservacion
                                                             "
                                                             :maxlength="255"
                                                         />
@@ -385,7 +391,7 @@
                                                             type="text"
                                                             class="form-control"
                                                             v-model="
-                                                                fillregistrarCotizacion.cPuntoLlegada
+                                                                fillEditarProducto.cPuntoLlegada
                                                             "
                                                             :maxlength="100"
                                                         />
@@ -403,7 +409,7 @@
                                                             type="text"
                                                             class="form-control"
                                                             v-model="
-                                                                fillregistrarCotizacion.cTransporte
+                                                                fillEditarProducto.cTransporte
                                                             "
                                                         />
                                                     </div>
@@ -419,7 +425,7 @@
                                                             type="text"
                                                             class="form-control"
                                                             v-model="
-                                                                fillregistrarCotizacion.Cconsignado
+                                                                fillEditarProducto.Cconsignado
                                                             "
                                                         />
                                                     </div>
@@ -449,7 +455,7 @@
                                                     class="form-control"
                                                     v-int
                                                     v-model="
-                                                        fillregistrarCotizacion.cCantidad
+                                                        fillEditarProducto.cCantidad
                                                     "
                                                 />
                                             </div>
@@ -465,7 +471,7 @@
                                             <div class="col-md-4">
                                                 <el-select
                                                     v-model="
-                                                        fillregistrarCotizacion.nIdUnidMed
+                                                        fillEditarProducto.nIdUnidMed
                                                     "
                                                     placeholder="Select"
                                                     style="width: 70%"
@@ -490,49 +496,15 @@
                                                 >DESCRIPCION DEL MEDIDOR</label
                                             >
 
-                                            <div class="col-md-10">
-                                                <el-select
+                                            <div class="col-md-9">
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+
                                                     v-model="
-                                                        fillregistrarCotizacion.nIdprod
+                                                        fillEditarProducto.cProduct
                                                     "
-                                                    style="width: 90%"
-                                                    filterable
-                                                    placeholder="Select"
-                                                    @change="
-                                                        setBuscaPrecioXProducto()
-                                                    "
-                                                >
-                                                    <v-row align="right">
-                                                        <el-option
-                                                            v-for="item in listProd"
-                                                            :key="item.id"
-                                                            :label="
-                                                                item.codigo +
-                                                                ' - ' +
-                                                                item.familia
-                                                                    .nombre +
-                                                                ' , ' +
-                                                                item.subfamilia
-                                                                    .nombre +
-                                                                ' , Modelo: ' +
-                                                                item.modelotipo
-                                                                    .nombre +
-                                                                ' , Marca : ' +
-                                                                item.marca
-                                                                    .nombre +
-                                                                ' , Material : ' +
-                                                                item.material
-                                                                    .nombre +
-                                                                ' ,' +
-                                                                item
-                                                                    .homologacion
-                                                                    .nombre
-                                                            "
-                                                            :value="item.id"
-                                                        >
-                                                        </el-option>
-                                                    </v-row>
-                                                </el-select>
+                                                />
                                             </div>
                                         </div>
                                     </div>
@@ -550,7 +522,7 @@
                                                     type="text"
                                                     class="form-control"
                                                     v-model="
-                                                        fillregistrarCotizacion.cPUnit
+                                                        fillEditarProducto.cPUnit
                                                     "
                                                     :onchange="
                                                         this.setCalculaTotal()
@@ -571,7 +543,7 @@
                                                     type="text"
                                                     class="form-control"
                                                     v-model="
-                                                        fillregistrarCotizacion.cTotal
+                                                        fillEditarProducto.cTotal
                                                     "
                                                     :readonly="true"
                                                     :onchange="
@@ -583,36 +555,13 @@
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group row">
-                                            <label
-                                                class="col-md-4 col-form-label"
-                                                >STOCK</label
-                                            >
-                                            <div class="col-md-2">
-                                                <input
-                                                    type="text"
-                                                    class="form-control"
-                                                    v-model="
-                                                        fillregistrarCotizacion.cStock
-                                                    "
-                                                    :readonly="true"
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <listStock :stock="this.listStock"></listStock>
-
                                 <div class="card-footer">
                                     <div class="row">
                                         <div class="col-md-4 offset-4">
                                             <button
                                                 class="btn btn-flat btn-info btnWidth"
                                                 @click.prevent="
-                                                    setRegistrarCotizacion
+                                                    setAddTempCotizacion
                                                 "
                                             >
                                                 Agregar
@@ -649,68 +598,76 @@
                                                     <th>
                                                         DESCRIPCION DEL PRODUCTO
                                                     </th>
-                                                    <th>HOMOLOGADO</th>
+
                                                     <th>P/UNIT</th>
                                                     <th>TOTAL S/IGV</th>
-                                                    <th>Acciones</th>
+                                                    <!-- <th>Acciones</th> -->
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr
                                                     v-for="(
                                                         item, index
-                                                    ) in listarProductosPaginated"
+                                                    ) in listDetCotizacion"
                                                     :key="index"
                                                 >
-                                                    <td
-                                                        v-text="Number(index)"
-                                                    ></td>
+                                                    <td v-text="index + 1"></td>
                                                     <td
                                                         v-text="item.cantidad"
                                                     ></td>
                                                     <td
                                                         v-text="
-                                                            item.unidmedNombre
+                                                            item.unidmedida
+                                                                .nombre
                                                         "
                                                     ></td>
-                                                    <td
-                                                        v-text="item.codigo"
-                                                    ></td>
-                                                    <td
-                                                        v-text="
-                                                            item.productoFamilia +
-                                                            ' ' +
-                                                            item.productoSubfamilia +
-                                                            ', MARCA :' +
-                                                            item.productoMarca +
-                                                            ', MODELO/TIPO :' +
-                                                            item.productoModelotipo +
-                                                            ', MATERIAL :' +
-                                                            item.material
-                                                        "
-                                                    ></td>
+
                                                     <td
                                                         v-text="
-                                                            item.homologacion
-                                                        "
+                                                            item.producto"
                                                     ></td>
+
                                                     <td
                                                         v-text="item.punit"
                                                     ></td>
-                                                    <td
-                                                        v-text="item.total"
-                                                    ></td>
-
+                                                    <td>
+                                                        {{
+                                                            (item.cantidad *
+                                                                item.punit)
+                                                                | formatPrice
+                                                        }}
+                                                    </td>
                                                     <td>
                                                         <button
-                                                            class="btn btn-info btn-sm"
+                                                            class="btn btn-danger btn-sm"
                                                             @click.prevent="
                                                                 borradoItems(
-                                                                    item.producto_id
+                                                                    item.id
                                                                 )
                                                             "
                                                         >
+                                                            <span
+                                                                ><i
+                                                                    class="far fa-trash-alt"
+                                                                ></i
+                                                            ></span>
                                                             Eliminar
+                                                        </button>
+
+                                                        <button
+                                                            class="btn btn-primary btn-sm"
+                                                            @click.prevent="
+                                                                EditarItems(
+                                                                    item.id
+                                                                )
+                                                            "
+                                                        >
+                                                            <span
+                                                                ><i
+                                                                    class="far fa-edit"
+                                                                ></i
+                                                            ></span>
+                                                            Editar
                                                         </button>
                                                     </td>
                                                 </tr>
@@ -724,7 +681,7 @@
                                                 <button
                                                     class="btn btn-flat btn-info btnWidth"
                                                     @click.prevent="
-                                                        setGrabarCotizacion
+                                                        setEditCotizacion
                                                     "
                                                 >
                                                     Guardar
@@ -777,16 +734,163 @@
                 </div>
             </div>
         </div>
+
+        <div
+            class="modal fade"
+            :class="{ show: modalShowEditItem }"
+            :style="modalShowEditItem ? mostrarModal : ocultarModal"
+        >
+            <div class="modal-editcotitem modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Editar Cotización</h5>
+                        <button
+                            class="close"
+                            @click="abrirModalEditItem"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="content container-fluid">
+                            <form role="form">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label
+                                                class="col-md-4 col-form-label"
+                                                >CANTIDAD</label
+                                            >
+                                            <div class="col-md-4">
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    v-int
+                                                    v-model="
+                                                        fillEditarProducto.cCantidadEdit
+                                                    "
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label
+                                                class="col-md-2 col-form-label"
+                                                >MEDIDA</label
+                                            >
+                                            <div class="col-md-4">
+                                                <el-select
+                                                    v-model="
+                                                        fillEditarProducto.nIdUnidMedEdit
+                                                    "
+                                                    placeholder="Select"
+                                                    style="width: 70%"
+                                                >
+                                                    <el-option
+                                                        v-for="item in listUnidMed"
+                                                        :key="item.id"
+                                                        :label="item.nombre"
+                                                        :value="item.id"
+                                                    >
+                                                    </el-option>
+                                                </el-select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group row">
+                                            <label
+                                                class="col-md-2 col-form-label"
+                                                >DESCRIPCION DEL MEDIDOR</label
+                                            >
+
+                                            <div class="col-md-9">
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+
+                                                    v-model="
+                                                        fillEditarProducto.cProductEdit
+                                                    "
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label
+                                                class="col-md-4 col-form-label"
+                                                >P/UNIT
+                                            </label>
+                                            <div class="col-md-6">
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    v-model="
+                                                        fillEditarProducto.cPUnitEdit
+                                                    "
+                                                    :onchange="
+                                                        this.setCalculaTotalModal()
+                                                    "
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label
+                                                class="col-md-2 col-form-label"
+                                                >TOTAL S/IGV</label
+                                            >
+                                            <div class="col-md-4">
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    v-model="
+                                                        fillEditarProducto.cTotalEdit
+                                                    "
+                                                    :readonly="true"
+                                                    :onchange="
+                                                        this.setCalculaTotalModal()
+                                                    "
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-success" @click="EditDatosItem">
+                            Guardar
+                        </button>
+                        <button
+                            class="btn btn-secondary"
+                            @click="abrirModalEditItem"
+                        >
+                            Cerrar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
-import listStock from "../ingreso_almacen/shared/listStock.vue";
 export default {
     data() {
         return {
-            fillregistrarCotizacion: {
-                nIdCliente: this.$attrs.id,
-                nIdUsuario: "",
+            fillEditarProducto: {
+                ncodCotizacion: this.$attrs.id,
+                nIdUsuario: sessionStorage.getItem("iduser"),
                 nIdDescripPago: "",
                 nIdGarantia: "",
                 cNomClient: "",
@@ -795,6 +899,8 @@ export default {
                 cAtencion: "",
                 cFonoClient: "",
                 cCantidad: "",
+                cPuntoLlegada: "",
+                cTransporte: "",
                 cEmail: "",
                 cVendedor: "",
                 cEmailVendedor: "",
@@ -803,7 +909,8 @@ export default {
                 vidUSer: "",
                 nIdUnidMed: "",
                 nIdTipoPago: "",
-                nIdprod: "",
+                cProduct:"",
+                cProductEdit: "",
                 cPUnit: "",
                 cValidez: "",
                 cEntrega: "",
@@ -813,12 +920,14 @@ export default {
                 cGarantia: "",
                 cTotal: "",
                 cEstado: "",
-                cPuntoLlegada: "",
-                cTransporte: "",
                 Cconsignado: "",
                 cObservacion: "",
+                cCantidadEdit: "",
+                nIdUnidMedEdit: "",
+                nIdprodEdit: " ",
+                cPUnitEdit: "",
+                cTotalEdit: "",
                 ctipoPrecio: "",
-                cStock: "",
             },
 
             listUnidMed: [],
@@ -826,10 +935,12 @@ export default {
             listProd: [],
             listDescripPago: [],
             listGarantia: [],
-            listarProductosPaginated: [],
-            listStock: [],
+            listDetCotizacion: [],
+
+            listEditProductosPaginated: [],
 
             modalShow: false,
+            modalShowEditItem: false,
             mostrarModal: {
                 display: "block",
                 background: "#0000006b",
@@ -841,20 +952,19 @@ export default {
             mensajeError: [],
         };
     },
-
-    components: {
-        listStock,
-    },
-
     mounted() {
         this.getClienteById();
-        this.getListarUnidadMedida();
-        this.getListarproductosByName();
-        this.getListarTipoPago();
-        this.setListtempCotizacion();
-        this.cargaDatosPredeterminados();
+       this.getListarTipoPago();
         this.getlistDescricionPago();
         this.getListGarantia();
+        this.getListarUnidadMedida();
+        this.getListarproductosByName();
+        this.cargaDatosPredeterminados();
+        this.getCargaCotizacionByCotizacion();
+
+        /*
+    this.setListtempCotizacion();
+   */
     },
 
     methods: {
@@ -862,8 +972,6 @@ export default {
             var url = "/administracion/pago/index";
             axios.get(url).then((response) => {
                 this.listDescripPago = response.data;
-                this.fillregistrarCotizacion.nIdDescripPago =
-                    this.listDescripPago[0].id;
             });
         },
 
@@ -871,82 +979,99 @@ export default {
             var url = "/administracion/garantia/index";
             axios.get(url).then((response) => {
                 this.listGarantia = response.data;
-                this.fillregistrarCotizacion.nIdGarantia =
-                    this.listGarantia[0].id;
             });
         },
 
         abrirModal() {
             this.modalShow = !this.modalShow;
         },
+
+        abrirModalEditItem() {
+            this.modalShowEditItem = !this.modalShowEditItem;
+        },
         getClienteById() {
-            var url = "/administracion/cliente/listClientesById";
+            var url = "/administracion/cliente/listGetClienteVendedor_CotiLibre";
             axios
                 .get(url, {
                     params: {
-                        nIdCliente: this.fillregistrarCotizacion.nIdCliente,
+                        ncodCotizacion: this.fillEditarProducto.ncodCotizacion,
                     },
                 })
                 .then((response) => {
-                    this.fillregistrarCotizacion.cNomClient =
-                        response.data.razonsocial;
-                    this.fillregistrarCotizacion.cDirClient =
-                        response.data.direccion;
-                    this.fillregistrarCotizacion.cRucClient = response.data.ruc;
-                    this.fillregistrarCotizacion.cAtencion =
-                        response.data.atencion;
-                    this.fillregistrarCotizacion.cFonoClient =
-                        response.data.telefono;
-                    this.fillregistrarCotizacion.cEmail = response.data.email;
-                    this.fillregistrarCotizacion.ctipoPrecio =
-                        response.data.tipoPrecio;
-
-                    this.fillregistrarCotizacion.vidUSer = JSON.parse(
-                        sessionStorage.getItem("iduser")
-                    );
-                    this.getUsuarioById();
-                    //console.log(this.fillregistrarCotizacion.vidUSer);
+                    this.fillEditarProducto.cNomClient =
+                        response.data.cliente.razonsocial;
+                    this.fillEditarProducto.cDirClient =
+                        response.data.cliente.direccion;
+                    this.fillEditarProducto.cRucClient =
+                        response.data.cliente.ruc;
+                    this.fillEditarProducto.cAtencion =
+                        response.data.cliente.atencion;
+                    this.fillEditarProducto.cFonoClient =
+                        response.data.cliente.telefono;
+                    this.fillEditarProducto.cEmail =
+                        response.data.cliente.email;
+                    this.fillEditarProducto.cVendedor =
+                        response.data.user.fullname;
+                    this.fillEditarProducto.cEmailVendedor =
+                        response.data.user.email;
+                    this.fillEditarProducto.cCeluVendedor =
+                        response.data.user.celular;
+                    this.fillEditarProducto.cValidez =
+                        response.data.validezoferta;
+                    this.fillEditarProducto.cEntrega = response.data.Entrega;
+                    this.fillEditarProducto.nIdTipoPago =
+                        response.data.tipopago_id;
+                    this.fillEditarProducto.nIdDescripPago =
+                        response.data.pago_id;
+                    this.fillEditarProducto.cFlete = response.data.flete;
+                    this.fillEditarProducto.Docu = response.data.documentacion;
+                    this.fillEditarProducto.nIdGarantia =
+                        response.data.garantia_id;
+                    this.fillEditarProducto.cPuntoLlegada =
+                        response.data.punto_llegada;
+                    this.fillEditarProducto.Cconsignado =
+                        response.data.consignado;
+                    this.fillEditarProducto.cTransporte =
+                        response.data.transporte;
+                    this.fillEditarProducto.cObservacion =
+                        response.data.observacion;
+                    this.fillEditarProducto.ctipoPrecio =
+                        response.data.cliente.tipoPrecio;
                 });
         },
 
-        getUsuarioById() {
-            var url = "/administracion/usuario/listUsuarioById";
+        getCargaCotizacionByCotizacion() {
+            var url = "/administracion/detallecotizancionLibre/listDetCotizacionBy";
             axios
                 .get(url, {
                     params: {
-                        nIdUsuario: this.fillregistrarCotizacion.vidUSer,
+                        item: this.fillEditarProducto.ncodCotizacion,
                     },
                 })
                 .then((response) => {
-                    this.fillregistrarCotizacion.cVendedor =
-                        response.data.fullname;
-                    this.fillregistrarCotizacion.cEmailVendedor =
-                        response.data.email;
-                    this.fillregistrarCotizacion.cCeluVendedor =
-                        response.data.celular;
-                    //console.log(response.data);
+                    this.listDetCotizacion = response.data;
                 });
         },
+
         limpiarCotizacionBsq() {
-            this.fillregistrarCotizacion.cEntrega = "";
-            this.fillregistrarCotizacion.cValidez = "";
-            this.fillregistrarCotizacion.cFPago = "";
-            this.fillregistrarCotizacion.cFlete = "";
-            this.fillregistrarCotizacion.Docu = "";
-            this.fillregistrarCotizacion.cGarantia = "";
-            this.fillregistrarCotizacion.cCantidad = "";
-            this.fillregistrarCotizacion.cMedida = "";
-            this.fillregistrarCotizacion.cDescripcion = "";
-            this.fillregistrarCotizacion.cPUnit = "";
-            this.fillregistrarCotizacion.cTotal = "";
+            this.fillEditarProducto.cEntrega = "";
+            this.fillEditarProducto.cValidez = "";
+            this.fillEditarProducto.cFPago = "";
+            this.fillEditarProducto.cFlete = "";
+            this.fillEditarProducto.Docu = "";
+            this.fillEditarProducto.cGarantia = "";
+            this.fillEditarProducto.cCantidad = "";
+            this.fillEditarProducto.cMedida = "";
+            this.fillEditarProducto.cDescripcion = "";
+            this.fillEditarProducto.cPUnit = "";
+            this.fillEditarProducto.cTotal = "";
         },
 
         getListarUnidadMedida() {
             var url = "/administracion/KardexDetalle/listUnidMed";
             axios.get(url).then((response) => {
                 this.listUnidMed = response.data;
-                this.fillregistrarCotizacion.nIdUnidMed =
-                    this.listUnidMed[7].id;
+                this.fillEditarProducto.nIdUnidMed = this.listUnidMed[7].id;
             });
         },
 
@@ -954,8 +1079,6 @@ export default {
             var url = "/administracion/cotizacion/listTipoPago";
             axios.get(url).then((response) => {
                 this.listTipoPago = response.data;
-                this.fillregistrarCotizacion.nIdTipoPago =
-                    this.listTipoPago[0].id;
             });
         },
 
@@ -964,7 +1087,7 @@ export default {
             axios
                 .get(url, {
                     params: {
-                        nIdprod: this.fillregistrarCotizacion.nIdprod,
+                        nIdprod: this.fillEditarProducto.nIdprod,
                     },
                 })
                 .then((response) => {
@@ -983,47 +1106,47 @@ export default {
         validarCotizacion() {
             this.error = 0;
             this.mensajeError = [];
-            if (!this.fillregistrarCotizacion.cValidez) {
+            if (!this.fillEditarProducto.cValidez) {
                 this.mensajeError.push(
                     "La validacion de Oferta es un campo obligatorio"
                 );
             }
-            if (!this.fillregistrarCotizacion.cEntrega) {
+            if (!this.fillEditarProducto.cEntrega) {
                 this.mensajeError.push(
                     "El Campo Entrega es un campo obligatorio"
                 );
             }
 
-            if (!this.fillregistrarCotizacion.cFlete) {
+            if (!this.fillEditarProducto.cFlete) {
                 this.mensajeError.push(
                     "El Campo Flete es un campo obligatorio"
                 );
             }
-            if (!this.fillregistrarCotizacion.Docu) {
+            if (!this.fillEditarProducto.Docu) {
                 this.mensajeError.push(
                     "El Campo Documento es un campo obligatorio"
                 );
             }
 
-            if (!this.fillregistrarCotizacion.cCantidad) {
+            if (!this.fillEditarProducto.cCantidad) {
                 this.mensajeError.push(
                     "El Campo Cantidad es un campo obligatorio"
                 );
             }
 
-            if (!this.fillregistrarCotizacion.nIdUnidMed) {
+            if (!this.fillEditarProducto.nIdUnidMed) {
                 this.mensajeError.push(
                     "El Campo Medida es un campo obligatorio"
                 );
             }
 
-            if (!this.fillregistrarCotizacion.nIdprod) {
+            if (!this.fillEditarProducto.nIdprod) {
                 this.mensajeError.push(
                     "El Campo Medidor es un campo obligatorio"
                 );
             }
 
-            if (!this.fillregistrarCotizacion.cPUnit) {
+            if (!this.fillEditarProducto.cPUnit) {
                 this.mensajeError.push(
                     "El Campo P.Unit es un campo obligatorio"
                 );
@@ -1036,90 +1159,60 @@ export default {
         },
 
         setAddTempCotizacion() {
-            var url = "/administracion/cotizacion/addTempCotizacion";
+            var url = "/administracion/cotizacionLibre/addTempEditCotizacion";
             axios
                 .post(url, {
-                    cCantidad: this.fillregistrarCotizacion.cCantidad,
-                    nIdUnidMed: this.fillregistrarCotizacion.nIdUnidMed,
-                    nIdprod: this.fillregistrarCotizacion.nIdprod,
-                    cPUnit: this.fillregistrarCotizacion.cPUnit,
-                    cTotal: this.fillregistrarCotizacion.cTotal,
-                    nIdCliente: this.fillregistrarCotizacion.nIdCliente,
+                    item: this.fillEditarProducto.ncodCotizacion,
+                    cCantidad: this.fillEditarProducto.cCantidad,
+                    nIdUnidMed: this.fillEditarProducto.nIdUnidMed,
+                    nIdprod: this.fillEditarProducto.cProduct,
+                    cPUnit: this.fillEditarProducto.cPUnit,
                 })
                 .then((response) => {
-                    if (response.data.icon == "error") {
-                        Swal.fire({
-                            position: "center",
-                            icon: response.data.icon,
-                            title: response.data.message,
-                            showConfirmButton: false,
-                            timer: 1500,
-                        });
-                    } else {
-                        this.listarProductosPaginated = response.data.datos;
-                        this.limpiaItems();
-                    }
+                    this.getCargaCotizacionByCotizacion();
+                    (this.fillEditarProducto.cCantidad = ""),
+                        (this.fillEditarProducto.cProduct = ""),
+                        (this.fillEditarProducto.cPUnit = "");
+                });
+        },
+        setEditCotizacion() {
+            var url = "/administracion/cotizacionLibre/EditCotizacion";
+            axios
+                .post(url, {
+                    ncodCotizacion: this.fillEditarProducto.ncodCotizacion,
+                    vidUSer: this.fillEditarProducto.vidUSer,
+                    cValidez: this.fillEditarProducto.cValidez,
+                    cEntrega: this.fillEditarProducto.cEntrega,
+                    nIdTipoPago: this.fillEditarProducto.nIdTipoPago,
+                    nIdDescripPago: this.fillEditarProducto.nIdDescripPago,
+                    cFPago: this.fillEditarProducto.cFPago,
+                    cFlete: this.fillEditarProducto.cFlete,
+                    Docu: this.fillEditarProducto.Docu,
+                    nIdGarantia: this.fillEditarProducto.nIdGarantia,
+                    cGarantia: this.fillEditarProducto.cGarantia,
+                    cPuntoLlegada: this.fillEditarProducto.cPuntoLlegada,
+                    Cconsignado: this.fillEditarProducto.Cconsignado,
+                    cTransporte: this.fillEditarProducto.cTransporte,
+                    cObservacion: this.fillEditarProducto.cObservacion,
+                })
+                .then((response) => {
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "El pedido ha sido grabado",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                    this.eliminarTempitemCoti();
+                });
+        },
 
-                    /*          if (response.data.message == "Ya fue agregado anteriormente") {
-            Swal.fire({
-              position: "center",
-              icon: response.data.icon,
-              title: response.data.message,
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          } */
-                });
-        },
-        setGrabarCotizacion() {
-            var url = "/administracion/tempcotizacion/grabaCotizacion";
-            axios
-                .post(url, {
-                    nIdCliente: this.fillregistrarCotizacion.nIdCliente,
-                    nIdUsuario: this.fillregistrarCotizacion.vidUSer,
-                    cEstado: 3,
-                    cValidez: this.fillregistrarCotizacion.cValidez,
-                    cEntrega: this.fillregistrarCotizacion.cEntrega,
-                    nIdTipoPago: this.fillregistrarCotizacion.nIdTipoPago,
-                    nIdDescripPago: this.fillregistrarCotizacion.nIdDescripPago,
-                    cFPago: this.fillregistrarCotizacion.cFPago,
-                    cFlete: this.fillregistrarCotizacion.cFlete,
-                    Docu: this.fillregistrarCotizacion.Docu,
-                    nIdGarantia: this.fillregistrarCotizacion.nIdGarantia,
-                    cGarantia: this.fillregistrarCotizacion.cGarantia,
-                    cPuntoLlegada: this.fillregistrarCotizacion.cPuntoLlegada,
-                    cTransporte: this.fillregistrarCotizacion.cTransporte,
-                    Cconsignado: this.fillregistrarCotizacion.Cconsignado,
-                    cObservacion: this.fillregistrarCotizacion.cObservacion,
-                    listarProductosPaginated: this.listarProductosPaginated,
-                })
-                .then((response) => {
-                    if (response.data.icon == "warning") {
-                        Swal.fire({
-                            position: "center",
-                            icon: response.data.icon,
-                            title: response.data.message,
-                            showConfirmButton: false,
-                            timer: 3000,
-                        });
-                    } else {
-                        Swal.fire({
-                            position: "center",
-                            icon: response.data.icon,
-                            title: response.data.message,
-                            showConfirmButton: false,
-                            timer: 3000,
-                        });
-                        this.eliminarTempitemCoti();
-                        this.fillregistrarCotizacion.nIdprod = "";
-                    }
-                });
-        },
+        setCargaDetalleCotizacionByCoti() {},
 
         setListtempCotizacion() {
             var url = "/administracion/tempcotizacion/ListtempCotizacion";
             axios.get(url, {}).then((response) => {
-                this.listarProductosPaginated = response.data.datos;
+                this.listEditProductosPaginated = response.data.datos;
             });
         },
         eliminarTempitemCoti() {
@@ -1129,38 +1222,116 @@ export default {
             });
         },
         setCalculaTotal() {
-            const a = parseFloat(this.fillregistrarCotizacion.cCantidad);
-            const b = parseFloat(this.fillregistrarCotizacion.cPUnit);
+            const a = parseFloat(this.fillEditarProducto.cCantidad);
+            const b = parseFloat(this.fillEditarProducto.cPUnit);
             const c = a * b;
-            this.fillregistrarCotizacion.cTotal = parseFloat(c).toFixed(2);
+            this.fillEditarProducto.cTotal = parseFloat(c).toFixed(2);
+        },
+
+        setCalculaTotalModal() {
+            const a = parseFloat(this.fillEditarProducto.cCantidadEdit);
+            const b = parseFloat(this.fillEditarProducto.cPUnitEdit);
+            const c = a * b;
+            this.fillEditarProducto.cTotalEdit = parseFloat(c).toFixed(2);
+        },
+        setCalculaTotalEdit() {
+            const a = parseFloat(this.fillEditarProducto.cCantidadEdit);
+            const b = parseFloat(this.fillEditarProducto.cPUnitEdit);
+            const c = a * b;
+            this.fillEditarProducto.cTotalEdit = parseFloat(c).toFixed(2);
         },
         limpiaItems() {
-            this.fillregistrarCotizacion.cCantidad = "";
-            this.fillregistrarCotizacion.cMedida = "";
-            this.fillregistrarCotizacion.cDescripcion = "";
-            this.fillregistrarCotizacion.cPUnit = "";
-            this.fillregistrarCotizacion.cTotal = "";
+            this.fillEditarProducto.cCantidad = "";
+            this.fillEditarProducto.cMedida = "";
+            this.fillEditarProducto.cDescripcion = "";
+            this.fillEditarProducto.cPUnit = "";
+            this.fillEditarProducto.cTotal = "";
         },
 
         borradoItems(item) {
-            var url = "/administracion/tempcotizacion/reorder";
+            Swal.fire({
+                title: "Esta usted seguro?",
+                text: "Se elimanara del item",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si, Eliminalo!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        "Deleted!",
+                        "Your file has been deleted.",
+                        "success"
+                    );
+
+                    var url =
+                        "/administracion/cotizacionLibre/dellTempEditCotizacion";
+                    axios
+                        .post(url, {
+                            item: item,
+                        })
+                        .then((response) => {
+                            this.getCargaCotizacionByCotizacion();
+                        });
+                }
+            });
+        },
+
+        EditarItems(item) {
+            this.modalShowEditItem = true;
+            this.CargaDatosItemEdit(item);
+            localStorage.Codigo = item;
+        },
+
+        CargaDatosItemEdit(item) {
+            var url =
+                "/administracion/detallecotizancionLibre/DatosItemDetalleCotixItem";
             axios
                 .post(url, {
                     item: item,
                 })
                 .then((response) => {
-                    this.listarProductosPaginated = response.data.datos;
-                    // this.fillregistrarCotizacion.nIdprod = '';
+                    this.fillEditarProducto.cCantidadEdit =
+                        response.data.cantidad;
+                    this.fillEditarProducto.nIdUnidMedEdit =
+                        response.data.unidmedida.id;
+                    this.fillEditarProducto.cProductEdit =
+                        response.data.producto;
+                    this.fillEditarProducto.cPUnitEdit = response.data.punit;
+                });
+        },
 
-                    //console.log(item);
+        EditDatosItem() {
+            var url = "/administracion/detallecotizancionLibre/EditDatosItem"
+            axios
+                .post(url, {
+                    item: localStorage.Codigo,
+                    nIdUsuario: this.fillEditarProducto.nIdUsuario,
+                    cCantidadEdit: this.fillEditarProducto.cCantidadEdit,
+                    nIdUnidMedEdit: this.fillEditarProducto.nIdUnidMedEdit,
+                    nIdprodEdit: this.fillEditarProducto.cProductEdit,
+                    cPUnitEdit: this.fillEditarProducto.cPUnitEdit,
+                })
+                .then((response) => {
+                    if (response.data.message) {
+                        Swal.fire({
+                            icon: response.data.icon,
+                            title: response.data.message,
+                            text: response.data.message,
+                        });
+                    }
+
+                    this.getCargaCotizacionByCotizacion();
+                    this.abrirModalEditItem();
+                    localStorage.removeItem(Codigo);
                 });
         },
 
         cargaDatosPredeterminados() {
-            this.fillregistrarCotizacion.cValidez = "15 días";
-            this.fillregistrarCotizacion.Docu =
-                "Factura, guía y carta de Garantía";
-            this.fillregistrarCotizacion.cFlete = "NOVESUR";
+            this.fillEditarProducto.cValidez = "15 días";
+            this.fillEditarProducto.Docu = "Factura, guía y carta de Garantía";
+            this.fillEditarProducto.cFlete = "NOVESUR";
         },
 
         setBuscaPrecioXProducto() {
@@ -1168,36 +1339,40 @@ export default {
             axios
                 .get(url, {
                     params: {
-                        nIdProducto: this.fillregistrarCotizacion.nIdprod,
-                        nIdCliente: this.fillregistrarCotizacion.nIdCliente,
+                        nIdProducto: this.fillEditarProducto.nIdprod,
                     },
                 })
                 .then((response) => {
-                    if (this.fillregistrarCotizacion.ctipoPrecio == "Lista") {
-                        this.fillregistrarCotizacion.cPUnit =
+                    // this.fillEditarProducto.cPUnit = response.data.precioSugerido;
+                    if (this.fillEditarProducto.ctipoPrecio == "Lista") {
+                        this.fillEditarProducto.cPUnit =
                             response.data.precioSugerido;
-                        this.fillregistrarCotizacion.cStock =
-                            response.data.stock;
                     } else if (
-                        this.fillregistrarCotizacion.ctipoPrecio ==
-                        "Distribuidor"
+                        this.fillEditarProducto.ctipoPrecio == "Distribuidor"
                     )
-                        this.fillregistrarCotizacion.cPUnit =
+                        this.fillEditarProducto.cPUnit =
                             response.data.precioDistribuidor;
-                    this.fillregistrarCotizacion.cStock = response.data.stock;
                 });
-            this.getListStock();
         },
-        getListStock() {
-            var url = "/administracion/parteingSalida/listStockByproduct";
+
+        setBuscaPrecioXProductoModal() {
+            var url = "/administracion/producto/getListarProductoById";
             axios
                 .get(url, {
                     params: {
-                        nIdprod: this.fillregistrarCotizacion.nIdprod,
+                        nIdProducto: this.fillEditarProducto.nIdprodEdit,
                     },
                 })
                 .then((response) => {
-                    this.listStock = response.data;
+                    // this.fillEditarProducto.cPUnitEdit = response.data.precioSugerido;
+                    if (this.fillEditarProducto.ctipoPrecio == "Lista") {
+                        this.fillEditarProducto.cPUnitEdit =
+                            response.data.precioSugerido;
+                    } else if (
+                        this.fillEditarProducto.ctipoPrecio == "Distribuidor"
+                    )
+                        this.fillEditarProducto.cPUnitEdit =
+                            response.data.precioDistribuidor;
                 });
         },
     },

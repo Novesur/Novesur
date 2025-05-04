@@ -296,6 +296,7 @@ class OrdencompraController extends Controller
 
         $ordencompra = Ordencompra::where('codigo', $request->nidOrdenCompra)->first();
         $dato = Detalleordencompra::with('ordencompras', 'ordencompras.proveedor')->where('ordencompras_id', $ordencompra->id)->first();
+
         return $dato;
 
     }

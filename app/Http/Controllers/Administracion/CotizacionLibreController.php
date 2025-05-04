@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Session;
 use App\Tipopago;
 use App\UnidMedida;
 use App\Cliente;
-use App\TempCotizacion;
-use App\Cotizacion;
+use App\TempCotizacionLibre;
+use App\CotizacionLibre;
 use App\CotizacionLibreDetalle;
 use App\Countable;
 use App\Exports\CotizacionFechaExport;
@@ -28,75 +28,37 @@ use Carbon\Carbon;
 class CotizacionLibreController extends Controller
 {
     public function addTempCotizacionLibre(Request $request)
+
+
     {
+       $products = Session::get('productsLibre');
+        $unidmed = UnidMedida::where(['id' => $request->nIdUnidMed])->first();
+        $tempcotizacionLibre = new TempCotizacionLibre;
+        $tempcotizacionLibre->fill(['cantidad' => $request->cCantidad, 'unidmedida_id' => $request->nIdUnidMed,'producto'=> $request->nIdprod,'punit' => $request->cPUnit, 'total' => $request->cTotal,'unidmedNombre' => $unidmed->nombre]);
+        Session::put('productsLibre',collect($products)->push($tempcotizacionLibre) );
+       // $products->push($tempcotizacionLibre);
 
-
-        $client = Cliente::find($request->nIdCliente);
-
-
-        $product = Producto::where(['id' => $request->nIdprod])->with('familia', 'marca', 'material', 'modelotipo', 'subfamilia', 'homologacion')->first();
-        $products = Session::get('products');
-        $products = ($products != null) ? collect($products) : collect([]);
-        // $exists = $products->firstWhere("producto_id", $product->id);
-        /*      if (!empty($exists)) :
-            // return response()->json(['message' => "Ya fue agregado anteriormente"], 422);
-            return response()->json(['datos' => $products, 'message' => 'Ya fue agregado anteriormente', 'icon' => 'error'], 200);
-
-        else : */
-
-        if($client->tipoPrecio == "Lista")
-        {
-            if ($product->precioSugerido <= $request->cPUnit) {
-                $articulo = $product;
-                $unidmed = UnidMedida::where(['id' => $request->nIdUnidMed])->first();
-                $tempcotizacion = new TempCotizacion;
-                $tempcotizacion->fill(['cantidad' => $request->cCantidad, 'unidmedida_id' => $request->nIdUnidMed, 'codigo' => $product->codigo, 'producto_id' => $request->nIdprod, 'punit' => $request->cPUnit, 'total' => $request->cTotal, 'producto' => $request->nIdprod,  'productoModelotipo' => $articulo->modelotipo->nombre, 'productoMarca' => $articulo->marca->nombre, 'unidmedNombre' => $unidmed->nombre, 'material' => $product->material->nombre, 'homologacion' => $product->homologacion->nombre]);
-                $products->push($tempcotizacion);
-                Session::put('products', $products);
-                return response()->json(['datos' => $products, 'message' => NULL]);
-            } else {
-                return response()->json(['datos' => $products, 'message' => 'El precio no puede ser menor que' . ' ' . $product->precioSugerido, 'icon' => 'error'], 200);
-            }
-        }
-
-        if($client->tipoPrecio == "Distribuidor")
-        {
-            if ($product->precioDistribuidor <= $request->cPUnit) {
-                $articulo = $product;
-                $unidmed = UnidMedida::where(['id' => $request->nIdUnidMed])->first();
-                $tempcotizacion = new TempCotizacion;
-                $tempcotizacion->fill(['cantidad' => $request->cCantidad, 'unidmedida_id' => $request->nIdUnidMed, 'codigo' => $product->codigo, 'producto_id' => $request->nIdprod, 'punit' => $request->cPUnit, 'total' => $request->cTotal, 'productoFamilia' => $articulo->familia->nombre, 'productoSubfamilia' => $articulo->subfamilia->nombre, 'productoModelotipo' => $articulo->modelotipo->nombre, 'productoMarca' => $articulo->marca->nombre, 'unidmedNombre' => $unidmed->nombre, 'material' => $product->material->nombre, 'homologacion' => $product->homologacion->nombre]);
-                $products->push($tempcotizacion);
-                Session::put('products', $products);
-                return response()->json(['datos' => $products, 'message' => NULL]);
-            } else {
-                return response()->json(['datos' => $products, 'message' => 'El precio no puede ser menor que' . ' ' . $product->precioDistribuidor, 'icon' => 'error'], 200);
-            }
-        }
-
-
+        return response()->json(['datos' => $tempcotizacionLibre, 'message' => NULL]);
     }
+
 
     public function addTempEditCotizacion(Request $request)
     {
-
-
-
         /*    $datos[] = array("cotizacion_id" => $request->item, "cantidad" => $request->cCantidad, "unidmedida_id" => $request->nIdUnidMed, "producto_id" => $request->nIdprod, "punit" => $request->cPUnit);
         $datos = json_encode($datos);
         var_dump($datos); */
 
-        $Cotizacion = Cotizacion::where('codigo', $request->item)->first();
+        $cotizacionLibre = CotizacionLibre::where('codigo', $request->item)->first();
 
         /*    $searchProd = CotizacionLibreDetalle::where('producto_id', $request->nIdprod)
-            ->where('cotizacion_id', $Cotizacion->id)->exists();
+            ->where('cotizacion_id', $cotizacionLibre->id)->exists();
 
         if ($searchProd != 1) { */
         $detcotizacionLibre =  new CotizacionLibreDetalle;
-        $detcotizacionLibre->cotizacion_id = $Cotizacion->id;
+        $detcotizacionLibre->cotizacionlibre_id = $cotizacionLibre->id;
         $detcotizacionLibre->cantidad = $request->cCantidad;
         $detcotizacionLibre->unidmedida_id = $request->nIdUnidMed;
-        $detcotizacionLibre->producto_id = $request->nIdprod;
+        $detcotizacionLibre->producto = $request->nIdprod;
         $detcotizacionLibre->punit = $request->cPUnit;
         $detcotizacionLibre->save();
         //}
@@ -104,18 +66,13 @@ class CotizacionLibreController extends Controller
 
     public function dellTempEditCotizacion(Request $request)
     {
-        /*     $cant = CotizacionLibreDetalle::where('id', $request->item)->get();
-        $count = $cant->count();
-
-        if ($count >= 2) {
-            CotizacionLibreDetalle::where('id', $request->item)->delete();
-        } */
 
         CotizacionLibreDetalle::where('id', $request->item)->delete();
     }
 
     public function create(Request $request)
     {
+//dd($request);
 
         $yearMaxID = date("Y");
        // $maxidCoti = Cotizacion::whereRaw('id = (select max(`id`) from cotizacion)')->first();
@@ -142,53 +99,54 @@ class CotizacionLibreController extends Controller
                 return response()->json(['message' => 'Haga click en boton Agregar o campos de Producto vacios', 'icon' => 'warning'], 200);
 
             }else{
-                if ($request->session()->has('products')) {
+                if ($request->session()->has('productsLibre')) {
                     $formatreq = date("Y-m-d");
-                    $cotizacion = new Cotizacion();
-                    $cotizacion->fecha =  $formatreq;
-                    $cotizacion->cliente_id =  $request->nIdCliente;
-                    $cotizacion->user_id =  $request->nIdUsuario;
-                    $cotizacion->estadopedido_id =  4;
-                    $cotizacion->validezoferta =  $request->cValidez;
-                    $cotizacion->Entrega =  mb_strtoupper($request->cEntrega);
-                    $cotizacion->tipopago_id =  $request->nIdTipoPago;
-                    $cotizacion->pago_id = $request->nIdDescripPago;
-                    $cotizacion->flete =  $request->cFlete;
-                    $cotizacion->documentacion =  $request->Docu;
-                    $cotizacion->garantia_id =  $request->nIdGarantia;
-                    $cotizacion->punto_llegada =  $request->cPuntoLlegada;
-                    $cotizacion->transporte =  $request->cTransporte;
-                    $cotizacion->consignado =  $request->Cconsignado;
-                    $cotizacion->observacion = $request->cObservacion;
-                    $cotizacion->codigo = $maxidCoti;
-                    $cotizacion->fechacotiupdate =  $formatreq;
-                    $cotizacion->save();
+                    $cotizacionLibre = new CotizacionLibre();
+                    $cotizacionLibre->fecha =  $formatreq;
+                    $cotizacionLibre->cliente_id =  $request->nIdCliente;
+                    $cotizacionLibre->user_id =  $request->nIdUsuario;
+                    $cotizacionLibre->estadopedido_id =  4;
+                    $cotizacionLibre->validezoferta =  $request->cValidez;
+                    $cotizacionLibre->Entrega =  mb_strtoupper($request->cEntrega);
+                    $cotizacionLibre->tipopago_id =  $request->nIdTipoPago ;
+                    $cotizacionLibre->pago_id = $request->cFPago;
+                    $cotizacionLibre->flete =  $request->cFlete;
+                    $cotizacionLibre->documentacion =  $request->Docu;
+                    $cotizacionLibre->garantia_id =  $request->nIdGarantia;
+                    $cotizacionLibre->punto_llegada =  $request->cPuntoLlegada;
+                    $cotizacionLibre->transporte =  $request->cTransporte;
+                    $cotizacionLibre->consignado =  $request->Cconsignado;
+                    $cotizacionLibre->observacion = $request->cObservacion;
+                    $cotizacionLibre->codigo = $maxidCoti;
+                    $cotizacionLibre->fechacotiupdate =  $formatreq;
+                    $cotizacionLibre->save();
 
 
 
-                    $detcotizacionLibre = Session::get('products');
-                    $allProducts = $detcotizacionLibre->map(function ($product) use ($cotizacion) {
+                    $detcotizacionLibre = Session::get('productsLibre');
+
+                    $allProducts = $detcotizacionLibre->map(function ($product) use ($cotizacionLibre) {
                         return [
-                            'cotizacion_id' => $cotizacion->id,
+                            'cotizacionlibre_id' => $cotizacionLibre->id,
                             'cantidad'      => $product->cantidad,
                             'unidmedida_id' => $product->unidmedida_id,
-                            'producto_id'   => $product->producto_id,
+                            'producto'   => $product->producto,
                             'punit'         => $product->punit,
                             'EstadoNotPedido' => true
                         ];
                     });
                     CotizacionLibreDetalle::insert($allProducts->toArray());
                     DB::commit();
-                    Session::put('products', collect([]));
+                    Session::put('productsLibre', collect([]));
                     Countable::where('id', 1)->update(['countcotizacion' => $countCoti +1]);
                     return response()->json(['message' => 'Grabado', 'icon' => 'success'], 200);
-                }  else {
+                }   else {
                     return response()->json(['message' => 'El item no existe', 'icon' => 'warning'], 200);
 
                 }
             }
 
-        } catch (Exception $e) {
+         } catch (Exception $e) {
             DB::rollBack();
             return response()->json(['message' => 'Verifique bien los valores ingresador por favor', 'icon' => 'warning'], 200);
         }
@@ -197,26 +155,26 @@ class CotizacionLibreController extends Controller
     public function edit(Request $request)
     {
 
-        $cotizacion = Cotizacion::where('codigo', $request->ncodCotizacion)->first();
-        // $cotizacion->fecha = date("Y-m-d");
-        $cotizacion->fecha = $cotizacion->fecha;
-        $cotizacion->cliente_id =  $cotizacion->cliente_id;
-        $cotizacion->user_id =  $cotizacion->user_id;
-        $cotizacion->estadopedido_id =   $cotizacion->estadopedido_id;
-        $cotizacion->validezoferta =  $request->cValidez;
-        $cotizacion->Entrega =  mb_strtoupper($request->cEntrega);
-        $cotizacion->tipopago_id =  $request->nIdTipoPago;
-        $cotizacion->pago_id = $request->nIdDescripPago;
-        $cotizacion->flete =  $request->cFlete;
-        $cotizacion->documentacion =  $request->Docu;
-        $cotizacion->garantia_id =  $request->nIdGarantia;
-        $cotizacion->punto_llegada =  $request->cPuntoLlegada;
-        $cotizacion->transporte =  $request->cTransporte;
-        $cotizacion->consignado =  $request->Cconsignado;
-        $cotizacion->observacion = $request->cObservacion;
-        $cotizacion->fechacotiupdate =  date("Y-m-d");
+        $cotizacionLibre = CotizacionLibre::where('codigo', $request->ncodCotizacion)->first();
+        // $cotizacionLibre->fecha = date("Y-m-d");
+        $cotizacionLibre->fecha = $cotizacionLibre->fecha;
+        $cotizacionLibre->cliente_id =  $cotizacionLibre->cliente_id;
+        $cotizacionLibre->user_id =  $cotizacionLibre->user_id;
+        $cotizacionLibre->estadopedido_id =   $cotizacionLibre->estadopedido_id;
+        $cotizacionLibre->validezoferta =  $request->cValidez;
+        $cotizacionLibre->Entrega =  mb_strtoupper($request->cEntrega);
+        $cotizacionLibre->tipopago_id =  $request->nIdTipoPago;
+        $cotizacionLibre->pago_id = $request->nIdDescripPago;
+        $cotizacionLibre->flete =  $request->cFlete;
+        $cotizacionLibre->documentacion =  $request->Docu;
+        $cotizacionLibre->garantia_id =  $request->nIdGarantia;
+        $cotizacionLibre->punto_llegada =  $request->cPuntoLlegada;
+        $cotizacionLibre->transporte =  $request->cTransporte;
+        $cotizacionLibre->consignado =  $request->Cconsignado;
+        $cotizacionLibre->observacion = $request->cObservacion;
+        $cotizacionLibre->fechacotiupdate =  date("Y-m-d");
 
-        $cotizacion->save();
+        $cotizacionLibre->save();
     }
     public  function ListtempCotizacion(Request $request)
     {
@@ -232,20 +190,20 @@ class CotizacionLibreController extends Controller
 
     public function eliminarTempitemCoti()
     {
-        Session::put('products', null);
-        $dato = session()->get('products') ?? collect([]);
+        Session::put('productsLibre', null);
+        $dato = session()->get('productsLibre') ?? collect([]);
         return response()->json(['datos' => $dato]);
     }
 
     public function reorder(Request $request)
     {
-
-        $id = (int)trim($request->item);
-        $items = session()->get('products') ?? collect([]);
-        $exits = $items->firstWhere("producto_id", $id);
+        $id = strval(trim($request->item));
+        $items = session()->get('productsLibre') ?? collect([]);
+       // dd($items);
+        $exits = $items->firstWhere("producto", $id);
         if (!empty($exits)) :
-            $items =  $items->whereNotIn("producto_id", [$id]);
-            session()->put('products', $items);
+            $items =  $items->whereNotIn("producto", [$id]);
+            session()->put('productsLibre', $items);
             return response()->json(['datos' => $items]);
         endif;
         return response()->json(['message' => 'El item no existe'], 422);
@@ -253,17 +211,16 @@ class CotizacionLibreController extends Controller
 
     public function ListCotizacionesby(Request $request)
     {
+       // dd($request);
 
         $nIdCliente   =    $request->nIdCliente;
         $nIdVendedor    =   $request->nIdVendedor;
-        $nIdtEstadoCoti2 =   $request->nIdtEstadoCoti2;
         $dFechaInicio   =   $request->dFechainicio;
         $dFechaFin      =   $request->dFechafin;
         $anioactual = substr($dFechaInicio, 0, -6);
 
         $nIdCliente   =   ($nIdCliente   ==  NULL) ? ($nIdCliente   =   '') :   $nIdCliente;
         $nIdVendedor   =   ($nIdVendedor   ==  NULL) ? ($nIdVendedor   =   '') :   $nIdVendedor;
-        $nIdtEstadoCoti2   =   ($nIdtEstadoCoti2   ==  NULL) ? ($nIdtEstadoCoti2   =   '') :   $nIdtEstadoCoti2;
         $dFechaInicio   =   ($dFechaInicio   ==  NULL) ? ($dFechaInicio   =   '') :   $dFechaInicio;
         $dFechaFin      =   ($dFechaFin   ==  NULL) ? ($dFechaFin   =   '') :   $dFechaFin;
 
@@ -271,28 +228,19 @@ class CotizacionLibreController extends Controller
 
         if ($anioactual >= '2022' or $anioactual == '') {
 
-            $dato = DB::connection('mysql')->select('call sp_ReporteCotizacion (?,?,?,?,?)', [
+            $dato = DB::connection('mysql')->select('call sp_ReporteCotizacionlibre (?,?,?,?)', [
                 $nIdVendedor,
                 $nIdCliente,
-                $nIdtEstadoCoti2,
                 $dFechaInicio,
                 $dFechaFin
             ]);
+
             return $dato;
         }
 
-        if ($anioactual == '2021') {
-
-            $dato = DB::connection('mysql2')->select('call sp_ReporteCotizacion (?,?,?,?,?)', [
-                $nIdVendedor,
-                $nIdCliente,
-                $nIdtEstadoCoti2,
-                $dFechaInicio,
-                $dFechaFin
-            ]);
-            return $dato;
-        }
     }
+
+
 
     public function ReporteVentasFechaEstado(Request $request)
     {
@@ -339,23 +287,22 @@ class CotizacionLibreController extends Controller
     public function editEstadoCotizacion(Request $request)
     {
 
-        $cotizacion = Cotizacion::where('codigo', $request->itemid)->first();
-        $cotizacion->fecha =  $cotizacion->fecha;
-        $cotizacion->cliente_id =  $cotizacion->cliente_id;
-        $cotizacion->user_id =  $cotizacion->user_id;
-        $cotizacion->estadopedido_id =   $request->nIdtEstadoCoti;
-        $cotizacion->validezoferta =   $cotizacion->validezoferta;
-        $cotizacion->Entrega = $cotizacion->Entrega;
-        $cotizacion->tipopago_id =  $cotizacion->tipopago_id;
-        $cotizacion->pago_id = $cotizacion->pago_id;
-        $cotizacion->flete =  $cotizacion->flete;
-        $cotizacion->documentacion =  $cotizacion->documentacion;
-        $cotizacion->garantia_id =   $cotizacion->garantia_id;
-        $cotizacion->punto_llegada =   $cotizacion->punto_llegada;
-        $cotizacion->transporte =  $cotizacion->transporte;
-        $cotizacion->consignado =  $cotizacion->consignado;
-        $cotizacion->observacion =  mb_strtoupper($request->cMotivoRechazo);
-        $cotizacion->save();
+        $cotizacionLibre = CotizacionLibre::where('codigo', $request->itemid)->first();
+        $cotizacionLibre->fecha =  $cotizacionLibre->fecha;
+        $cotizacionLibre->cliente_id =  $cotizacionLibre->cliente_id;
+        $cotizacionLibre->user_id =  $cotizacionLibre->user_id;
+        $cotizacionLibre->validezoferta =   $cotizacionLibre->validezoferta;
+        $cotizacionLibre->Entrega = $cotizacionLibre->Entrega;
+        $cotizacionLibre->tipopago_id =  $cotizacionLibre->tipopago_id;
+        $cotizacionLibre->pago_id = $cotizacionLibre->pago_id;
+        $cotizacionLibre->flete =  $cotizacionLibre->flete;
+        $cotizacionLibre->documentacion =  $cotizacionLibre->documentacion;
+        $cotizacionLibre->garantia_id =   $cotizacionLibre->garantia_id;
+        $cotizacionLibre->punto_llegada =   $cotizacionLibre->punto_llegada;
+        $cotizacionLibre->transporte =  $cotizacionLibre->transporte;
+        $cotizacionLibre->consignado =  $cotizacionLibre->consignado;
+        $cotizacionLibre->observacion =  mb_strtoupper($request->cMotivoRechazo);
+        $cotizacionLibre->save();
 
 
         /* Cotizacion::findOrFail($request->itemid)->update(['estadopedido_id' => $request->nIdtEstadoCoti]); */
@@ -380,12 +327,12 @@ class CotizacionLibreController extends Controller
 
         if ($anioactual >= '2022' or $anioactual == '') {
 
-            $coti = Cotizacion::on('mysql')->with('cliente', 'user', 'tipopago', 'estadopedido', 'pago', 'garantia')->where('codigo', $valor)->first();
-            $detcoti = CotizacionLibreDetalle::with('unidmedida', 'producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia')->where('cotizacion_id', $coti->id)->get();
+            $coti = CotizacionLibre::on('mysql')->with('cliente', 'user', 'tipopago', 'estadopedido', 'pago', 'garantia')->where('codigo', $valor)->first();
+            $detcoti = CotizacionLibreDetalle::with('unidmedida')->where('cotizacionlibre_id', $coti->id)->get();
             $logo = asset('img/logo.gif');
             $qr= asset('img/QR.jpeg');
             $productos01 = asset('img/banner01.png');
-            $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('reporte.cotizacion.reportepdf', [
+            $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('reporte.cotizacion.cotizacion_librepdf', [
                 'logo' => $logo,
                 'productos01' => $productos01,
                 'coti' => $coti,
@@ -395,35 +342,18 @@ class CotizacionLibreController extends Controller
             return $pdf->download('invoice.pdf');
         }
 
-        if ($anioactual == '2021' or $anioactual == '') {
-
-            $coti = Cotizacion::on('mysql2')->with('cliente', 'user', 'tipopago', 'estadopedido', 'pago', 'garantia')->where('codigo', $valor)->first();
-            $detcoti = CotizacionLibreDetalle::with('unidmedida', 'producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia')->where('cotizacion_id', $coti->id)->get();
-
-            $logo = asset('img/logo02.png');
-            $qr= asset('img/QR.jpeg');
-            $productos01 = asset('img/banner01.png');
-            $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('reporte.cotizacion.reportepdf', [
-                'logo' => $logo,
-                'productos01' => $productos01,
-                'coti' => $coti,
-                'detcoti' => $detcoti,
-                'qr'=>$qr,
-            ]);
-            return $pdf->download('invoice.pdf');
-        }
     }
 
     public function listCotizacionList(Request $request)
     {
 
         if ($request->cSelectAnios >= '2022') {
-            $dato = CotizacionLibreDetalle::on('mysql')->with('cotizacion', 'cotizacion.cliente', 'cotizacion.estadopedido', 'cotizacion.user')->where('producto_id', $request->nIdprod)->get();
+            $dato = CotizacionLibreDetalle::on('mysql')->with('cotizacion_libre', 'cotizacion_libre.cliente', 'cotizacion_libre.estadopedido', 'cotizacion_libre.user')->where('producto','like','%'. $request->cNomProduct .'%')->get();
 
             return $dato;
         }
         if ($request->cSelectAnios == '2021') {
-            $dato = CotizacionLibreDetalle::on('mysql2')->with('cotizacion', 'cotizacion.cliente', 'cotizacion.estadopedido', 'cotizacion.user')->where('producto_id', $request->nIdprod)->get();
+            $dato = CotizacionLibreDetalle::on('mysql2')->with('cotizacion_libre', 'cotizacion_libre.cliente', 'cotizacion_libre.estadopedido', 'cotizacion_libre.user')->where('producto','like','%'. $request->cNomProduct .'%')->get();
             return $dato;
         }
     }
@@ -541,9 +471,9 @@ class CotizacionLibreController extends Controller
     public function updateFechaCotizacion(Request $request)
     {
         $formatreq = date("Y-m-d");
-        $cotizacion = Cotizacion::find($request->item);
-        $cotizacion->fecha = $formatreq;
-        $cotizacion->save();
+        $cotizacionLibre = Cotizacion::find($request->item);
+        $cotizacionLibre->fecha = $formatreq;
+        $cotizacionLibre->save();
     }
 
     public function exportProductCotizacion(Request $request)
@@ -617,7 +547,7 @@ class CotizacionLibreController extends Controller
   $fecha2 = ($fecha2 == NULL)? ($fecha2 = ''):$fecha2;
 
 
-  $rpta = DB::select('call sp_ConsultaListadoProducts (?, ?,?)',
+  $rpta = DB::select('call sp_ConsultaCotiLibreByProducts (?, ?,?)',
   [
     $nIdVendedor,
     $fecha1 ,
@@ -655,3 +585,4 @@ class CotizacionLibreController extends Controller
         return (new CotizacionAnalisisExport)->setGenerarExcel($listAnalisisDetProductByDate)->download('invoices.xlsx');
 
       }
+    }

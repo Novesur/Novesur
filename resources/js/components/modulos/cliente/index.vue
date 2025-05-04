@@ -210,7 +210,7 @@
                                                         )
                                                     "
                                                 >
-                                                    <!--     <router-link
+                                                       <router-link
                           class="btn  btn-secondary btn-sm "
                           :to="{
                             name: 'cotizacion_libre.create',
@@ -218,7 +218,7 @@
                           }"
                         >
                         <i class="fas fa-file-signature"></i> Cotizacion Libre
-                        </router-link> -->
+                        </router-link>
 
                                                     <router-link
                                                         class="btn btn-success btn-sm"

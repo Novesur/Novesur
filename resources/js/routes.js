@@ -422,6 +422,23 @@ export default new Router({
             props: true,
         },
 
+        {
+            path: "/cotizacion_libre/index",
+            name: "cotizacion_libre.index",
+            component: require("./components/modulos/cotizacion_libre/index")
+                .default,
+            props: true,
+        },
+
+        {
+            path: "/cotizacion_libre/editar/:id",
+            name: "cotizacion_libre.editar",
+            component: require("./components/modulos/cotizacion_libre/edit").default,
+            props: true,
+        },
+
+
+
         /// REPORTE DE COTIZACION EN PDF
 
         {

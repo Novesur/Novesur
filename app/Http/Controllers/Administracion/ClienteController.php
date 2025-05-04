@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Cliente;
 use App\Cotizacion;
+use App\CotizacionLibre;
 use App\User;
 use App\Exports\ClientExport;
 use GuzzleHttp\Client;
@@ -112,17 +113,18 @@ class ClienteController extends Controller
 
     public function listGetClienteVendedor(Request $request)
     {
-
         $dato = Cotizacion::with('cliente', 'user')->where('codigo', $request->ncodCotizacion)->first();
         return $dato;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function listGetClienteVendedor_CotiLibre(Request $request)
+    {
+        $dato = CotizacionLibre::with('cliente', 'user')->where('codigo', $request->ncodCotizacion)->first();
+        return $dato;
+    }
+
+
+
     public function edit(Request $request)
 
     {

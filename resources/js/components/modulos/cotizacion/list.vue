@@ -968,7 +968,7 @@ export default {
                     },
                 })
                 .then((response) => {
-                console.log(response.data)
+
                     this.listCotizacion = response.data;
                 });
         },
@@ -996,7 +996,7 @@ export default {
                 })
                 .then((response) => {
                     this.listCotizacionByDate = response.data;
-                    console.log(response.data)
+
                 });
         },
 

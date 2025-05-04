@@ -255,6 +255,14 @@
                   </router-link>
                 </template>
               </li>
+              <li class="nav-item">
+                <template v-if="listPermisos.includes('consulta.cotilibre')">
+                  <router-link class="nav-link" :to="'/cotizacion_libre/index'">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Consulta Cotizaciones Libre</p>
+                  </router-link>
+                </template>
+              </li>
 
               <li class="nav-item">
                 <template v-if="listPermisos.includes('consulta.detalleproductos')">

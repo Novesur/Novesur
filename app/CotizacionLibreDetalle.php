@@ -22,7 +22,7 @@ class CotizacionLibreDetalle extends Model
         return $this->belongsTo(UnidMedida::class);
     }
 
-    public function cotizacion(){
-        return $this->belongsTo(Cotizacion::class);
+    public function cotizacion_libre(){
+        return $this->belongsTo(CotizacionLibre::class);
     }
 }

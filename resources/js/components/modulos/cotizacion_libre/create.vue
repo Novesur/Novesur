@@ -247,7 +247,7 @@
                                                 <div class="form-group row">
                                                     <label
                                                         class="col-md-2 col-form-label"
-                                                        >CONDICIÓN DE
+                                                        >TIPO  DE
                                                         PAGO</label
                                                     >
                                                     <div class="col-md-4">
@@ -280,7 +280,7 @@
                                                     <div class="col-md-4">
                                                         <el-select
                                                             v-model="
-                                                                fillregistrarCotizacionLibre.nIdDescripPago
+                                                                fillregistrarCotizacionLibre.cFPago
                                                             "
                                                             placeholder="Select"
                                                             style="width: 70%"
@@ -614,11 +614,11 @@
                                                     <th>ITEM</th>
                                                     <th>CANT</th>
                                                     <th>MEDIDA</th>
-                                                    <th>CODIGO</th>
+
                                                     <th>
                                                         DESCRIPCION DEL PRODUCTO
                                                     </th>
-                                                    <th>HOMOLOGADO</th>
+
                                                     <th>P/UNIT</th>
                                                     <th>TOTAL S/IGV</th>
                                                     <th>Acciones</th>
@@ -642,27 +642,13 @@
                                                             item.unidmedNombre
                                                         "
                                                     ></td>
-                                                    <td
-                                                        v-text="item.codigo"
-                                                    ></td>
+
                                                     <td
                                                         v-text="
-                                                            item.productoFamilia +
-                                                            ' ' +
-                                                            item.productoSubfamilia +
-                                                            ', MARCA :' +
-                                                            item.productoMarca +
-                                                            ', MODELO/TIPO :' +
-                                                            item.productoModelotipo +
-                                                            ', MATERIAL :' +
-                                                            item.material
+                                                            item.producto
                                                         "
                                                     ></td>
-                                                    <td
-                                                        v-text="
-                                                            item.homologacion
-                                                        "
-                                                    ></td>
+
                                                     <td
                                                         v-text="item.punit"
                                                     ></td>
@@ -671,11 +657,11 @@
                                                     ></td>
 
                                                     <td>
-                                                        <button
+                                                         <button
                                                             class="btn btn-info btn-sm"
                                                             @click.prevent="
                                                                 borradoItems(
-                                                                    item.producto_id
+                                                                    item.producto
                                                                 )
                                                             "
                                                         >
@@ -831,7 +817,7 @@ export default {
             var url = "/administracion/pago/index";
             axios.get(url).then((response) => {
                 this.listDescripPago = response.data;
-                this.fillregistrarCotizacionLibre.nIdDescripPago =
+                this.fillregistrarCotizacionLibre.cFPago =
                     this.listDescripPago[0].id;
             });
         },
@@ -1005,7 +991,7 @@ export default {
         },
 
         setAddTempCotizacion() {
-            var url = "cotizacionLibre/addTempCotizacionLibre";
+            var url = "/administracion/cotizacionLibre/addTempCotizacionLibre";
             axios
                 .post(url, {
                     cCantidad: this.fillregistrarCotizacionLibre.cCantidad,
@@ -1025,7 +1011,7 @@ export default {
                             timer: 1500,
                         });
                     } else {
-                        this.listarProductosPaginated = response.data.datos;
+                        this.listarProductosPaginated.push(response.data.datos);
                         this.limpiaItems();
                     }
 
@@ -1041,7 +1027,7 @@ export default {
                 });
         },
         setGrabarCotizacion() {
-            var url = "/administracion/tempcotizacion/grabaCotizacion";
+            var url = "/administracion/cotizacionLibre/create";
             axios
                 .post(url, {
                     nIdCliente: this.fillregistrarCotizacionLibre.nIdCliente,
@@ -1092,7 +1078,7 @@ export default {
             });
         },
         eliminarTempitemCoti() {
-            var url = "/administracion/tempcotizacion/eliminarTempitemCoti";
+            var url = "/administracion/cotizacionLibre/eliminarTempitemCoti";
             axios.post(url).then((response) => {
                 this.setListtempCotizacion();
             });
@@ -1104,6 +1090,7 @@ export default {
             this.fillregistrarCotizacionLibre.cTotal = parseFloat(c).toFixed(2);
         },
         limpiaItems() {
+            this.fillregistrarCotizacionLibre.nIdprod="";
             this.fillregistrarCotizacionLibre.cCantidad = "";
             this.fillregistrarCotizacionLibre.cMedida = "";
             this.fillregistrarCotizacionLibre.cDescripcion = "";
@@ -1112,13 +1099,13 @@ export default {
         },
 
         borradoItems(item) {
-            var url = "/administracion/tempcotizacion/reorder";
+            var url = "/administracion/tempcotizacionLibre/reorder";
             axios
                 .post(url, {
                     item: item,
                 })
                 .then((response) => {
-                    this.listarProductosPaginated = response.data.datos;
+                    this.listarProductosPaginated=response.data.datos ;
                     // this.fillregistrarCotizacionLibre.nIdprod = '';
 
                     //console.log(item);
