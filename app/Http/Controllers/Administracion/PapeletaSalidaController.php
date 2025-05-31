@@ -83,7 +83,7 @@ if ($tiempo  >= $tiempoMax) {
             }
 
 
-            //Si motivo es Despacho /  Si motivo es Ventas o Evaluadion 
+            //Si motivo es Despacho /  Si motivo es Ventas o Evaluadion
 
             if ($request->nIdMotivo == 2 || $request->nIdMotivo == 3 || $request->nIdMotivo == 6) {
                 $validaCampos = empty($request->listTempClientPSalida);
@@ -91,7 +91,7 @@ if ($tiempo  >= $tiempoMax) {
 
                     $clientPapeletaSalida = Session::get('clients');
                     $allclients = $clientPapeletaSalida->map(function ($PS) use ($PapeletaSalida) {
-    
+
                         return [
                             'papeletasalida_id' => $PapeletaSalida->id,
                             'cliente_id'      =>  $PS->id,
@@ -99,7 +99,7 @@ if ($tiempo  >= $tiempoMax) {
                             'direccion'   => $PS->direccion,
                         ];
                     });
-    
+
                     ClientsPapeletaSalida::insert($allclients->toArray());
                     return response()->json(['message' => 'Papeleta de Salida grabado', 'icon' => 'success'], 200);
                 }else{
@@ -236,7 +236,14 @@ if ($tiempo  >= $tiempoMax) {
 
     public function setAprobarPapeletaSalida(Request $request)
     {
-        Papeletasalida::where('id', $request->item)->update(['estadopapeletasalida_id' => '2']);
+        $papeleta = Papeletasalida::where('id', $request->item)->first();
+        if($papeleta->estadopapeletasalida_id == 2){
+            Papeletasalida::where('id', $request->item)->update(['estadopapeletasalida_id' => '3']);
+        }
+
+          if($papeleta->estadopapeletasalida_id == 3 || $papeleta->estadopapeletasalida_id == 1 ){
+            Papeletasalida::where('id', $request->item)->update(['estadopapeletasalida_id' => '2']);
+        }
     }
 
     public function getListarCliente(Request $request)

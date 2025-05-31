@@ -263,13 +263,31 @@
                                         listRolPermisoByUsuario.includes('papeleta.admin')
                                       "
                                     >
-                                      <button
+                                      <button v-if="item.estadopapeletasalida_id == 1"
                                         class="btn btn-success btn-sm"
-                                        @click.prevent="aprobarPartidaSalida(item.id)"
+                                        @click.prevent="aprobarPartidaSalida(item.id, item.estadopapeletasalida_id)"
                                       >
                                         <i class="far fa-thumbs-up"></i>
                                         Aprobar
                                       </button>
+
+                                        <button v-if="item.estadopapeletasalida_id == 2"
+                                        class="btn btn-secondary btn-sm"
+                                        @click.prevent="aprobarPartidaSalida(item.id, item.estadopapeletasalida_id)"
+                                      >
+                                        <i class="far fa-thumbs-down"></i>
+                                        Desaprobar
+                                      </button>
+
+                                         <button v-if="item.estadopapeletasalida_id == 3"
+                                        class="btn btn-success btn-sm"
+                                        @click.prevent="aprobarPartidaSalida(item.id, item.estadopapeletasalida_id)"
+                                      >
+                                        <i class="far fa-thumbs-up"></i>
+                                        Aprobar
+                                      </button>
+
+
                                       <button
                                         class="btn btn-info btn-sm"
                                         @click.prevent="abrirAnularVendedor(item.id)"
@@ -881,30 +899,60 @@ export default {
       });
     },
 
-    aprobarPartidaSalida(item) {
-      Swal.fire({
-        title: "Desea aprobar la papeleta de salida?",
-        text: "No podrás revertir esto.!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Si, quiero aprobarlo!",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          var url = "/administracion/papeletasalida/setAprobarPapeletaSalida";
-          axios
-            .post(url, {
-              item: item,
-            })
-            .then(() => {
-              //this.getListarOrdenServicioxProveedor();
-              this.getlistPapeleByVendedor();
-            });
+    aprobarPartidaSalida(item, estadoPapeleta) {
 
-          Swal.fire("Aprobado!", "Tu Papeleta de Salida fue  aprobado.", "success");
+        if(estadoPapeleta == 2 ){
+            Swal.fire({
+              title: "Desea Desaprobar la papeleta de salida?",
+              text: "No podrás revertir esto.!",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "Si, quiero desaprobarlo!",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                var url = "/administracion/papeletasalida/setAprobarPapeletaSalida";
+                axios
+                  .post(url, {
+                    item: item,
+
+                  })
+                  .then(() => {
+                    //this.getListarOrdenServicioxProveedor();
+                    this.getlistPapeleByVendedor();
+                  });
+
+                Swal.fire("Aprobado!", "Tu Papeleta de Salida fue  aprobado.", "success");
+              }
+            });
         }
-      });
+                if(estadoPapeleta == 3 || estadoPapeleta == 1 ){
+            Swal.fire({
+              title: "Desea aprobar la papeleta de salida?",
+              text: "No podrás revertir esto.!",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "Si, quiero aprobarlo!",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                var url = "/administracion/papeletasalida/setAprobarPapeletaSalida";
+                axios
+                  .post(url, {
+                    item: item,
+
+                  })
+                  .then(() => {
+                    //this.getListarOrdenServicioxProveedor();
+                    this.getlistPapeleByVendedor();
+                  });
+
+                Swal.fire("Aprobado!", "Tu Papeleta de Salida fue  aprobado.", "success");
+              }
+            });
+        }
     },
 
     limpiarCriteriosBsq() {

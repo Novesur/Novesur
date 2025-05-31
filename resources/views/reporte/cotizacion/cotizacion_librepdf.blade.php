@@ -112,13 +112,22 @@ th,
             </td>
         </tr>
         <tr>
-            <td colspan="2" align="center" style="font-size: 11px"><strong>VENTA DE MEDIDORES, ACCESORIOS Y INSUMOS
+            <td colspan="2" align="center" style="font-size: 11px"><strong>VENTA DE MEDIDORES, ACCESORIOS E INSUMOS
                     PARA AGUA POTABLE SERVICIO DE INSTALACION, CONTRASTACION Y REPARACION DE MEDIDORES DE AGUA</strong>
             </td>
         </tr>
     </table>
 
-    <table width="100%" border="0">
+   <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Documento sin título</title>
+</head>
+
+<body>
+
+      <table width="100%" border="0">
         <tr>
             {{--           <td colspan="4" align="center" style="border: 1px; background-color: rgb(109, 172, 243);width: -10px;padding-top: 0rem" ><h3><strong>COTIZACION Nº {{str_pad($coti->id,3,'0',STR_PAD_LEFT) }} - {{substr($coti->fecha,0,4)}}</strong></h3></td>
  --}}
@@ -217,9 +226,9 @@ th,
             <td>&nbsp;</td>
         </tr>
 
-    </table>
+</table>
 
-    <h6 style="margin: 0.5em">
+<h6 style="margin: 0.5em">
         <center style="text-transform: uppercase">De nuestra consideración; Hacemos llegar  nuestra propuesta económica, según se muestra a
             continuación</center>
     </h6>
@@ -231,8 +240,7 @@ th,
             <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 12px" >
                 <strong>CANT</strong>
             </td>
-<td></td>
-            <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 12px" ><strong>DESCRIPCION
+<td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 12px" ><strong>DESCRIPCION
                     DEL PRODUCTO</strong></td>
             <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 12px" >
                 <strong>P/UNIT</strong>
@@ -250,18 +258,14 @@ th,
                     <td align="center" style="font-size:1em" >@php
                         echo $i = $i + 1;
                     @endphp</td>
-                    </td>
-                    <td></td>
-                    <td align="center" style="font-size: 10px" >{{ $data->cantidad }}</td>
+                    <td align="center" >{{ $data->cantidad }}</td>
+                    <td align="center" style="font-size: 10px" >{{ $data->producto}}</td>
 
                     <td align="center" style="font-size: 10px" >
-                        {{ $data->producto}}
+                        S/. {{ number_format($data->punit, 2) }}
                     </td>
-                    <td align="center" style="font-size: 10px" >S/. {{ number_format($data->punit, 2) }}</td>
-
-                    <td align="right" style="font-size: 9px" >S/.
-                        {{ number_format($data->cantidad * $data->punit, 2) }}
-                    </td>
+                    <td colspan="2" align="center" style="font-size: 10px" ><span style="font-size: 9px">S/.
+                    {{ number_format($data->cantidad * $data->punit, 2) }} </span></td>
 
                 </tr>
             @endforeach
@@ -276,7 +280,7 @@ th,
             $total = $subtotal + $IGV;
         @endphp
         <tr>
-            <td colspan="4" rowspan="3" align="center" >&nbsp;</td>
+            <td colspan="3" rowspan="3" align="center" >&nbsp;</td>
             <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 10px">
                 <strong>SUBTOTAL</strong>
             </td>
@@ -296,90 +300,13 @@ th,
 
     </table>
 
-    <table width="100%" border="1" align="center" style="margin-top: 5px" >
 
-        <tr>
-            <td colspan="3" align="center" style="font-size: 12px" ><strong>CUENTAS CORRIENTES INVERSIONES
-                    NOVESUR</strong></td>
-        </tr>
-        <tr>
-            <td align="center" style="background-color: lightgreen ;font-size: 11px" ><strong>BANCO</strong></td>
-            <td align="center" style="background-color: lightgreen;font-size: 11px" ><strong>CTE. SOLES</strong></td>
-            <td align="center" style="background-color: lightgreen;font-size: 11px" ><strong>CTA. INTERBANCARIO
-                    CCI</strong></td>
-        </tr>
-        <tr>
-            <td align="center"  ><strong style="color: red">BCP</strong></td>
-            <td align="center" >193-1760590-0-36</td>
-            <td align="center" >CCI 002-193-001760590036-18</td>
-        </tr>
-        <tr>
-            <td align="center" ><strong style="color: blue">BBVA</strong></td>
-            <td align="center" >0011-0933-0100025143</td>
-            <td align="center" >CCI 011-933-000100025143-97</td>
-        </tr>
-    </table>
-    <br>
-    <table width="100%" border="0">
-        <tr>
-            <td colspan="2"><strong>Condiciones Comerciales :</strong></td>
-        </tr>
-        <tr>
-            <td width="23%" style="font-size: 11px"><strong>Validez de Oferta :</strong></td>
-            <td width="90%" style="font-size: 10px; text-transform: uppercase">{{ $coti->validezoferta }}</td>
-        </tr>
-        <tr>
-            <td style="font-size: 11px"><strong>Plazo de entrega :</strong></td>
-            <td style="font-size: 10px">{{ $coti->Entrega }}</td>
-        </tr>
-        <tr>
-            <td style="font-size: 11px"><strong>Condición de venta :</strong></td>
-            <td style="font-size: 10px"> {{ $coti->tipopago->nombre }}</td>
-        </tr>
+</body>
+</html>
 
-        <tr>
-            <td style="font-size: 11px"><strong>Condición de Pago :</strong></td>
-            <td style="font-size: 10px"> {{ $coti->pago->nombre }}</td>
-        </tr>
-                <tr>
-            <td style="font-size: 11px"><strong>Referencia :</strong></td>
-            <td style="font-size: 10px">- TODA COMISON GENERADA POR DEPOSITOS EN AGENTES DE BANCO
-                <strong>(PROVINCIA)</strong>, SERÁ ASUMIDA POR EL CLIENTE
-            </td>
-
-        </tr>
-        <tr>
-            <td style="font-size: 11px">&nbsp;</td>
-            <td style="font-size: 10px">
-
-                    <div style="text-transform: uppercase">- El incumplimiento del pago generara interés a la tasa vigente del sistema Bancario
-                    </div>
-
-            </td>
-        </tr>
-        <tr>
-            <td style="font-size: 11px"><strong>Flete :</strong></td>
-            <td style="font-size: 10px">{{ $coti->flete }}</td>
-        </tr>
-        <tr>
-            <td style="font-size: 11px"><strong>Documentacion :</strong></td>
-            <td style="font-size: 10px ; text-transform: uppercase">{{ $coti->documentacion }}</td>
-        </tr>
-        <tr>
-            <td style="font-size: 11px"><strong>Garantia : </strong></td>
-            <td style="font-size: 10px; text-transform: uppercase">{{ $coti->garantia->nombre }} por defectos de fabricaciòn (no cubre los
-                originados por mala manipulaciòn, vandalismo, golpes, mala instalaciòn <strong>por terceros</strong> , mala operaciòn,
-                exceso de presiòn y temperaturas)</td>
-        </tr>
-        <tr>
-            <td style="font-size: 12px"><strong>Observación : </strong></td>
-            <td style="font-size: 14px"><strong>{{ $coti->observacion }}</strong> </td>
-        </tr>
-
-    </table>
 
     <div style=" margin-bottom: 0px;font-weight:normal">
-
+<br/>
         <h6 style="font-weight:normal; margin-top: 0px; text-transform: uppercase">Atentamente</h6>
 
         <h6 style=" position: center; margin-top: 0px;font-weight:normal; margin-left: 40px">

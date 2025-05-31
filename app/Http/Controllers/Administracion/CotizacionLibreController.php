@@ -80,9 +80,6 @@ class CotizacionLibreController extends Controller
 
        $countCoti = $countable[0]->countcotizacion;
 
-
-
-
         if ($countCoti == 0) {
 
             $maxidCoti = '0001' . '-' . $yearMaxID;
@@ -92,8 +89,8 @@ class CotizacionLibreController extends Controller
             $maxidCoti = sprintf('%04d', $countCoti + 1) . '-' . $yearMaxID;
         }
 
-        DB::beginTransaction();
-        try {
+      /*   DB::beginTransaction();
+        try { */
 
             if(empty($request->listarProductosPaginated)){
                 return response()->json(['message' => 'Haga click en boton Agregar o campos de Producto vacios', 'icon' => 'warning'], 200);
@@ -130,7 +127,7 @@ class CotizacionLibreController extends Controller
                             'cotizacionlibre_id' => $cotizacionLibre->id,
                             'cantidad'      => $product->cantidad,
                             'unidmedida_id' => $product->unidmedida_id,
-                            'producto'   => $product->producto,
+                            'producto'   => mb_strtoupper($product->producto),
                             'punit'         => $product->punit,
                             'EstadoNotPedido' => true
                         ];
@@ -145,11 +142,11 @@ class CotizacionLibreController extends Controller
 
                 }
             }
-
+/*
          } catch (Exception $e) {
             DB::rollBack();
             return response()->json(['message' => 'Verifique bien los valores ingresador por favor', 'icon' => 'warning'], 200);
-        }
+        } */
     }
 
     public function edit(Request $request)

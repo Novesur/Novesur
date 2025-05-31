@@ -219,6 +219,7 @@ class OrdencompraController extends Controller
  */
 //dd($request);
 
+
         if ($request->nidProveedor == null && $request->dFecha == null ) {
             $dato = Ordencompra::with('proveedor', 'user', 'estadoordencompra', 'pago')
             ->where('tipo_ordencompra_id',$request->nIdtipoCompra)
@@ -255,7 +256,6 @@ class OrdencompraController extends Controller
             ->whereBetween('Femision', [$request->dFecha[0], $request->dFecha[1]])->get();
             return $dato;
         }
-
 
 
     }

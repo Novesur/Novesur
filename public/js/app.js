@@ -17424,28 +17424,52 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         }
       });
     },
-    aprobarPartidaSalida: function aprobarPartidaSalida(item) {
+    aprobarPartidaSalida: function aprobarPartidaSalida(item, estadoPapeleta) {
       var _this5 = this;
-      Swal.fire({
-        title: "Desea aprobar la papeleta de salida?",
-        text: "No podrás revertir esto.!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Si, quiero aprobarlo!"
-      }).then(function (result) {
-        if (result.isConfirmed) {
-          var url = "/administracion/papeletasalida/setAprobarPapeletaSalida";
-          axios.post(url, {
-            item: item
-          }).then(function () {
-            //this.getListarOrdenServicioxProveedor();
-            _this5.getlistPapeleByVendedor();
-          });
-          Swal.fire("Aprobado!", "Tu Papeleta de Salida fue  aprobado.", "success");
-        }
-      });
+      if (estadoPapeleta == 2) {
+        Swal.fire({
+          title: "Desea Desaprobar la papeleta de salida?",
+          text: "No podrás revertir esto.!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Si, quiero desaprobarlo!"
+        }).then(function (result) {
+          if (result.isConfirmed) {
+            var url = "/administracion/papeletasalida/setAprobarPapeletaSalida";
+            axios.post(url, {
+              item: item
+            }).then(function () {
+              //this.getListarOrdenServicioxProveedor();
+              _this5.getlistPapeleByVendedor();
+            });
+            Swal.fire("Aprobado!", "Tu Papeleta de Salida fue  aprobado.", "success");
+          }
+        });
+      }
+      if (estadoPapeleta == 3 || estadoPapeleta == 1) {
+        Swal.fire({
+          title: "Desea aprobar la papeleta de salida?",
+          text: "No podrás revertir esto.!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Si, quiero aprobarlo!"
+        }).then(function (result) {
+          if (result.isConfirmed) {
+            var url = "/administracion/papeletasalida/setAprobarPapeletaSalida";
+            axios.post(url, {
+              item: item
+            }).then(function () {
+              //this.getListarOrdenServicioxProveedor();
+              _this5.getlistPapeleByVendedor();
+            });
+            Swal.fire("Aprobado!", "Tu Papeleta de Salida fue  aprobado.", "success");
+          }
+        });
+      }
     },
     limpiarCriteriosBsq: function limpiarCriteriosBsq() {
       this.fillBsqPapeletaSalida.nIdVendedor = "";
@@ -52867,17 +52891,37 @@ var render = function render() {
       }
     }, [_c("span", [_c("i", {
       staticClass: "far fa-file-pdf"
-    })]), _vm._v("\n                                    PDF\n                                  ")]), _vm._v(" "), _vm.listRolPermisoByUsuario.includes("papeleta.admin") ? [_c("button", {
+    })]), _vm._v("\n                                    PDF\n                                  ")]), _vm._v(" "), _vm.listRolPermisoByUsuario.includes("papeleta.admin") ? [item.estadopapeletasalida_id == 1 ? _c("button", {
       staticClass: "btn btn-success btn-sm",
       on: {
         click: function click($event) {
           $event.preventDefault();
-          return _vm.aprobarPartidaSalida(item.id);
+          return _vm.aprobarPartidaSalida(item.id, item.estadopapeletasalida_id);
         }
       }
     }, [_c("i", {
       staticClass: "far fa-thumbs-up"
-    }), _vm._v("\n                                      Aprobar\n                                    ")]), _vm._v(" "), _c("button", {
+    }), _vm._v("\n                                      Aprobar\n                                    ")]) : _vm._e(), _vm._v(" "), item.estadopapeletasalida_id == 2 ? _c("button", {
+      staticClass: "btn btn-secondary btn-sm",
+      on: {
+        click: function click($event) {
+          $event.preventDefault();
+          return _vm.aprobarPartidaSalida(item.id, item.estadopapeletasalida_id);
+        }
+      }
+    }, [_c("i", {
+      staticClass: "far fa-thumbs-down"
+    }), _vm._v("\n                                      Desaprobar\n                                    ")]) : _vm._e(), _vm._v(" "), item.estadopapeletasalida_id == 3 ? _c("button", {
+      staticClass: "btn btn-success btn-sm",
+      on: {
+        click: function click($event) {
+          $event.preventDefault();
+          return _vm.aprobarPartidaSalida(item.id, item.estadopapeletasalida_id);
+        }
+      }
+    }, [_c("i", {
+      staticClass: "far fa-thumbs-up"
+    }), _vm._v("\n                                      Aprobar\n                                    ")]) : _vm._e(), _vm._v(" "), _c("button", {
       staticClass: "btn btn-info btn-sm",
       on: {
         click: function click($event) {

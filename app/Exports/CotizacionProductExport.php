@@ -13,7 +13,9 @@ class CotizacionProductExport  implements FromView,ShouldAutoSize
     private $listCotizacion = [];
     public function setGenerarExcel($listCotizacion, $producto)
 
+
     {
+
         $this->listCotizacion = $listCotizacion;
         $this->producto = $producto;
         return  $this;

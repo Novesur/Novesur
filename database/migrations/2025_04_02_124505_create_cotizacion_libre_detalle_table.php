@@ -20,7 +20,7 @@ class CreateCotizacionLibreDetalleTable extends Migration
             $table->integer('cantidad')->required();
             $table->unsignedBigInteger('unidmedida_id');
             $table->foreign('unidmedida_id')->references('id')->on('unidmedida');
-            $table->string('producto_id')->required();
+            $table->string('producto')->required();
             $table->decimal('punit', 8, 3)->required();
             $table->decimal('pventa', 8, 3)->nullable();
             $table->boolean('EstadoNotPedido')->nullable();

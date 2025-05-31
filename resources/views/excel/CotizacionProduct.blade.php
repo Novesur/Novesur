@@ -24,8 +24,6 @@
             <th><b>Cliente</b></th>
             <th><b>Estado</b></th>
             <th><b>Vendedor</b></th>
-
-
         </tr>
         </thead>
         <tbody>
@@ -45,7 +43,11 @@ $i = 0;
                 <td>{{$data->cotizacion->cliente->ruc}}</td>
                 <td>{{$data->cotizacion->cliente->razonsocial}}</td>
                 <td>{{$data->cotizacion->estadopedido->nombre}}</td>
+                @if ($data->cotizacion->user)
                 <td>{{$data->cotizacion->user->firstname}}</td>
+                @else
+                <td></td>
+                @endif
             </tr>
             @endforeach
         </tbody>

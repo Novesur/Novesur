@@ -189,6 +189,7 @@ Route::get('/administracion/detallecotizancion/listDetCotibyId', 'Administracion
 /// Estado de Cotizacion
 Route::get('/administracion/detallecotizancion/listEstadoCotizacion', 'Administracion\DetalleCotizacionController@listEstadoCotizacion');
 Route::post('/administracion/cotizacion/editEstadoCotizacion', 'Administracion\CotizacionController@editEstadoCotizacion');
+Route::post('/administracion/cotizacion/anularEstadoCotizacion', 'Administracion\CotizacionController@anularEstadoCotizacion');
 
 
 //Cotizacion
