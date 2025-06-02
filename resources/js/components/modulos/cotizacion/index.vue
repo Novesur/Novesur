@@ -157,6 +157,7 @@
                                             <th>Cliente</th>
                                             <!--  <th>Estado</th> -->
                                             <th>Total</th>
+                                            <th>Estado</th>
                                             <th>Accion</th>
                                             <th>Observacion</th>
                                         </tr>
@@ -182,6 +183,8 @@
 
                                             <td v-if="item.estadopedido == 'ANULADO'"> </td>
                                             <td v-else>S/. {{ item.total | formatPrice }}</td>
+
+                                            <td v-text="item.estadopedido"></td>
 
                                             <td v-if="item.estadopedido != 'ANULADO'">
                                                 <button v-if="listRolPermisoByUsuario.includes(
@@ -237,11 +240,12 @@
 
 
                                             <template v-if="item.estadopedido == 'ANULADO'">
-                                                <td></td>
+                                                <td v-text="estadopedido"></td>
                                             </template>
                                             <template v-else>
                                                 <td v-text="item.observacion"></td>
                                             </template>
+
 
 
                                         </tr>

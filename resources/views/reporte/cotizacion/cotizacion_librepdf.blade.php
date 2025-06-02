@@ -301,6 +301,65 @@ th,
     </table>
 
 
+        <table width="100%" border="0">
+        <tr>
+            <td colspan="2"><strong>Condiciones Comerciales :</strong></td>
+        </tr>
+        <tr>
+            <td width="23%" style="font-size: 11px"><strong>Validez de Oferta :</strong></td>
+            <td width="90%" style="font-size: 10px; text-transform: uppercase">{{ $coti->validezoferta }}</td>
+        </tr>
+        <tr>
+            <td style="font-size: 11px"><strong>Plazo de entrega :</strong></td>
+            <td style="font-size: 10px">{{ $coti->Entrega }}</td>
+        </tr>
+        <tr>
+            <td style="font-size: 11px"><strong>Condición de venta :</strong></td>
+            <td style="font-size: 10px"> {{ $coti->tipopago->nombre }}</td>
+        </tr>
+
+        <tr>
+            <td style="font-size: 11px"><strong>Condición de Pago :</strong></td>
+            <td style="font-size: 10px"> {{ $coti->pago->nombre }}</td>
+        </tr>
+                <tr>
+            <td style="font-size: 11px"><strong>Referencia :</strong></td>
+            <td style="font-size: 10px">- TODA COMISON GENERADA POR DEPOSITOS EN AGENTES DE BANCO
+                <strong>(PROVINCIA)</strong>, SERÁ ASUMIDA POR EL CLIENTE
+            </td>
+
+        </tr>
+        <tr>
+            <td style="font-size: 11px">&nbsp;</td>
+            <td style="font-size: 10px">
+
+                    <div style="text-transform: uppercase">- El incumplimiento del pago generara interés a la tasa vigente del sistema Bancario
+                    </div>
+
+            </td>
+        </tr>
+        <tr>
+            <td style="font-size: 11px"><strong>Flete :</strong></td>
+            <td style="font-size: 10px">{{ $coti->flete }}</td>
+        </tr>
+        <tr>
+            <td style="font-size: 11px"><strong>Documentacion :</strong></td>
+            <td style="font-size: 10px ; text-transform: uppercase">{{ $coti->documentacion }}</td>
+        </tr>
+        <tr>
+            <td style="font-size: 11px"><strong>Garantia : </strong></td>
+            <td style="font-size: 10px; text-transform: uppercase">{{ $coti->garantia->nombre }} por defectos de fabricaciòn (no cubre los
+                originados por mala manipulaciòn, vandalismo, golpes, mala instalaciòn <strong>por terceros</strong> , mala operaciòn,
+                exceso de presiòn y temperaturas)</td>
+        </tr>
+        <tr>
+            <td style="font-size: 12px"><strong>Observación : </strong></td>
+            <td style="font-size: 14px"><strong>{{ $coti->observacion }}</strong> </td>
+        </tr>
+
+    </table>
+
+
 </body>
 </html>
 

@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Motivopapeletasalida;
 use App\ObservacionPapeleta;
 use App\Papeletasalida;
+use App\User;
 use App\TempClientPapeletaSalida;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -236,13 +237,18 @@ if ($tiempo  >= $tiempoMax) {
 
     public function setAprobarPapeletaSalida(Request $request)
     {
+        $user= User::where('id',$request->nIdUser)->first();
+        $valorUser = $user->firstname.' '.$user->secondname .' '. $user->lastname;
+
         $papeleta = Papeletasalida::where('id', $request->item)->first();
         if($papeleta->estadopapeletasalida_id == 2){
             Papeletasalida::where('id', $request->item)->update(['estadopapeletasalida_id' => '3']);
+            Papeletasalida::where('id', $request->item)->update(['user_aprobacion' => NULL]);
         }
 
           if($papeleta->estadopapeletasalida_id == 3 || $papeleta->estadopapeletasalida_id == 1 ){
             Papeletasalida::where('id', $request->item)->update(['estadopapeletasalida_id' => '2']);
+            Papeletasalida::where('id', $request->item)->update(['user_aprobacion' => $valorUser]);
         }
     }
 

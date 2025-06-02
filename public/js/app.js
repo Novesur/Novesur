@@ -17439,7 +17439,8 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
           if (result.isConfirmed) {
             var url = "/administracion/papeletasalida/setAprobarPapeletaSalida";
             axios.post(url, {
-              item: item
+              item: item,
+              nIdUser: _this5.fillBsqPapeletaSalida.nIdUser
             }).then(function () {
               //this.getListarOrdenServicioxProveedor();
               _this5.getlistPapeleByVendedor();
@@ -17461,7 +17462,8 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
           if (result.isConfirmed) {
             var url = "/administracion/papeletasalida/setAprobarPapeletaSalida";
             axios.post(url, {
-              item: item
+              item: item,
+              nIdUser: _this5.fillBsqPapeletaSalida.nIdUser
             }).then(function () {
               //this.getListarOrdenServicioxProveedor();
               _this5.getlistPapeleByVendedor();
@@ -32273,7 +32275,11 @@ var render = function render() {
       domProps: {
         textContent: _vm._s(item.razonsocial)
       }
-    }), _vm._v(" "), item.estadopedido == "ANULADO" ? _c("td") : _c("td", [_vm._v("S/. " + _vm._s(_vm._f("formatPrice")(item.total)))]), _vm._v(" "), item.estadopedido != "ANULADO" ? _c("td", [_vm.listRolPermisoByUsuario.includes("cotizacion.estado") ? _c("button", {
+    }), _vm._v(" "), item.estadopedido == "ANULADO" ? _c("td") : _c("td", [_vm._v("S/. " + _vm._s(_vm._f("formatPrice")(item.total)))]), _vm._v(" "), _c("td", {
+      domProps: {
+        textContent: _vm._s(item.estadopedido)
+      }
+    }), _vm._v(" "), item.estadopedido != "ANULADO" ? _c("td", [_vm.listRolPermisoByUsuario.includes("cotizacion.estado") ? _c("button", {
       staticClass: "btn btn-info btn-sm",
       on: {
         click: function click($event) {
@@ -32311,7 +32317,11 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "far fa-edit"
-    }), _vm._v(" Editar\n                                                ")])] : _vm._e()], 2) : _vm._e(), _vm._v(" "), item.estadopedido == "ANULADO" ? [_c("td")] : [_c("td", {
+    }), _vm._v(" Editar\n                                                ")])] : _vm._e()], 2) : _vm._e(), _vm._v(" "), item.estadopedido == "ANULADO" ? [_c("td", {
+      domProps: {
+        textContent: _vm._s(_vm.estadopedido)
+      }
+    })] : [_c("td", {
       domProps: {
         textContent: _vm._s(item.observacion)
       }
@@ -32565,7 +32575,7 @@ var staticRenderFns = [function () {
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("thead", [_c("tr", [_c("th", [_vm._v("Codigo")]), _vm._v(" "), _c("th", [_vm._v("Fecha")]), _vm._v(" "), _c("th", [_vm._v("Cliente")]), _vm._v(" "), _c("th", [_vm._v("Total")]), _vm._v(" "), _c("th", [_vm._v("Accion")]), _vm._v(" "), _c("th", [_vm._v("Observacion")])])]);
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("Codigo")]), _vm._v(" "), _c("th", [_vm._v("Fecha")]), _vm._v(" "), _c("th", [_vm._v("Cliente")]), _vm._v(" "), _c("th", [_vm._v("Total")]), _vm._v(" "), _c("th", [_vm._v("Estado")]), _vm._v(" "), _c("th", [_vm._v("Accion")]), _vm._v(" "), _c("th", [_vm._v("Observacion")])])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;

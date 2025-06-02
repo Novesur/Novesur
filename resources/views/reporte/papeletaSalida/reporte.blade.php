@@ -84,6 +84,13 @@
     <li>{{$dataObserv->observacion}}</li>
     @endforeach @endif
 </UL>
+
+<table width="100%" border="0">
+  <tr>
+    <td width="142" > <strong>Aprobado por :</strong></td>
+    <td width="665">{{$Papeletasalida->user_aprobacion}}</td>
+  </tr>
+</table>
 <br>
 <table width="100%" border="0">
   <tr>

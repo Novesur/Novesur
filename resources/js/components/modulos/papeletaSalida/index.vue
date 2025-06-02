@@ -916,6 +916,7 @@ export default {
                 axios
                   .post(url, {
                     item: item,
+                    nIdUser : this.fillBsqPapeletaSalida.nIdUser
 
                   })
                   .then(() => {
@@ -942,6 +943,7 @@ export default {
                 axios
                   .post(url, {
                     item: item,
+                     nIdUser : this.fillBsqPapeletaSalida.nIdUser
 
                   })
                   .then(() => {
