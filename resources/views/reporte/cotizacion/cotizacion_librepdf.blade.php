@@ -261,10 +261,10 @@ th,
                     <td align="center" >{{ $data->cantidad }}</td>
                     <td align="center" style="font-size: 10px" >{{ $data->producto}}</td>
 
-                    <td align="center" style="font-size: 10px" >
+                    <td align="right" style="font-size: 10px" >
                         S/. {{ number_format($data->punit, 2) }}
                     </td>
-                    <td colspan="2" align="center" style="font-size: 10px" ><span style="font-size: 9px">S/.
+                    <td colspan="2" align="right" style="font-size: 10px" ><span style="font-size: 9px">S/.
                     {{ number_format($data->cantidad * $data->punit, 2) }} </span></td>
 
                 </tr>

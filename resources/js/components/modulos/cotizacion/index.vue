@@ -361,6 +361,20 @@
                             </div>
                         </template>
 
+                              <template v-if="fillBsqCotizacion.nIdtEstadoCoti == 4">
+                            <div class="col" :style="'padding-top : 20px'">
+                                <input type="text" class="form-control" placeholder="Motivo del Rechazo"
+                                    v-model="fillBsqCotizacion.cMotivoRechazo" />
+                            </div>
+                        </template>
+
+                                  <template v-if="fillBsqCotizacion.nIdtEstadoCoti == 5">
+                            <div class="col" :style="'padding-top : 20px'">
+                                <input type="text" class="form-control" placeholder="Motivo del Rechazo"
+                                    v-model="fillBsqCotizacion.cMotivoRechazo" />
+                            </div>
+                        </template>
+
 
 
 

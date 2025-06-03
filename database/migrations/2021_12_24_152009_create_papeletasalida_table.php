@@ -26,6 +26,7 @@ class CreatePapeletasalidaTable extends Migration
             $table->foreign('estadopapeletasalida_id')->references('id')->on('estadopapeletasalida');
             $table->string('observacion',250)->nullable();
             $table->time('hora_emision')->required();
+            $table->string('user_aprobacion',150)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

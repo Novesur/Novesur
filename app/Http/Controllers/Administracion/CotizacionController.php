@@ -150,7 +150,7 @@ class CotizacionController extends Controller
                     $cotizacion->fecha =  $formatreq;
                     $cotizacion->cliente_id =  $request->nIdCliente;
                     $cotizacion->user_id =  $request->nIdUsuario;
-                    $cotizacion->estadopedido_id =  4;
+                    $cotizacion->estadopedido_id =  5;
                     $cotizacion->validezoferta =  $request->cValidez;
                     $cotizacion->Entrega =  mb_strtoupper($request->cEntrega);
                     $cotizacion->tipopago_id =  $request->nIdTipoPago;

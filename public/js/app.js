@@ -32519,6 +32519,54 @@ var render = function render() {
         _vm.$set(_vm.fillBsqCotizacion, "cMotivoRechazo", $event.target.value);
       }
     }
+  })])] : _vm._e(), _vm._v(" "), _vm.fillBsqCotizacion.nIdtEstadoCoti == 4 ? [_c("div", {
+    staticClass: "col",
+    style: "padding-top : 20px"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillBsqCotizacion.cMotivoRechazo,
+      expression: "fillBsqCotizacion.cMotivoRechazo"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      placeholder: "Motivo del Rechazo"
+    },
+    domProps: {
+      value: _vm.fillBsqCotizacion.cMotivoRechazo
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillBsqCotizacion, "cMotivoRechazo", $event.target.value);
+      }
+    }
+  })])] : _vm._e(), _vm._v(" "), _vm.fillBsqCotizacion.nIdtEstadoCoti == 5 ? [_c("div", {
+    staticClass: "col",
+    style: "padding-top : 20px"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillBsqCotizacion.cMotivoRechazo,
+      expression: "fillBsqCotizacion.cMotivoRechazo"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      placeholder: "Motivo del Rechazo"
+    },
+    domProps: {
+      value: _vm.fillBsqCotizacion.cMotivoRechazo
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillBsqCotizacion, "cMotivoRechazo", $event.target.value);
+      }
+    }
   })])] : _vm._e()], 2), _vm._v(" "), _c("div", {
     staticClass: "modal-footer"
   }, [_c("button", {

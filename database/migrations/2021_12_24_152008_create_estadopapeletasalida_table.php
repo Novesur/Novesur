@@ -15,7 +15,7 @@ class CreateEstadopapeletasalidaTable extends Migration
     {
         Schema::create('estadopapeletasalida', function (Blueprint $table) {
             $table->id();
-            $table->char('nombre', 10)->unique()->required();
+            $table->char('nombre', 20)->unique()->required();
         });
     }
 
