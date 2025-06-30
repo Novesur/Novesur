@@ -112,7 +112,7 @@ th,
             </td>
         </tr>
         <tr>
-            <td colspan="2" align="center" style="font-size: 11px"><strong>VENTA DE MEDIDORES, ACCESORIOS Y INSUMOS
+            <td colspan="2" align="center" style="font-size: 11px"><strong>VENTA DE MEDIDORES, ACCESORIOS E INSUMOS
                     PARA AGUA POTABLE SERVICIO DE INSTALACION, CONTRASTACION Y REPARACION DE MEDIDORES DE AGUA</strong>
             </td>
         </tr>
@@ -301,7 +301,7 @@ th,
 
         <tr>
             <td colspan="3" align="center" style="font-size: 12px" ><strong>CUENTAS CORRIENTES INVERSIONES
-                    NOVESUR</strong></td>
+                    NOVESUR SAC</strong></td>
         </tr>
         <tr>
             <td align="center" style="background-color: lightgreen ;font-size: 11px" ><strong>BANCO</strong></td>

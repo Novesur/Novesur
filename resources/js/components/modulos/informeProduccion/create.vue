@@ -11,7 +11,7 @@
     </div>
     <div class="content container-fluid">
       <div class="card">
-     
+
         <div class="card-body">
           <div class="col-md-12">
 
@@ -97,8 +97,8 @@
                         </div>
                       </div>
 
-                      
-                     
+
+
                     <div class="col-md-4">
                       <div class="form-group row">
                         <label class="col-md-3 col-form-label">Cliente-Ref</label>
@@ -112,18 +112,18 @@
                         </div>
                       </div>
                     </div>
-                 
+
 
 
 
                     </div>
                   </div>
 
-                
-           
-                  
 
-          
+
+
+
+
 
 
 
@@ -196,10 +196,10 @@
                         <button class="btn btn-flat btn-info btnWidth" @click.prevent="setEditInfoProd">
                           Editar
                         </button>
-                   
+
                       </div>
                     </div>
-                  </div> 
+                  </div>
 
 
                   <!-- INICIO  DE REQUERIMIENTOS DE MATERIALES -->
@@ -272,7 +272,7 @@
                         </div>
                       </div>
                     </form>
-                  </div> 
+                  </div>
 
 
                 </form>
@@ -288,7 +288,7 @@
                     </button>
                   </div>
                 </div>
-              </div> 
+              </div>
 
               <!--  Bandeja de Resultados -->
               <div class="card card-primary">
@@ -308,7 +308,7 @@
                         <th>Descripcion</th>
                         <th>Cantidad</th>
                         <th>Unid. Medida</th>
-                      
+
                         <th>Acción</th>
                       </tr>
                     </thead>
@@ -330,9 +330,9 @@
                         "></td>
                         <td v-text="item.cantInfProd"></td>
                         <td v-text="item.unidmedida.nombre"></td>
-                     
+
                         <td>
-                        
+
                           <button class="btn btn-secondary btn-sm" @click="ModalReqMateriales(item.id)">
                             <i class="far fa-edit"></i> Editar
                           </button>
@@ -343,7 +343,7 @@
                 </div>
               </div>
 
-   
+
             </div>
           </div>
         </div>
@@ -842,7 +842,7 @@ export default {
         nIdEditmaterial: "",
         cCantprodEdit: "",
         nIdUnidMedEdit: "",
-       
+
       },
 
 
@@ -895,7 +895,7 @@ export default {
         sessionStorage.getItem("listRolPermisosByUsuario")
       ),
     };
-    
+
   },
 
   mounted() {
@@ -930,14 +930,11 @@ export default {
           this.fillCrearInfoProduccion.nIdUnidMed = response.data.unidmedida_id;
 
           if (response.data.cliente_id == "202") {
-            this.fillCrearInfoProduccion.nIdTipoPago =
-              this.listDescripPago[0].value;
+            this.fillCrearInfoProduccion.nIdTipoPago =this.listDescripPago[0].value;
             this.fillCrearInfoProduccion.nidAlmacen = response.data.almacen_id;
           } else {
-            this.fillCrearInfoProduccion.nIdTipoPago =
-              this.listDescripPago[1].value;
-            this.fillCrearInfoProduccion.cRSocial =
-              response.data.cliente.razonsocial;
+            this.fillCrearInfoProduccion.nIdTipoPago =this.listDescripPago[1].value;
+            this.fillCrearInfoProduccion.cRSocial =response.data.cliente.razonsocial;
           }
 
           this.cargaRequeMateriales(
@@ -1123,7 +1120,7 @@ export default {
     },
 
     setAddMObra() {
-      var url = "/administracion/InformeProduccion/addMObra"; 
+      var url = "/administracion/InformeProduccion/addMObra";
       axios
         .post(url, {
           codRequMateriales: this.fillCrearInfoProduccion.codRequMateriales,
@@ -1203,13 +1200,13 @@ export default {
     },
 
     setSaveOrdProduccion() {
-      var url = "/administracion/InformeProduccion/create";  
+      var url = "/administracion/InformeProduccion/create";
       axios
         .post(url, {
           codRequMateriales: this.fillCrearInfoProduccion.codRequMateriales,
           cCantprod: this.fillCrearInfoProduccion.cCantprod,
           nIdUser: this.fillCrearInfoProduccion.nIdUser,
-          cReferencia: this.fillCrearInfoProduccion.cReferencia 
+          cReferencia: this.fillCrearInfoProduccion.cReferencia
         })
         .then((response) => {
           Swal.fire({
@@ -1245,7 +1242,7 @@ export default {
         this.mensajeError.push("Tipo de Pago es campo obligatorio");
       }
 
-   
+
 
       if (this.mensajeError.length) {
         this.error = 1;
@@ -1256,7 +1253,7 @@ export default {
     setAddPMaterialReqMateriales() {
 
 
-      var url = "/administracion/InformeProduccion/addMaterialReqMateriales"; 
+      var url = "/administracion/InformeProduccion/addMaterialReqMateriales";
       axios
         .post(url, {
           codRequMateriales: this.fillCrearInfoProduccion.codRequMateriales,
@@ -1271,9 +1268,9 @@ export default {
         })
 
       /*  var url = "/administracion/InformeProduccion/saveReqMateriales";
- 
+
        axios
-         .post(url, { 
+         .post(url, {
            //codRequMateriales: this.fillCrearInfoProduccion.codRequMateriales,
            nIdmaterial: this.fillCrearInfoProduccion.nIdmaterial,
            cCantMaterial: this.fillCrearInfoProduccion.cCantMaterial,
@@ -1283,7 +1280,7 @@ export default {
          .then((response) => {
            this.listartempProduccion = response.data.datos;
            this.CargaInfoProduccion();
-       
+
            if (response.data.message == "Ya fue agregado anteriormente") {
              Swal.fire({
                position: "center",
@@ -1292,7 +1289,7 @@ export default {
                showConfirmButton: false,
                timer: 1500,
              });
-           } 
+           }
          }); */
     },
 

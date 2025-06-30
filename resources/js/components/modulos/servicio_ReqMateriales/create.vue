@@ -4,7 +4,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-12">
-            <h1 class="m-0 text-dark">Requerimientos de Materiales - Proyectos </h1>
+            <h1 class="m-0 text-dark">Requerimientos de Materiales para servicio al Cliente </h1>
           </div>
         </div>
       </div>
@@ -26,33 +26,7 @@
               </div>
               <div class="card-body">
                 <form role="form">
-                  <div class="col-md-12">
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-md-3 col-form-label">Nombre Proyecto</label>
-                          <div class="col-md-8">
-                            <el-select
-                              v-model="fillCrearReqMaterialesProy.nIdCcostos"
-                              style="width: 90%"
-                              filterable
-                              placeholder="Select"
-                            >
-                              <v-row>
-                                <el-option
-                                  v-for="item in listCCostos"
-                                  :key="item.id"
-                                  :label="item.codigo + ' - ' + item.nombre"
-                                  :value="item.id"
-                                >
-                                </el-option>
-                              </v-row>
-                            </el-select>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+
                   <div class="col-md-12">
                     <div class="row">
                       <div class="col-md-6">
@@ -62,7 +36,7 @@
                             <input
                               type="text"
                               class="form-control"
-                              v-model="fillCrearReqMaterialesProy.nIdClient"
+                              v-model="fillCrearReqMaterialesServicio.cClient"
                               readonly="true"
                             />
                           </div>
@@ -71,32 +45,43 @@
 
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-md-2 col-form-label">RUC </label>
+                          <label class="col-md-2 col-form-label">RUC o DNI </label>
                           <div class="col-md-5">
                             <input
                               type="text"
                               class="form-control"
-                              v-model="fillCrearReqMaterialesProy.cRuc"
+                              v-model="fillCrearReqMaterialesServicio.cRuc"
                               :maxlength="11"
                             />
                           </div>
                           <div class="text-center">
                             <span style="color: red; text-align: end">{{
-                              this.fillCrearReqMaterialesProy.cRuc.length +
+                              this.fillCrearReqMaterialesServicio.cRuc.length +
                               " " +
                               "Caracteres"
                             }}</span>
                           </div>
-                          <div class="col">
-                            <span>
-                              <button
-                                class="btn btn-success btn-sm"
-                                @click.prevent="consultaRuc"
-                              >
-                                <span><i class="fas fa-search"></i> Consultar Ruc</span>
-                              </button></span
+                                 <div class="col">
+                          <span>
+                            <button
+                              class="btn btn-success btn-sm"
+                              @click.prevent="consultaRuc"
                             >
-                          </div>
+                              <span><i class="fas fa-search"></i> Consultar Ruc</span>
+                            </button></span
+                          >
+
+                          <span>
+                            <button
+                              class="btn btn-success btn-sm"
+                              @click.prevent="consultaDNI"
+                            >
+                              <span><i class="fas fa-search"></i> Consultar DNI</span>
+                            </button></span
+                          >
+                        </div>
+
+
                         </div>
                       </div>
                     </div>
@@ -110,7 +95,7 @@
                           <input
                             type="text"
                             class="form-control"
-                            v-model="fillCrearReqMaterialesProy.detservicio"
+                            v-model="fillCrearReqMaterialesServicio.detservicio"
                           />
                         </div>
                       </div>
@@ -124,7 +109,7 @@
                           <label class="col-md-3 col-form-label">Fecha Inicio</label>
                           <div class="col-md-6">
                             <el-date-picker
-                              v-model="fillCrearReqMaterialesProy.FInicio"
+                              v-model="fillCrearReqMaterialesServicio.FInicio"
                               type="date"
                               placeholder="Indique la fecha"
                               format="dd/MM/yyyy"
@@ -141,7 +126,7 @@
                             <label class="col-md-3 col-form-label">Fecha Final</label>
                             <div class="col-md-6">
                               <el-date-picker
-                                v-model="fillCrearReqMaterialesProy.FFinal"
+                                v-model="fillCrearReqMaterialesServicio.FFinal"
                                 type="date"
                                 placeholder="Indique la fecha"
                                 format="dd/MM/yyyy"
@@ -165,32 +150,31 @@
                             <input
                               type="text"
                               class="form-control"
-                              v-model="fillCrearReqMaterialesProy.cDuracion"
+                              v-model="fillCrearReqMaterialesServicio.cDuracion"
                             />
                           </div>
                         </div>
                       </div>
 
-
-                    </div>
-                  </div>
-
-                  <div class="col-md-12">
-                    <div class="row">
-                      <div class="col-md-9">
+                      <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-md-2 col-form-label">O/S N°</label>
-                          <div class="col-md-9">
+                          <label class="col-md-2 col-form-label">Cantidad</label>
+                          <div class="col-md-3">
                             <input
                               type="text"
                               class="form-control"
-                              v-model="fillCrearReqMaterialesProy.nIdOS"
+                              v-model="fillCrearReqMaterialesServicio.cCantidad"
                             />
                           </div>
                         </div>
-                      </div>
+
                     </div>
+                    </div>
+
+
                   </div>
+
+
 
                   <!-- INICIO  DE REQUERIMIENTOS DE MATERIALES -->
 
@@ -210,7 +194,7 @@
 
                                 <div class="col-md-10">
                                   <el-select
-                                    v-model="fillCrearReqMaterialesProy.nIdmaterial"
+                                    v-model="fillCrearReqMaterialesServicio.nIdmaterial"
                                     style="width: 90%"
                                     filterable
                                     placeholder="Select"
@@ -247,7 +231,7 @@
                                   <input
                                     type="text"
                                     class="form-control"
-                                    v-model="fillCrearReqMaterialesProy.cCantMaterial"
+                                    v-model="fillCrearReqMaterialesServicio.cCantMaterial"
                                   />
                                 </div>
                               </div>
@@ -257,7 +241,7 @@
                                   <label class="col-md-4 col-form-label">MEDIDA</label>
                                   <div class="col-md-4">
                                     <el-select
-                                      v-model="fillCrearReqMaterialesProy.nIdUnidMedMat"
+                                      v-model="fillCrearReqMaterialesServicio.nIdUnidMedMat"
                                       placeholder="Select"
                                       style="width: 70%"
                                     >
@@ -285,7 +269,7 @@
                   <div class="col-md-4 offset-4">
                     <button
                       class="btn btn-flat btn-primary btnWidth"
-                      @click.prevent="setRegistrarReqMaterialesList"
+                      @click.prevent="setRegistrarServMaterialesList"
                     >
                       Agregar
                     </button>
@@ -317,7 +301,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="(item, index) in listartempProduccion" :key="index">
+                      <tr v-for="(item, index) in listartempServicio" :key="index">
                         <td v-text="item.codigo"></td>
                         <td v-text="item.cantidad"></td>
 
@@ -391,7 +375,7 @@
 
                   <div class="col-md-6">
                     <el-select
-                      v-model="fillCrearReqMaterialesProy.nIdPersonal"
+                      v-model="fillCrearReqMaterialesServicio.nIdPersonal"
                       placeholder="Seleccione un Personal"
                       clearable
                       filterable
@@ -413,14 +397,14 @@
                   <label class="col-md-2 col-form-label"></label>
                   <div class="col-md-6">
                     <el-radio
-                      v-model="fillCrearReqMaterialesProy.radTipoTiempo"
+                      v-model="fillCrearReqMaterialesServicio.radTipoTiempo"
                       @change="onChange($event)"
                       label="1"
                       checked
                       >POR DIAS
                     </el-radio>
                     <el-radio
-                      v-model="fillCrearReqMaterialesProy.radTipoTiempo"
+                      v-model="fillCrearReqMaterialesServicio.radTipoTiempo"
                       @change="onChange($event)"
                       label="2"
                       >POR HORAS
@@ -435,7 +419,7 @@
                       type="text"
                       class="form-control"
                       :disabled="validatedDias"
-                      v-model="fillCrearReqMaterialesProy.cDiasMObra"
+                      v-model="fillCrearReqMaterialesServicio.cDiasMObra"
                       v-int
                     />
                   </div>
@@ -448,7 +432,7 @@
                       type="text"
                       class="form-control"
                       :disabled="validateHoras"
-                      v-model="fillCrearReqMaterialesProy.cHorasMObra"
+                      v-model="fillCrearReqMaterialesServicio.cHorasMObra"
                       v-int
                     />
                   </div>
@@ -540,7 +524,7 @@
                     <input
                       type="text"
                       class="form-control"
-                      v-model="fillCrearReqMaterialesProy.cDescripcion"
+                      v-model="fillCrearReqMaterialesServicio.cDescripcion"
                     />
                   </div>
                 </div>
@@ -551,7 +535,7 @@
                     <input
                       type="text"
                       class="form-control"
-                      v-model="fillCrearReqMaterialesProy.cCantidadReq"
+                      v-model="fillCrearReqMaterialesServicio.cCantidadReq"
                     />
                   </div>
                 </div>
@@ -560,7 +544,7 @@
                   <label class="col-md-2 col-form-label">Unid. Medida</label>
                   <div class="col-md-2">
                     <el-select
-                      v-model="fillCrearReqMaterialesProy.nIdUnidMedOtroReq"
+                      v-model="fillCrearReqMaterialesServicio.nIdUnidMedOtroReq"
                       placeholder="Select"
                       style="width: 70%"
                     >
@@ -641,7 +625,7 @@
             <div class="col-md-4 offset-4">
               <button
                 class="btn btn-flat btn-info btnWidth"
-                @click.prevent="setRegistrarReqMateriales"
+                @click.prevent="setRegistrarServicio"
               >
                 Guardar
               </button>
@@ -692,23 +676,17 @@
 export default {
   data() {
     return {
-      fillCrearReqMaterialesProy: {
+      fillCrearReqMaterialesServicio: {
         nIdProveedor: this.$attrs.id,
-        nIdCcostos: "",
-
-        nIdClient: "",
+        cClient: "",
         FInicio: "",
         FFinal: "",
         cDuracion: "",
         nIdDetServ: "",
-        nIdOS: "",
         cUnidMed: "",
         nIdUnidMedOtroReq: "",
         nIdPersonal: "",
-
-
         cRuc: "",
-
         cDocumento: "",
         cFechaEmision: "",
         nidAlmacen: "",
@@ -735,8 +713,7 @@ export default {
       listPersonal: [],
       listUnidMed: [],
       listProd: [],
-      listCCostos: [],
-      listartempProduccion: [],
+      listartempServicio: [],
       listartempMobra: [],
       listartempRequerimientos: [],
       listartempOtrosRequerimientos: [],
@@ -774,7 +751,6 @@ export default {
     this.getlistTipoCambio();
     this.defaultDiaHora();
     this.getListarUnidadMedida();
-    this.getListarCentroCostos();
     this.getListPersonal();
     this.getListarZonaProduccion();
   },
@@ -782,25 +758,25 @@ export default {
   methods: {
     calculoFecha() {
       if (
-        this.fillCrearReqMaterialesProy.FFinal != null &&
-        this.fillCrearReqMaterialesProy.FInicio != null
+        this.fillCrearReqMaterialesServicio.FFinal != null &&
+        this.fillCrearReqMaterialesServicio.FInicio != null
       ) {
         let valorfecha =
-          new Date(this.fillCrearReqMaterialesProy.FFinal).getTime() -
-          new Date(this.fillCrearReqMaterialesProy.FInicio).getTime();
-        this.fillCrearReqMaterialesProy.cDuracion = String(
+          new Date(this.fillCrearReqMaterialesServicio.FFinal).getTime() -
+          new Date(this.fillCrearReqMaterialesServicio.FInicio).getTime();
+        this.fillCrearReqMaterialesServicio.cDuracion = String(
           valorfecha / 86400000 + 1
         ).padStart(2, 0);
       }
     },
     onChange(e) {
       if (e == 1) {
-        this.fillCrearReqMaterialesProy.cHorasMObra = 0;
+        this.fillCrearReqMaterialesServicio.cHorasMObra = 0;
         this.validateHoras = true;
         this.validatedDias = false;
       }
       if (e == 2) {
-        this.fillCrearReqMaterialesProy.cDiasMObra = 0;
+        this.fillCrearReqMaterialesServicio.cDiasMObra = 0;
         this.validateHoras = false;
         this.validatedDias = true;
       }
@@ -808,28 +784,28 @@ export default {
 
     onChangeClient(e) {
       if (e == 1) {
-        this.fillCrearReqMaterialesProy.cRuc = "";
+        this.fillCrearReqMaterialesServicio.cRuc = "";
       }
       if (e == 2) {
-        this.fillCrearReqMaterialesProy.nidAlmacen = "";
-        this.fillCrearReqMaterialesProy.cRSocial = "";
+        this.fillCrearReqMaterialesServicio.nidAlmacen = "";
+        this.fillCrearReqMaterialesServicio.cRSocial = "";
       }
     },
     defaultDiaHora() {
-      this.fillCrearReqMaterialesProy.cCantidadReq = 0;
-      this.fillCrearReqMaterialesProy.cDiasMObra = 0;
-      this.fillCrearReqMaterialesProy.cHorasMObra = 0;
+      this.fillCrearReqMaterialesServicio.cCantidadReq = 0;
+      this.fillCrearReqMaterialesServicio.cDiasMObra = 0;
+      this.fillCrearReqMaterialesServicio.cHorasMObra = 0;
     },
 
     consultaRuc() {
       var url = "/administracion/cliente/consultaRuc";
       axios
         .post(url, {
-          cRuc: this.fillCrearReqMaterialesProy.cRuc,
+          cRuc: this.fillCrearReqMaterialesServicio.cRuc,
         })
         .then((response) => {
           if (response.data.success == false) {
-            (this.fillCrearReqMaterialesProy.cRSocial = ""),
+            (this.fillCrearReqMaterialesServicio.cRSocial = ""),
               Swal.fire({
                 position: "center",
                 icon: "info",
@@ -838,28 +814,62 @@ export default {
                 timer: 2000,
               });
           } else {
-            this.fillCrearReqMaterialesProy.nIdClient = response.data.razonSocial;
-            /*        (this.fillRegistrarCliente.cDireccion = response.data.direccion),
+            this.fillCrearReqMaterialesServicio.cClient = response.data.razonSocial;
+            /*        (this.fillCrearReqMaterialesServicio.cDireccion = response.data.direccion),
                           (this.estadobutton = false);
                         this.disabledbtnRuc = true; */
           }
         });
     },
 
-    setAddMObra() {
-      var url = "/administracion/ProyectoManoObra/addProyManObra";
+        consultaDNI() {
+      var url = "/administracion/cliente/consultaDNI";
       axios
         .post(url, {
-          nIdPersonal: this.fillCrearReqMaterialesProy.nIdPersonal,
-          cDiasMObra: this.fillCrearReqMaterialesProy.cDiasMObra,
-          cHorasMObra: this.fillCrearReqMaterialesProy.cHorasMObra,
-          estado: "R",
+          cRuc: this.fillCrearReqMaterialesServicio.cRuc,
+        })
+        .then((response) => {
+          if (response.data.success == false) {
+           /*  this.estadobutton = true;
+            (this.fillCrearReqMaterialesServicio.cRSocial = ""),
+              (this.fillCrearReqMaterialesServicio.cDireccion = ""); */
+
+            Swal.fire({
+              position: "center",
+              icon: "info",
+              title: "DNI no encontrado o numero equivocado",
+              showConfirmButton: false,
+              timer: 2000,
+            });
+            this.estadobutton = false;
+          } else {
+            (this.fillCrearReqMaterialesServicio.cClient =
+              response.data.nombres +
+              " " +
+              response.data.apellidoPaterno +
+              " " +
+              response.data.apellidoMaterno);
+             // (this.fillCrearReqMaterialesServicio.cClient  = response.data.direccion);
+       /*     this.estadobutton = false;
+            this.disabledbtnRuc = true;  */
+          }
+        });
+    },
+
+    setAddMObra() {
+      var url = "/administracion/servicio/addServManObra";
+      axios
+        .post(url, {
+          nIdPersonal: this.fillCrearReqMaterialesServicio.nIdPersonal,
+          cDiasMObra: this.fillCrearReqMaterialesServicio.cDiasMObra,
+          cHorasMObra: this.fillCrearReqMaterialesServicio.cHorasMObra,
+         estado: "S",
         })
         .then((response) => {
           this.listartempMobra = response.data.datos;
           this.setcleanListMObra();
-          this.fillCrearReqMaterialesProy.cDiasMObra = 0;
-          this.fillCrearReqMaterialesProy.cHorasMObra = 0;
+          this.fillCrearReqMaterialesServicio.cDiasMObra = 0;
+          this.fillCrearReqMaterialesServicio.cHorasMObra = 0;
         });
     },
 
@@ -871,21 +881,21 @@ export default {
     },
 
     setcleanListMObra() {
-      (this.fillCrearReqMaterialesProy.cPersonal = ""),
-        (this.fillCrearReqMaterialesProy.cDiasMObra = 0);
-      this.fillCrearReqMaterialesProy.cHorasMObra = 0;
+      (this.fillCrearReqMaterialesServicio.cPersonal = ""),
+        (this.fillCrearReqMaterialesServicio.cDiasMObra = 0);
+      this.fillCrearReqMaterialesServicio.cHorasMObra = 0;
     },
 
 
 
     setOtrosRequerimientos() {
-      var url = "/administracion/ProyectOtrosReq/addOtrosProyReqMateriales";
+      var url = "/administracion/servicio/addOtrosServicios";
       axios
         .post(url, {
-          cDescripcion: this.fillCrearReqMaterialesProy.cDescripcion,
-          cCantidadReq: this.fillCrearReqMaterialesProy.cCantidadReq,
-          nIdUnidMedOtroReq: this.fillCrearReqMaterialesProy.nIdUnidMedOtroReq,
-          estado: "R",
+          cDescripcion: this.fillCrearReqMaterialesServicio.cDescripcion,
+          cCantidadReq: this.fillCrearReqMaterialesServicio.cCantidadReq,
+          nIdUnidMedOtroReq: this.fillCrearReqMaterialesServicio.nIdUnidMedOtroReq,
+         estado: "S",
         })
         .then((response) => {
           /*            if (
@@ -903,33 +913,33 @@ export default {
                         this.listartempOtrosRequerimientos =
                             response.data.datos;
                         this.setLimpiaRequerimientos();
-                        this.fillCrearReqMaterialesProy.cCantidadReq = 0;
+                        this.fillCrearReqMaterialesServicio.cCantidadReq = 0;
                     } */
 
           this.listartempOtrosRequerimientos = response.data.datos;
           this.setLimpiaRequerimientos();
-          this.fillCrearReqMaterialesProy.cCantidadReq = 0;
+          this.fillCrearReqMaterialesServicio.cCantidadReq = 0;
         });
     },
 
     setLimpiaRequerimientos() {
-      (this.fillCrearReqMaterialesProy.cDescripcion = ""),
-        (this.fillCrearReqMaterialesProy.cCantidadReq = 0);
+      (this.fillCrearReqMaterialesServicio.cDescripcion = ""),
+        (this.fillCrearReqMaterialesServicio.cCantidadReq = 0);
     },
 
     DeletListReqMateriales(item) {
-      var url = "/administracion/ProyectoMateriales/reorderReqMateriales";
+      var url = "/administracion/servicio/reorderServicio";
       axios
         .post(url, {
           item: item,
         })
         .then((response) => {
-          this.listartempProduccion = response.data.datos;
+          this.listartempServicio = response.data.datos;
         });
     },
 
     DeletListReqMaNObra(item) {
-      var url = "/administracion/ProyectoManoObra/reorderProyectManObra";
+      var url = "/administracion/servicio/reorderServicioManObra";
       axios
         .post(url, {
           item: item,
@@ -940,7 +950,7 @@ export default {
     },
 
     DeletListOtrosReq(item) {
-      var url = "/administracion/ProyectOtrosReq/reorderOtrosReq";
+      var url = "/administracion/servicio/reorderOtrosReq";
       axios
         .post(url, {
           item: item,
@@ -955,11 +965,11 @@ export default {
       axios
         .get(url, {
           params: {
-            nIdProveedor: this.fillCrearReqMaterialesProy.nIdProveedor,
+            nIdProveedor: this.fillCrearReqMaterialesServicio.nIdProveedor,
           },
         })
         .then((response) => {
-          this.fillCrearReqMaterialesProy.cCodProduct = response.data.nombre;
+          this.fillCrearReqMaterialesServicio.cCodProduct = response.data.nombre;
         });
     },
 
@@ -967,22 +977,17 @@ export default {
       var url = "/administracion/ordenCompra/TipoCambio";
       axios.get(url).then((response) => {
         this.listTipoCambio = response.data;
-        this.fillCrearReqMaterialesProy.nIdTipoMoneda = this.listTipoCambio[0].id;
+        this.fillCrearReqMaterialesServicio.nIdTipoMoneda = this.listTipoCambio[0].id;
       });
     },
 
-    getListarCentroCostos() {
-      var url = "/administracion/CentroCostos/list";
-      axios.get(url).then((response) => {
-        this.listCCostos = response.data;
-      });
-    },
+
     getListarproductosByName() {
       var url = "/administracion/detallecotizancion/listProdByName";
       axios
         .get(url, {
           params: {
-            nIdmaterial: this.fillCrearReqMaterialesProy.nIdmaterial,
+            nIdmaterial: this.fillCrearReqMaterialesServicio.nIdmaterial,
           },
         })
         .then((response) => {
@@ -991,9 +996,9 @@ export default {
     },
 
     limpiarCriteriosBsq() {
-      this.fillCrearReqMaterialesProy.cCodProduct = "";
+      this.fillCrearReqMaterialesServicio.cCodProduct = "";
     },
-    setRegistrarReqMateriales() {
+    setRegistrarServicio() {
       if (this.validaOrdenProduccion()) {
         this.modalShow = true;
         return;
@@ -1002,22 +1007,19 @@ export default {
     },
 
     setGrabarReqMateriales() {
-      var url = "/administracion/proyecto_ReqMateriales/create";
+      var url = "/administracion/servicio/create";
       axios
         .post(url, {
-          nidAlmacen: this.fillCrearReqMaterialesProy.nidAlmacen,
-          cRuc: this.fillCrearReqMaterialesProy.cRuc,
-          FInicio: this.fillCrearReqMaterialesProy.FInicio,
-          FFinal: this.fillCrearReqMaterialesProy.FFinal,
-          nIdUser: this.fillCrearReqMaterialesProy.nIdUser,
-          Duracionfechas: this.fillCrearReqMaterialesProy.cDuracion,
-          nIdUnidMed: this.fillCrearReqMaterialesProy.nIdUnidMed,
-          nIdCcostos: this.fillCrearReqMaterialesProy.nIdCcostos,
-          nIdClient: this.fillCrearReqMaterialesProy.nIdClient,
-          detservicio: this.fillCrearReqMaterialesProy.detservicio,
-          cDuracion: this.fillCrearReqMaterialesProy.cDuracion,
-          nIdOS: this.fillCrearReqMaterialesProy.nIdOS,
-          nIdZonaProduccion: this.fillCrearReqMaterialesProy.nIdZonaProduccion,
+          nidAlmacen: this.fillCrearReqMaterialesServicio.nidAlmacen,
+          cRuc: this.fillCrearReqMaterialesServicio.cRuc,
+          FInicio: this.fillCrearReqMaterialesServicio.FInicio,
+          FFinal: this.fillCrearReqMaterialesServicio.FFinal,
+          nIdUser: this.fillCrearReqMaterialesServicio.nIdUser,
+          Duracionfechas: this.fillCrearReqMaterialesServicio.cDuracion,
+          nIdUnidMed: this.fillCrearReqMaterialesServicio.nIdUnidMed,
+          cClient: this.fillCrearReqMaterialesServicio.cClient,
+          detservicio: this.fillCrearReqMaterialesServicio.detservicio,
+          cCantidad: this.fillCrearReqMaterialesServicio.cCantidad,
         })
         .then((response) => {
           Swal.fire({
@@ -1027,9 +1029,9 @@ export default {
             showConfirmButton: false,
             timer: 1500,
           });
+          this.setCleanServicios();
           this.setCleanReqMateriales();
           this.setCleanManoObra();
-          this.setCleanRequerimientos();
           this.setCleanOtrosReq();
         });
     },
@@ -1040,28 +1042,23 @@ export default {
       this.error = 0;
       this.mensajeError = [];
 
-      if (!this.fillCrearReqMaterialesProy.nIdCcostos) {
-        this.mensajeError.push("El Centro de Costos es obligatorio");
-      }
-
-      if (!this.fillCrearReqMaterialesProy.FInicio) {
+      if (!this.fillCrearReqMaterialesServicio.FInicio) {
         this.mensajeError.push("Fecha Inicio es campo obligatorio");
       }
 
-      if (!this.fillCrearReqMaterialesProy.FFinal) {
+      if (!this.fillCrearReqMaterialesServicio.FFinal) {
         this.mensajeError.push("Fecha Final es campo obligatorio");
       }
 
-      if (!this.fillCrearReqMaterialesProy.nIdClient) {
+      if (!this.fillCrearReqMaterialesServicio.cClient) {
         this.mensajeError.push("Cliente Campo Obligatorio");
       }
 
-      if (!this.fillCrearReqMaterialesProy.detservicio) {
+      if (!this.fillCrearReqMaterialesServicio.detservicio) {
         this.mensajeError.push("Detalle Servicio Campo Obligatorio");
       }
-
-      if (!this.fillCrearReqMaterialesProy.nIdOS) {
-        this.mensajeError.push("Campo O/S  Obligatorio");
+          if (!this.fillCrearReqMaterialesServicio.cCantidad) {
+        this.mensajeError.push("Cantidad es obligatorio");
       }
 
       if (this.mensajeError.length) {
@@ -1071,7 +1068,7 @@ export default {
       return this.error;
     },
 
-    setRegistrarReqMaterialesList() {
+    setRegistrarServMaterialesList() {
       if (this.setvalidarReqMateriales()) {
         this.modalShow = true;
         return;
@@ -1083,11 +1080,11 @@ export default {
       this.error = 0;
       this.mensajeError = [];
 
-      if (!this.fillCrearReqMaterialesProy.nIdmaterial) {
+      if (!this.fillCrearReqMaterialesServicio.nIdmaterial) {
         this.mensajeError.push("Campo Material de requerimientos Obligatorio");
       }
 
-      if (!this.fillCrearReqMaterialesProy.cCantMaterial) {
+      if (!this.fillCrearReqMaterialesServicio.cCantMaterial) {
         this.mensajeError.push("Campo Cantidad de requerimientos Obligatorio");
       }
 
@@ -1098,14 +1095,14 @@ export default {
       return this.error;
     },
     setAddReqMaterial() {
-      var url = "/administracion/ProyectoMateriales/addOrden";
+      var url = "/administracion/servicio/addOrden";
 
       axios
         .post(url, {
-          nIdmaterial: this.fillCrearReqMaterialesProy.nIdmaterial,
-          cCantMaterial: this.fillCrearReqMaterialesProy.cCantMaterial,
-          nIdUnidMedMat: this.fillCrearReqMaterialesProy.nIdUnidMedMat,
-          estado: "R",
+          nIdmaterial: this.fillCrearReqMaterialesServicio.nIdmaterial,
+          cCantMaterial: this.fillCrearReqMaterialesServicio.cCantMaterial,
+          nIdUnidMedMat: this.fillCrearReqMaterialesServicio.nIdUnidMedMat,
+         estado: "S",
         })
         .then((response) => {
           if (response.data.message == "Ya fue agregado anteriormente") {
@@ -1117,9 +1114,9 @@ export default {
               timer: 1500,
             });
           } else {
-            this.listartempProduccion = response.data.datos;
+            this.listartempServicio = response.data.datos;
             this.setLimpiaMaterial();
-            this.fillCrearReqMaterialesProy.cCantMaterial = 0;
+            this.fillCrearReqMaterialesServicio.cCantMaterial = 0;
           }
 
           if (response.data.message == "El valor no puede ser cero") {
@@ -1131,33 +1128,35 @@ export default {
               timer: 1500,
             });
           } else {
-            this.listartempProduccion = response.data.datos;
+            this.listartempServicio = response.data.datos;
             this.setLimpiaMaterial();
-            this.fillCrearReqMaterialesProy.cCantMaterial = 0;
+            this.fillCrearReqMaterialesServicio.cCantMaterial = 0;
           }
         });
     },
 
     setLimpiaMaterial() {
-      (this.fillCrearReqMaterialesProy.nIdmaterial = ""),
-        (this.fillCrearReqMaterialesProy.cCantMaterial = 0);
+      (this.fillCrearReqMaterialesServicio.nIdmaterial = ""),
+        (this.fillCrearReqMaterialesServicio.cCantMaterial = 0);
     },
 
     setLimpiaCampos() {
-      this.fillCrearReqMaterialesProy.nIdmaterial = null;
-      this.fillCrearReqMaterialesProy.cCantidad = 0;
+      this.fillCrearReqMaterialesServicio.nIdmaterial = null;
+      this.fillCrearReqMaterialesServicio.cCantidad = 0;
+
+
     },
 
     setResetCampos() {
-      this.fillCrearReqMaterialesProy.nIdmaterial = null;
-      this.fillCrearReqMaterialesProy.cCantidad = 0;
-      this.fillCrearReqMaterialesProy.cDocumento = "";
+      this.fillCrearReqMaterialesServicio.nIdmaterial = null;
+      this.fillCrearReqMaterialesServicio.cCantidad = 0;
+      this.fillCrearReqMaterialesServicio.cDocumento = "";
     },
 
     setCleanReqMateriales() {
       var url = "/administracion/ProyectoMateriales/eliminarTemporder";
       axios.get(url, {}).then((response) => {
-        this.listartempProduccion = response.data.datos;
+        this.listartempServicio = response.data.datos;
         this.setLimpiaMaterial();
       });
     },
@@ -1178,21 +1177,20 @@ export default {
       });
     },
 
-    setCleanRequerimientos() {
-      this.fillCrearReqMaterialesProy.nIdCcostos = "";
-      this.fillCrearReqMaterialesProy.nIdClient = "";
-      this.fillCrearReqMaterialesProy.cRuc = "";
-      this.fillCrearReqMaterialesProy.detservicio = "";
-      this.fillCrearReqMaterialesProy.FInicio = "";
-      this.fillCrearReqMaterialesProy.FFinal = "";
-      this.fillCrearReqMaterialesProy.cDuracion = "";
-      this.fillCrearReqMaterialesProy.nIdOS = "";
+    setCleanServicios() {
+      this.fillCrearReqMaterialesServicio.cClient = "";
+      this.fillCrearReqMaterialesServicio.cRuc = "";
+      this.fillCrearReqMaterialesServicio.detservicio = "";
+      this.fillCrearReqMaterialesServicio.FInicio = "";
+      this.fillCrearReqMaterialesServicio.FFinal = "";
+      this.fillCrearReqMaterialesServicio.cDuracion = "";
+
     },
 
     setListtemOrders() {
       var url = "/administracion/ordenCompra/ListtempOrden";
       axios.get(url, {}).then((response) => {
-        this.listartempProduccion = response.data.datos;
+        this.listartempServicio = response.data.datos;
       });
     },
 
@@ -1206,20 +1204,20 @@ export default {
       var url = "/administracion/KardexDetalle/listUnidMed";
       axios.get(url).then((response) => {
         this.listUnidMed = response.data;
-        this.fillCrearReqMaterialesProy.nIdUnidMed = this.listUnidMed[7].id;
-        this.fillCrearReqMaterialesProy.nIdUnidMedMat = this.listUnidMed[7].id;
+        this.fillCrearReqMaterialesServicio.nIdUnidMed = this.listUnidMed[7].id;
+        this.fillCrearReqMaterialesServicio.nIdUnidMedMat = this.listUnidMed[7].id;
       });
     },
   },
   computed: {
     calculoFechas() {
       if (
-        this.fillCrearReqMaterialesProy.FFinal != null &&
-        this.fillCrearReqMaterialesProy.FInicio != null
+        this.fillCrearReqMaterialesServicio.FFinal != null &&
+        this.fillCrearReqMaterialesServicio.FInicio != null
       ) {
         let valorfecha =
-          new Date(this.fillCrearReqMaterialesProy.FFinal).getTime() -
-          new Date(this.fillCrearReqMaterialesProy.FInicio).getTime();
+          new Date(this.fillCrearReqMaterialesServicio.FFinal).getTime() -
+          new Date(this.fillCrearReqMaterialesServicio.FInicio).getTime();
         return String(valorfecha / 86400000 + 1).padStart(2, 0);
       }
     },

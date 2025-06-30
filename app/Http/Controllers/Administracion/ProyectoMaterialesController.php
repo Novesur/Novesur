@@ -91,7 +91,7 @@ class ProyectoMaterialesController extends Controller
 
     public function SaveMatReqMatProy(Request $request)
     {
-        
+
         $formatreq = date("Y-m-d");
         $ProyectoMateriales = new ProyectoMateriales();
         $ProyectoMateriales->pk_proyecto_reqmateriales = $request->idproy;
@@ -105,7 +105,7 @@ class ProyectoMaterialesController extends Controller
         $ProyectoMateriales->save();
     }
 
-    public function getDataModalReqMateriales(Request $request){ 
+    public function getDataModalReqMateriales(Request $request){
         $proyectoMateriales = ProyectoMateriales::where('id', $request->item)->first();
         return $proyectoMateriales ;
     }

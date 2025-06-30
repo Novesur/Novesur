@@ -27,22 +27,20 @@ class ProyectoManoObraController extends Controller
         $ProyectoManObra->estado = $request->estado;
         $ProyectoManObra->save();
 
-
-
     }
 
 
     public function listproyManoObra(Request $request){
         $idproyReqMateriales = ProyectoReqMateriales::where('codigo', $request->codRequMateriales)->first();
-        
-        $dato = ProyectoManObra::with('personal','personalInfoValor')->where('pk_proyecto_reqmateriales', $idproyReqMateriales->id)->get(); 
+
+        $dato = ProyectoManObra::with('personal','personalInfoValor')->where('pk_proyecto_reqmateriales', $idproyReqMateriales->id)->get();
         return $dato;
-    } 
+    }
 
 
     public function addProyManObra(Request $request)
     {
-       
+
         $personal= Personal::where('id',$request->nIdPersonal)->first();
         $materiales = Session::get('ProyManObra');
         $materiales = ($materiales != null) ? collect($materiales) : collect([]);
@@ -56,7 +54,7 @@ class ProyectoManoObraController extends Controller
 
     public function CleanProyectManObra()
     {
-        Session::put('ProyManObra', null); 
+        Session::put('ProyManObra', null);
         $dato = session()->get('ProyManObra') ?? collect([]);
         return response()->json(['datos' => $dato]);
     }
@@ -65,7 +63,7 @@ class ProyectoManoObraController extends Controller
         $id = trim($request->item);
         $items = session()->get('ProyManObra') ?? collect([]);
         $exits = $items->firstWhere("id_personal", $id);
-        
+
         if (!empty($exits)) :
             $items =  $items->whereNotIn("id_personal", [$id]);
             session()->put('ProyManObra', $items);
@@ -73,7 +71,7 @@ class ProyectoManoObraController extends Controller
         endif;
         return response()->json(['message' => 'El item no existe'], 422);
 
-    } 
+    }
 
 
 

@@ -17,7 +17,7 @@ use App\Exports\InfoProdListExport;
 use App\RequerimientosMateriales;
 use Illuminate\Http\Request;
 use Svg\Tag\Rect;
-use PDF; 
+use PDF;
 
 class InformeProduccionController extends Controller
 {
@@ -32,10 +32,10 @@ class InformeProduccionController extends Controller
         public function getListReqMatReqMat(Request $request){
 
             $CodMaterialReqMateriales = RequerimientosMateriales::where('codigo', $request->codReqMat)->first();
-   
+
 
                    $data = MaterialReqMateriales::with('producto','producto.marca','producto.familia','producto.material','producto.modelotipo','producto.subfamilia','producto.homologacion','unidmedida')->where('pk_ReqMateriales', $CodMaterialReqMateriales->id)->get();
-                  
+
                    return $data;
         }
 
@@ -52,7 +52,7 @@ class InformeProduccionController extends Controller
 
           public function getOtrosRequerimientosReqMateriales(Request $request){
             $idReqMateriales = RequerimientosMateriales::where('codigo', $request->codReqMat)->first();
-       
+
             $dato = OtrosRequerimientosReqMateriales::where('pk_ReqMateriales',$idReqMateriales->id)->get();
             return $dato;
           }
@@ -60,7 +60,7 @@ class InformeProduccionController extends Controller
 
 
           public function create(Request $request){
-            
+
             $yearMaxID = date("Y");
             $formatreq = date("Y-m-d");
             $countable = Countable::all();
@@ -96,12 +96,12 @@ class InformeProduccionController extends Controller
             Countable::where('id', 1)->update(['countinfoproduccion' => $countMaxinfoproduccion +1]);
 
 
-           
+
 
             $ManoObraReqmateriales = ManoObraReqmateriales::where('pk_ReqMateriales', $RequerimientosMateriales->id)->get();
-       
+
             foreach ($ManoObraReqmateriales as $dataManObraReq) {
-  
+
               $InfoProduccionManoObra = new InfoProduccionManoObra();
               $InfoProduccionManoObra->informeproduccion_id = $InfoProduccion->id;
               $InfoProduccionManoObra->personal = strtoupper($dataManObraReq->personalInfoProd);
@@ -158,9 +158,9 @@ class InformeProduccionController extends Controller
             if (is_null($request->nIdprod)) {
                 $dato = InformeProduccion::with('requerimiento_materiales','producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion', 'unidmedida', 'cliente')->whereBetween('fecha', [$request->dFecha[0], $request->dFecha[1]])->get();
                 return $dato;
-            } 
+            }
         }
-    
+
 
     public function saveReqMateriales(Request $request){
 
@@ -186,10 +186,10 @@ class InformeProduccionController extends Controller
     $InfoProduccionManoObra->informeproduccion_id = $ordenproduc->id;
     $InfoProduccionManoObra->personal = strtoupper($request->cPersonal);
     $InfoProduccionManoObra->dias = $request->cDiasMObra;
-    $InfoProduccionManoObra->horas = $request->cHorasMObra; 
-    $InfoProduccionManoObra->costdias = 0; 
-    $InfoProduccionManoObra->costhoras = 0; 
-    $InfoProduccionManoObra->total = 0; 
+    $InfoProduccionManoObra->horas = $request->cHorasMObra;
+    $InfoProduccionManoObra->costdias = 0;
+    $InfoProduccionManoObra->costhoras = 0;
+    $InfoProduccionManoObra->total = 0;
     $InfoProduccionManoObra->save();
     }
 
@@ -242,7 +242,7 @@ class InformeProduccionController extends Controller
     public function EditReqMateriales(Request $request){
         $codReq = RequerimientosMateriales::where('codigo',$request->codRequMateriales)->first();
          $InfoProduccion = InformeProduccion::where('pk_ReqMateriales', $codReq->id)->update(['cantidad' => $request->cCantprod]);
-          
+
     }
 
     public function addMaterialReqMateriales(Request $request){
@@ -270,9 +270,9 @@ class InformeProduccionController extends Controller
         $ManoObraReqmateriales->diasInfoProd = $request->cDiasMObra;
         $ManoObraReqmateriales->horasInfoProd = $request->cHorasMObra;
         $ManoObraReqmateriales->estado = $request->estado;
-   
+
         $ManoObraReqmateriales->save();
-        
+
     }
 
     public function addOtrosRequerimientos(Request $request){
@@ -293,43 +293,43 @@ class InformeProduccionController extends Controller
     }
 
     public function mostrarInfoManObra(Request $request){
-        
+
         $datos = InfoProduccionManoObra::where('informeproduccion_id', $request->item)->get();
         return $datos;
     }
 
     public function mostrarInfOtrosReq(Request $request){
-        
+
         $datos = InfoProduccionOtrosRequerimientos::where('informeproduccion_id', $request->item)->get();
         return $datos;
     }
 
-    public function editPrecioMatOdrProd(Request $request){ 
-     
-   
+    public function editPrecioMatOdrProd(Request $request){
+
+
        InfoProduccionMaterial::where('id', $request->item)->update(['costunit' => $request->precio, 'total' => $request->total]);
-        
+
     }
 
     public function  editPrecioHoraOdrProd(Request $request){
-     
-        
+
+
          InfoProduccionManoObra::where('id', $request->id)->update(['costhoras' => $request->precioHora, 'total' => $request->total]);
     }
 
     public function editPrecioDiaOdrProd(Request $request){
-        
+
         InfoProduccionManoObra::where('id', $request->id)->update(['costdias' => $request->precioDia, 'total' => $request->total]);
     }
 
     public function editPrecioOtrosReq(Request $request){
-     
+
         InfoProduccionOtrosRequerimientos::where('id', $request->id)->update(['precio' => $request->precioDia, 'total' => $request->total]);
     }
 
-    public function export(Request $request) 
+    public function export(Request $request)
     {
-    
+
 
         $idReqMateriales = $request->get("params")['item'];
         $diaActual = Carbon::now()->format('d/m/Y');

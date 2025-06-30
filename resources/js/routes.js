@@ -851,6 +851,34 @@ export default new Router({
             name: "alertas.list",
             component: require("./components/modulos/alertas/list").default,
         },
+
+
+        //SERVICIOS
+           {
+            path: "/servicio_ReqMateriales/create",
+            name: "servicio_ReqMateriales.create",
+            component: require("./components/modulos/servicio_ReqMateriales/create").default,
+        },
+
+           {
+            path: "/servicio_ReqMateriales/list",
+            name: "servicio_ReqMateriales.list",
+            component: require("./components/modulos/servicio_ReqMateriales/list").default,
+            },
+
+                {
+            path: "/informeServicio/create",
+            name: "informeServicio.create",
+            component: require("./components/modulos/informeServicio/create").default,
+            },
+
+                 {
+            path: "/informeServicio/list",
+            name: "informeServicio.list",
+            component: require("./components/modulos/informeServicio/list").default,
+            },
+
+
     ],
 
     mode: "history",

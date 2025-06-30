@@ -737,6 +737,56 @@ Route::post('/operacion/alertas/ExcelAlertasByFecha', 'Administracion\AlertaCont
 /* Zona de Produccion*/
 Route::get('/administracion/ZonaProduccion/list', 'Administracion\ZonaProduccionController@list');
 
+/* Servicio */
+Route::post('/administracion/servicio/create', 'Administracion\ServicioController@create');
+Route::post('/administracion/servicio/addOrden', 'Administracion\ServicioController@addOrden');
+Route::post('/administracion/servicio/reorderServicio', 'Administracion\ServicioController@reorderServicio');
+Route::post('/administracion/servicio/addServManObra', 'Administracion\ServicioController@addServManObra');
+Route::post('/administracion/servicio/addOtrosServicios', 'Administracion\ServicioController@addOtrosServicios');
+Route::post('/administracion/servicio/reorderServicioManObra', 'Administracion\ServicioController@reorderServicioManObra');
+Route::post('/administracion/servicio/reorderOtrosReq', 'Administracion\ServicioController@reorderOtrosReq');
+Route::get('/administracion/servicio/list', 'Administracion\ServicioController@list');
+
+Route::post('/administracion/servicio/setGenerarServicioPdf', 'Administracion\ServicioController@setGenerarServicioPdf');
+Route::post('/administracion/servicioReqMateriales/listbyId', 'Administracion\ServicioReqMaterialesController@listbyId');
+Route::get('/administracion/servicioReqMateriales/listproyMateriales', 'Administracion\ServicioReqMaterialesController@listproyMateriales');
+Route::get('/administracion/servicioReqMateriales/list', 'Administracion\ServicioReqMaterialesController@list');
+Route::get('/administracion/servicioManoObra/listproyManoObra', 'Administracion\ServicioManoObraController@listproyManoObra');
+Route::post('/administracion/servicioManoObra/reorderReqManObra', 'Administracion\ServicioManoObraController@reorderReqManObra');
+Route::get('/administracion/servicioManoObra/ListValorMaNObraxInfoValor', 'Administracion\ServicioManoObraController@ListValorMaNObraxInfoValor');
+Route::get('/administracion/servicioManoObra/mostrarInfoManObra', 'Administracion\ServicioManoObraController@mostrarInfoManObra');
+
+
+Route::get('/administracion/servicioOtrosReq/listproyOtrosReq', 'Administracion\ServicioOtrosReqController@listproyOtrosReq');
+Route::post('/administracion/servicioReqMateriales/addReqMatServicio', 'Administracion\ServicioReqMaterialesController@addReqMatServicio');
+Route::post('/administracion/servicioReqMateriales/reorderReqMateriales', 'Administracion\ServicioReqMaterialesController@reorderReqMateriales');
+Route::post('/administracion/servicioReqMateriales/getDataModalReqMateriales', 'Administracion\ServicioReqMaterialesController@getDataModalReqMateriales');
+Route::post('/administracion/servicioReqMateriales/EditModalReqMateriales', 'Administracion\ServicioReqMaterialesController@EditModalReqMateriales');
+
+
+Route::post('/administracion/servicioManoObra/addReqMatProyManObra', 'Administracion\ServicioManoObraController@addReqMatProyManObra');
+Route::post('/administracion/servicioOtrosReq/addReqMatProyOtrosReq', 'Administracion\ServicioOtrosReqController@addReqMatProyOtrosReq');
+Route::get('/administracion/servicioOtrosReq/mostrarInfoManObra', 'Administracion\ServicioOtrosReqController@mostrarInfoManObra');
+
+
+
+Route::post('/administracion/servicioOtrosReq/reorderOtrosReq', 'Administracion\ServicioOtrosReqController@reorderOtrosReq');
+Route::get('/administracion/servicioOtrosReq/ListValorOtrosReqxServicio', 'Administracion\ServicioOtrosReqController@ListValorOtrosReqxServicio');
+
+
+Route::get('/administracion/servicioInforme/list', 'Administracion\ServicioInformeController@list');
+Route::get('/administracion/servicioInforme/index', 'Administracion\ServicioInformeController@index');
+Route::post('/administracion/servicioInforme/save', 'Administracion\ServicioInformeController@save');
+Route::post('/administracion/servicioInforme/SetGenerarInfoServicioPDF', 'Administracion\ServicioInformeController@SetGenerarInfoServicioPDF');
+Route::get('/administracion/servicioInforme/mostrarInfoReqMateriales', 'Administracion\ServicioInformeController@mostrarInfoReqMateriales');
+Route::post('/administracion/servicioInforme/editPrecioMatInfoServicio', 'Administracion\ServicioInformeController@editPrecioMatInfoServicio');
+Route::post('/administracion/servicioInforme/editPrecioDiaOdrProd', 'Administracion\ServicioInformeController@editPrecioDiaOdrProd');
+Route::post('/administracion/servicioInforme/editPrecioHoraOdrProd', 'Administracion\ServicioInformeController@editPrecioHoraOdrProd');
+Route::post('/administracion/servicioInforme/editPrecioOtrosOrdProd', 'Administracion\ServicioInformeController@editPrecioOtrosOrdProd');
+Route::post('/administracion/servicioInforme/ExcelDetalladoInfoServicio', 'Administracion\ServicioInformeController@ExcelDetalladoInfoServicio');
+Route::post('/administracion/servicioInforme/export', 'Administracion\ServicioInformeController@export');
+Route::post('/administracion/servicioInforme/create', 'Administracion\ServicioInformeController@create');
+
 
 
 

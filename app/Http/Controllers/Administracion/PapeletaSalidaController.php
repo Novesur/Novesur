@@ -66,7 +66,7 @@ if ($tiempo  >= $tiempoMax) {
     $PapeletaSalida->horasalida = substr($request->tHoraSalida, 0, 8);
     $PapeletaSalida->horaretorno = substr($request->tHoraRetorno, 0, 8);
     $PapeletaSalida->motivopapeletasalida_id = $request->nIdMotivo;
-    $PapeletaSalida->estadopapeletasalida_id = '1';
+    $PapeletaSalida->estadopapeletasalida_id = '3';
     $PapeletaSalida->fundamento = nl2br(htmlentities(mb_strtoupper($request->cReferencia)));
     $PapeletaSalida->hora_emision =  substr($femision, 0,7);
     $PapeletaSalida->save();

@@ -24,39 +24,7 @@
 
                             <div class="card-body">
                                 <form role="form">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group row">
-                                                <label
-                                                    class="col-md-2 col-form-label"
-                                                    >Proyecto</label
-                                                >
-                                                <div class="col-md-6">
-                                                    <el-select
-                                                        v-model="
-                                                            fillBPInfValor.nIdProyecto
-                                                        "
-                                                        style="width: 100%"
-                                                        filterable
-                                                        placeholder="Select"
-                                                        clearable
-                                                    >
-                                                        <el-option
-                                                            v-for="item in listCCostos"
-                                                            :key="item.id"
-                                                            :label="
-                                                                item.codigo +
-                                                                ' - ' +
-                                                                item.nombre
-                                                            "
-                                                            :value="item.id"
-                                                        >
-                                                        </el-option>
-                                                    </el-select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group row">
@@ -154,7 +122,6 @@
                                         <tr>
                                             <th>Fecha</th>
                                             <th>Codigo</th>
-                                            <th>Nombre Proyecto</th>
                                             <th>Cliente</th>
                                             <th>Detalle Servicio</th>
                                             <th>Fecha Inicio</th>
@@ -172,9 +139,6 @@
                                         >
                                             <td v-text="item.fecha"></td>
                                             <td v-text="item.codigo"></td>
-                                            <td
-                                                v-text="item.ccostos.nombre"
-                                            ></td>
                                             <td v-text="item.cliente"></td>
                                             <td v-text="item.detservicio"></td>
                                             <td v-text="item.fechainicio"></td>
@@ -185,7 +149,7 @@
                                                 <button
                                                     class="btn btn-danger btn-sm"
                                                     @click.prevent="
-                                                        SetGenerarInfoValorizacionPDF(
+                                                        SetGenerarInfoServicioPDF(
                                                             item.id
                                                         )
                                                     "
@@ -426,7 +390,7 @@
                                                                             item.id,
                                                                             item.costunit,
                                                                             item.cantidad,
-                                                                            item.pk_informe_valorizacion
+                                                                            item.pk_servicio_informe
                                                                         )
                                                                     "
                                                                 >
@@ -511,20 +475,10 @@
                                                         >
                                                             <td>
                                                                 {{
-                                                                    item
-                                                                        .personal
-                                                                        .ApPaterno
+                                                                    item.personal
+
                                                                 }}
-                                                                {{
-                                                                    item
-                                                                        .personal
-                                                                        .ApMaterno
-                                                                }}
-                                                                {{
-                                                                    item
-                                                                        .personal
-                                                                        .nombres
-                                                                }}
+
                                                             </td>
                                                             <td>
                                                                 {{ item.horas }}
@@ -552,7 +506,7 @@
                                                                     @click.prevent="
                                                                         MandarDiaMObra(
                                                                             item.id,
-                                                                            item.pk_informe_valorizacion,
+                                                                            item.pk_servicio_informe,
                                                                             (total =
                                                                                 item.dias *
                                                                                     item.costdias +
@@ -571,7 +525,7 @@
                                                                     @click.prevent="
                                                                         MandarHoraMObra(
                                                                             item.id,
-                                                                            item.informeproduccion_id,
+                                                                            item.pk_servicio_informe,
                                                                             (total =
                                                                                 item.dias *
                                                                                     item.costdias +
@@ -663,7 +617,7 @@
                                                             <th>
                                                                 Unid. Medida
                                                             </th>
-                                                            <th>Alquiler</th>
+                                                            <!-- <th>Alquiler</th> -->
                                                             <!--   <th>
                                                                 Unid. Alquiler
                                                             </th> -->
@@ -705,13 +659,13 @@
                                                                     item.alquiler
                                                                 }}
                                                             </td> -->
-                                                            <td>
+                                                        <!--     <td>
                                                                 {{
                                                                     item
                                                                         .pk_tiempo_alquiler
                                                                         .nombre
                                                                 }}
-                                                            </td>
+                                                            </td> -->
                                                             <td>
                                                                 {{ item.total }}
                                                             </td>
@@ -722,7 +676,7 @@
                                                                     @click.prevent="
                                                                         MandarPreciOtroReq(
                                                                             item.id,
-                                                                            item.pk_informe_valorizacion,
+                                                                            item.pk_servicio_informe,
                                                                             item.cantidad
                                                                         )
                                                                     "
@@ -733,16 +687,16 @@
                                                                     Precio
                                                                 </button>
 
-                                                                <button
+                                                           <!--      <button
                                                                     class="btn btn-success btn-sm"
                                                                     tabindex="-1"
                                                                     role="dialog"
                                                                     @click.prevent="
-                                                                        /*       MandarPreciOtroReq(
+                                                                              MandarPreciOtroReq(
                                                                             item.id,
                                                                             item.pk_informe_valorizacion,
                                                                             item.cantidad
-                                                                        ) */
+                                                                        )
                                                                         abrirModalOtrosReqAlquiler(
                                                                             item.id,
                                                                             item.pk_informe_valorizacion
@@ -753,7 +707,7 @@
                                                                         class="fas fa-pencil-alt"
                                                                     ></i>
                                                                     Alquiler
-                                                                </button>
+                                                                </button> -->
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -1008,7 +962,7 @@ export default {
     data() {
         return {
             fillBPInfValor: {
-                nIdProyecto: "",
+
                 dFecha: "",
                 cServicio: "",
                 precioMatInfoValor: "",
@@ -1054,8 +1008,8 @@ export default {
                 display: "none",
             },
 
-            listCCostos: [],
-            listPInfoValorizacion: [],
+
+            listPInfoServicio: [],
             listInfoValMateriales: [],
             listProd: [],
             listManObra: [],
@@ -1072,7 +1026,7 @@ export default {
         };
     },
     mounted() {
-        this.getlistCcostos();
+
         this.getlistUnidAlquiler();
         this.getListarUnidadMedida();
         this.getListPersonal();
@@ -1080,17 +1034,17 @@ export default {
 
     computed: {
         pageCount() {
-            let a = this.listPInfoValorizacion.length,
+            let a = this.listPInfoServicio.length,
                 b = this.perPage;
             return Math.ceil(a / b);
         },
         listarClientesPaginated() {
             let inicio = this.pageNumber * this.perPage,
                 fin = inicio + this.perPage;
-            return this.listPInfoValorizacion.slice(inicio, fin);
+            return this.listPInfoServicio.slice(inicio, fin);
         },
         pagesList() {
-            let a = this.listPInfoValorizacion.length,
+            let a = this.listPInfoServicio.length,
                 b = this.perPage;
             let pageCount = Math.ceil(a / b);
             let count = 0,
@@ -1117,12 +1071,7 @@ export default {
                 this.fillBPInfValor.nIdUnidMedAlquiler = this.listUnidMed[7].id;
             });
         },
-        getlistCcostos() {
-            var url = "/administracion/CentroCostos/list";
-            axios.get(url).then((response) => {
-                this.listCCostos = response.data;
-            });
-        },
+
 
         getlistUnidAlquiler() {
             var url = "/administracion/informeValorizacion/listUnidAlquiler";
@@ -1217,7 +1166,7 @@ export default {
 
         setMostrarInfo(item) {
             var url =
-                "/administracion/informeValorizacion/mostrarInfoReqMateriales";
+                "/administracion/servicioInforme/mostrarInfoReqMateriales";
             axios
                 .get(url, {
                     params: {
@@ -1230,7 +1179,7 @@ export default {
         },
 
         setMostrarInfoManObra(item) {
-            var url = "/administracion/informeValorizacion/mostrarInfoManObra";
+            var url = "/administracion/servicioManoObra/mostrarInfoManObra";
             axios
                 .get(url, {
                     params: {
@@ -1242,7 +1191,7 @@ export default {
                 });
         },
         setMostrarInfOtrosReq(item) {
-            var url = "/administracion/informeValorizacion/mostrarInfOtrosReq";
+            var url = "/administracion/servicioOtrosReq/mostrarInfoManObra";
             axios
                 .get(url, {
                     params: {
@@ -1272,7 +1221,7 @@ export default {
                 });
         },
 
-        MandarDatosPrecio(item, costunit, cantidad, pk_informe_valorizacion) {
+        MandarDatosPrecio(item, costunit, cantidad, pk_servicio_informe) {
             this.fillBPInfValor.precioMatInfoValor = prompt(
                 "Ingrese el precio a editar",
                 costunit
@@ -1281,7 +1230,7 @@ export default {
                 cantidad * this.fillBPInfValor.precioMatInfoValor;
 
             var url =
-                "/administracion/InformeValorizacion/editPrecioMatInfoValor";
+                "/administracion/servicioInforme/editPrecioMatInfoServicio";
             axios
                 .post(url, {
                     item,
@@ -1289,15 +1238,15 @@ export default {
                     totalInfoValor: this.fillBPInfValor.totalInfoValor,
                 })
                 .then((response) => {
-                    this.setMostrarInfo(pk_informe_valorizacion);
+                    this.setMostrarInfo(pk_servicio_informe);
                 });
         },
 
-        MandarDiaMObra(id, informeproduccion_id, total) {
+        MandarDiaMObra(id, pk_servicio_informe, total) {
             this.fillBPInfValor.precioDia = prompt(
                 "Ingrese el precio de la Hora "
             );
-            var url = "/administracion/InformeProduccion/editPrecioDiaOdrProd";
+            var url = "/administracion/servicioInforme/editPrecioDiaOdrProd";
             axios
                 .post(url, {
                     id,
@@ -1305,15 +1254,15 @@ export default {
                     total,
                 })
                 .then((response) => {
-                    this.setMostrarInfoManObra(informeproduccion_id);
+                    this.setMostrarInfoManObra(pk_servicio_informe);
                 });
         },
 
-        MandarPreciOtroReq(id, informeproduccion_id, cantidad) {
+        MandarPreciOtroReq(id, pk_servicio_informe, cantidad) {
             let precioDia = prompt("Ingrese el precio ");
             let total = parseInt(cantidad) * precioDia;
 
-            var url = "/administracion/InformeValorizacion/editPrecioOtrosReq";
+            var url = "/administracion/servicioInforme/editPrecioOtrosOrdProd";
             axios
                 .post(url, {
                     id,
@@ -1321,13 +1270,13 @@ export default {
                     total,
                 })
                 .then((response) => {
-                    this.setMostrarInfOtrosReq(informeproduccion_id);
+                    this.setMostrarInfOtrosReq(pk_servicio_informe);
                 });
         },
 
         MandarHoraMObra(id, informeproduccion_id, total) {
             let precioHora = prompt("Ingrese el precio de la Hora ");
-            var url = "/administracion/InformeProduccion/editPrecioHoraOdrProd";
+            var url = "/administracion/servicioInforme/editPrecioHoraOdrProd";
             axios
                 .post(url, {
                     id,
@@ -1339,10 +1288,10 @@ export default {
                 });
         },
 
-        SetGenerarInfoValorizacionPDF(id) {
+        SetGenerarInfoServicioPDF(id) {
             var config = { responseType: "blob" };
             var url =
-                "/administracion/InformeValorizacion/setGenerarInfoValorizacionPdf";
+                "/administracion/servicioInforme/SetGenerarInfoServicioPDF";
             axios
                 .post(
                     url,
@@ -1364,7 +1313,7 @@ export default {
 
         getExcelReporte(item) {
             var url =
-                "/administracion/InformeValorizacion/ExcelDetalladoInfoValor";
+                "/administracion/servicioInforme/ExcelDetalladoInfoServicio";
             axios
                 .post(
                     url,
@@ -1394,35 +1343,35 @@ export default {
         limpiarListClientsBsq() {
             this.fillBPInfValor.cNombre = "";
             this.fillBPInfValor.cRuc = "";
-            this.listPInfoValorizacion = [];
+            this.listPInfoServicio = [];
         },
         limpiarBandejaProveedor() {
-            this.listPInfoValorizacion = [];
+            this.listPInfoServicio = [];
         },
         getListInfoValorizacion() {
-            var url = "/administracion/InformeValorizacion/index";
+            var url = "/administracion/servicioInforme/index";
             axios
                 .get(url, {
                     params: {
                         cServicio: this.fillBPInfValor.cServicio,
                         cFecha: this.fillBPInfValor.cFecha,
-                        nIdProyecto: this.fillBPInfValor.nIdProyecto,
+
                     },
                 })
                 .then((response) => {
-                    this.listPInfoValorizacion = response.data;
+                    this.listPInfoServicio = response.data;
                 });
         },
 
         ExcelListOrdProd() {
-            var url = "/operacion/InformeValorizacion/export";
+            var url = "/administracion/servicioInforme/export";
             axios
                 .post(
                     url,
                     {
                         params: {
-                            listPInfoValorizacion: JSON.stringify(
-                                this.listPInfoValorizacion
+                            listPInfoServicio: JSON.stringify(
+                                this.listPInfoServicio
                             ),
                         },
                     },
@@ -1432,6 +1381,9 @@ export default {
                     FileSaver.saveAs(response.data, "InfoProduccion.xlsx");
                 });
         },
+
+
+
 
         nextPage() {
             this.pageNumber++;

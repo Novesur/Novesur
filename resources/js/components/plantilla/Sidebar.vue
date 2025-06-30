@@ -723,6 +723,89 @@
             </ul>
           </li>
 
+
+                  <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="fas fa-file-signature"></i>
+              <p>
+                Servicio
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <template>
+                  <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                      <i class="fas fa-solid fa-briefcase"></i>
+                      <p>
+                        Requerimiento de Materiales
+                        <i class="fas fa-angle-left right"></i>
+                      </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                      <li class="nav-item">
+                        <template
+                          v-if="listPermisos.includes('servicioMateriales.create')"
+                        >
+                          <router-link
+                            class="nav-link"
+                            :to="'/servicio_ReqMateriales/create'"
+                          >
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Crear</p>
+                          </router-link>
+                        </template>
+                      </li>
+
+                      <li class="nav-item">
+                        <template
+                          v-if="listPermisos.includes('servicioMateriales.list')"
+                        >
+                          <router-link
+                            class="nav-link"
+                            :to="'/servicio_ReqMateriales/list'"
+                          >
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Reporte</p>
+                          </router-link>
+                        </template>
+                      </li>
+                    </ul>
+                  </li>
+                </template>
+              </li>
+              <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                  <i class="fas fa-solid fa-clipboard-list"></i>
+                  <p>
+                    Informe de Servicio
+                    <i class="fas fa-angle-left right"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <template v-if="listPermisos.includes('informeServicio.create')">
+                      <router-link class="nav-link" :to="'/informeServicio/create'">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Crear</p>
+                      </router-link>
+                    </template>
+                  </li>
+
+                  <li class="nav-item">
+                    <template v-if="listPermisos.includes('informeServicio.list')">
+                      <router-link class="nav-link" :to="'/informeServicio/list'">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Reporte</p>
+                      </router-link>
+                    </template>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="fas fa-user-cog"></i>
