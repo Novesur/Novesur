@@ -32,6 +32,7 @@ class ServicioReqMaterialesController extends Controller
         $dato = Servicio::where('codigo', $request->codRequMateriales)->first();
 
         $datoServicio = ServicioInforme::where('ord_servicio', $request->codRequMateriales)->first();
+
         $validaServicioInforme = ServicioInforme::where('ord_servicio', $request->codRequMateriales)->get();
 
         if ($validaServicioInforme->count() == 0) {
@@ -144,21 +145,70 @@ class ServicioReqMaterialesController extends Controller
 
     public function list(Request $request)
     {
+
+
         if (is_null($request->dFecha)  && is_null($request->nIdprod)) {
-            $dato = MaterialServicio::with('servicio', 'producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion', 'unidmedida')->get();
+           // $dato = MaterialServicio::with('servicio', 'producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion', 'unidmedida')->get();
+           $dato =  ServicioInforme::all();
             return $dato;
         }
-        if (is_null($request->dFecha)) {
+
+        if($request->dFecha) {
+             $dato =  ServicioInforme::where('fecha',$request->dFecha)->get();
+              return $dato;
+        }
+
+   /*      if (is_null($request->dFecha)) {
             $dato = MaterialServicio::with('servicio', 'producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion', 'unidmedida')->where('producto_id', $request->nIdprod)->get();
             return $dato;
-        }
+        } */
 
-        if (is_null($request->nIdprod)) {
+        /* if (is_null($request->nIdprod)) {
             $dato = MaterialServicio::with('servicio', 'producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion', 'unidmedida')->whereBetween('fecha', [$request->dFecha[0], $request->dFecha[1]])->get();
             return $dato;
-        }
+        } */
     }
 
+    public function listMaterialById(Request $request){
+
+         $dato = MaterialServicio::with('servicio', 'producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion', 'unidmedida')->where('pk_Servicios', $request->nIdServicio)->get();
+         return $dato;
+
+    }
+
+
+    public function createMaterialServicioById(Request $request){
+            $formatreq = date("Y-m-d");
+            $materialServicio = new MaterialServicio();
+            $materialServicio->pk_Servicios = $request->nIdServicio;
+            $materialServicio->producto_id =  $request->nIdmaterial;
+            $materialServicio->cantidad = $request->cCantMaterial;
+            $materialServicio->unidmedida_id = $request->nIdUnidMedMat;
+            $materialServicio->cantServicio = $request->cCantMaterial;
+            $materialServicio->cantServicio = $request->cCantMaterial;
+            $materialServicio->unidmedidaInfoValor_id = $request->nIdUnidMedMat;
+            $materialServicio->fecha = $formatreq;
+            $materialServicio->estado= $request->estado;
+            $materialServicio->save();
+
+
+            $servicio = Servicio::where('id',$request->nIdServicio)->first();
+            $informeServicio = ServicioInforme::where('ord_servicio' ,$servicio->codigo )->first();
+
+            $servicioInforme_Materiales = new  ServicioInforme_Materiales();
+            $servicioInforme_Materiales->pk_servicio_informe = $informeServicio->id;
+            $servicioInforme_Materiales->producto_id = $request->nIdmaterial;
+            $servicioInforme_Materiales->cantidad = $request->cCantMaterial;
+            $servicioInforme_Materiales->unidmedida_id = $request->nIdUnidMedMat;
+            $servicioInforme_Materiales->fecha = $formatreq;
+            $servicioInforme_Materiales->costunit = 0;
+            $servicioInforme_Materiales->total = 0;
+            $servicioInforme_Materiales->save();
+    }
+
+    public function deleteItemMaterialById(Request $request){
+        MaterialServicio::where('id',$request->item)->delete();
+    }
 
 
 }

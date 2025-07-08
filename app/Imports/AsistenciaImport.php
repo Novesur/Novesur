@@ -28,7 +28,9 @@ class AsistenciaImport implements ToModel, WithHeadingRow, WithBatchInserts, Wit
                     'fecha' =>   $fecha,
                     'tiempo' =>  $tiempo,
                     'asistencia_estado_id' =>  1,
-                    'estado' =>  1
+                    'estado' =>  1,
+                    'sede_id' =>  1,
+
                 ]);
             }
         }

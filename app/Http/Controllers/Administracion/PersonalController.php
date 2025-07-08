@@ -10,9 +10,9 @@ class PersonalController extends Controller
 {
     public function create(Request $request)
     {
-        $validaDNI = Personal::where('DNI',trim($request->cDni))->first();
+       /*  $validaDNI = Personal::where('DNI',trim($request->cDni))->first();
         $valida = isset($validaDNI);
-       if(!$valida){
+       if(!$valida){ */
            $personal = new Personal;
            $personal->codigo = $request->cNumPersonal;
            $personal->nombres = strtoupper($request->cNombres);
@@ -22,11 +22,12 @@ class PersonalController extends Controller
            $personal->zonal_id = $request->nIdZonal;
            $personal->cargo_personal_id = $request->nIdCargo;
            $personal->estado = 'A';
+           $personal->sede_id = $request->nIdSede;
            $personal->save();
            return response()->json(['message' => 'Nuevo Personal Guardado', 'icon' => 'success'], 200);
-       }else{
+     /*   }else{
         return response()->json(['message' => 'DNI ya existe, revise bien los datos', 'icon' => 'warning'], 200);
-       }
+       } */
     }
 
     public function index(Request $request)
@@ -42,7 +43,7 @@ class PersonalController extends Controller
             $dato = Personal::with('cargo', 'zonal')->where('dni',$request->cDNI)->get();
             return $dato;
         }
-        
+
 
         //Busqueda por Nombre
         if ($request->cDNI == null && $request->cZonal == null && $request->cCargo == null) {
@@ -88,7 +89,7 @@ class PersonalController extends Controller
             $personal->DNI = $request->cDni;
             $personal->zonal_id = $request->nIdZonal;
             $personal->cargo_personal_id = $request->nIdCargo;
-            
+
             if($request->estado = true){
                 $valorestado = 'A';
             }else{
@@ -101,8 +102,8 @@ class PersonalController extends Controller
 
     }
 
-    public function personalAsistencia(){
-        $personal = Personal::whereNotNull('codigo')->get();
+    public function personalAsistencia(Request $request){
+        $personal = Personal::whereNotNull('codigo')->where('sede_id',$request->sede)->where('estado','A')->get();
         return $personal;
     }
 

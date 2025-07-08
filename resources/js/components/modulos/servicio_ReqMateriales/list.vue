@@ -22,7 +22,7 @@
 
               <div class="card-body">
                 <form role="form">
-                  <div class="row">
+             <!--      <div class="row">
                     <div class="col-md-12">
                       <div class="form-group row">
                         <label class="col-md-1 col-form-label"
@@ -66,10 +66,8 @@
                       </div>
                       </div>
                     </div>
+                  </div> -->
 
-
-
-                  </div>
                           <div class="row">
                         <div class="col-md-12">
                           <div class="form-group row">
@@ -142,7 +140,7 @@
                       v-for="(item, index) in listOrdenProduc"
                       :key="index"
                     >
-                    <td v-text="item.servicio.codigo"></td>
+                    <td v-text="item.codigo"></td>
                       <td>{{item.fecha | moment("DD - MM - Y") }}
                      <!--    {{
                           item.user == null
@@ -151,14 +149,14 @@
                         }} -->
                       </td>
 
-                       <td v-text="item.servicio.cliente"></td>
-                      <td  v-text="item.servicio.detservicio">
+                       <td v-text="item.cliente"></td>
+                      <td  v-text="item.detservicio">
                             </td>
 
-                            <td>{{item.servicio.cantidad}}</td>
-                            <td>{{item.servicio.fechainicio | moment("DD - MM - Y")  }}</td>
-                            <td>{{item.servicio.fechafinal | moment("DD - MM - Y") }}</td>
-                             <td  v-text="item.servicio.duracion"></td>
+                            <td>{{item.cantidad}}</td>
+                            <td>{{item.fechainicio | moment("DD - MM - Y")  }}</td>
+                            <td>{{item.fechafinal | moment("DD - MM - Y") }}</td>
+                             <td  v-text="item.duracion"></td>
                             <td>     <button
                                 class="btn btn-danger btn-sm"
                                 @click.prevent="
@@ -166,7 +164,20 @@
                                 "
                               >
                                 <i class="fas fa-file-pdf"></i> PDF
-                              </button></td>
+                              </button>
+
+                             <router-link
+                                class="btn btn-info btn-sm tamañoletra"
+                                :to="{
+                                  name: 'servicio_ReqMateriales.editMaterial',
+                                  params: { id: item.id },
+                                }"
+                              >
+                                <i class="fas fa-pencil-alt"></i> Editar
+                              </router-link>
+
+
+                            </td>
                     </tr>
                   </tbody>
                 </table>

@@ -180,6 +180,61 @@
                                             </div>
                                         </div>
                                     </div>
+
+
+                                                  <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label
+                                                    class="col-md-3 col-form-label"
+                                                    >Sede</label
+                                                >
+                                                <div class="col-md-9">
+                                                    <el-select
+                                                        v-model="
+                                                            fillCrearPersonal.nIdSede
+                                                        "
+                                                        placeholder="Seleccione un Rol"
+                                                        clearable
+                                                    >
+                                                        <el-option
+                                                            v-for="item in listSede"
+                                                            :key="item.id"
+                                                            :label="item.nombre"
+                                                            :value="item.id"
+                                                        >
+                                                        </el-option>
+                                                    </el-select>
+                                                </div>
+                                            </div>
+                                        </div>
+<!--
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label
+                                                    class="col-md-3 col-form-label"
+                                                    >Zonal</label
+                                                >
+                                                <div class="col-md-9">
+                                                    <el-select
+                                                        v-model="
+                                                            fillCrearPersonal.nIdZonal
+                                                        "
+                                                        placeholder="Seleccione un Rol"
+                                                        clearable
+                                                    >
+                                                        <el-option
+                                                            v-for="item in listZonal"
+                                                            :key="item.id"
+                                                            :label="item.nombre"
+                                                            :value="item.id"
+                                                        >
+                                                        </el-option>
+                                                    </el-select>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                    </div>
                                 </form>
                             </div>
                             <div class="card-footer">
@@ -249,9 +304,12 @@ export default {
                 nIdCargo: "",
                 cDni: "",
                 nIdZonal: "",
+                nIdSede:""
             },
             listZonal: [],
             listCargo: [],
+            listSede: [],
+
             modalShow: false,
             mostrarModal: {
                 display: "block",
@@ -269,8 +327,18 @@ export default {
       this.getListarGradoAcad();
       this.getListCargo();
       this.getListarZonal();
+      this.getListarSede();
     },
     methods: {
+
+
+           getListarSede() {
+            var url = "/administracion/sede/list";
+            axios.get(url).then((response) => {
+                this.listSede = response.data;
+            });
+        },
+
         abrirModal() {
             this.modalShow = !this.modalShow;
         },
@@ -347,7 +415,7 @@ export default {
 
         setValidarPersonal() {
             if (this.validarRegistrarPersonal()) {
-                this.modalShow = true; 
+                this.modalShow = true;
                 return;
             }
             this.setRegistrarPersonal();
@@ -365,11 +433,12 @@ export default {
                     nIdCargo: this.fillCrearPersonal.nIdCargo,
                     cEmail: this.fillCrearPersonal.cEmail,
                     cPassword: this.fillCrearPersonal.cDni,
-                    nIdZonal: this.fillCrearPersonal.nIdZonal, 
+                    nIdZonal: this.fillCrearPersonal.nIdZonal,
+                    nIdSede: this.fillCrearPersonal.nIdSede,
 
                 })
                 .then((response) => {
-                    
+
           Swal.fire({
             position: "center",
             icon: response.data.icon,

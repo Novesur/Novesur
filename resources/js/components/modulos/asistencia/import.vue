@@ -63,6 +63,17 @@
                                             </div>
                                         </div>
                                 </div> -->
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                                <template>
+                                            <el-radio v-model="radioSede" label="1" :value="1" border>Surco</el-radio>
+                                            <el-radio v-model="radioSede" label="2"  :value="2" border>Lurin</el-radio>
+                                                </template>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="card-footer">
                                 <div class="row">
@@ -120,7 +131,7 @@
                                             <td v-text="item.cargo"></td>
                                             <td v-text="item.zonal"></td>
                                             <td v-text="item.estado" ></td>
-                                            
+
 
                                <!--              <td>
                                                 <router-link
@@ -220,6 +231,7 @@ export default {
             },
             listPersonal: [],
             listZonal: [],
+            radioSede: '1',
 
             listRolPermisoByUsuario: JSON.parse(
                 sessionStorage.getItem("listRolPermisosByUsuario")
@@ -324,8 +336,9 @@ export default {
         },
 
         setImportFile() {
-            var data = new FormData(document.getElementById("mainFormAsist")); 
+            var data = new FormData(document.getElementById("mainFormAsist"));
             var url = "/administracion/asistencia/import";
+             data.append('radioSede', this.radioSede);
             axios
                 .post(url, data, {
                     headers: {

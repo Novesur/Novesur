@@ -878,6 +878,12 @@ export default new Router({
             component: require("./components/modulos/informeServicio/list").default,
             },
 
+            {
+            path: "/servicio_ReqMateriales/editMaterial/:id",
+            name: "servicio_ReqMateriales.editMaterial",
+            component: require("./components/modulos/servicio_ReqMateriales/editMaterial").default,
+            props: true,
+            },
 
     ],
 

@@ -282,4 +282,9 @@ class ServicioController extends Controller
             return $dato;
         }
     }
+
+    public function servicioById(Request $request){
+        $dato = Servicio::where('id',$request->nIdServicio)->first();
+        return $dato;
+    }
 }

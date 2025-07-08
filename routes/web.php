@@ -746,8 +746,12 @@ Route::post('/administracion/servicio/addOtrosServicios', 'Administracion\Servic
 Route::post('/administracion/servicio/reorderServicioManObra', 'Administracion\ServicioController@reorderServicioManObra');
 Route::post('/administracion/servicio/reorderOtrosReq', 'Administracion\ServicioController@reorderOtrosReq');
 Route::get('/administracion/servicio/list', 'Administracion\ServicioController@list');
-
 Route::post('/administracion/servicio/setGenerarServicioPdf', 'Administracion\ServicioController@setGenerarServicioPdf');
+Route::get('/administracion/servicio/servicioById', 'Administracion\ServicioController@servicioById');
+
+
+
+
 Route::post('/administracion/servicioReqMateriales/listbyId', 'Administracion\ServicioReqMaterialesController@listbyId');
 Route::get('/administracion/servicioReqMateriales/listproyMateriales', 'Administracion\ServicioReqMaterialesController@listproyMateriales');
 Route::get('/administracion/servicioReqMateriales/list', 'Administracion\ServicioReqMaterialesController@list');
@@ -762,6 +766,11 @@ Route::post('/administracion/servicioReqMateriales/addReqMatServicio', 'Administ
 Route::post('/administracion/servicioReqMateriales/reorderReqMateriales', 'Administracion\ServicioReqMaterialesController@reorderReqMateriales');
 Route::post('/administracion/servicioReqMateriales/getDataModalReqMateriales', 'Administracion\ServicioReqMaterialesController@getDataModalReqMateriales');
 Route::post('/administracion/servicioReqMateriales/EditModalReqMateriales', 'Administracion\ServicioReqMaterialesController@EditModalReqMateriales');
+Route::get('/administracion/servicioReqMateriales/listMaterialById', 'Administracion\ServicioReqMaterialesController@listMaterialById');
+Route::post('/administracion/servicioReqMateriales/createMaterialServicioById', 'Administracion\ServicioReqMaterialesController@createMaterialServicioById');
+Route::post('/administracion/servicioReqMateriales/deleteItemMaterialById', 'Administracion\ServicioReqMaterialesController@deleteItemMaterialById');
+
+
 
 
 Route::post('/administracion/servicioManoObra/addReqMatProyManObra', 'Administracion\ServicioManoObraController@addReqMatProyManObra');
@@ -787,6 +796,8 @@ Route::post('/administracion/servicioInforme/ExcelDetalladoInfoServicio', 'Admin
 Route::post('/administracion/servicioInforme/export', 'Administracion\ServicioInformeController@export');
 Route::post('/administracion/servicioInforme/create', 'Administracion\ServicioInformeController@create');
 
+/* Sede */
+Route::get('/administracion/sede/list', 'Administracion\SedeController@list');
 
 
 

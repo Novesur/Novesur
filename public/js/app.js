@@ -4689,6 +4689,7 @@ __webpack_require__.r(__webpack_exports__);
       },
       listPersonal: [],
       listZonal: [],
+      radioSede: '1',
       listRolPermisoByUsuario: JSON.parse(sessionStorage.getItem("listRolPermisosByUsuario")),
       pageNumber: 0,
       perPage: 10
@@ -4781,6 +4782,7 @@ __webpack_require__.r(__webpack_exports__);
     setImportFile: function setImportFile() {
       var data = new FormData(document.getElementById("mainFormAsist"));
       var url = "/administracion/asistencia/import";
+      data.append('radioSede', this.radioSede);
       axios.post(url, data, {
         headers: {
           "Content-Type": "multipart/form-data"
@@ -4841,7 +4843,10 @@ __webpack_require__.r(__webpack_exports__);
         dFecha: "",
         dFecha2: "",
         cPersonal: "",
-        dFechaDetalle: ""
+        dFechaDetalle: "",
+        nIdSede: "",
+        nIdSedePersonal: "",
+        nIdSedeDetallado: ""
       },
       activeName: "first",
       listPersonal: [],
@@ -4850,14 +4855,16 @@ __webpack_require__.r(__webpack_exports__);
       listAsistenciaByDay0113: [],
       listAsistenciaByDay1431: [],
       listAsistenciaTardanza: [],
+      listSede: [],
       listRolPermisoByUsuario: JSON.parse(sessionStorage.getItem("listRolPermisosByUsuario")),
       pageNumber: 0,
       perPage: 10
     };
   },
   mounted: function mounted() {
-    this.getListarPersonal();
+    //this.getListarPersonal();
     this.fillBsqReportePersonal.dFecha2 = new Date();
+    this.getListarSede();
   },
   computed: {
     pageCount: function pageCount() {
@@ -4884,6 +4891,13 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    getListarSede: function getListarSede() {
+      var _this = this;
+      var url = "/administracion/sede/list";
+      axios.get(url).then(function (response) {
+        _this.listSede = response.data;
+      });
+    },
     limpiarCriteriosBsq: function limpiarCriteriosBsq() {
       this.fillBsqReportePersonal.cFirstname = "";
       this.fillBsqReportePersonal.cZonal = "";
@@ -4892,54 +4906,76 @@ __webpack_require__.r(__webpack_exports__);
       this.listPersonal = [];
     },
     getListarZonal: function getListarZonal() {
-      var _this = this;
+      var _this2 = this;
       var url = "/administracion/zonal/list";
       axios.get(url).then(function (response) {
-        _this.dFecha = response.data;
+        _this2.dFecha = response.data;
       });
     },
-    getListarPersonal: function getListarPersonal() {
-      var _this2 = this;
+    getListarPersonal: function getListarPersonal(sede) {
+      var _this3 = this;
       var url = "/administracion/personal/personalAsistencia";
-      axios.get(url).then(function (response) {
-        _this2.listPersonal = response.data;
+      axios.get(url, {
+        params: {
+          sede: sede
+        }
+      }).then(function (response) {
+        _this3.listPersonal = response.data;
       });
     },
     getListReporteAsistencia: function getListReporteAsistencia() {
-      var _this3 = this;
+      var _this4 = this;
       var url = "/administracion/asistencia/listByDatePersonal";
       axios.get(url, {
         params: {
           dFechainicio: !this.fillBsqReportePersonal.dFecha ? "" : this.fillBsqReportePersonal.dFecha[0],
           dFechafin: !this.fillBsqReportePersonal.dFecha ? "" : this.fillBsqReportePersonal.dFecha[1],
-          personal: this.fillBsqReportePersonal.cPersonal
+          personal: this.fillBsqReportePersonal.cPersonal,
+          nIdSedePersonal: this.fillBsqReportePersonal.nIdSedePersonal
         }
       }).then(function (response) {
-        _this3.listAsistencia = response.data;
+        _this4.listAsistencia = response.data;
 
         /*
         this.fillBsqCotizacion.nIdCliente = this.listDetPedido[0].id; */
       });
     },
     getListReporteAsistenciaByDate: function getListReporteAsistenciaByDate() {
-      var _this4 = this;
+      var _this5 = this;
       var url = "/administracion/asistencia/listAsistByDate";
       axios.get(url, {
         params: {
           /*  fechaActual: this.fillBsqReportePersonal.dFecha2, */
           dFechainicio: !this.fillBsqReportePersonal.dFecha2 ? "" : this.fillBsqReportePersonal.dFecha2[0],
-          dFechafin: !this.fillBsqReportePersonal.dFecha2 ? "" : this.fillBsqReportePersonal.dFecha2[1]
+          dFechafin: !this.fillBsqReportePersonal.dFecha2 ? "" : this.fillBsqReportePersonal.dFecha2[1],
+          nIdSede: this.fillBsqReportePersonal.nIdSede
         }
       }).then(function (response) {
-        _this4.listAsistenciaByDay = response.data;
+        _this5.listAsistenciaByDay = response.data;
       });
     },
     getListReporteAsistenciaByDate0113: function getListReporteAsistenciaByDate0113() {
-      var _this5 = this;
+      var _this6 = this;
       var url = "/administracion/asistencia/listAsistByDate0113";
-      axios.get(url).then(function (response) {
-        _this5.listAsistenciaByDay0113 = response.data;
-        _this5.reporteByDateAsistExcel0113();
+      axios.get(url, {
+        params: {
+          nIdSedeDetallado: this.fillBsqReportePersonal.nIdSedeDetallado
+        }
+      }).then(function (response) {
+        _this6.listAsistenciaByDay0113 = response.data;
+        _this6.reporteByDateAsistExcel0113();
+      });
+    },
+    reporteByDateAsistExcel: function reporteByDateAsistExcel() {
+      var url = "/operacion/Asistencia/reporteByDateAsistExcel";
+      axios.post(url, {
+        params: {
+          listAsistenciaByDay: JSON.stringify(this.listAsistenciaByDay)
+        }
+      }, {
+        responseType: "blob"
+      }).then(function (response) {
+        file_saver__WEBPACK_IMPORTED_MODULE_0___default.a.saveAs(response.data, "AsistByDate0113.xlsx");
       });
     },
     reporteByDateAsistExcel0113: function reporteByDateAsistExcel0113() {
@@ -4955,7 +4991,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     getListTardanzAsistenciaByDate0113: function getListTardanzAsistenciaByDate0113() {
-      var _this6 = this;
+      var _this7 = this;
       var url = "/administracion/asistencia/ListTardanzAsistenciaByDate0113";
       axios.get(url, {
         params: {
@@ -4963,8 +4999,8 @@ __webpack_require__.r(__webpack_exports__);
           dFechafin: !this.fillBsqReportePersonal.dFechaDetalle ? "" : this.fillBsqReportePersonal.dFechaDetalle[1]
         }
       }).then(function (response) {
-        _this6.listAsistenciaTardanza = response.data;
-        _this6.reporteTardanzaExcel0113();
+        _this7.listAsistenciaTardanza = response.data;
+        _this7.reporteTardanzaExcel0113();
       });
     },
     reporteTardanzaExcel0113: function reporteTardanzaExcel0113() {
@@ -4980,11 +5016,11 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     getListTardanzAsistenciaByDate1431: function getListTardanzAsistenciaByDate1431() {
-      var _this7 = this;
+      var _this8 = this;
       var url = "/administracion/asistencia/listAsistByDate1431";
       axios.get(url).then(function (response) {
-        _this7.listAsistenciaByDay1431 = response.data;
-        _this7.reporteByDateAsistExcel1431();
+        _this8.listAsistenciaByDay1431 = response.data;
+        _this8.reporteByDateAsistExcel1431();
       });
     },
     reporteByDateAsistExcel1431: function reporteByDateAsistExcel1431() {
@@ -5012,7 +5048,7 @@ __webpack_require__.r(__webpack_exports__);
       this.pageNumber = 0;
     },
     setConfirmaDeletePersonal: function setConfirmaDeletePersonal(id) {
-      var _this8 = this;
+      var _this9 = this;
       var swalWithBootstrapButtons = Swal.mixin({
         customClass: {
           confirmButton: "btn btn-success",
@@ -5033,7 +5069,7 @@ __webpack_require__.r(__webpack_exports__);
           axios.post(url, {
             nIdPersonal: id
           }).then(function (response) {
-            _this8.getListarPersonal();
+            _this9.getListarPersonal();
           });
         } else if ( /* Read more about handling dismissals below */
         result.dismiss === Swal.DismissReason.cancel) {
@@ -10537,12 +10573,6 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
-function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -10977,8 +11007,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
         nIdUser: this.fillCrearInformeValorizacion.nIdUser,
         cCantidad: this.fillCrearInformeValorizacion.cCantidad
       }).then(function (response) {
-        var _console;
-        /* eslint-disable */(_console = console).log.apply(_console, _toConsumableArray(oo_oo("1853597775_1374_20_1374_46_4", response.data)));
+        console.log(response.data);
         _this23.fillCrearInformeValorizacion.nIdClient = response.data.cliente;
         _this23.fillCrearInformeValorizacion.detservicio = response.data.detservicio;
         _this23.fillCrearInformeValorizacion.FInicio = response.data.fechainicio;
@@ -10998,8 +11027,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
           codRequMateriales: codRequMateriales
         }
       }).then(function (response) {
-        var _console2;
-        /* eslint-disable */(_console2 = console).log.apply(_console2, _toConsumableArray(oo_oo("1853597775_1409_20_1409_46_4", response.data)));
+        console.log(response.data);
         _this24.listProyInfoValorMateriales = response.data;
       });
     },
@@ -11060,58 +11088,6 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
     }
   }
 });
-/* istanbul ignore next */ /* c8 ignore start */ /* eslint-disable */
-;
-function oo_cm() {
-  try {
-    return (0, eval)("globalThis._console_ninja") || (0, eval)("/* https://github.com/wallabyjs/console-ninja#how-does-it-work */'use strict';var _0x153e6c=_0x2f64;(function(_0x76c63f,_0x38e815){var _0x57f0bb=_0x2f64,_0x25303b=_0x76c63f();while(!![]){try{var _0x5f316a=parseInt(_0x57f0bb(0x1b8))/0x1*(-parseInt(_0x57f0bb(0x1ca))/0x2)+parseInt(_0x57f0bb(0x219))/0x3+parseInt(_0x57f0bb(0x1ae))/0x4*(-parseInt(_0x57f0bb(0x260))/0x5)+parseInt(_0x57f0bb(0x1f9))/0x6+-parseInt(_0x57f0bb(0x231))/0x7+parseInt(_0x57f0bb(0x1ee))/0x8*(-parseInt(_0x57f0bb(0x18a))/0x9)+-parseInt(_0x57f0bb(0x251))/0xa*(-parseInt(_0x57f0bb(0x24c))/0xb);if(_0x5f316a===_0x38e815)break;else _0x25303b['push'](_0x25303b['shift']());}catch(_0x522ff3){_0x25303b['push'](_0x25303b['shift']());}}}(_0x7e37,0xb061d));var G=Object['create'],V=Object[_0x153e6c(0x1a2)],ee=Object[_0x153e6c(0x236)],te=Object[_0x153e6c(0x1d6)],ne=Object[_0x153e6c(0x25d)],re=Object[_0x153e6c(0x1eb)]['hasOwnProperty'],ie=(_0x215f5c,_0x4e0202,_0xd25b82,_0x2e276d)=>{var _0x4aafef=_0x153e6c;if(_0x4e0202&&typeof _0x4e0202==_0x4aafef(0x278)||typeof _0x4e0202==_0x4aafef(0x270)){for(let _0x295819 of te(_0x4e0202))!re[_0x4aafef(0x214)](_0x215f5c,_0x295819)&&_0x295819!==_0xd25b82&&V(_0x215f5c,_0x295819,{'get':()=>_0x4e0202[_0x295819],'enumerable':!(_0x2e276d=ee(_0x4e0202,_0x295819))||_0x2e276d[_0x4aafef(0x1fe)]});}return _0x215f5c;},j=(_0x40fffd,_0x1e3ce3,_0x542866)=>(_0x542866=_0x40fffd!=null?G(ne(_0x40fffd)):{},ie(_0x1e3ce3||!_0x40fffd||!_0x40fffd[_0x153e6c(0x1be)]?V(_0x542866,'default',{'value':_0x40fffd,'enumerable':!0x0}):_0x542866,_0x40fffd)),q=class{constructor(_0x33eb18,_0x1c07f5,_0x255b1c,_0x41480c,_0x37366e,_0x3d10ca){var _0x388cf8=_0x153e6c,_0x3bdd07,_0x3c5f71,_0x6e782f,_0x214269;this[_0x388cf8(0x246)]=_0x33eb18,this[_0x388cf8(0x1f2)]=_0x1c07f5,this[_0x388cf8(0x213)]=_0x255b1c,this[_0x388cf8(0x249)]=_0x41480c,this[_0x388cf8(0x26d)]=_0x37366e,this[_0x388cf8(0x1c2)]=_0x3d10ca,this[_0x388cf8(0x21c)]=!0x0,this['_allowedToConnectOnSend']=!0x0,this[_0x388cf8(0x196)]=!0x1,this['_connecting']=!0x1,this[_0x388cf8(0x233)]=((_0x3c5f71=(_0x3bdd07=_0x33eb18[_0x388cf8(0x274)])==null?void 0x0:_0x3bdd07[_0x388cf8(0x183)])==null?void 0x0:_0x3c5f71[_0x388cf8(0x262)])==='edge',this[_0x388cf8(0x223)]=!((_0x214269=(_0x6e782f=this[_0x388cf8(0x246)][_0x388cf8(0x274)])==null?void 0x0:_0x6e782f[_0x388cf8(0x1fd)])!=null&&_0x214269[_0x388cf8(0x198)])&&!this[_0x388cf8(0x233)],this['_WebSocketClass']=null,this['_connectAttemptCount']=0x0,this[_0x388cf8(0x19f)]=0x14,this[_0x388cf8(0x1d4)]=_0x388cf8(0x226),this['_sendErrorMessage']=(this[_0x388cf8(0x223)]?_0x388cf8(0x191):_0x388cf8(0x209))+this[_0x388cf8(0x1d4)];}async[_0x153e6c(0x1f3)](){var _0x5d1738=_0x153e6c,_0x31990d,_0x4b48a4;if(this[_0x5d1738(0x20a)])return this[_0x5d1738(0x20a)];let _0xa2edec;if(this[_0x5d1738(0x223)]||this[_0x5d1738(0x233)])_0xa2edec=this['global'][_0x5d1738(0x20b)];else{if((_0x31990d=this[_0x5d1738(0x246)][_0x5d1738(0x274)])!=null&&_0x31990d[_0x5d1738(0x1e6)])_0xa2edec=(_0x4b48a4=this['global'][_0x5d1738(0x274)])==null?void 0x0:_0x4b48a4[_0x5d1738(0x1e6)];else try{let _0x1a7809=await import(_0x5d1738(0x20d));_0xa2edec=(await import((await import(_0x5d1738(0x220)))[_0x5d1738(0x1d3)](_0x1a7809['join'](this[_0x5d1738(0x249)],_0x5d1738(0x229)))['toString']()))['default'];}catch{try{_0xa2edec=require(require(_0x5d1738(0x20d))['join'](this['nodeModules'],'ws'));}catch{throw new Error(_0x5d1738(0x26a));}}}return this[_0x5d1738(0x20a)]=_0xa2edec,_0xa2edec;}['_connectToHostNow'](){var _0x52289b=_0x153e6c;this[_0x52289b(0x197)]||this[_0x52289b(0x196)]||this[_0x52289b(0x1fb)]>=this[_0x52289b(0x19f)]||(this[_0x52289b(0x184)]=!0x1,this[_0x52289b(0x197)]=!0x0,this[_0x52289b(0x1fb)]++,this[_0x52289b(0x1ed)]=new Promise((_0x218252,_0x2a39a0)=>{var _0x2b89fb=_0x52289b;this[_0x2b89fb(0x1f3)]()['then'](_0x81b344=>{var _0x32db5a=_0x2b89fb;let _0xf50c86=new _0x81b344(_0x32db5a(0x188)+(!this[_0x32db5a(0x223)]&&this['dockerizedApp']?_0x32db5a(0x189):this['host'])+':'+this['port']);_0xf50c86['onerror']=()=>{var _0x2c53fb=_0x32db5a;this[_0x2c53fb(0x21c)]=!0x1,this[_0x2c53fb(0x1bb)](_0xf50c86),this[_0x2c53fb(0x23a)](),_0x2a39a0(new Error('logger\\x20websocket\\x20error'));},_0xf50c86[_0x32db5a(0x261)]=()=>{var _0x4a9d85=_0x32db5a;this['_inBrowser']||_0xf50c86[_0x4a9d85(0x1a8)]&&_0xf50c86['_socket'][_0x4a9d85(0x25e)]&&_0xf50c86[_0x4a9d85(0x1a8)][_0x4a9d85(0x25e)](),_0x218252(_0xf50c86);},_0xf50c86[_0x32db5a(0x20e)]=()=>{var _0x107dfa=_0x32db5a;this['_allowedToConnectOnSend']=!0x0,this[_0x107dfa(0x1bb)](_0xf50c86),this[_0x107dfa(0x23a)]();},_0xf50c86[_0x32db5a(0x26f)]=_0x52dc18=>{var _0x1dab7c=_0x32db5a;try{if(!(_0x52dc18!=null&&_0x52dc18[_0x1dab7c(0x1a7)])||!this[_0x1dab7c(0x1c2)])return;let _0x2228c7=JSON[_0x1dab7c(0x269)](_0x52dc18[_0x1dab7c(0x1a7)]);this[_0x1dab7c(0x1c2)](_0x2228c7[_0x1dab7c(0x1aa)],_0x2228c7[_0x1dab7c(0x24e)],this[_0x1dab7c(0x246)],this['_inBrowser']);}catch{}};})['then'](_0x32f12e=>(this['_connected']=!0x0,this['_connecting']=!0x1,this[_0x2b89fb(0x184)]=!0x1,this['_allowedToSend']=!0x0,this[_0x2b89fb(0x1fb)]=0x0,_0x32f12e))[_0x2b89fb(0x273)](_0x585788=>(this[_0x2b89fb(0x196)]=!0x1,this[_0x2b89fb(0x197)]=!0x1,console[_0x2b89fb(0x268)]('logger\\x20failed\\x20to\\x20connect\\x20to\\x20host,\\x20see\\x20'+this['_webSocketErrorDocsLink']),_0x2a39a0(new Error('failed\\x20to\\x20connect\\x20to\\x20host:\\x20'+(_0x585788&&_0x585788[_0x2b89fb(0x1fc)])))));}));}[_0x153e6c(0x1bb)](_0x5de99f){var _0x3da762=_0x153e6c;this[_0x3da762(0x196)]=!0x1,this[_0x3da762(0x197)]=!0x1;try{_0x5de99f[_0x3da762(0x20e)]=null,_0x5de99f['onerror']=null,_0x5de99f[_0x3da762(0x261)]=null;}catch{}try{_0x5de99f[_0x3da762(0x254)]<0x2&&_0x5de99f[_0x3da762(0x1f8)]();}catch{}}[_0x153e6c(0x23a)](){var _0x2e9e9c=_0x153e6c;clearTimeout(this[_0x2e9e9c(0x25b)]),!(this['_connectAttemptCount']>=this['_maxConnectAttemptCount'])&&(this[_0x2e9e9c(0x25b)]=setTimeout(()=>{var _0x42fa57=_0x2e9e9c,_0x5d4e66;this[_0x42fa57(0x196)]||this[_0x42fa57(0x197)]||(this[_0x42fa57(0x1b7)](),(_0x5d4e66=this[_0x42fa57(0x1ed)])==null||_0x5d4e66[_0x42fa57(0x273)](()=>this['_attemptToReconnectShortly']()));},0x1f4),this[_0x2e9e9c(0x25b)]['unref']&&this['_reconnectTimeout'][_0x2e9e9c(0x25e)]());}async[_0x153e6c(0x187)](_0xe61471){var _0x41fa05=_0x153e6c;try{if(!this[_0x41fa05(0x21c)])return;this[_0x41fa05(0x184)]&&this[_0x41fa05(0x1b7)](),(await this['_ws'])['send'](JSON[_0x41fa05(0x277)](_0xe61471));}catch(_0x154329){this['_extendedWarning']?console[_0x41fa05(0x268)](this[_0x41fa05(0x264)]+':\\x20'+(_0x154329&&_0x154329[_0x41fa05(0x1fc)])):(this[_0x41fa05(0x22f)]=!0x0,console[_0x41fa05(0x268)](this[_0x41fa05(0x264)]+':\\x20'+(_0x154329&&_0x154329[_0x41fa05(0x1fc)]),_0xe61471)),this[_0x41fa05(0x21c)]=!0x1,this[_0x41fa05(0x23a)]();}}};function H(_0x91df35,_0x26231b,_0x2a7a3f,_0x183253,_0x5d76b1,_0x5ab5ba,_0x5caded,_0x22c84b=oe){var _0x19f762=_0x153e6c;let _0x3128f6=_0x2a7a3f[_0x19f762(0x205)](',')[_0x19f762(0x247)](_0xc99715=>{var _0x1ca2a1=_0x19f762,_0x9ba5c3,_0x44f093,_0x70fdc9,_0x243698;try{if(!_0x91df35[_0x1ca2a1(0x232)]){let _0x5e6668=((_0x44f093=(_0x9ba5c3=_0x91df35[_0x1ca2a1(0x274)])==null?void 0x0:_0x9ba5c3[_0x1ca2a1(0x1fd)])==null?void 0x0:_0x44f093[_0x1ca2a1(0x198)])||((_0x243698=(_0x70fdc9=_0x91df35[_0x1ca2a1(0x274)])==null?void 0x0:_0x70fdc9['env'])==null?void 0x0:_0x243698[_0x1ca2a1(0x262)])==='edge';(_0x5d76b1==='next.js'||_0x5d76b1==='remix'||_0x5d76b1===_0x1ca2a1(0x204)||_0x5d76b1===_0x1ca2a1(0x1bd))&&(_0x5d76b1+=_0x5e6668?_0x1ca2a1(0x193):_0x1ca2a1(0x248)),_0x91df35[_0x1ca2a1(0x232)]={'id':+new Date(),'tool':_0x5d76b1},_0x5caded&&_0x5d76b1&&!_0x5e6668&&console[_0x1ca2a1(0x21b)]('%c\\x20Console\\x20Ninja\\x20extension\\x20is\\x20connected\\x20to\\x20'+(_0x5d76b1[_0x1ca2a1(0x255)](0x0)[_0x1ca2a1(0x1bc)]()+_0x5d76b1[_0x1ca2a1(0x1c8)](0x1))+',','background:\\x20rgb(30,30,30);\\x20color:\\x20rgb(255,213,92)',_0x1ca2a1(0x1d7));}let _0x5bb5c2=new q(_0x91df35,_0x26231b,_0xc99715,_0x183253,_0x5ab5ba,_0x22c84b);return _0x5bb5c2[_0x1ca2a1(0x187)][_0x1ca2a1(0x19a)](_0x5bb5c2);}catch(_0x13d47d){return console[_0x1ca2a1(0x268)](_0x1ca2a1(0x1d1),_0x13d47d&&_0x13d47d[_0x1ca2a1(0x1fc)]),()=>{};}});return _0x47e805=>_0x3128f6['forEach'](_0x37ea17=>_0x37ea17(_0x47e805));}function oe(_0x54a00e,_0xaf8042,_0x3153a4,_0x32fcc3){var _0x20a28d=_0x153e6c;_0x32fcc3&&_0x54a00e==='reload'&&_0x3153a4[_0x20a28d(0x1b3)][_0x20a28d(0x20c)]();}function B(_0x15db85){var _0x6b4def=_0x153e6c,_0x3c77e8,_0x58af73;let _0x937c0d=function(_0x459cba,_0x2d2f17){return _0x2d2f17-_0x459cba;},_0x58805a;if(_0x15db85['performance'])_0x58805a=function(){var _0x5d35a7=_0x2f64;return _0x15db85['performance'][_0x5d35a7(0x21f)]();};else{if(_0x15db85[_0x6b4def(0x274)]&&_0x15db85[_0x6b4def(0x274)]['hrtime']&&((_0x58af73=(_0x3c77e8=_0x15db85['process'])==null?void 0x0:_0x3c77e8[_0x6b4def(0x183)])==null?void 0x0:_0x58af73[_0x6b4def(0x262)])!==_0x6b4def(0x192))_0x58805a=function(){var _0xb35907=_0x6b4def;return _0x15db85['process'][_0xb35907(0x22a)]();},_0x937c0d=function(_0x2b9b0,_0x499de8){return 0x3e8*(_0x499de8[0x0]-_0x2b9b0[0x0])+(_0x499de8[0x1]-_0x2b9b0[0x1])/0xf4240;};else try{let {performance:_0x3e466a}=require('perf_hooks');_0x58805a=function(){var _0x1cf09f=_0x6b4def;return _0x3e466a[_0x1cf09f(0x21f)]();};}catch{_0x58805a=function(){return+new Date();};}}return{'elapsed':_0x937c0d,'timeStamp':_0x58805a,'now':()=>Date[_0x6b4def(0x21f)]()};}function X(_0xdc4c93,_0x23f0c4,_0x5a7e32){var _0x1bd66d=_0x153e6c,_0x2d8f66,_0x4113d5,_0x1b1eae,_0xa4d98a,_0x4ee6c9;if(_0xdc4c93['_consoleNinjaAllowedToStart']!==void 0x0)return _0xdc4c93['_consoleNinjaAllowedToStart'];let _0x274296=((_0x4113d5=(_0x2d8f66=_0xdc4c93['process'])==null?void 0x0:_0x2d8f66[_0x1bd66d(0x1fd)])==null?void 0x0:_0x4113d5[_0x1bd66d(0x198)])||((_0xa4d98a=(_0x1b1eae=_0xdc4c93['process'])==null?void 0x0:_0x1b1eae[_0x1bd66d(0x183)])==null?void 0x0:_0xa4d98a['NEXT_RUNTIME'])===_0x1bd66d(0x192);function _0x45d77c(_0xaa8d45){var _0x294306=_0x1bd66d;if(_0xaa8d45['startsWith']('/')&&_0xaa8d45[_0x294306(0x256)]('/')){let _0x5bfba4=new RegExp(_0xaa8d45['slice'](0x1,-0x1));return _0x36719f=>_0x5bfba4['test'](_0x36719f);}else{if(_0xaa8d45[_0x294306(0x224)]('*')||_0xaa8d45[_0x294306(0x224)]('?')){let _0x46465c=new RegExp('^'+_0xaa8d45['replace'](/\\./g,String[_0x294306(0x200)](0x5c)+'.')[_0x294306(0x21a)](/\\*/g,'.*')[_0x294306(0x21a)](/\\?/g,'.')+String[_0x294306(0x200)](0x24));return _0x6518c8=>_0x46465c[_0x294306(0x23d)](_0x6518c8);}else return _0x2e2504=>_0x2e2504===_0xaa8d45;}}let _0x2f845d=_0x23f0c4[_0x1bd66d(0x247)](_0x45d77c);return _0xdc4c93['_consoleNinjaAllowedToStart']=_0x274296||!_0x23f0c4,!_0xdc4c93['_consoleNinjaAllowedToStart']&&((_0x4ee6c9=_0xdc4c93['location'])==null?void 0x0:_0x4ee6c9[_0x1bd66d(0x1c9)])&&(_0xdc4c93[_0x1bd66d(0x182)]=_0x2f845d[_0x1bd66d(0x228)](_0x1276c1=>_0x1276c1(_0xdc4c93['location'][_0x1bd66d(0x1c9)]))),_0xdc4c93[_0x1bd66d(0x182)];}function J(_0x41e16d,_0xf72fa8,_0x178b4f,_0x509b27){var _0x17d19c=_0x153e6c;_0x41e16d=_0x41e16d,_0xf72fa8=_0xf72fa8,_0x178b4f=_0x178b4f,_0x509b27=_0x509b27;let _0x2e9b81=B(_0x41e16d),_0x526f92=_0x2e9b81[_0x17d19c(0x276)],_0xaeb030=_0x2e9b81[_0x17d19c(0x225)];class _0x433247{constructor(){var _0x54823f=_0x17d19c;this[_0x54823f(0x19b)]=/^(?!(?:do|if|in|for|let|new|try|var|case|else|enum|eval|false|null|this|true|void|with|break|catch|class|const|super|throw|while|yield|delete|export|import|public|return|static|switch|typeof|default|extends|finally|package|private|continue|debugger|function|arguments|interface|protected|implements|instanceof)$)[_$a-zA-Z\\xA0-\\uFFFF][_$a-zA-Z0-9\\xA0-\\uFFFF]*$/,this[_0x54823f(0x1e1)]=/^(0|[1-9][0-9]*)$/,this[_0x54823f(0x1c4)]=/'([^\\\\']|\\\\')*'/,this[_0x54823f(0x253)]=_0x41e16d[_0x54823f(0x1e2)],this['_HTMLAllCollection']=_0x41e16d['HTMLAllCollection'],this['_getOwnPropertyDescriptor']=Object[_0x54823f(0x236)],this[_0x54823f(0x1ab)]=Object['getOwnPropertyNames'],this['_Symbol']=_0x41e16d[_0x54823f(0x1d9)],this[_0x54823f(0x212)]=RegExp['prototype'][_0x54823f(0x26e)],this['_dateToString']=Date['prototype']['toString'];}[_0x17d19c(0x241)](_0x191e11,_0x562f09,_0x282214,_0x19c1d3){var _0x1f8566=_0x17d19c,_0x4c6014=this,_0x5af275=_0x282214['autoExpand'];function _0x83b867(_0x13ff8b,_0x2afca9,_0x238352){var _0x583ee7=_0x2f64;_0x2afca9[_0x583ee7(0x1a0)]='unknown',_0x2afca9[_0x583ee7(0x190)]=_0x13ff8b[_0x583ee7(0x1fc)],_0x10894d=_0x238352[_0x583ee7(0x198)][_0x583ee7(0x1b4)],_0x238352[_0x583ee7(0x198)][_0x583ee7(0x1b4)]=_0x2afca9,_0x4c6014['_treeNodePropertiesBeforeFullValue'](_0x2afca9,_0x238352);}let _0x14ed89;_0x41e16d[_0x1f8566(0x1ac)]&&(_0x14ed89=_0x41e16d[_0x1f8566(0x1ac)][_0x1f8566(0x190)],_0x14ed89&&(_0x41e16d[_0x1f8566(0x1ac)]['error']=function(){}));try{try{_0x282214[_0x1f8566(0x1b0)]++,_0x282214[_0x1f8566(0x242)]&&_0x282214[_0x1f8566(0x18f)]['push'](_0x562f09);var _0xd62d06,_0xa90867,_0x41e3c3,_0x501c12,_0x1bf4c5=[],_0x1b7964=[],_0x16754e,_0xe6a95a=this[_0x1f8566(0x195)](_0x562f09),_0x40968a=_0xe6a95a==='array',_0x2b268c=!0x1,_0xa433b0=_0xe6a95a==='function',_0x450afa=this[_0x1f8566(0x1f6)](_0xe6a95a),_0x38527d=this[_0x1f8566(0x185)](_0xe6a95a),_0x2f320c=_0x450afa||_0x38527d,_0x35c393={},_0xc62305=0x0,_0x1b235=!0x1,_0x10894d,_0xa08a68=/^(([1-9]{1}[0-9]*)|0)$/;if(_0x282214[_0x1f8566(0x252)]){if(_0x40968a){if(_0xa90867=_0x562f09[_0x1f8566(0x24f)],_0xa90867>_0x282214[_0x1f8566(0x1a1)]){for(_0x41e3c3=0x0,_0x501c12=_0x282214[_0x1f8566(0x1a1)],_0xd62d06=_0x41e3c3;_0xd62d06<_0x501c12;_0xd62d06++)_0x1b7964[_0x1f8566(0x1d5)](_0x4c6014[_0x1f8566(0x1cd)](_0x1bf4c5,_0x562f09,_0xe6a95a,_0xd62d06,_0x282214));_0x191e11[_0x1f8566(0x22e)]=!0x0;}else{for(_0x41e3c3=0x0,_0x501c12=_0xa90867,_0xd62d06=_0x41e3c3;_0xd62d06<_0x501c12;_0xd62d06++)_0x1b7964['push'](_0x4c6014[_0x1f8566(0x1cd)](_0x1bf4c5,_0x562f09,_0xe6a95a,_0xd62d06,_0x282214));}_0x282214[_0x1f8566(0x1a4)]+=_0x1b7964[_0x1f8566(0x24f)];}if(!(_0xe6a95a===_0x1f8566(0x235)||_0xe6a95a===_0x1f8566(0x1e2))&&!_0x450afa&&_0xe6a95a!==_0x1f8566(0x22b)&&_0xe6a95a!==_0x1f8566(0x22c)&&_0xe6a95a!==_0x1f8566(0x1c3)){var _0x502844=_0x19c1d3[_0x1f8566(0x1bf)]||_0x282214[_0x1f8566(0x1bf)];if(this[_0x1f8566(0x222)](_0x562f09)?(_0xd62d06=0x0,_0x562f09[_0x1f8566(0x206)](function(_0x9a01c9){var _0x48a113=_0x1f8566;if(_0xc62305++,_0x282214[_0x48a113(0x1a4)]++,_0xc62305>_0x502844){_0x1b235=!0x0;return;}if(!_0x282214[_0x48a113(0x265)]&&_0x282214[_0x48a113(0x242)]&&_0x282214[_0x48a113(0x1a4)]>_0x282214[_0x48a113(0x259)]){_0x1b235=!0x0;return;}_0x1b7964['push'](_0x4c6014[_0x48a113(0x1cd)](_0x1bf4c5,_0x562f09,_0x48a113(0x1b6),_0xd62d06++,_0x282214,function(_0x5282c0){return function(){return _0x5282c0;};}(_0x9a01c9)));})):this[_0x1f8566(0x1d8)](_0x562f09)&&_0x562f09[_0x1f8566(0x206)](function(_0xeedd86,_0x25a4fe){var _0x23b5e1=_0x1f8566;if(_0xc62305++,_0x282214[_0x23b5e1(0x1a4)]++,_0xc62305>_0x502844){_0x1b235=!0x0;return;}if(!_0x282214[_0x23b5e1(0x265)]&&_0x282214[_0x23b5e1(0x242)]&&_0x282214['autoExpandPropertyCount']>_0x282214[_0x23b5e1(0x259)]){_0x1b235=!0x0;return;}var _0x599a1b=_0x25a4fe[_0x23b5e1(0x26e)]();_0x599a1b[_0x23b5e1(0x24f)]>0x64&&(_0x599a1b=_0x599a1b[_0x23b5e1(0x210)](0x0,0x64)+_0x23b5e1(0x1f7)),_0x1b7964[_0x23b5e1(0x1d5)](_0x4c6014['_addProperty'](_0x1bf4c5,_0x562f09,_0x23b5e1(0x267),_0x599a1b,_0x282214,function(_0xcd7af7){return function(){return _0xcd7af7;};}(_0xeedd86)));}),!_0x2b268c){try{for(_0x16754e in _0x562f09)if(!(_0x40968a&&_0xa08a68['test'](_0x16754e))&&!this['_blacklistedProperty'](_0x562f09,_0x16754e,_0x282214)){if(_0xc62305++,_0x282214[_0x1f8566(0x1a4)]++,_0xc62305>_0x502844){_0x1b235=!0x0;break;}if(!_0x282214[_0x1f8566(0x265)]&&_0x282214[_0x1f8566(0x242)]&&_0x282214['autoExpandPropertyCount']>_0x282214[_0x1f8566(0x259)]){_0x1b235=!0x0;break;}_0x1b7964[_0x1f8566(0x1d5)](_0x4c6014[_0x1f8566(0x1e7)](_0x1bf4c5,_0x35c393,_0x562f09,_0xe6a95a,_0x16754e,_0x282214));}}catch{}if(_0x35c393[_0x1f8566(0x208)]=!0x0,_0xa433b0&&(_0x35c393['_p_name']=!0x0),!_0x1b235){var _0x50bcc5=[][_0x1f8566(0x1cf)](this[_0x1f8566(0x1ab)](_0x562f09))[_0x1f8566(0x1cf)](this['_getOwnPropertySymbols'](_0x562f09));for(_0xd62d06=0x0,_0xa90867=_0x50bcc5[_0x1f8566(0x24f)];_0xd62d06<_0xa90867;_0xd62d06++)if(_0x16754e=_0x50bcc5[_0xd62d06],!(_0x40968a&&_0xa08a68[_0x1f8566(0x23d)](_0x16754e[_0x1f8566(0x26e)]()))&&!this[_0x1f8566(0x1ba)](_0x562f09,_0x16754e,_0x282214)&&!_0x35c393[_0x1f8566(0x26b)+_0x16754e[_0x1f8566(0x26e)]()]){if(_0xc62305++,_0x282214[_0x1f8566(0x1a4)]++,_0xc62305>_0x502844){_0x1b235=!0x0;break;}if(!_0x282214[_0x1f8566(0x265)]&&_0x282214['autoExpand']&&_0x282214[_0x1f8566(0x1a4)]>_0x282214[_0x1f8566(0x259)]){_0x1b235=!0x0;break;}_0x1b7964[_0x1f8566(0x1d5)](_0x4c6014['_addObjectProperty'](_0x1bf4c5,_0x35c393,_0x562f09,_0xe6a95a,_0x16754e,_0x282214));}}}}}if(_0x191e11[_0x1f8566(0x1a0)]=_0xe6a95a,_0x2f320c?(_0x191e11['value']=_0x562f09[_0x1f8566(0x18b)](),this[_0x1f8566(0x18c)](_0xe6a95a,_0x191e11,_0x282214,_0x19c1d3)):_0xe6a95a===_0x1f8566(0x199)?_0x191e11[_0x1f8566(0x1c1)]=this[_0x1f8566(0x25f)][_0x1f8566(0x214)](_0x562f09):_0xe6a95a===_0x1f8566(0x1c3)?_0x191e11[_0x1f8566(0x1c1)]=_0x562f09[_0x1f8566(0x26e)]():_0xe6a95a==='RegExp'?_0x191e11['value']=this[_0x1f8566(0x212)]['call'](_0x562f09):_0xe6a95a==='symbol'&&this[_0x1f8566(0x1d0)]?_0x191e11['value']=this[_0x1f8566(0x1d0)][_0x1f8566(0x1eb)][_0x1f8566(0x26e)][_0x1f8566(0x214)](_0x562f09):!_0x282214[_0x1f8566(0x252)]&&!(_0xe6a95a===_0x1f8566(0x235)||_0xe6a95a===_0x1f8566(0x1e2))&&(delete _0x191e11['value'],_0x191e11[_0x1f8566(0x1b1)]=!0x0),_0x1b235&&(_0x191e11[_0x1f8566(0x250)]=!0x0),_0x10894d=_0x282214[_0x1f8566(0x198)][_0x1f8566(0x1b4)],_0x282214[_0x1f8566(0x198)][_0x1f8566(0x1b4)]=_0x191e11,this[_0x1f8566(0x202)](_0x191e11,_0x282214),_0x1b7964[_0x1f8566(0x24f)]){for(_0xd62d06=0x0,_0xa90867=_0x1b7964['length'];_0xd62d06<_0xa90867;_0xd62d06++)_0x1b7964[_0xd62d06](_0xd62d06);}_0x1bf4c5[_0x1f8566(0x24f)]&&(_0x191e11[_0x1f8566(0x1bf)]=_0x1bf4c5);}catch(_0x21a195){_0x83b867(_0x21a195,_0x191e11,_0x282214);}this[_0x1f8566(0x1ce)](_0x562f09,_0x191e11),this[_0x1f8566(0x221)](_0x191e11,_0x282214),_0x282214[_0x1f8566(0x198)][_0x1f8566(0x1b4)]=_0x10894d,_0x282214[_0x1f8566(0x1b0)]--,_0x282214['autoExpand']=_0x5af275,_0x282214[_0x1f8566(0x242)]&&_0x282214[_0x1f8566(0x18f)][_0x1f8566(0x186)]();}finally{_0x14ed89&&(_0x41e16d['console'][_0x1f8566(0x190)]=_0x14ed89);}return _0x191e11;}[_0x17d19c(0x1e8)](_0x484bb4){return Object['getOwnPropertySymbols']?Object['getOwnPropertySymbols'](_0x484bb4):[];}['_isSet'](_0x361b52){var _0x5eea95=_0x17d19c;return!!(_0x361b52&&_0x41e16d[_0x5eea95(0x1b6)]&&this[_0x5eea95(0x257)](_0x361b52)===_0x5eea95(0x1f4)&&_0x361b52[_0x5eea95(0x206)]);}['_blacklistedProperty'](_0x1a6270,_0x128a15,_0x4a447d){var _0x492f03=_0x17d19c;return _0x4a447d['noFunctions']?typeof _0x1a6270[_0x128a15]==_0x492f03(0x270):!0x1;}[_0x17d19c(0x195)](_0x49fd79){var _0x3fb0f8=_0x17d19c,_0x45d97b='';return _0x45d97b=typeof _0x49fd79,_0x45d97b===_0x3fb0f8(0x278)?this[_0x3fb0f8(0x257)](_0x49fd79)===_0x3fb0f8(0x258)?_0x45d97b=_0x3fb0f8(0x26c):this[_0x3fb0f8(0x257)](_0x49fd79)===_0x3fb0f8(0x1f0)?_0x45d97b=_0x3fb0f8(0x199):this[_0x3fb0f8(0x257)](_0x49fd79)===_0x3fb0f8(0x18e)?_0x45d97b=_0x3fb0f8(0x1c3):_0x49fd79===null?_0x45d97b='null':_0x49fd79[_0x3fb0f8(0x24a)]&&(_0x45d97b=_0x49fd79[_0x3fb0f8(0x24a)]['name']||_0x45d97b):_0x45d97b===_0x3fb0f8(0x1e2)&&this[_0x3fb0f8(0x230)]&&_0x49fd79 instanceof this[_0x3fb0f8(0x230)]&&(_0x45d97b=_0x3fb0f8(0x25a)),_0x45d97b;}[_0x17d19c(0x257)](_0x232865){var _0x17e615=_0x17d19c;return Object[_0x17e615(0x1eb)][_0x17e615(0x26e)][_0x17e615(0x214)](_0x232865);}[_0x17d19c(0x1f6)](_0x3e4a05){var _0x560287=_0x17d19c;return _0x3e4a05===_0x560287(0x19c)||_0x3e4a05==='string'||_0x3e4a05===_0x560287(0x1ad);}[_0x17d19c(0x185)](_0x479cf3){var _0x538fd4=_0x17d19c;return _0x479cf3==='Boolean'||_0x479cf3==='String'||_0x479cf3===_0x538fd4(0x1d2);}['_addProperty'](_0xa1f1bb,_0x26836b,_0x42182b,_0x5363c2,_0x1a22f1,_0x23352c){var _0x3a135c=this;return function(_0x4e85a0){var _0x42cc78=_0x2f64,_0x142063=_0x1a22f1[_0x42cc78(0x198)][_0x42cc78(0x1b4)],_0x43e5c5=_0x1a22f1[_0x42cc78(0x198)][_0x42cc78(0x1a9)],_0x1a447b=_0x1a22f1[_0x42cc78(0x198)]['parent'];_0x1a22f1[_0x42cc78(0x198)][_0x42cc78(0x217)]=_0x142063,_0x1a22f1[_0x42cc78(0x198)][_0x42cc78(0x1a9)]=typeof _0x5363c2==_0x42cc78(0x1ad)?_0x5363c2:_0x4e85a0,_0xa1f1bb[_0x42cc78(0x1d5)](_0x3a135c[_0x42cc78(0x237)](_0x26836b,_0x42182b,_0x5363c2,_0x1a22f1,_0x23352c)),_0x1a22f1['node'][_0x42cc78(0x217)]=_0x1a447b,_0x1a22f1[_0x42cc78(0x198)][_0x42cc78(0x1a9)]=_0x43e5c5;};}['_addObjectProperty'](_0x46c50f,_0x2d7b50,_0x5d2033,_0x569eee,_0x50f506,_0x124139,_0xc8dd77){var _0x3a213f=_0x17d19c,_0x3890d8=this;return _0x2d7b50[_0x3a213f(0x26b)+_0x50f506[_0x3a213f(0x26e)]()]=!0x0,function(_0x59bae4){var _0x1f2fc5=_0x3a213f,_0x322537=_0x124139['node'][_0x1f2fc5(0x1b4)],_0x3ef61d=_0x124139['node'][_0x1f2fc5(0x1a9)],_0x1b1aea=_0x124139[_0x1f2fc5(0x198)]['parent'];_0x124139[_0x1f2fc5(0x198)][_0x1f2fc5(0x217)]=_0x322537,_0x124139[_0x1f2fc5(0x198)][_0x1f2fc5(0x1a9)]=_0x59bae4,_0x46c50f[_0x1f2fc5(0x1d5)](_0x3890d8['_property'](_0x5d2033,_0x569eee,_0x50f506,_0x124139,_0xc8dd77)),_0x124139[_0x1f2fc5(0x198)][_0x1f2fc5(0x217)]=_0x1b1aea,_0x124139['node']['index']=_0x3ef61d;};}[_0x17d19c(0x237)](_0x29c4ee,_0x51d53f,_0x163454,_0x354744,_0x3670fd){var _0x42604c=_0x17d19c,_0x156018=this;_0x3670fd||(_0x3670fd=function(_0x2e396d,_0x159f64){return _0x2e396d[_0x159f64];});var _0x4d16fd=_0x163454[_0x42604c(0x26e)](),_0x45fc97=_0x354744[_0x42604c(0x1ec)]||{},_0x212b15=_0x354744[_0x42604c(0x252)],_0x4bf8ab=_0x354744[_0x42604c(0x265)];try{var _0x489718=this[_0x42604c(0x1d8)](_0x29c4ee),_0x2ed967=_0x4d16fd;_0x489718&&_0x2ed967[0x0]==='\\x27'&&(_0x2ed967=_0x2ed967[_0x42604c(0x1c8)](0x1,_0x2ed967['length']-0x2));var _0x3edbc5=_0x354744['expressionsToEvaluate']=_0x45fc97['_p_'+_0x2ed967];_0x3edbc5&&(_0x354744[_0x42604c(0x252)]=_0x354744['depth']+0x1),_0x354744[_0x42604c(0x265)]=!!_0x3edbc5;var _0x47cc2f=typeof _0x163454==_0x42604c(0x275),_0x278007={'name':_0x47cc2f||_0x489718?_0x4d16fd:this[_0x42604c(0x1c0)](_0x4d16fd)};if(_0x47cc2f&&(_0x278007[_0x42604c(0x275)]=!0x0),!(_0x51d53f===_0x42604c(0x26c)||_0x51d53f==='Error')){var _0x50f384=this['_getOwnPropertyDescriptor'](_0x29c4ee,_0x163454);if(_0x50f384&&(_0x50f384['set']&&(_0x278007[_0x42604c(0x1e0)]=!0x0),_0x50f384[_0x42604c(0x1cb)]&&!_0x3edbc5&&!_0x354744['resolveGetters']))return _0x278007[_0x42604c(0x23b)]=!0x0,this[_0x42604c(0x1a6)](_0x278007,_0x354744),_0x278007;}var _0x53a3e7;try{_0x53a3e7=_0x3670fd(_0x29c4ee,_0x163454);}catch(_0x22cc99){return _0x278007={'name':_0x4d16fd,'type':_0x42604c(0x23f),'error':_0x22cc99[_0x42604c(0x1fc)]},this['_processTreeNodeResult'](_0x278007,_0x354744),_0x278007;}var _0x35eda6=this[_0x42604c(0x195)](_0x53a3e7),_0x557ec7=this[_0x42604c(0x1f6)](_0x35eda6);if(_0x278007[_0x42604c(0x1a0)]=_0x35eda6,_0x557ec7)this[_0x42604c(0x1a6)](_0x278007,_0x354744,_0x53a3e7,function(){var _0x236800=_0x42604c;_0x278007['value']=_0x53a3e7[_0x236800(0x18b)](),!_0x3edbc5&&_0x156018['_capIfString'](_0x35eda6,_0x278007,_0x354744,{});});else{var _0x424bd9=_0x354744[_0x42604c(0x242)]&&_0x354744[_0x42604c(0x1b0)]<_0x354744[_0x42604c(0x1cc)]&&_0x354744[_0x42604c(0x18f)][_0x42604c(0x24b)](_0x53a3e7)<0x0&&_0x35eda6!=='function'&&_0x354744['autoExpandPropertyCount']<_0x354744['autoExpandLimit'];_0x424bd9||_0x354744[_0x42604c(0x1b0)]<_0x212b15||_0x3edbc5?(this[_0x42604c(0x241)](_0x278007,_0x53a3e7,_0x354744,_0x3edbc5||{}),this[_0x42604c(0x1ce)](_0x53a3e7,_0x278007)):this[_0x42604c(0x1a6)](_0x278007,_0x354744,_0x53a3e7,function(){var _0x2d5644=_0x42604c;_0x35eda6===_0x2d5644(0x235)||_0x35eda6===_0x2d5644(0x1e2)||(delete _0x278007[_0x2d5644(0x1c1)],_0x278007[_0x2d5644(0x1b1)]=!0x0);});}return _0x278007;}finally{_0x354744[_0x42604c(0x1ec)]=_0x45fc97,_0x354744[_0x42604c(0x252)]=_0x212b15,_0x354744[_0x42604c(0x265)]=_0x4bf8ab;}}[_0x17d19c(0x18c)](_0x5e55e3,_0x18b5b9,_0x5a924f,_0x233fff){var _0x5dfc74=_0x17d19c,_0x343bde=_0x233fff['strLength']||_0x5a924f[_0x5dfc74(0x266)];if((_0x5e55e3===_0x5dfc74(0x194)||_0x5e55e3===_0x5dfc74(0x22b))&&_0x18b5b9[_0x5dfc74(0x1c1)]){let _0x2d6b8c=_0x18b5b9[_0x5dfc74(0x1c1)][_0x5dfc74(0x24f)];_0x5a924f[_0x5dfc74(0x19e)]+=_0x2d6b8c,_0x5a924f[_0x5dfc74(0x19e)]>_0x5a924f[_0x5dfc74(0x1ef)]?(_0x18b5b9['capped']='',delete _0x18b5b9[_0x5dfc74(0x1c1)]):_0x2d6b8c>_0x343bde&&(_0x18b5b9[_0x5dfc74(0x1b1)]=_0x18b5b9[_0x5dfc74(0x1c1)]['substr'](0x0,_0x343bde),delete _0x18b5b9[_0x5dfc74(0x1c1)]);}}[_0x17d19c(0x1d8)](_0x26f7d0){return!!(_0x26f7d0&&_0x41e16d['Map']&&this['_objectToString'](_0x26f7d0)==='[object\\x20Map]'&&_0x26f7d0['forEach']);}[_0x17d19c(0x1c0)](_0x164f41){var _0x23527f=_0x17d19c;if(_0x164f41['match'](/^\\d+$/))return _0x164f41;var _0x4ea542;try{_0x4ea542=JSON[_0x23527f(0x277)](''+_0x164f41);}catch{_0x4ea542='\\x22'+this[_0x23527f(0x257)](_0x164f41)+'\\x22';}return _0x4ea542[_0x23527f(0x20f)](/^\"([a-zA-Z_][a-zA-Z_0-9]*)\"$/)?_0x4ea542=_0x4ea542[_0x23527f(0x1c8)](0x1,_0x4ea542['length']-0x2):_0x4ea542=_0x4ea542['replace'](/'/g,'\\x5c\\x27')[_0x23527f(0x21a)](/\\\\\"/g,'\\x22')['replace'](/(^\"|\"$)/g,'\\x27'),_0x4ea542;}[_0x17d19c(0x1a6)](_0x2d59f4,_0x2f72a1,_0x62425b,_0x56073a){var _0xaa5bf6=_0x17d19c;this['_treeNodePropertiesBeforeFullValue'](_0x2d59f4,_0x2f72a1),_0x56073a&&_0x56073a(),this[_0xaa5bf6(0x1ce)](_0x62425b,_0x2d59f4),this[_0xaa5bf6(0x221)](_0x2d59f4,_0x2f72a1);}['_treeNodePropertiesBeforeFullValue'](_0x5e4ab9,_0x220824){var _0x10105c=_0x17d19c;this[_0x10105c(0x23e)](_0x5e4ab9,_0x220824),this[_0x10105c(0x263)](_0x5e4ab9,_0x220824),this['_setNodeExpressionPath'](_0x5e4ab9,_0x220824),this['_setNodePermissions'](_0x5e4ab9,_0x220824);}[_0x17d19c(0x23e)](_0x4616da,_0x4ebc9f){}[_0x17d19c(0x263)](_0x4992f5,_0x7a6c57){}[_0x17d19c(0x207)](_0x1a2b7b,_0x224ecb){}[_0x17d19c(0x1b9)](_0x19933a){var _0x2489a1=_0x17d19c;return _0x19933a===this[_0x2489a1(0x253)];}['_treeNodePropertiesAfterFullValue'](_0x495a34,_0x205449){var _0x2de81d=_0x17d19c;this[_0x2de81d(0x207)](_0x495a34,_0x205449),this['_setNodeExpandableState'](_0x495a34),_0x205449['sortProps']&&this['_sortProps'](_0x495a34),this[_0x2de81d(0x1df)](_0x495a34,_0x205449),this[_0x2de81d(0x201)](_0x495a34,_0x205449),this[_0x2de81d(0x1c7)](_0x495a34);}[_0x17d19c(0x1ce)](_0x1f376b,_0x1eca16){var _0x544bd1=_0x17d19c;try{_0x1f376b&&typeof _0x1f376b[_0x544bd1(0x24f)]==_0x544bd1(0x1ad)&&(_0x1eca16[_0x544bd1(0x24f)]=_0x1f376b[_0x544bd1(0x24f)]);}catch{}if(_0x1eca16[_0x544bd1(0x1a0)]===_0x544bd1(0x1ad)||_0x1eca16[_0x544bd1(0x1a0)]==='Number'){if(isNaN(_0x1eca16['value']))_0x1eca16[_0x544bd1(0x1ff)]=!0x0,delete _0x1eca16['value'];else switch(_0x1eca16[_0x544bd1(0x1c1)]){case Number[_0x544bd1(0x1de)]:_0x1eca16[_0x544bd1(0x1e5)]=!0x0,delete _0x1eca16['value'];break;case Number[_0x544bd1(0x18d)]:_0x1eca16['negativeInfinity']=!0x0,delete _0x1eca16[_0x544bd1(0x1c1)];break;case 0x0:this['_isNegativeZero'](_0x1eca16['value'])&&(_0x1eca16[_0x544bd1(0x1da)]=!0x0);break;}}else _0x1eca16[_0x544bd1(0x1a0)]==='function'&&typeof _0x1f376b['name']==_0x544bd1(0x194)&&_0x1f376b[_0x544bd1(0x239)]&&_0x1eca16[_0x544bd1(0x239)]&&_0x1f376b['name']!==_0x1eca16[_0x544bd1(0x239)]&&(_0x1eca16[_0x544bd1(0x19d)]=_0x1f376b['name']);}[_0x17d19c(0x1fa)](_0x56f27d){var _0x33fdad=_0x17d19c;return 0x1/_0x56f27d===Number[_0x33fdad(0x18d)];}[_0x17d19c(0x25c)](_0x20ca85){var _0x4caef2=_0x17d19c;!_0x20ca85[_0x4caef2(0x1bf)]||!_0x20ca85[_0x4caef2(0x1bf)][_0x4caef2(0x24f)]||_0x20ca85[_0x4caef2(0x1a0)]===_0x4caef2(0x26c)||_0x20ca85[_0x4caef2(0x1a0)]===_0x4caef2(0x267)||_0x20ca85['type']===_0x4caef2(0x1b6)||_0x20ca85['props']['sort'](function(_0xa2ebe4,_0xe934db){var _0x47268e=_0x4caef2,_0x543543=_0xa2ebe4['name'][_0x47268e(0x1c6)](),_0x31d4b1=_0xe934db['name'][_0x47268e(0x1c6)]();return _0x543543<_0x31d4b1?-0x1:_0x543543>_0x31d4b1?0x1:0x0;});}['_addFunctionsNode'](_0x590ad9,_0x36b733){var _0x3768ee=_0x17d19c;if(!(_0x36b733[_0x3768ee(0x1b2)]||!_0x590ad9[_0x3768ee(0x1bf)]||!_0x590ad9['props'][_0x3768ee(0x24f)])){for(var _0x8f1921=[],_0x8e4a54=[],_0x3deffb=0x0,_0x4f09f1=_0x590ad9[_0x3768ee(0x1bf)][_0x3768ee(0x24f)];_0x3deffb<_0x4f09f1;_0x3deffb++){var _0x2f5212=_0x590ad9[_0x3768ee(0x1bf)][_0x3deffb];_0x2f5212[_0x3768ee(0x1a0)]==='function'?_0x8f1921[_0x3768ee(0x1d5)](_0x2f5212):_0x8e4a54['push'](_0x2f5212);}if(!(!_0x8e4a54[_0x3768ee(0x24f)]||_0x8f1921['length']<=0x1)){_0x590ad9[_0x3768ee(0x1bf)]=_0x8e4a54;var _0x29e7d6={'functionsNode':!0x0,'props':_0x8f1921};this[_0x3768ee(0x23e)](_0x29e7d6,_0x36b733),this[_0x3768ee(0x207)](_0x29e7d6,_0x36b733),this[_0x3768ee(0x1af)](_0x29e7d6),this['_setNodePermissions'](_0x29e7d6,_0x36b733),_0x29e7d6['id']+='\\x20f',_0x590ad9[_0x3768ee(0x1bf)][_0x3768ee(0x1e4)](_0x29e7d6);}}}[_0x17d19c(0x201)](_0x4c9f3b,_0x58d806){}['_setNodeExpandableState'](_0x4e0b07){}[_0x17d19c(0x1a3)](_0x3a9c3e){var _0x28f20c=_0x17d19c;return Array[_0x28f20c(0x244)](_0x3a9c3e)||typeof _0x3a9c3e==_0x28f20c(0x278)&&this['_objectToString'](_0x3a9c3e)===_0x28f20c(0x258);}['_setNodePermissions'](_0x2027c7,_0x43a273){}[_0x17d19c(0x1c7)](_0x5c9a2d){var _0x46e84d=_0x17d19c;delete _0x5c9a2d[_0x46e84d(0x240)],delete _0x5c9a2d[_0x46e84d(0x1e9)],delete _0x5c9a2d[_0x46e84d(0x1a5)];}[_0x17d19c(0x238)](_0x4e46b6,_0xc9bc99){}}let _0x92d2f3=new _0x433247(),_0x33af12={'props':0x64,'elements':0x64,'strLength':0x400*0x32,'totalStrLength':0x400*0x32,'autoExpandLimit':0x1388,'autoExpandMaxDepth':0xa},_0x34f3eb={'props':0x5,'elements':0x5,'strLength':0x100,'totalStrLength':0x100*0x3,'autoExpandLimit':0x1e,'autoExpandMaxDepth':0x2};function _0x506114(_0x52d83e,_0x37934b,_0x32d7b9,_0x28d03b,_0xbfcb85,_0x4105fa){var _0x50da68=_0x17d19c;let _0x32f43f,_0x554cc2;try{_0x554cc2=_0xaeb030(),_0x32f43f=_0x178b4f[_0x37934b],!_0x32f43f||_0x554cc2-_0x32f43f['ts']>0x1f4&&_0x32f43f[_0x50da68(0x215)]&&_0x32f43f[_0x50da68(0x1e3)]/_0x32f43f[_0x50da68(0x215)]<0x64?(_0x178b4f[_0x37934b]=_0x32f43f={'count':0x0,'time':0x0,'ts':_0x554cc2},_0x178b4f['hits']={}):_0x554cc2-_0x178b4f[_0x50da68(0x234)]['ts']>0x32&&_0x178b4f[_0x50da68(0x234)][_0x50da68(0x215)]&&_0x178b4f['hits'][_0x50da68(0x1e3)]/_0x178b4f[_0x50da68(0x234)]['count']<0x64&&(_0x178b4f[_0x50da68(0x234)]={});let _0x267dc6=[],_0x535017=_0x32f43f[_0x50da68(0x1ea)]||_0x178b4f[_0x50da68(0x234)]['reduceLimits']?_0x34f3eb:_0x33af12,_0x1882f4=_0xc49df0=>{var _0x7da2d5=_0x50da68;let _0x22f4fa={};return _0x22f4fa[_0x7da2d5(0x1bf)]=_0xc49df0[_0x7da2d5(0x1bf)],_0x22f4fa[_0x7da2d5(0x1a1)]=_0xc49df0[_0x7da2d5(0x1a1)],_0x22f4fa[_0x7da2d5(0x266)]=_0xc49df0['strLength'],_0x22f4fa[_0x7da2d5(0x1ef)]=_0xc49df0['totalStrLength'],_0x22f4fa['autoExpandLimit']=_0xc49df0['autoExpandLimit'],_0x22f4fa['autoExpandMaxDepth']=_0xc49df0[_0x7da2d5(0x1cc)],_0x22f4fa[_0x7da2d5(0x211)]=!0x1,_0x22f4fa[_0x7da2d5(0x1b2)]=!_0xf72fa8,_0x22f4fa[_0x7da2d5(0x252)]=0x1,_0x22f4fa['level']=0x0,_0x22f4fa[_0x7da2d5(0x21d)]=_0x7da2d5(0x218),_0x22f4fa[_0x7da2d5(0x1dd)]=_0x7da2d5(0x23c),_0x22f4fa[_0x7da2d5(0x242)]=!0x0,_0x22f4fa[_0x7da2d5(0x18f)]=[],_0x22f4fa['autoExpandPropertyCount']=0x0,_0x22f4fa[_0x7da2d5(0x271)]=!0x0,_0x22f4fa[_0x7da2d5(0x19e)]=0x0,_0x22f4fa[_0x7da2d5(0x198)]={'current':void 0x0,'parent':void 0x0,'index':0x0},_0x22f4fa;};for(var _0x557b48=0x0;_0x557b48<_0xbfcb85[_0x50da68(0x24f)];_0x557b48++)_0x267dc6[_0x50da68(0x1d5)](_0x92d2f3['serialize']({'timeNode':_0x52d83e===_0x50da68(0x1e3)||void 0x0},_0xbfcb85[_0x557b48],_0x1882f4(_0x535017),{}));if(_0x52d83e==='trace'||_0x52d83e===_0x50da68(0x190)){let _0x3b7ce6=Error[_0x50da68(0x1b5)];try{Error[_0x50da68(0x1b5)]=0x1/0x0,_0x267dc6[_0x50da68(0x1d5)](_0x92d2f3['serialize']({'stackNode':!0x0},new Error()['stack'],_0x1882f4(_0x535017),{'strLength':0x1/0x0}));}finally{Error['stackTraceLimit']=_0x3b7ce6;}}return{'method':_0x50da68(0x21b),'version':_0x509b27,'args':[{'ts':_0x32d7b9,'session':_0x28d03b,'args':_0x267dc6,'id':_0x37934b,'context':_0x4105fa}]};}catch(_0x217116){return{'method':_0x50da68(0x21b),'version':_0x509b27,'args':[{'ts':_0x32d7b9,'session':_0x28d03b,'args':[{'type':_0x50da68(0x23f),'error':_0x217116&&_0x217116[_0x50da68(0x1fc)]}],'id':_0x37934b,'context':_0x4105fa}]};}finally{try{if(_0x32f43f&&_0x554cc2){let _0x5b4701=_0xaeb030();_0x32f43f['count']++,_0x32f43f[_0x50da68(0x1e3)]+=_0x526f92(_0x554cc2,_0x5b4701),_0x32f43f['ts']=_0x5b4701,_0x178b4f[_0x50da68(0x234)]['count']++,_0x178b4f[_0x50da68(0x234)][_0x50da68(0x1e3)]+=_0x526f92(_0x554cc2,_0x5b4701),_0x178b4f[_0x50da68(0x234)]['ts']=_0x5b4701,(_0x32f43f[_0x50da68(0x215)]>0x32||_0x32f43f[_0x50da68(0x1e3)]>0x64)&&(_0x32f43f[_0x50da68(0x1ea)]=!0x0),(_0x178b4f[_0x50da68(0x234)][_0x50da68(0x215)]>0x3e8||_0x178b4f[_0x50da68(0x234)][_0x50da68(0x1e3)]>0x12c)&&(_0x178b4f[_0x50da68(0x234)][_0x50da68(0x1ea)]=!0x0);}}catch{}}}return _0x506114;}function _0x2f64(_0xc123ed,_0x373a6a){var _0x7e3707=_0x7e37();return _0x2f64=function(_0x2f646f,_0x39d0ab){_0x2f646f=_0x2f646f-0x182;var _0x2ebbff=_0x7e3707[_0x2f646f];return _0x2ebbff;},_0x2f64(_0xc123ed,_0x373a6a);}function _0x7e37(){var _0x2ceb2a=['prototype','expressionsToEvaluate','_ws','24GbScfZ','totalStrLength','[object\\x20Date]','','host','getWebSocketClass','[object\\x20Set]','60145','_isPrimitiveType','...','close','8135382phFLIs','_isNegativeZero','_connectAttemptCount','message','versions','enumerable','nan','fromCharCode','_addLoadNode','_treeNodePropertiesBeforeFullValue','1.0.0','astro','split','forEach','_setNodeLabel','_p_length','Console\\x20Ninja\\x20failed\\x20to\\x20send\\x20logs,\\x20restarting\\x20the\\x20process\\x20may\\x20help;\\x20also\\x20see\\x20','_WebSocketClass','WebSocket','reload','path','onclose','match','slice','sortProps','_regExpToString','port','call','count',\"c:\\\\Users\\\\Chocho\\\\.vscode\\\\extensions\\\\wallabyjs.console-ninja-1.0.454\\\\node_modules\",'parent','root_exp_id','1622841bmQylM','replace','log','_allowedToSend','expId','disabledTrace','now','url','_treeNodePropertiesAfterFullValue','_isSet','_inBrowser','includes','timeStamp','https://tinyurl.com/37x8b79t','_console_ninja','some','ws/index.js','hrtime','String','Buffer','trace','cappedElements','_extendedWarning','_HTMLAllCollection','5843131NdmwSP','_console_ninja_session','_inNextEdge','hits','null','getOwnPropertyDescriptor','_property','_setNodeExpressionPath','name','_attemptToReconnectShortly','getter','root_exp','test','_setNodeId','unknown','_hasSymbolPropertyOnItsPath','serialize','autoExpand','1751244420488','isArray','127.0.0.1','global','map','\\x20browser','nodeModules','constructor','indexOf','7257855QYQRVY','disabledLog','args','length','cappedProps','20iRHXFh','depth','_undefined','readyState','charAt','endsWith','_objectToString','[object\\x20Array]','autoExpandLimit','HTMLAllCollection','_reconnectTimeout','_sortProps','getPrototypeOf','unref','_dateToString','1497470hNfbwD','onopen','NEXT_RUNTIME','_setNodeQueryPath','_sendErrorMessage','isExpressionToEvaluate','strLength','Map','warn','parse','failed\\x20to\\x20find\\x20and\\x20load\\x20WebSocket','_p_','array','dockerizedApp','toString','onmessage','function','resolveGetters',[\"localhost\",\"127.0.0.1\",\"example.cypress.io\",\"DESKTOP-OHD70AO\",\"192.168.1.36\"],'catch','process','symbol','elapsed','stringify','object','_consoleNinjaAllowedToStart','env','_allowedToConnectOnSend','_isPrimitiveWrapperType','pop','send','ws://','gateway.docker.internal','2886876RUuqkL','valueOf','_capIfString','NEGATIVE_INFINITY','[object\\x20BigInt]','autoExpandPreviousObjects','error','Console\\x20Ninja\\x20failed\\x20to\\x20send\\x20logs,\\x20refreshing\\x20the\\x20page\\x20may\\x20help;\\x20also\\x20see\\x20','edge','\\x20server','string','_type','_connected','_connecting','node','date','bind','_keyStrRegExp','boolean','funcName','allStrLength','_maxConnectAttemptCount','type','elements','defineProperty','_isArray','autoExpandPropertyCount','_hasMapOnItsPath','_processTreeNodeResult','data','_socket','index','method','_getOwnPropertyNames','console','number','4ZvFqOQ','_setNodeExpandableState','level','capped','noFunctions','location','current','stackTraceLimit','Set','_connectToHostNow','29xOCwxZ','_isUndefined','_blacklistedProperty','_disposeWebsocket','toUpperCase','angular','__es'+'Module','props','_propertyName','value','eventReceivedCallback','bigint','_quotedRegExp','webpack','toLowerCase','_cleanNode','substr','hostname','27412DFayIi','get','autoExpandMaxDepth','_addProperty','_additionalMetadata','concat','_Symbol','logger\\x20failed\\x20to\\x20connect\\x20to\\x20host','Number','pathToFileURL','_webSocketErrorDocsLink','push','getOwnPropertyNames','see\\x20https://tinyurl.com/2vt8jxzw\\x20for\\x20more\\x20info.','_isMap','Symbol','negativeZero','coverage','origin','rootExpression','POSITIVE_INFINITY','_addFunctionsNode','setter','_numberRegExp','undefined','time','unshift','positiveInfinity','_WebSocket','_addObjectProperty','_getOwnPropertySymbols','_hasSetOnItsPath','reduceLimits'];_0x7e37=function(){return _0x2ceb2a;};return _0x7e37();}((_0x17e495,_0x339e19,_0x1ff378,_0x136b64,_0xc67da3,_0x396395,_0x76aa16,_0x9927b1,_0x3f290b,_0xbb61d,_0x37a6de)=>{var _0x29882f=_0x153e6c;if(_0x17e495[_0x29882f(0x227)])return _0x17e495[_0x29882f(0x227)];if(!X(_0x17e495,_0x9927b1,_0xc67da3))return _0x17e495[_0x29882f(0x227)]={'consoleLog':()=>{},'consoleTrace':()=>{},'consoleTime':()=>{},'consoleTimeEnd':()=>{},'autoLog':()=>{},'autoLogMany':()=>{},'autoTraceMany':()=>{},'coverage':()=>{},'autoTrace':()=>{},'autoTime':()=>{},'autoTimeEnd':()=>{}},_0x17e495['_console_ninja'];let _0x2cfb74=B(_0x17e495),_0x5991d7=_0x2cfb74['elapsed'],_0x18478b=_0x2cfb74[_0x29882f(0x225)],_0x470716=_0x2cfb74[_0x29882f(0x21f)],_0x6be82c={'hits':{},'ts':{}},_0xdbbc1a=J(_0x17e495,_0x3f290b,_0x6be82c,_0x396395),_0x3c8832=_0x4edcc7=>{_0x6be82c['ts'][_0x4edcc7]=_0x18478b();},_0x409842=(_0x4a82f5,_0x1cfe95)=>{var _0x387c3a=_0x29882f;let _0x58a5e2=_0x6be82c['ts'][_0x1cfe95];if(delete _0x6be82c['ts'][_0x1cfe95],_0x58a5e2){let _0x47ade6=_0x5991d7(_0x58a5e2,_0x18478b());_0x5e2966(_0xdbbc1a(_0x387c3a(0x1e3),_0x4a82f5,_0x470716(),_0x485c83,[_0x47ade6],_0x1cfe95));}},_0x507cd2=_0x428e5=>{var _0x502e81=_0x29882f,_0x17e901;return _0xc67da3==='next.js'&&_0x17e495[_0x502e81(0x1dc)]&&((_0x17e901=_0x428e5==null?void 0x0:_0x428e5['args'])==null?void 0x0:_0x17e901['length'])&&(_0x428e5[_0x502e81(0x24e)][0x0][_0x502e81(0x1dc)]=_0x17e495[_0x502e81(0x1dc)]),_0x428e5;};_0x17e495[_0x29882f(0x227)]={'consoleLog':(_0x2706be,_0x474503)=>{var _0x24bdf6=_0x29882f;_0x17e495[_0x24bdf6(0x1ac)]['log'][_0x24bdf6(0x239)]!==_0x24bdf6(0x24d)&&_0x5e2966(_0xdbbc1a(_0x24bdf6(0x21b),_0x2706be,_0x470716(),_0x485c83,_0x474503));},'consoleTrace':(_0x52d15d,_0xfb798a)=>{var _0x271ff3=_0x29882f,_0x225898,_0x259b6e;_0x17e495[_0x271ff3(0x1ac)][_0x271ff3(0x21b)][_0x271ff3(0x239)]!==_0x271ff3(0x21e)&&((_0x259b6e=(_0x225898=_0x17e495[_0x271ff3(0x274)])==null?void 0x0:_0x225898[_0x271ff3(0x1fd)])!=null&&_0x259b6e[_0x271ff3(0x198)]&&(_0x17e495['_ninjaIgnoreNextError']=!0x0),_0x5e2966(_0x507cd2(_0xdbbc1a(_0x271ff3(0x22d),_0x52d15d,_0x470716(),_0x485c83,_0xfb798a))));},'consoleError':(_0x4310a2,_0x4e6173)=>{var _0x417011=_0x29882f;_0x17e495['_ninjaIgnoreNextError']=!0x0,_0x5e2966(_0x507cd2(_0xdbbc1a(_0x417011(0x190),_0x4310a2,_0x470716(),_0x485c83,_0x4e6173)));},'consoleTime':_0x1b9671=>{_0x3c8832(_0x1b9671);},'consoleTimeEnd':(_0x35dd13,_0xe4c285)=>{_0x409842(_0xe4c285,_0x35dd13);},'autoLog':(_0x15f1d7,_0x194e8e)=>{var _0x1b894d=_0x29882f;_0x5e2966(_0xdbbc1a(_0x1b894d(0x21b),_0x194e8e,_0x470716(),_0x485c83,[_0x15f1d7]));},'autoLogMany':(_0x4a38cf,_0x3e60af)=>{var _0x57aeeb=_0x29882f;_0x5e2966(_0xdbbc1a(_0x57aeeb(0x21b),_0x4a38cf,_0x470716(),_0x485c83,_0x3e60af));},'autoTrace':(_0x29db23,_0x3fbda0)=>{_0x5e2966(_0x507cd2(_0xdbbc1a('trace',_0x3fbda0,_0x470716(),_0x485c83,[_0x29db23])));},'autoTraceMany':(_0x34c0bd,_0x328e27)=>{_0x5e2966(_0x507cd2(_0xdbbc1a('trace',_0x34c0bd,_0x470716(),_0x485c83,_0x328e27)));},'autoTime':(_0x5443e4,_0x3e0262,_0x2c2a0f)=>{_0x3c8832(_0x2c2a0f);},'autoTimeEnd':(_0x2b1686,_0x1cd247,_0x3c146c)=>{_0x409842(_0x1cd247,_0x3c146c);},'coverage':_0x478cc7=>{var _0x1605f1=_0x29882f;_0x5e2966({'method':_0x1605f1(0x1db),'version':_0x396395,'args':[{'id':_0x478cc7}]});}};let _0x5e2966=H(_0x17e495,_0x339e19,_0x1ff378,_0x136b64,_0xc67da3,_0xbb61d,_0x37a6de),_0x485c83=_0x17e495[_0x29882f(0x232)];return _0x17e495['_console_ninja'];})(globalThis,_0x153e6c(0x245),_0x153e6c(0x1f5),_0x153e6c(0x216),_0x153e6c(0x1c5),_0x153e6c(0x203),_0x153e6c(0x243),_0x153e6c(0x272),'',_0x153e6c(0x1f1),'1');");
-  } catch (e) {}
-}
-; /* istanbul ignore next */
-function oo_oo( /**@type{any}**/i) {
-  for (var _len = arguments.length, v = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    v[_key - 1] = arguments[_key];
-  }
-  try {
-    oo_cm().consoleLog(i, v);
-  } catch (e) {}
-  return v;
-}
-; /* istanbul ignore next */
-function oo_tr( /**@type{any}**/i) {
-  for (var _len2 = arguments.length, v = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-    v[_key2 - 1] = arguments[_key2];
-  }
-  try {
-    oo_cm().consoleTrace(i, v);
-  } catch (e) {}
-  return v;
-}
-; /* istanbul ignore next */
-function oo_tx( /**@type{any}**/i) {
-  for (var _len3 = arguments.length, v = new Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
-    v[_key3 - 1] = arguments[_key3];
-  }
-  try {
-    oo_cm().consoleError(i, v);
-  } catch (e) {}
-  return v;
-}
-; /* istanbul ignore next */
-function oo_ts( /**@type{any}**/v) {
-  try {
-    oo_cm().consoleTime(v);
-  } catch (e) {}
-  return v;
-}
-; /* istanbul ignore next */
-function oo_te( /**@type{any}**/v, /**@type{any}**/i) {
-  try {
-    oo_cm().consoleTimeEnd(v, i);
-  } catch (e) {}
-  return v;
-}
-; /*eslint unicorn/no-abusive-eslint-disable:,eslint-comments/disable-enable-pair:,eslint-comments/no-unlimited-disable:,eslint-comments/no-aggregating-enable:,eslint-comments/no-duplicate-disable:,eslint-comments/no-unused-disable:,eslint-comments/no-unused-enable:,*/
 
 /***/ }),
 
@@ -19929,10 +19905,12 @@ __webpack_require__.r(__webpack_exports__);
         cNumPersonal: "",
         nIdCargo: "",
         cDni: "",
-        nIdZonal: ""
+        nIdZonal: "",
+        nIdSede: ""
       },
       listZonal: [],
       listCargo: [],
+      listSede: [],
       modalShow: false,
       mostrarModal: {
         display: "block",
@@ -19950,37 +19928,45 @@ __webpack_require__.r(__webpack_exports__);
     this.getListarGradoAcad();
     this.getListCargo();
     this.getListarZonal();
+    this.getListarSede();
   },
   methods: {
+    getListarSede: function getListarSede() {
+      var _this = this;
+      var url = "/administracion/sede/list";
+      axios.get(url).then(function (response) {
+        _this.listSede = response.data;
+      });
+    },
     abrirModal: function abrirModal() {
       this.modalShow = !this.modalShow;
     },
     getListarZonal: function getListarZonal() {
-      var _this = this;
+      var _this2 = this;
       var url = "/administracion/zonal/list";
       axios.get(url).then(function (response) {
-        _this.listZonal = response.data;
+        _this2.listZonal = response.data;
       });
     },
     getListCargo: function getListCargo() {
-      var _this2 = this;
+      var _this3 = this;
       var url = "/administracion/cargo/list";
       axios.get(url).then(function (response) {
-        _this2.listCargo = response.data;
+        _this3.listCargo = response.data;
       });
     },
     getListarAlmacen: function getListarAlmacen() {
-      var _this3 = this;
+      var _this4 = this;
       var url = "/administracion/almacen/listAlmacen";
       axios.get(url).then(function (response) {
-        _this3.listAlmacen = response.data;
+        _this4.listAlmacen = response.data;
       });
     },
     getListarGradoAcad: function getListarGradoAcad() {
-      var _this4 = this;
+      var _this5 = this;
       var url = "/administracion/usuario/getListarGradoAcad";
       axios.get(url).then(function (response) {
-        _this4.listGradoAcad = response.data;
+        _this5.listGradoAcad = response.data;
       });
     },
     validarRegistrarPersonal: function validarRegistrarPersonal() {
@@ -20029,7 +20015,7 @@ __webpack_require__.r(__webpack_exports__);
       this.setRegistrarPersonal();
     },
     setRegistrarPersonal: function setRegistrarPersonal() {
-      var _this5 = this;
+      var _this6 = this;
       var url = "/administracion/personal/create";
       axios.post(url, {
         cNumPersonal: this.fillCrearPersonal.cNumPersonal,
@@ -20040,7 +20026,8 @@ __webpack_require__.r(__webpack_exports__);
         nIdCargo: this.fillCrearPersonal.nIdCargo,
         cEmail: this.fillCrearPersonal.cEmail,
         cPassword: this.fillCrearPersonal.cDni,
-        nIdZonal: this.fillCrearPersonal.nIdZonal
+        nIdZonal: this.fillCrearPersonal.nIdZonal,
+        nIdSede: this.fillCrearPersonal.nIdSede
       }).then(function (response) {
         Swal.fire({
           position: "center",
@@ -20049,7 +20036,7 @@ __webpack_require__.r(__webpack_exports__);
           showConfirmButton: false,
           timer: 2000
         });
-        _this5.$router.push("/personal/index");
+        _this6.$router.push("/personal/index");
       });
     }
   }
@@ -23497,6 +23484,499 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
     calculoFechas: function calculoFechas() {
       if (this.fillCrearReqMaterialesServicio.FFinal != null && this.fillCrearReqMaterialesServicio.FInicio != null) {
         var valorfecha = new Date(this.fillCrearReqMaterialesServicio.FFinal).getTime() - new Date(this.fillCrearReqMaterialesServicio.FInicio).getTime();
+        return String(valorfecha / 86400000 + 1).padStart(2, 0);
+      }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/modulos/servicio_ReqMateriales/editMaterial.vue?vue&type=script&lang=js":
+/*!*****************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/modulos/servicio_ReqMateriales/editMaterial.vue?vue&type=script&lang=js ***!
+  \*****************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    var _fillEditReqMateriale;
+    return {
+      fillEditReqMaterialesServicio: (_fillEditReqMateriale = {
+        nIdServicio: this.$attrs.id,
+        cClient: "",
+        FInicio: "",
+        FFinal: "",
+        cDuracion: "",
+        nIdDetServ: "",
+        cUnidMed: "",
+        nIdUnidMedOtroReq: "",
+        nIdPersonal: "",
+        cRuc: "",
+        cDocumento: "",
+        cFechaEmision: "",
+        nidAlmacen: "",
+        cRSocial: ""
+      }, _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_fillEditReqMateriale, "cRuc", ""), "nIdmaterial", ""), "cCantMaterial", ""), "cCantidad", ""), "nIdTipoPago", ""), "nIdTipoMoneda", ""), "nIdUser", sessionStorage.getItem("iduser")), "cPersonal", ""), "cDiasMObra", ""), "cHorasMObra", ""), _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_fillEditReqMateriale, "cDescripcion", ""), "cCantidadReq", ""), "nIdUnidMed", ""), "nIdUnidMedMat", ""), "radTipoTiempo", "1"), "estado", "")),
+      listAlmacen: [],
+      listPersonal: [],
+      listUnidMed: [],
+      listProd: [],
+      listartempServicio: [],
+      listartempMobra: [],
+      listartempRequerimientos: [],
+      listartempOtrosRequerimientos: [],
+      listServicioMateriales: [],
+      listDescripPago: [{
+        value: "1",
+        label: "PARA STOCK"
+      }, {
+        value: "2",
+        label: "PARA PEDIDO DE CLIENTE"
+      }],
+      listTipoCambio: [],
+      validatedDias: false,
+      validateHoras: true,
+      modalShow: false,
+      mostrarModal: {
+        display: "block",
+        background: "#0000006b"
+      },
+      ocultarModal: {
+        display: "none"
+      },
+      error: 0,
+      mensajeError: []
+    };
+  },
+  mounted: function mounted() {
+    this.getListarproductosByName();
+    this.getlistTipoCambio();
+    this.defaultDiaHora();
+    this.getListarUnidadMedida();
+    this.getListServicioById();
+    this.getListServicioMaterialesById();
+  },
+  methods: {
+    getListServicioById: function getListServicioById() {
+      var _this = this;
+      var url = "/administracion/servicio/servicioById";
+      axios.get(url, {
+        params: {
+          nIdServicio: this.fillEditReqMaterialesServicio.nIdServicio
+        }
+      }).then(function (response) {
+        _this.fillEditReqMaterialesServicio.cClient = response.data.cliente;
+        _this.fillEditReqMaterialesServicio.cRuc = response.data.ruc_dni;
+        _this.fillEditReqMaterialesServicio.detservicio = response.data.detservicio;
+        _this.fillEditReqMaterialesServicio.FInicio = response.data.fechainicio;
+        _this.fillEditReqMaterialesServicio.FFinal = response.data.fechafinal;
+        _this.fillEditReqMaterialesServicio.cDuracion = response.data.duracion;
+        _this.fillEditReqMaterialesServicio.cCantidad = response.data.cantidad;
+      });
+    },
+    getListServicioMaterialesById: function getListServicioMaterialesById() {
+      var _this2 = this;
+      var url = "/administracion/servicioReqMateriales/listMaterialById";
+      axios.get(url, {
+        params: {
+          nIdServicio: this.fillEditReqMaterialesServicio.nIdServicio
+        }
+      }).then(function (response) {
+        console.log(response.data);
+        _this2.listServicioMateriales = response.data;
+      });
+    },
+    calculoFecha: function calculoFecha() {
+      if (this.fillEditReqMaterialesServicio.FFinal != null && this.fillEditReqMaterialesServicio.FInicio != null) {
+        var valorfecha = new Date(this.fillEditReqMaterialesServicio.FFinal).getTime() - new Date(this.fillEditReqMaterialesServicio.FInicio).getTime();
+        this.fillEditReqMaterialesServicio.cDuracion = String(valorfecha / 86400000 + 1).padStart(2, 0);
+      }
+    },
+    onChange: function onChange(e) {
+      if (e == 1) {
+        this.fillEditReqMaterialesServicio.cHorasMObra = 0;
+        this.validateHoras = true;
+        this.validatedDias = false;
+      }
+      if (e == 2) {
+        this.fillEditReqMaterialesServicio.cDiasMObra = 0;
+        this.validateHoras = false;
+        this.validatedDias = true;
+      }
+    },
+    onChangeClient: function onChangeClient(e) {
+      if (e == 1) {
+        this.fillEditReqMaterialesServicio.cRuc = "";
+      }
+      if (e == 2) {
+        this.fillEditReqMaterialesServicio.nidAlmacen = "";
+        this.fillEditReqMaterialesServicio.cRSocial = "";
+      }
+    },
+    defaultDiaHora: function defaultDiaHora() {
+      this.fillEditReqMaterialesServicio.cCantidadReq = 0;
+      this.fillEditReqMaterialesServicio.cDiasMObra = 0;
+      this.fillEditReqMaterialesServicio.cHorasMObra = 0;
+    },
+    consultaRuc: function consultaRuc() {
+      var _this3 = this;
+      var url = "/administracion/cliente/consultaRuc";
+      axios.post(url, {
+        cRuc: this.fillEditReqMaterialesServicio.cRuc
+      }).then(function (response) {
+        if (response.data.success == false) {
+          _this3.fillEditReqMaterialesServicio.cRSocial = "", Swal.fire({
+            position: "center",
+            icon: "info",
+            title: "Ruc no encontrado o numero equivocado",
+            showConfirmButton: false,
+            timer: 2000
+          });
+        } else {
+          _this3.fillEditReqMaterialesServicio.cClient = response.data.razonSocial;
+          /*        (this.fillEditReqMaterialesServicio.cDireccion = response.data.direccion),
+                        (this.estadobutton = false);
+                      this.disabledbtnRuc = true; */
+        }
+      });
+    },
+    consultaDNI: function consultaDNI() {
+      var _this4 = this;
+      var url = "/administracion/cliente/consultaDNI";
+      axios.post(url, {
+        cRuc: this.fillEditReqMaterialesServicio.cRuc
+      }).then(function (response) {
+        if (response.data.success == false) {
+          /*  this.estadobutton = true;
+           (this.fillEditReqMaterialesServicio.cRSocial = ""),
+             (this.fillEditReqMaterialesServicio.cDireccion = ""); */
+
+          Swal.fire({
+            position: "center",
+            icon: "info",
+            title: "DNI no encontrado o numero equivocado",
+            showConfirmButton: false,
+            timer: 2000
+          });
+          _this4.estadobutton = false;
+        } else {
+          _this4.fillEditReqMaterialesServicio.cClient = response.data.nombres + " " + response.data.apellidoPaterno + " " + response.data.apellidoMaterno;
+          // (this.fillEditReqMaterialesServicio.cClient  = response.data.direccion);
+          /*     this.estadobutton = false;
+               this.disabledbtnRuc = true;  */
+        }
+      });
+    },
+    setAddMObra: function setAddMObra() {
+      var _this5 = this;
+      var url = "/administracion/servicio/addServManObra";
+      axios.post(url, {
+        nIdPersonal: this.fillEditReqMaterialesServicio.nIdPersonal,
+        cDiasMObra: this.fillEditReqMaterialesServicio.cDiasMObra,
+        cHorasMObra: this.fillEditReqMaterialesServicio.cHorasMObra,
+        estado: "S"
+      }).then(function (response) {
+        _this5.listartempMobra = response.data.datos;
+        _this5.setcleanListMObra();
+        _this5.fillEditReqMaterialesServicio.cDiasMObra = 0;
+        _this5.fillEditReqMaterialesServicio.cHorasMObra = 0;
+      });
+    },
+    getListPersonal: function getListPersonal() {
+      var _this6 = this;
+      var url = "/administracion/personal/list";
+      axios.get(url).then(function (response) {
+        _this6.listPersonal = response.data;
+      });
+    },
+    setcleanListMObra: function setcleanListMObra() {
+      this.fillEditReqMaterialesServicio.cPersonal = "", this.fillEditReqMaterialesServicio.cDiasMObra = 0;
+      this.fillEditReqMaterialesServicio.cHorasMObra = 0;
+    },
+    setOtrosRequerimientos: function setOtrosRequerimientos() {
+      var _this7 = this;
+      var url = "/administracion/servicio/addOtrosServicios";
+      axios.post(url, {
+        cDescripcion: this.fillEditReqMaterialesServicio.cDescripcion,
+        cCantidadReq: this.fillEditReqMaterialesServicio.cCantidadReq,
+        nIdUnidMedOtroReq: this.fillEditReqMaterialesServicio.nIdUnidMedOtroReq,
+        estado: "S"
+      }).then(function (response) {
+        /*            if (
+                      response.data.message ==
+                      "El valor no puede ser cero ni vacio"
+                  ) {
+                      Swal.fire({
+                          position: "center",
+                          icon: response.data.icon,
+                          title: response.data.message,
+                          showConfirmButton: false,
+                          timer: 1500,
+                      });
+                  } else {
+                      this.listartempOtrosRequerimientos =
+                          response.data.datos;
+                      this.setLimpiaRequerimientos();
+                      this.fillEditReqMaterialesServicio.cCantidadReq = 0;
+                  } */
+
+        _this7.listartempOtrosRequerimientos = response.data.datos;
+        _this7.setLimpiaRequerimientos();
+        _this7.fillEditReqMaterialesServicio.cCantidadReq = 0;
+      });
+    },
+    setLimpiaRequerimientos: function setLimpiaRequerimientos() {
+      this.fillEditReqMaterialesServicio.cDescripcion = "", this.fillEditReqMaterialesServicio.cCantidadReq = 0;
+    },
+    DeletListReqMateriales: function DeletListReqMateriales(item) {
+      var _this8 = this;
+      var url = "/administracion/servicioReqMateriales/deleteItemMaterialById";
+      axios.post(url, {
+        item: item
+      }).then(function (response) {
+        _this8.getListServicioMaterialesById();
+      });
+    },
+    DeletListReqMaNObra: function DeletListReqMaNObra(item) {
+      var _this9 = this;
+      var url = "/administracion/servicio/reorderServicioManObra";
+      axios.post(url, {
+        item: item
+      }).then(function (response) {
+        _this9.listartempMobra = response.data.datos;
+      });
+    },
+    DeletListOtrosReq: function DeletListOtrosReq(item) {
+      var _this10 = this;
+      var url = "/administracion/servicio/reorderOtrosReq";
+      axios.post(url, {
+        item: item
+      }).then(function (response) {
+        _this10.listartempOtrosRequerimientos = response.data.datos;
+      });
+    },
+    getlistTipoCambio: function getlistTipoCambio() {
+      var _this11 = this;
+      var url = "/administracion/ordenCompra/TipoCambio";
+      axios.get(url).then(function (response) {
+        _this11.listTipoCambio = response.data;
+        _this11.fillEditReqMaterialesServicio.nIdTipoMoneda = _this11.listTipoCambio[0].id;
+      });
+    },
+    getListarproductosByName: function getListarproductosByName() {
+      var _this12 = this;
+      var url = "/administracion/detallecotizancion/listProdByName";
+      axios.get(url, {
+        params: {
+          nIdmaterial: this.fillEditReqMaterialesServicio.nIdmaterial
+        }
+      }).then(function (response) {
+        _this12.listProd = response.data;
+      });
+    },
+    limpiarCriteriosBsq: function limpiarCriteriosBsq() {
+      this.fillEditReqMaterialesServicio.cCodProduct = "";
+    },
+    setRegistrarServicio: function setRegistrarServicio() {
+      if (this.validaOrdenProduccion()) {
+        this.modalShow = true;
+        return;
+      }
+      this.setGrabarReqMateriales();
+    },
+    setGrabarReqMateriales: function setGrabarReqMateriales() {
+      var _this13 = this;
+      var url = "/administracion/servicio/create";
+      axios.post(url, {
+        nidAlmacen: this.fillEditReqMaterialesServicio.nidAlmacen,
+        cRuc: this.fillEditReqMaterialesServicio.cRuc,
+        FInicio: this.fillEditReqMaterialesServicio.FInicio,
+        FFinal: this.fillEditReqMaterialesServicio.FFinal,
+        nIdUser: this.fillEditReqMaterialesServicio.nIdUser,
+        Duracionfechas: this.fillEditReqMaterialesServicio.cDuracion,
+        nIdUnidMed: this.fillEditReqMaterialesServicio.nIdUnidMed,
+        cClient: this.fillEditReqMaterialesServicio.cClient,
+        detservicio: this.fillEditReqMaterialesServicio.detservicio,
+        cCantidad: this.fillEditReqMaterialesServicio.cCantidad
+      }).then(function (response) {
+        Swal.fire({
+          position: "center",
+          icon: response.data.icon,
+          title: response.data.message,
+          showConfirmButton: false,
+          timer: 1500
+        });
+        _this13.setCleanServicios();
+        _this13.setCleanReqMateriales();
+        _this13.setCleanManoObra();
+        _this13.setCleanOtrosReq();
+      });
+    },
+    abrirModal: function abrirModal() {
+      this.modalShow = !this.modalShow;
+    },
+    validaOrdenProduccion: function validaOrdenProduccion() {
+      this.error = 0;
+      this.mensajeError = [];
+      if (!this.fillEditReqMaterialesServicio.FInicio) {
+        this.mensajeError.push("Fecha Inicio es campo obligatorio");
+      }
+      if (!this.fillEditReqMaterialesServicio.FFinal) {
+        this.mensajeError.push("Fecha Final es campo obligatorio");
+      }
+      if (!this.fillEditReqMaterialesServicio.cClient) {
+        this.mensajeError.push("Cliente Campo Obligatorio");
+      }
+      if (!this.fillEditReqMaterialesServicio.detservicio) {
+        this.mensajeError.push("Detalle Servicio Campo Obligatorio");
+      }
+      if (!this.fillEditReqMaterialesServicio.cCantidad) {
+        this.mensajeError.push("Cantidad es obligatorio");
+      }
+      if (this.mensajeError.length) {
+        this.error = 1;
+      }
+      return this.error;
+    },
+    setRegistrarServMaterialesList: function setRegistrarServMaterialesList() {
+      if (this.setvalidarReqMateriales()) {
+        this.modalShow = true;
+        return;
+      }
+      this.setAddReqMaterial();
+    },
+    setvalidarReqMateriales: function setvalidarReqMateriales() {
+      this.error = 0;
+      this.mensajeError = [];
+      if (!this.fillEditReqMaterialesServicio.nIdmaterial) {
+        this.mensajeError.push("Campo Material de requerimientos Obligatorio");
+      }
+      if (!this.fillEditReqMaterialesServicio.cCantMaterial) {
+        this.mensajeError.push("Campo Cantidad de requerimientos Obligatorio");
+      }
+      if (this.mensajeError.length) {
+        this.error = 1;
+      }
+      return this.error;
+    },
+    setAddReqMaterial: function setAddReqMaterial() {
+      var _this14 = this;
+      var url = "/administracion/servicioReqMateriales/createMaterialServicioById";
+      axios.post(url, {
+        nIdServicio: this.fillEditReqMaterialesServicio.nIdServicio,
+        nIdmaterial: this.fillEditReqMaterialesServicio.nIdmaterial,
+        cCantMaterial: this.fillEditReqMaterialesServicio.cCantMaterial,
+        nIdUnidMedMat: this.fillEditReqMaterialesServicio.nIdUnidMedMat,
+        estado: "S"
+      }).then(function (response) {
+        if (response.data.message == "Ya fue agregado anteriormente") {
+          Swal.fire({
+            position: "center",
+            icon: response.data.icon,
+            title: response.data.message,
+            showConfirmButton: false,
+            timer: 1500
+          });
+        } else {
+          _this14.setLimpiaMaterial();
+          _this14.fillEditReqMaterialesServicio.cCantMaterial = 0;
+          _this14.getListServicioMaterialesById();
+        }
+        if (response.data.message == "El valor no puede ser cero") {
+          Swal.fire({
+            position: "center",
+            icon: response.data.icon,
+            title: response.data.message,
+            showConfirmButton: false,
+            timer: 1500
+          });
+        } else {
+          _this14.setLimpiaMaterial();
+          _this14.fillEditReqMaterialesServicio.cCantMaterial = 0;
+          _this14.getListServicioMaterialesById();
+        }
+      });
+    },
+    setLimpiaMaterial: function setLimpiaMaterial() {
+      this.fillEditReqMaterialesServicio.nIdmaterial = "", this.fillEditReqMaterialesServicio.cCantMaterial = 0;
+    },
+    setLimpiaCampos: function setLimpiaCampos() {
+      this.fillEditReqMaterialesServicio.nIdmaterial = null;
+      this.fillEditReqMaterialesServicio.cCantidad = 0;
+    },
+    setResetCampos: function setResetCampos() {
+      this.fillEditReqMaterialesServicio.nIdmaterial = null;
+      this.fillEditReqMaterialesServicio.cCantidad = 0;
+      this.fillEditReqMaterialesServicio.cDocumento = "";
+    },
+    setCleanReqMateriales: function setCleanReqMateriales() {
+      var _this15 = this;
+      var url = "/administracion/ProyectoMateriales/eliminarTemporder";
+      axios.get(url, {}).then(function (response) {
+        _this15.listartempServicio = response.data.datos;
+        _this15.setLimpiaMaterial();
+      });
+    },
+    setCleanManoObra: function setCleanManoObra() {
+      var _this16 = this;
+      var url = "/administracion/ProyectoManoObra/CleanProyectManObra";
+      axios.get(url, {}).then(function (response) {
+        _this16.listartempMobra = response.data.datos;
+        _this16.setcleanListMObra();
+      });
+    },
+    setCleanOtrosReq: function setCleanOtrosReq() {
+      var _this17 = this;
+      var url = "/administracion/ProyectOtrosReq/CleanOtrosProyReqMateriales";
+      axios.get(url, {}).then(function (response) {
+        _this17.listartempOtrosRequerimientos = response.data.datos;
+        _this17.setcleanListMObra();
+      });
+    },
+    setCleanServicios: function setCleanServicios() {
+      this.fillEditReqMaterialesServicio.cClient = "";
+      this.fillEditReqMaterialesServicio.cRuc = "";
+      this.fillEditReqMaterialesServicio.detservicio = "";
+      this.fillEditReqMaterialesServicio.FInicio = "";
+      this.fillEditReqMaterialesServicio.FFinal = "";
+      this.fillEditReqMaterialesServicio.cDuracion = "";
+    },
+    setListtemOrders: function setListtemOrders() {
+      var _this18 = this;
+      var url = "/administracion/ordenCompra/ListtempOrden";
+      axios.get(url, {}).then(function (response) {
+        _this18.listartempServicio = response.data.datos;
+      });
+    },
+    eliminarTempitemOrders: function eliminarTempitemOrders() {
+      var _this19 = this;
+      var url = "/administracion/ordenCompra/eliminarTemporder";
+      axios.post(url).then(function (response) {
+        _this19.setListtemOrders();
+      });
+    },
+    getListarUnidadMedida: function getListarUnidadMedida() {
+      var _this20 = this;
+      var url = "/administracion/KardexDetalle/listUnidMed";
+      axios.get(url).then(function (response) {
+        _this20.listUnidMed = response.data;
+        _this20.fillEditReqMaterialesServicio.nIdUnidMed = _this20.listUnidMed[7].id;
+        _this20.fillEditReqMaterialesServicio.nIdUnidMedMat = _this20.listUnidMed[7].id;
+      });
+    }
+  },
+  computed: {
+    calculoFechas: function calculoFechas() {
+      if (this.fillEditReqMaterialesServicio.FFinal != null && this.fillEditReqMaterialesServicio.FInicio != null) {
+        var valorfecha = new Date(this.fillEditReqMaterialesServicio.FFinal).getTime() - new Date(this.fillEditReqMaterialesServicio.FInicio).getTime();
         return String(valorfecha / 86400000 + 1).padStart(2, 0);
       }
     }
@@ -27923,7 +28403,41 @@ var render = function render() {
     staticClass: "container-fluid"
   }, [_c("div", {
     staticClass: "card card-info"
-  }, [_vm._m(1), _vm._v(" "), _vm._m(2), _vm._v(" "), _c("div", {
+  }, [_vm._m(1), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_vm._m(2), _vm._v(" "), _c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-6"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [[_c("el-radio", {
+    attrs: {
+      label: "1",
+      value: 1,
+      border: ""
+    },
+    model: {
+      value: _vm.radioSede,
+      callback: function callback($$v) {
+        _vm.radioSede = $$v;
+      },
+      expression: "radioSede"
+    }
+  }, [_vm._v("Surco")]), _vm._v(" "), _c("el-radio", {
+    attrs: {
+      label: "2",
+      value: 2,
+      border: ""
+    },
+    model: {
+      value: _vm.radioSede,
+      callback: function callback($$v) {
+        _vm.radioSede = $$v;
+      },
+      expression: "radioSede"
+    }
+  }, [_vm._v("Lurin")])]], 2)])])]), _vm._v(" "), _c("div", {
     staticClass: "card-footer"
   }, [_c("div", {
     staticClass: "row"
@@ -28060,8 +28574,6 @@ var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "card-body"
-  }, [_c("div", {
     staticClass: "row"
   }, [_c("div", {
     staticClass: "col-md-6"
@@ -28076,7 +28588,7 @@ var staticRenderFns = [function () {
       type: "file",
       name: "select_file"
     }
-  })])])])])]);
+  })])])])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
@@ -28146,6 +28658,44 @@ var render = function render() {
     staticClass: "form-group row"
   }, [_c("label", {
     staticClass: "col-md-3 col-form-label"
+  }, [_vm._v("Seleccione la\n                                                            Sede")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6"
+  }, [_c("el-select", {
+    style: {
+      width: "350px"
+    },
+    attrs: {
+      filterable: "",
+      placeholder: "Seleccione una Sede"
+    },
+    on: {
+      change: function change($event) {
+        return _vm.getListarPersonal(_vm.fillBsqReportePersonal.nIdSedePersonal);
+      }
+    },
+    model: {
+      value: _vm.fillBsqReportePersonal.nIdSedePersonal,
+      callback: function callback($$v) {
+        _vm.$set(_vm.fillBsqReportePersonal, "nIdSedePersonal", $$v);
+      },
+      expression: "fillBsqReportePersonal.nIdSedePersonal"
+    }
+  }, _vm._l(_vm.listSede, function (item) {
+    return _c("el-option", {
+      key: item.id,
+      attrs: {
+        label: item.nombre,
+        value: item.id
+      }
+    });
+  }), 1)], 1)])])]), _vm._v(" "), _c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-6"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-3 col-form-label"
   }, [_vm._v("Personal")]), _vm._v(" "), _c("div", {
     staticClass: "col-md-9"
   }, [_c("el-select", {
@@ -28179,7 +28729,7 @@ var render = function render() {
     staticClass: "form-group row"
   }, [_c("label", {
     staticClass: "col-md-3 col-form-label"
-  }, [_vm._v("Seleccione el Rango")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Seleccione el\n                                                            Rango")]), _vm._v(" "), _c("div", {
     staticClass: "col-md-6"
   }, [_c("el-date-picker", {
     style: {
@@ -28215,7 +28765,7 @@ var render = function render() {
         return _vm.getListReporteAsistencia.apply(null, arguments);
       }
     }
-  }, [_vm._v("\n                           Buscar\n                         ")]), _vm._v(" "), _c("button", {
+  }, [_vm._v("\n                                                        Buscar\n                                                    ")]), _vm._v(" "), _c("button", {
     staticClass: "btn btn-flat btn-default btnWidth",
     on: {
       click: function click($event) {
@@ -28223,7 +28773,7 @@ var render = function render() {
         return _vm.limpiarCriteriosBsq.apply(null, arguments);
       }
     }
-  }, [_vm._v("\n                           Limpiar\n                         ")])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                                                        Limpiar\n                                                    ")])])])]), _vm._v(" "), _c("div", {
     staticClass: "card card-info"
   }, [_c("div", {
     staticClass: "card-header"
@@ -28329,7 +28879,7 @@ var render = function render() {
     staticClass: "form-group row"
   }, [_c("label", {
     staticClass: "col-md-3 col-form-label"
-  }, [_vm._v("Seleccione la Fecha")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Seleccione la\n                                                            Fecha")]), _vm._v(" "), _c("div", {
     staticClass: "col-md-6"
   }, [_c("el-date-picker", {
     style: {
@@ -28351,7 +28901,38 @@ var render = function render() {
       },
       expression: "fillBsqReportePersonal.dFecha2"
     }
-  })], 1)])])])]), _vm._v(" "), _c("div", {
+  })], 1)])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-3 col-form-label"
+  }, [_vm._v("Seleccione la\n                                                            Sede")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6"
+  }, [_c("el-select", {
+    style: {
+      width: "350px"
+    },
+    attrs: {
+      filterable: "",
+      placeholder: "Seleccione una Sede"
+    },
+    model: {
+      value: _vm.fillBsqReportePersonal.nIdSede,
+      callback: function callback($$v) {
+        _vm.$set(_vm.fillBsqReportePersonal, "nIdSede", $$v);
+      },
+      expression: "fillBsqReportePersonal.nIdSede"
+    }
+  }, _vm._l(_vm.listSede, function (item) {
+    return _c("el-option", {
+      key: item.id,
+      attrs: {
+        label: item.nombre,
+        value: item.id
+      }
+    });
+  }), 1)], 1)])])])]), _vm._v(" "), _c("div", {
     staticClass: "card-footer"
   }, [_c("div", {
     staticClass: "row"
@@ -28365,7 +28946,7 @@ var render = function render() {
         return _vm.getListReporteAsistenciaByDate.apply(null, arguments);
       }
     }
-  }, [_vm._v("\n                           Buscar\n                         ")]), _vm._v(" "), _c("button", {
+  }, [_vm._v("\n                                                        Buscar\n                                                    ")]), _vm._v(" "), _c("button", {
     staticClass: "btn btn-flat btn-default btnWidth3buttons",
     on: {
       click: function click($event) {
@@ -28373,7 +28954,7 @@ var render = function render() {
         return _vm.limpiarCriteriosBsq.apply(null, arguments);
       }
     }
-  }, [_vm._v("\n                           Limpiar\n                         ")]), _vm._v(" "), _c("button", {
+  }, [_vm._v("\n                                                        Limpiar\n                                                    ")]), _vm._v(" "), _c("button", {
     staticClass: "btn btn-flat btn-success btnWidth3buttons",
     on: {
       click: function click($event) {
@@ -28393,7 +28974,7 @@ var render = function render() {
     staticClass: "card-body table-responsive"
   }, [_c("table", {
     staticClass: "table table-hover table-head-fixed text-nowrap projects"
-  }, [_c("thead", [_c("tr", [_c("th", [_vm._v("Fecha")]), _vm._v(" "), _c("th", [_vm._v("Hora")]), _vm._v(" "), _c("th", [_vm._v("Personal")]), _vm._v(" "), _c("th", [_vm._v("DNI")]), _vm._v(" "), _c("th", [_vm._v("Zona")]), _vm._v(" "), _c("th", [_vm._v("Cargo")]), _vm._v(" "), _c("th", [_vm._v("Estado")])])]), _vm._v(" "), _c("tbody", _vm._l(_vm.listAsistenciaByDay, function (item, index) {
+  }, [_c("thead", [_c("tr", [_c("th", [_vm._v("Fecha")]), _vm._v(" "), _c("th", [_vm._v("Hora")]), _vm._v(" "), _c("th", [_vm._v("Personal")]), _vm._v(" "), _c("th", [_vm._v("DNI")]), _vm._v(" "), _c("th", [_vm._v("Zona")]), _vm._v(" "), _c("th", [_vm._v("Sede")]), _vm._v(" "), _c("th", [_vm._v("Cargo")]), _vm._v(" "), _c("th", [_vm._v("Estado")])])]), _vm._v(" "), _c("tbody", _vm._l(_vm.listAsistenciaByDay, function (item, index) {
     return _c("tr", {
       key: index
     }, [_c("td", {
@@ -28415,6 +28996,10 @@ var render = function render() {
     }), _vm._v(" "), _c("td", {
       domProps: {
         textContent: _vm._s(item.zonal)
+      }
+    }), _vm._v(" "), _c("td", {
+      domProps: {
+        textContent: _vm._s(item.sede)
       }
     }), _vm._v(" "), _c("td", {
       domProps: {
@@ -28489,7 +29074,40 @@ var render = function render() {
     staticClass: "form-group row"
   }, [_c("label", {
     staticClass: "col-md-3 col-form-label"
-  }, [_vm._v("Seleccione la Fecha")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Seleccione la\n                                                            Sede")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6"
+  }, [_c("el-select", {
+    style: {
+      width: "350px"
+    },
+    attrs: {
+      filterable: "",
+      placeholder: "Seleccione una Sede"
+    },
+    model: {
+      value: _vm.fillBsqReportePersonal.nIdSedeDetallado,
+      callback: function callback($$v) {
+        _vm.$set(_vm.fillBsqReportePersonal, "nIdSedeDetallado", $$v);
+      },
+      expression: "fillBsqReportePersonal.nIdSedeDetallado"
+    }
+  }, _vm._l(_vm.listSede, function (item) {
+    return _c("el-option", {
+      key: item.id,
+      attrs: {
+        label: item.nombre,
+        value: item.id
+      }
+    });
+  }), 1)], 1)])])]), _vm._v(" "), _c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-6"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-3 col-form-label"
+  }, [_vm._v("Seleccione la\n                                                            Fecha")]), _vm._v(" "), _c("div", {
     staticClass: "col-md-6"
   }, [_c("el-date-picker", {
     style: {
@@ -28547,7 +29165,7 @@ var render = function render() {
     }
   }, [_c("span", [_c("i", {
     staticClass: "fas fa-file-excel"
-  }), _vm._v(" Control por\n                             tardanzas")])])])])])])], 1)], 1)])])])])])]);
+  }), _vm._v(" Control por\n                                                            tardanzas")])])])])])])], 1)], 1)])])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -59541,7 +60159,7 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "fas fa-plus-square"
-  }), _vm._v("Regresar\n                    ")])], 1)]), _vm._v(" "), _c("div", {
+  }), _vm._v("Regresar\n                        ")])], 1)]), _vm._v(" "), _c("div", {
     staticClass: "card-body"
   }, [_c("div", {
     staticClass: "container-fluid"
@@ -59568,7 +60186,7 @@ var render = function render() {
       name: "model",
       rawName: "v-model",
       value: _vm.fillCrearPersonal.cNumPersonal,
-      expression: "\n                                                        fillCrearPersonal.cNumPersonal\n                                                    "
+      expression: "\n                                                            fillCrearPersonal.cNumPersonal\n                                                        "
     }],
     staticClass: "form-control",
     attrs: {
@@ -59598,7 +60216,7 @@ var render = function render() {
       name: "model",
       rawName: "v-model",
       value: _vm.fillCrearPersonal.cNombres,
-      expression: "\n                                                        fillCrearPersonal.cNombres\n                                                    "
+      expression: "\n                                                            fillCrearPersonal.cNombres\n                                                        "
     }],
     staticClass: "form-control",
     attrs: {
@@ -59626,7 +60244,7 @@ var render = function render() {
       name: "model",
       rawName: "v-model",
       value: _vm.fillCrearPersonal.cSecondname,
-      expression: "\n                                                        fillCrearPersonal.cSecondname\n                                                    "
+      expression: "\n                                                            fillCrearPersonal.cSecondname\n                                                        "
     }],
     staticClass: "form-control",
     attrs: {
@@ -59656,7 +60274,7 @@ var render = function render() {
       name: "model",
       rawName: "v-model",
       value: _vm.fillCrearPersonal.cLastname,
-      expression: "\n                                                        fillCrearPersonal.cLastname\n                                                    "
+      expression: "\n                                                            fillCrearPersonal.cLastname\n                                                        "
     }],
     staticClass: "form-control",
     attrs: {
@@ -59684,7 +60302,7 @@ var render = function render() {
       name: "model",
       rawName: "v-model",
       value: _vm.fillCrearPersonal.cDni,
-      expression: "\n                                                        fillCrearPersonal.cDni\n                                                    "
+      expression: "\n                                                            fillCrearPersonal.cDni\n                                                        "
     }],
     staticClass: "form-control",
     attrs: {
@@ -59719,7 +60337,7 @@ var render = function render() {
       callback: function callback($$v) {
         _vm.$set(_vm.fillCrearPersonal, "nIdCargo", $$v);
       },
-      expression: "\n                                                        fillCrearPersonal.nIdCargo\n                                                    "
+      expression: "\n                                                            fillCrearPersonal.nIdCargo\n                                                        "
     }
   }, _vm._l(_vm.listCargo, function (item) {
     return _c("el-option", {
@@ -59747,9 +60365,39 @@ var render = function render() {
       callback: function callback($$v) {
         _vm.$set(_vm.fillCrearPersonal, "nIdZonal", $$v);
       },
-      expression: "\n                                                        fillCrearPersonal.nIdZonal\n                                                    "
+      expression: "\n                                                            fillCrearPersonal.nIdZonal\n                                                        "
     }
   }, _vm._l(_vm.listZonal, function (item) {
+    return _c("el-option", {
+      key: item.id,
+      attrs: {
+        label: item.nombre,
+        value: item.id
+      }
+    });
+  }), 1)], 1)])])]), _vm._v(" "), _c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-6"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-3 col-form-label"
+  }, [_vm._v("Sede")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-9"
+  }, [_c("el-select", {
+    attrs: {
+      placeholder: "Seleccione un Rol",
+      clearable: ""
+    },
+    model: {
+      value: _vm.fillCrearPersonal.nIdSede,
+      callback: function callback($$v) {
+        _vm.$set(_vm.fillCrearPersonal, "nIdSede", $$v);
+      },
+      expression: "\n                                                            fillCrearPersonal.nIdSede\n                                                        "
+    }
+  }, _vm._l(_vm.listSede, function (item) {
     return _c("el-option", {
       key: item.id,
       attrs: {
@@ -59771,7 +60419,7 @@ var render = function render() {
         return _vm.setValidarPersonal.apply(null, arguments);
       }
     }
-  }, [_vm._v("\n                                        Registrar\n                                    ")]), _vm._v(" "), _c("button", {
+  }, [_vm._v("\n                                            Registrar\n                                        ")]), _vm._v(" "), _c("button", {
     staticClass: "btn btn-flat btn-default btnWidth",
     on: {
       click: function click($event) {
@@ -59779,7 +60427,7 @@ var render = function render() {
         return _vm.limpiarCriteriosBsq.apply(null, arguments);
       }
     }
-  }, [_vm._v("\n                                        Limpiar\n                                    ")])])])])])])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                                            Limpiar\n                                        ")])])])])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "modal fade",
     "class": {
       show: _vm.modalShow
@@ -59821,7 +60469,7 @@ var render = function render() {
     on: {
       click: _vm.abrirModal
     }
-  }, [_vm._v("\n                        Cerrar\n                    ")])])])])])]);
+  }, [_vm._v("\n                            Cerrar\n                        ")])])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -59844,7 +60492,7 @@ var staticRenderFns = [function () {
     staticClass: "card-header"
   }, [_c("h3", {
     staticClass: "card-title"
-  }, [_vm._v("\n                                Formulario Registrar Personal\n                            ")])]);
+  }, [_vm._v("\n                                    Formulario Registrar Personal\n                                ")])]);
 }];
 render._withStripped = true;
 
@@ -67700,6 +68348,512 @@ render._withStripped = true;
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/modulos/servicio_ReqMateriales/editMaterial.vue?vue&type=template&id=1edde469":
+/*!***************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/modulos/servicio_ReqMateriales/editMaterial.vue?vue&type=template&id=1edde469 ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", [_vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "content container-fluid"
+  }, [_c("div", {
+    staticClass: "card"
+  }, [_c("div", {
+    staticClass: "card-header"
+  }, [_c("div", {
+    staticClass: "card-tools"
+  }, [_c("router-link", {
+    staticClass: "btn btn-info btn-sm",
+    attrs: {
+      to: "/servicio_ReqMateriales/list"
+    }
+  }, [_c("i", {
+    staticClass: "fas fa-arrow-left"
+  }), _vm._v("Regresar\n                      ")])], 1)]), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_c("div", {
+    staticClass: "container-fluid"
+  }, [_c("div", {
+    staticClass: "card card-info"
+  }, [_vm._m(1), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_c("form", {
+    attrs: {
+      role: "form"
+    }
+  }, [_c("div", {
+    staticClass: "col-md-12"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-6"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-3 col-form-label"
+  }, [_vm._v("Cliente")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillEditReqMaterialesServicio.cClient,
+      expression: "fillEditReqMaterialesServicio.cClient"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      readonly: "true"
+    },
+    domProps: {
+      value: _vm.fillEditReqMaterialesServicio.cClient
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillEditReqMaterialesServicio, "cClient", $event.target.value);
+      }
+    }
+  })])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-2 col-form-label"
+  }, [_vm._v("RUC o DNI ")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-5"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillEditReqMaterialesServicio.cRuc,
+      expression: "fillEditReqMaterialesServicio.cRuc"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      maxlength: 11
+    },
+    domProps: {
+      value: _vm.fillEditReqMaterialesServicio.cRuc
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillEditReqMaterialesServicio, "cRuc", $event.target.value);
+      }
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "text-center"
+  }, [_c("span", {
+    staticStyle: {
+      color: "red",
+      "text-align": "end"
+    }
+  }, [_vm._v(_vm._s(this.fillEditReqMaterialesServicio.cRuc.length + " " + "Caracteres"))])])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-12"
+  }, [_c("div", {
+    staticClass: "col-md-9"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-2 col-form-label"
+  }, [_vm._v("Detalle Servicio")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-9"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillEditReqMaterialesServicio.detservicio,
+      expression: "fillEditReqMaterialesServicio.detservicio"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text"
+    },
+    domProps: {
+      value: _vm.fillEditReqMaterialesServicio.detservicio
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillEditReqMaterialesServicio, "detservicio", $event.target.value);
+      }
+    }
+  })])])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-12"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-6"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-3 col-form-label"
+  }, [_vm._v("Fecha Inicio")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6"
+  }, [_c("el-date-picker", {
+    attrs: {
+      type: "date",
+      placeholder: "Indique la fecha",
+      format: "dd/MM/yyyy",
+      "value-format": "yyyy-MM-dd"
+    },
+    model: {
+      value: _vm.fillEditReqMaterialesServicio.FInicio,
+      callback: function callback($$v) {
+        _vm.$set(_vm.fillEditReqMaterialesServicio, "FInicio", $$v);
+      },
+      expression: "fillEditReqMaterialesServicio.FInicio"
+    }
+  })], 1)])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6"
+  }, [_c("div", {
+    staticClass: "col-md-6"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-3 col-form-label"
+  }, [_vm._v("Fecha Final")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6"
+  }, [_c("el-date-picker", {
+    attrs: {
+      type: "date",
+      placeholder: "Indique la fecha",
+      format: "dd/MM/yyyy",
+      "value-format": "yyyy-MM-dd"
+    },
+    on: {
+      change: _vm.calculoFecha
+    },
+    model: {
+      value: _vm.fillEditReqMaterialesServicio.FFinal,
+      callback: function callback($$v) {
+        _vm.$set(_vm.fillEditReqMaterialesServicio, "FFinal", $$v);
+      },
+      expression: "fillEditReqMaterialesServicio.FFinal"
+    }
+  })], 1)])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-12"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-6"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-3 col-form-label"
+  }, [_vm._v("Duracion (Días)")]), _vm._v(" "), _vm.calculoFechas != "NaN" ? _c("div", {
+    staticClass: "col-md-3"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillEditReqMaterialesServicio.cDuracion,
+      expression: "fillEditReqMaterialesServicio.cDuracion"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text"
+    },
+    domProps: {
+      value: _vm.fillEditReqMaterialesServicio.cDuracion
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillEditReqMaterialesServicio, "cDuracion", $event.target.value);
+      }
+    }
+  })]) : _vm._e()])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-2 col-form-label"
+  }, [_vm._v("Cantidad")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-3"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillEditReqMaterialesServicio.cCantidad,
+      expression: "fillEditReqMaterialesServicio.cCantidad"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text"
+    },
+    domProps: {
+      value: _vm.fillEditReqMaterialesServicio.cCantidad
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillEditReqMaterialesServicio, "cCantidad", $event.target.value);
+      }
+    }
+  })])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "container-fluid"
+  }, [_c("form", {
+    attrs: {
+      role: "form"
+    }
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-12"
+  }, [_c("div", {
+    staticClass: "card card-primary"
+  }, [_vm._m(2), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-2 col-form-label"
+  }, [_vm._v("DESCRIPCION DEL MATERIAL")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-10"
+  }, [_c("el-select", {
+    staticStyle: {
+      width: "90%"
+    },
+    attrs: {
+      filterable: "",
+      placeholder: "Select"
+    },
+    model: {
+      value: _vm.fillEditReqMaterialesServicio.nIdmaterial,
+      callback: function callback($$v) {
+        _vm.$set(_vm.fillEditReqMaterialesServicio, "nIdmaterial", $$v);
+      },
+      expression: "fillEditReqMaterialesServicio.nIdmaterial"
+    }
+  }, [_c("v-row", {
+    attrs: {
+      align: "right"
+    }
+  }, _vm._l(_vm.listProd, function (item) {
+    return _c("el-option", {
+      key: item.id,
+      attrs: {
+        label: item.codigo + " - " + item.familia.nombre + " , " + item.subfamilia.nombre + " , Modelo: " + item.modelotipo.nombre + " , Marca : " + item.marca.nombre + " , Material : " + item.material.nombre + " ," + item.homologacion.nombre,
+        value: item.id
+      }
+    });
+  }), 1)], 1)], 1)]), _vm._v(" "), _c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-2 col-form-label"
+  }, [_vm._v("CANTIDAD")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-3"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillEditReqMaterialesServicio.cCantMaterial,
+      expression: "fillEditReqMaterialesServicio.cCantMaterial"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text"
+    },
+    domProps: {
+      value: _vm.fillEditReqMaterialesServicio.cCantMaterial
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillEditReqMaterialesServicio, "cCantMaterial", $event.target.value);
+      }
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-4 col-form-label"
+  }, [_vm._v("MEDIDA")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-4"
+  }, [_c("el-select", {
+    staticStyle: {
+      width: "70%"
+    },
+    attrs: {
+      placeholder: "Select"
+    },
+    model: {
+      value: _vm.fillEditReqMaterialesServicio.nIdUnidMedMat,
+      callback: function callback($$v) {
+        _vm.$set(_vm.fillEditReqMaterialesServicio, "nIdUnidMedMat", $$v);
+      },
+      expression: "fillEditReqMaterialesServicio.nIdUnidMedMat"
+    }
+  }, _vm._l(_vm.listUnidMed, function (item) {
+    return _c("el-option", {
+      key: item.id,
+      attrs: {
+        label: item.nombre,
+        value: item.id
+      }
+    });
+  }), 1)], 1)])])])])])])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "card-footer"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-4 offset-4"
+  }, [_c("button", {
+    staticClass: "btn btn-flat btn-primary btnWidth",
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.setRegistrarServMaterialesList.apply(null, arguments);
+      }
+    }
+  }, [_vm._v("\n                    Agregar\n                  ")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-flat btn-default btnWidth",
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.setCleanReqMateriales.apply(null, arguments);
+      }
+    }
+  }, [_vm._v("\n                    Limpiar\n                  ")])])])]), _vm._v(" "), _c("div", {
+    staticClass: "card card-primary"
+  }, [_vm._m(3), _vm._v(" "), _c("div", {
+    staticClass: "card-body table-responsive"
+  }, [_c("table", {
+    staticClass: "table table-hover table-head-fixed text-nowrap projects"
+  }, [_vm._m(4), _vm._v(" "), _c("tbody", _vm._l(_vm.listServicioMateriales, function (item, index) {
+    return _c("tr", {
+      key: index
+    }, [_c("td", {
+      domProps: {
+        textContent: _vm._s(item.producto.codigo)
+      }
+    }), _vm._v(" "), _c("td", {
+      domProps: {
+        textContent: _vm._s(item.cantServicio)
+      }
+    }), _vm._v(" "), _c("td", {
+      domProps: {
+        textContent: _vm._s(item.producto.familia.nombre + " " + item.producto.subfamilia.nombre + ", MARCA :" + item.producto.marca.nombre + ", MODELO/TIPO :" + item.producto.modelotipo.nombre + ", MATERIAL :" + item.producto.material.nombre)
+      }
+    }), _vm._v(" "), _c("td", {
+      domProps: {
+        textContent: _vm._s(item.unidmedida.nombre)
+      }
+    }), _vm._v(" "), _c("td", [_c("button", {
+      staticClass: "btn btn-danger btn-sm",
+      on: {
+        click: function click($event) {
+          $event.preventDefault();
+          return _vm.DeletListReqMateriales(item.id);
+        }
+      }
+    }, [_c("i", {
+      staticClass: "fas fa-trash-alt"
+    }), _vm._v("\n                          Eliminar\n                        ")])])]);
+  }), 0)])])])])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "modal fade",
+    "class": {
+      show: _vm.modalShow
+    },
+    style: _vm.modalShow ? _vm.mostrarModal : _vm.ocultarModal
+  }, [_c("div", {
+    staticClass: "modal-dialog",
+    attrs: {
+      role: "document"
+    }
+  }, [_c("div", {
+    staticClass: "modal-content"
+  }, [_c("div", {
+    staticClass: "modal-header"
+  }, [_c("h5", {
+    staticClass: "modal-title"
+  }, [_vm._v("Sistemas Novesur")]), _vm._v(" "), _c("button", {
+    staticClass: "close",
+    on: {
+      click: _vm.abrirModal
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "modal-body"
+  }, _vm._l(_vm.mensajeError, function (item, index) {
+    return _c("div", {
+      key: index,
+      staticClass: "callout callout-danger",
+      staticStyle: {
+        padding: "5px"
+      },
+      domProps: {
+        textContent: _vm._s(item)
+      }
+    });
+  }), 0), _vm._v(" "), _c("div", {
+    staticClass: "modal-footer"
+  }, [_c("button", {
+    staticClass: "btn btn-secondary",
+    on: {
+      click: _vm.abrirModal
+    }
+  }, [_vm._v("Cerrar")])])])])])]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "content-header"
+  }, [_c("div", {
+    staticClass: "container-fluid"
+  }, [_c("div", {
+    staticClass: "row mb-2"
+  }, [_c("div", {
+    staticClass: "col-sm-12"
+  }, [_c("h1", {
+    staticClass: "m-0 text-dark"
+  }, [_vm._v("Editar Requerimientos de Materiales para servicio al Cliente ")])])])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "card-header"
+  }, [_c("h3", {
+    staticClass: "card-title"
+  }, [_vm._v("Formulario Requerimiento de Materiales")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "card-header"
+  }, [_c("h3", {
+    staticClass: "card-title"
+  }, [_vm._v("REQUERIMIENTOS DE MATERIALES")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "card-header"
+  }, [_c("h3", {
+    staticClass: "card-title"
+  }, [_vm._v("Bandeja de Resultados")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("Codigo")]), _vm._v(" "), _c("th", [_vm._v("Cantidad")]), _vm._v(" "), _c("th", [_vm._v("Descripcion")]), _vm._v(" "), _c("th", [_vm._v("Unid. Medida")]), _vm._v(" "), _c("th", [_vm._v("Acción")])])]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/modulos/servicio_ReqMateriales/list.vue?vue&type=template&id=2b64cd94":
 /*!*******************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/modulos/servicio_ReqMateriales/list.vue?vue&type=template&id=2b64cd94 ***!
@@ -67733,44 +68887,6 @@ var render = function render() {
       role: "form"
     }
   }, [_c("div", {
-    staticClass: "row"
-  }, [_c("div", {
-    staticClass: "col-md-12"
-  }, [_c("div", {
-    staticClass: "form-group row"
-  }, [_c("label", {
-    staticClass: "col-md-1 col-form-label"
-  }, [_vm._v("Producto")]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-10"
-  }, [_c("el-select", {
-    staticStyle: {
-      width: "90%"
-    },
-    attrs: {
-      filterable: "",
-      clearable: "",
-      placeholder: "Select"
-    },
-    model: {
-      value: _vm.fillReporteOrdProduccion.nIdprod,
-      callback: function callback($$v) {
-        _vm.$set(_vm.fillReporteOrdProduccion, "nIdprod", $$v);
-      },
-      expression: "fillReporteOrdProduccion.nIdprod"
-    }
-  }, [_c("v-row", {
-    attrs: {
-      align: "right"
-    }
-  }, _vm._l(_vm.listProd, function (item) {
-    return _c("el-option", {
-      key: item.id,
-      attrs: {
-        label: item.codigo + " - " + item.familia.nombre + " , " + item.subfamilia.nombre + " , Modelo: " + item.modelotipo.nombre + " , Marca : " + item.marca.nombre + " , Material : " + item.material.nombre + " ," + item.homologacion.nombre,
-        value: item.id
-      }
-    });
-  }), 1)], 1)], 1)])])]), _vm._v(" "), _c("div", {
     staticClass: "row"
   }, [_c("div", {
     staticClass: "col-md-12"
@@ -67831,19 +68947,19 @@ var render = function render() {
       key: index
     }, [_c("td", {
       domProps: {
-        textContent: _vm._s(item.servicio.codigo)
+        textContent: _vm._s(item.codigo)
       }
     }), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm._f("moment")(item.fecha, "DD - MM - Y")) + "\n                     ")]), _vm._v(" "), _c("td", {
       domProps: {
-        textContent: _vm._s(item.servicio.cliente)
+        textContent: _vm._s(item.cliente)
       }
     }), _vm._v(" "), _c("td", {
       domProps: {
-        textContent: _vm._s(item.servicio.detservicio)
+        textContent: _vm._s(item.detservicio)
       }
-    }), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.servicio.cantidad))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm._f("moment")(item.servicio.fechainicio, "DD - MM - Y")))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm._f("moment")(item.servicio.fechafinal, "DD - MM - Y")))]), _vm._v(" "), _c("td", {
+    }), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.cantidad))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm._f("moment")(item.fechainicio, "DD - MM - Y")))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm._f("moment")(item.fechafinal, "DD - MM - Y")))]), _vm._v(" "), _c("td", {
       domProps: {
-        textContent: _vm._s(item.servicio.duracion)
+        textContent: _vm._s(item.duracion)
       }
     }), _vm._v(" "), _c("td", [_c("button", {
       staticClass: "btn btn-danger btn-sm",
@@ -67855,7 +68971,19 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "fas fa-file-pdf"
-    }), _vm._v(" PDF\n                              ")])])]);
+    }), _vm._v(" PDF\n                              ")]), _vm._v(" "), _c("router-link", {
+      staticClass: "btn btn-info btn-sm tamañoletra",
+      attrs: {
+        to: {
+          name: "servicio_ReqMateriales.editMaterial",
+          params: {
+            id: item.id
+          }
+        }
+      }
+    }, [_c("i", {
+      staticClass: "fas fa-pencil-alt"
+    }), _vm._v(" Editar\n                              ")])], 1)]);
   }), 0)])])])])])])])]);
 };
 var staticRenderFns = [function () {
@@ -196188,6 +197316,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/modulos/servicio_ReqMateriales/editMaterial.vue":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/modulos/servicio_ReqMateriales/editMaterial.vue ***!
+  \*********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _editMaterial_vue_vue_type_template_id_1edde469__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./editMaterial.vue?vue&type=template&id=1edde469 */ "./resources/js/components/modulos/servicio_ReqMateriales/editMaterial.vue?vue&type=template&id=1edde469");
+/* harmony import */ var _editMaterial_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./editMaterial.vue?vue&type=script&lang=js */ "./resources/js/components/modulos/servicio_ReqMateriales/editMaterial.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _editMaterial_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _editMaterial_vue_vue_type_template_id_1edde469__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _editMaterial_vue_vue_type_template_id_1edde469__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/modulos/servicio_ReqMateriales/editMaterial.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/modulos/servicio_ReqMateriales/editMaterial.vue?vue&type=script&lang=js":
+/*!*********************************************************************************************************!*\
+  !*** ./resources/js/components/modulos/servicio_ReqMateriales/editMaterial.vue?vue&type=script&lang=js ***!
+  \*********************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_editMaterial_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./editMaterial.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/modulos/servicio_ReqMateriales/editMaterial.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_editMaterial_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/modulos/servicio_ReqMateriales/editMaterial.vue?vue&type=template&id=1edde469":
+/*!***************************************************************************************************************!*\
+  !*** ./resources/js/components/modulos/servicio_ReqMateriales/editMaterial.vue?vue&type=template&id=1edde469 ***!
+  \***************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_editMaterial_vue_vue_type_template_id_1edde469__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../../node_modules/vue-loader/lib??vue-loader-options!./editMaterial.vue?vue&type=template&id=1edde469 */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/modulos/servicio_ReqMateriales/editMaterial.vue?vue&type=template&id=1edde469");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_editMaterial_vue_vue_type_template_id_1edde469__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_editMaterial_vue_vue_type_template_id_1edde469__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/modulos/servicio_ReqMateriales/list.vue":
 /*!*************************************************************************!*\
   !*** ./resources/js/components/modulos/servicio_ReqMateriales/list.vue ***!
@@ -198440,6 +199637,11 @@ function verificarAcceso(to, from, next) {
     path: "/informeServicio/list",
     name: "informeServicio.list",
     component: __webpack_require__(/*! ./components/modulos/informeServicio/list */ "./resources/js/components/modulos/informeServicio/list.vue")["default"]
+  }, {
+    path: "/servicio_ReqMateriales/editMaterial/:id",
+    name: "servicio_ReqMateriales.editMaterial",
+    component: __webpack_require__(/*! ./components/modulos/servicio_ReqMateriales/editMaterial */ "./resources/js/components/modulos/servicio_ReqMateriales/editMaterial.vue")["default"],
+    props: true
   }],
   mode: "history",
   linkActiveClass: "active"

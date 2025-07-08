@@ -8,6 +8,7 @@ use App\Imports\AsistenciaImport;
 use App\Exports\Asistencia0113Export;
 use App\Exports\Asistencia1431Export;
 use App\Exports\AsistenciaTardanzaExport;
+use App\Imports\AsistenciaLurinImport;
 use App\Personal;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -19,15 +20,33 @@ class AsistenciaController extends Controller
 {
     public function import(Request $request){
 
-        $path= $request->file('select_file');
-        $dato= is_null($path);
+        //Si Sede es Surco
+        if($request->radioSede == 1){
+            $path= $request->file('select_file');
+            $dato= is_null($path);
 
-       if(!$dato){
-           Excel::import(new AsistenciaImport, $path);
-           return response()->json(['message' => 'Exportacion Realizada', 'icon' => 'success'], 200);
-       }else{
-        return response()->json(['message' => 'Seleccione el archivo', 'icon' => 'warning'], 200);
-       }
+           if(!$dato){
+               Excel::import(new AsistenciaImport, $path);
+               return response()->json(['message' => 'Exportacion Realizada', 'icon' => 'success'], 200);
+           }else{
+            return response()->json(['message' => 'Seleccione el archivo', 'icon' => 'warning'], 200);
+           }
+
+        }
+     //Si Sede es Lurin
+        if($request->radioSede == 2){
+            $path= $request->file('select_file');
+
+            $dato= is_null($path);
+
+           if(!$dato){
+               Excel::import(new AsistenciaLurinImport, $path);
+               return response()->json(['message' => 'Exportacion Realizada', 'icon' => 'success'], 200);
+           }else{
+            return response()->json(['message' => 'Seleccione el archivo', 'icon' => 'warning'], 200);
+           }
+        }
+
     }
 
     public function listAsistByDate(Request $request){
@@ -44,17 +63,19 @@ class AsistenciaController extends Controller
 
        $dFechafin = $request->dFechafin;
        $dFechafin = ($dFechafin == NULL) ? ($dFechafin = 0) : $dFechafin;
-        $rpta = DB::select('call sp_AsistenciaByDay (?,?)', [
+       $sede = $request->nIdSede;
+        $rpta = DB::select('call sp_AsistenciaByDay (?,?,?)', [
             $dFechainicio,
             $dFechafin,
+            $sede
         ]);
         return $rpta;
     }
 
     public function  listByDatePersonal(Request $request){
 
-
         $personal = Personal::find($request->personal);
+
 
         if (!$request->ajax()) return redirect('/');
         $dFechainicio = $request->dFechainicio;
@@ -62,11 +83,13 @@ class AsistenciaController extends Controller
 
         $dFechafin = $request->dFechafin;
         $dFechafin = ($dFechafin == NULL) ? ($dFechafin = 0) : $dFechafin;
+        $nIdSedePersonal = $request->nIdSedePersonal;
 
-        $rpta = DB::select('call sp_AsistenciasReportByDatePersonal (?,?,?)', [
+        $rpta = DB::select('call sp_AsistenciasReportByDatePersonal (?,?,?,?)', [
             $dFechainicio,
             $dFechafin,
-            $personal->codigo
+            $personal->id,
+            $nIdSedePersonal
 
         ]);
         return $rpta;
@@ -79,8 +102,13 @@ class AsistenciaController extends Controller
 
     }
 
-    public function  listAsistByDate0113(){
-        $rpta = DB::select('call sp_ListadoAsistencia0113');
+    public function  listAsistByDate0113(Request $request){
+
+        $nIdSedeDetallado = $request->nIdSedeDetallado;
+
+        $rpta = DB::select('call sp_ListadoAsistencia0113 (?)',[
+            $nIdSedeDetallado
+        ]);
         return $rpta;
     }
 

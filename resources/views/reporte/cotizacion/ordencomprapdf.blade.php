@@ -296,11 +296,11 @@
     <tr>
       @if($orderCompra->user->almacen_id == 1 && $orderCompra->tipo_ordencompra_id === 2)
       <td width="33%" align="center">
-        <img src="{{URL::asset('/img/Firma_Yossi.png')}}" alt="firma" style="width: 200px; height: 100px">
+      {{--   <img src="{{URL::asset('/img/Firma_Yossi.png')}}" alt="firma" style="width: 200px; height: 100px"> --}}
       </td>
       <td width="25%" align="center">&nbsp;</td>
       <td width="40%" align="center">
-        <img src="{{URL::asset('/img/firma-sello.gif')}}" alt="firma" style="width: 320px; height: 150px">
+       {{--  <img src="{{URL::asset('/img/firma-sello.gif')}}" alt="firma" style="width: 320px; height: 150px"> --}}
       </td>
 
       @endif
