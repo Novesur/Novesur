@@ -7006,6 +7006,7 @@ __webpack_require__.r(__webpack_exports__);
       listGarantia: [],
       listDetCotizacion: [],
       listEditProductosPaginated: [],
+      listRolPermisoByUsuario: JSON.parse(sessionStorage.getItem("listRolPermisosByUsuario")),
       modalShow: false,
       modalShowEditItem: false,
       mostrarModal: {
@@ -33840,7 +33841,7 @@ var render = function render() {
           return _vm.borradoItems(item.id);
         }
       }
-    }, [_vm._m(5, true), _vm._v("\n                                                        Eliminar\n                                                    ")]), _vm._v(" "), _c("button", {
+    }, [_vm._m(5, true), _vm._v("\n                                                        Eliminar\n                                                    ")]), _vm._v(" "), _vm.listRolPermisoByUsuario.includes("cotizacion_EditarProducto") ? [_c("button", {
       staticClass: "btn btn-primary btn-sm",
       on: {
         click: function click($event) {
@@ -33848,7 +33849,7 @@ var render = function render() {
           return _vm.EditarItems(item.id);
         }
       }
-    }, [_vm._m(6, true), _vm._v("\n                                                        Editar\n                                                    ")])])]);
+    }, [_vm._m(6, true), _vm._v("\n                                                            Editar\n                                                        ")])] : _vm._e()], 2)]);
   }), 0)])]), _vm._v(" "), _c("div", {
     staticClass: "card-footer"
   }, [_c("div", {
@@ -34456,7 +34457,7 @@ var render = function render() {
           return _vm.getPdfCotizacion(item.codigo, item.fecha);
         }
       }
-    }, [_vm._m(4, true), _vm._v(" PDF\n                                            ")]), _vm._v(" "), item.estadodias <= 30 ? [_c("router-link", {
+    }, [_vm._m(4, true), _vm._v(" PDF\n                                            ")]), _vm._v(" "), [_c("router-link", {
       staticClass: "btn btn-secondary btn-sm",
       attrs: {
         to: {
@@ -34468,7 +34469,7 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "far fa-edit"
-    }), _vm._v(" Editar\n                                                ")])] : _vm._e()], 2) : _vm._e(), _vm._v(" "), item.estadopedido == "ANULADO" ? [_c("td", {
+    }), _vm._v(" Editar\n                                                ")])]], 2) : _vm._e(), _vm._v(" "), item.estadopedido == "ANULADO" ? [_c("td", {
       domProps: {
         textContent: _vm._s(_vm.estadopedido)
       }

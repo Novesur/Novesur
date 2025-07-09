@@ -711,21 +711,24 @@
                                                             Eliminar
                                                         </button>
 
-                                                        <button
-                                                            class="btn btn-primary btn-sm"
-                                                            @click.prevent="
-                                                                EditarItems(
-                                                                    item.id
-                                                                )
-                                                            "
-                                                        >
-                                                            <span
-                                                                ><i
-                                                                    class="far fa-edit"
-                                                                ></i
-                                                            ></span>
-                                                            Editar
-                                                        </button>
+                                                        <template v-if="listRolPermisoByUsuario.includes('cotizacion_EditarProducto')">
+
+                                                            <button
+                                                                class="btn btn-primary btn-sm"
+                                                                @click.prevent="
+                                                                    EditarItems(
+                                                                        item.id
+                                                                    )
+                                                                "
+                                                            >
+                                                                <span
+                                                                    ><i
+                                                                        class="far fa-edit"
+                                                                    ></i
+                                                                ></span>
+                                                                Editar
+                                                            </button>
+                                                        </template>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -1024,6 +1027,9 @@ export default {
             listDetCotizacion: [],
 
             listEditProductosPaginated: [],
+              listRolPermisoByUsuario: JSON.parse(
+                sessionStorage.getItem("listRolPermisosByUsuario")
+            ),
 
             modalShow: false,
             modalShowEditItem: false,

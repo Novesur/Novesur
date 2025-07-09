@@ -28,16 +28,16 @@
             <tr>
                 <td>
 
-                   @php
+                {{--    @php
                    echo sprintf('%03d', $data->id).'-'. substr($data->fecha,0,4);
-                   @endphp
-
+                   @endphp --}}
+{{$data->codigo}}
 
             </td>
                 <td>{{date('d-m-Y', strtotime($data->fecha))}}</td>
                 <td>{{$data->cliente->razonsocial}}</td>
                 <td>{{$data->estadopedido->nombre}}</td>
-                <td>{{$data->user->firstname}}</td> 
+                <td>{{$data->user->firstname}}</td>
                 <td>{{$data->detalle_sum}}</td>
             </tr>
             @endforeach

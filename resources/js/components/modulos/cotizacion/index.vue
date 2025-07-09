@@ -219,7 +219,8 @@
                                             </router-link>
                                             </template> -->
 
-                                                <template v-if="item.estadodias <= 30">
+                                                <!-- <template v-if="item.estadodias <= 30"> -->
+                                                    <template >
                                                     <router-link class="btn btn-secondary btn-sm" :to="{
                                                         name: 'cotizacion.editar',
                                                         params: { id: item.codigo },
