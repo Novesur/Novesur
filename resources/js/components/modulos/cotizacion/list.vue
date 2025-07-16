@@ -798,10 +798,12 @@ export default {
                 nIdprod: "",
                 nIdClient: "",
             },
+
             rangoAnios: [
                 { label: "2021", value: "2021" },
                 { label: "2022", value: "2022" },
             ],
+
             activeName: "first",
             listDetPedido: [],
             listVendedorAdmin: [],
@@ -968,7 +970,7 @@ export default {
                     },
                 })
                 .then((response) => {
-
+                    console.log(response.data)
                     this.listCotizacion = response.data;
                 });
         },

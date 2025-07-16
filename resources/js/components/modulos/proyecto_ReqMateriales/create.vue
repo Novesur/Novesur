@@ -723,7 +723,7 @@ export default {
         cPersonal: "",
         cDiasMObra: "",
         cHorasMObra: "",
-        cDescripcion: "",
+        cDescripcion: ".",
         cCantidadReq: "",
         nIdUnidMed: "",
         nIdUnidMedMat: "",
@@ -1208,6 +1208,7 @@ export default {
         this.listUnidMed = response.data;
         this.fillCrearReqMaterialesProy.nIdUnidMed = this.listUnidMed[7].id;
         this.fillCrearReqMaterialesProy.nIdUnidMedMat = this.listUnidMed[7].id;
+        this.fillCrearReqMaterialesProy.nIdUnidMedOtroReq = this.listUnidMed[7].id;
       });
     },
   },

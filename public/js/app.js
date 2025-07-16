@@ -4996,7 +4996,8 @@ __webpack_require__.r(__webpack_exports__);
       axios.get(url, {
         params: {
           dFechainicio: !this.fillBsqReportePersonal.dFechaDetalle ? "" : this.fillBsqReportePersonal.dFechaDetalle[0],
-          dFechafin: !this.fillBsqReportePersonal.dFechaDetalle ? "" : this.fillBsqReportePersonal.dFechaDetalle[1]
+          dFechafin: !this.fillBsqReportePersonal.dFechaDetalle ? "" : this.fillBsqReportePersonal.dFechaDetalle[1],
+          nIdSedeDetallado: this.fillBsqReportePersonal.nIdSedeDetallado
         }
       }).then(function (response) {
         _this7.listAsistenciaTardanza = response.data;
@@ -7840,6 +7841,7 @@ __webpack_require__.r(__webpack_exports__);
           cSelectAnios: this.fillListCotizacion.cSelectAnios
         }
       }).then(function (response) {
+        console.log(response.data);
         _this2.listCotizacion = response.data;
       });
     },
@@ -21461,7 +21463,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         cFechaEmision: "",
         nidAlmacen: "",
         cRSocial: ""
-      }, _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_fillCrearReqMaterial, "cRuc", ""), "nIdmaterial", ""), "cCantMaterial", ""), "cCantidad", ""), "nIdTipoPago", ""), "nIdTipoMoneda", ""), "nIdUser", sessionStorage.getItem("iduser")), "cPersonal", ""), "cDiasMObra", ""), "cHorasMObra", ""), _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_fillCrearReqMaterial, "cDescripcion", ""), "cCantidadReq", ""), "nIdUnidMed", ""), "nIdUnidMedMat", ""), "radTipoTiempo", "1"), "estado", "")),
+      }, _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_fillCrearReqMaterial, "cRuc", ""), "nIdmaterial", ""), "cCantMaterial", ""), "cCantidad", ""), "nIdTipoPago", ""), "nIdTipoMoneda", ""), "nIdUser", sessionStorage.getItem("iduser")), "cPersonal", ""), "cDiasMObra", ""), "cHorasMObra", ""), _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_fillCrearReqMaterial, "cDescripcion", "."), "cCantidadReq", ""), "nIdUnidMed", ""), "nIdUnidMedMat", ""), "radTipoTiempo", "1"), "estado", "")),
       listAlmacen: [],
       listPersonal: [],
       listUnidMed: [],
@@ -21878,6 +21880,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         _this19.listUnidMed = response.data;
         _this19.fillCrearReqMaterialesProy.nIdUnidMed = _this19.listUnidMed[7].id;
         _this19.fillCrearReqMaterialesProy.nIdUnidMedMat = _this19.listUnidMed[7].id;
+        _this19.fillCrearReqMaterialesProy.nIdUnidMedOtroReq = _this19.listUnidMed[7].id;
       });
     }
   },

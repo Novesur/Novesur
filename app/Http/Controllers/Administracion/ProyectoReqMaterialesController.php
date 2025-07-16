@@ -97,8 +97,22 @@ class ProyectoReqMaterialesController extends Controller
         Session::put('ProyManObra', collect([]));
 
         $OtrosRequerimientos = Session::get('OtrosProyReqMateriales');
+      $validaOtrosreq = is_null($OtrosRequerimientos );
 
-
+      if(!$validaOtrosreq){
+         ProyectOtrosReq::insert([
+              'pk_proyecto_reqmateriales' => $proyectoReqMateriales->id,
+               'descripcion' => '.',
+                'cantidad' => 0,
+                'unidmedida_id' => '6',
+                'descripcionInfoValor' => '.',
+                'cantidadInfoValor' => 0,
+                'unidmedida_idInfoValor' => '6',
+                'estado' => 'R'
+         ]);
+        DB::commit();
+        Session::put('OtrosProyReqMateriales', collect([]));
+      }
 
         $allOtrosReque =  $OtrosRequerimientos->map(function ($OtrosRequerimientos) use ($proyectoReqMateriales) {
             return [

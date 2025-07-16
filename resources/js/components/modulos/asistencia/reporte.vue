@@ -660,6 +660,8 @@ export default {
                         dFechafin: !this.fillBsqReportePersonal.dFechaDetalle
                             ? ""
                             : this.fillBsqReportePersonal.dFechaDetalle[1],
+                        nIdSedeDetallado: this.fillBsqReportePersonal.nIdSedeDetallado
+
                     },
                 })
                 .then((response) => {
