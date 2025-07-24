@@ -263,9 +263,10 @@
                                         listRolPermisoByUsuario.includes('papeleta.admin')
                                       "
                                     >
-                                      <button v-if="item.estadopapeletasalida_id == 1"
+                                      <button v-if="item.estadopapeletasalida_id == 4"
                                         class="btn btn-success btn-sm"
                                         @click.prevent="aprobarPartidaSalida(item.id, item.estadopapeletasalida_id)"
+                                        :disabled="esFechaMayorADosDias(item.fecha)"
                                       >
                                         <i class="far fa-thumbs-up"></i>
                                         Aprobar
@@ -274,6 +275,7 @@
                                         <button v-if="item.estadopapeletasalida_id == 2"
                                         class="btn btn-secondary btn-sm"
                                         @click.prevent="aprobarPartidaSalida(item.id, item.estadopapeletasalida_id)"
+                                        :disabled="esFechaMayorADosDias(item.fecha)"
                                       >
                                         <i class="far fa-thumbs-down"></i>
                                         Desaprobar
@@ -282,6 +284,7 @@
                                          <button v-if="item.estadopapeletasalida_id == 3"
                                         class="btn btn-success btn-sm"
                                         @click.prevent="aprobarPartidaSalida(item.id, item.estadopapeletasalida_id)"
+                                        :disabled="esFechaMayorADosDias(item.fecha)"
                                       >
                                         <i class="far fa-thumbs-up"></i>
                                         Aprobar
@@ -291,6 +294,7 @@
                                       <button
                                         class="btn btn-info btn-sm"
                                         @click.prevent="abrirAnularVendedor(item.id)"
+                                        :disabled="esFechaMayorADosDias(item.fecha)"
                                       >
                                         <i class="far fa-calendar-check"></i>
                                         Anular
@@ -777,6 +781,22 @@ export default {
     },
   },
   methods: {
+
+      esFechaMayorADosDias(fechaItem) {
+    // Convertir la fecha del ítem a un objeto Date
+    const fecha = new Date(fechaItem);
+    // Obtener la fecha actual
+    const hoy = new Date();
+    // Calcular la diferencia en milisegundos
+    const diferencia = hoy - fecha;
+    // Convertir milisegundos a días (1000 ms * 60 seg * 60 min * 24 hrs)
+    const diasDiferencia = diferencia / (1000 * 60 * 60 * 24);
+
+    // Retornar true si la diferencia es mayor a 2 días
+    return diasDiferencia >= 2;
+  },
+
+
     ModalObservacion(itemId) {
       this.modalObservacion = !this.modalObservacion;
       this.fillBsqPapeletaSalida.itemid = itemId;
@@ -900,7 +920,6 @@ export default {
     },
 
     aprobarPartidaSalida(item, estadoPapeleta) {
-
         if(estadoPapeleta == 2 ){
             Swal.fire({
               title: "Desea Desaprobar la papeleta de salida?",
@@ -928,7 +947,7 @@ export default {
               }
             });
         }
-                if(estadoPapeleta == 3 || estadoPapeleta == 1 ){
+                if(estadoPapeleta == 3 || estadoPapeleta == 1 || estadoPapeleta == 4  ){
             Swal.fire({
               title: "Desea aprobar la papeleta de salida?",
               text: "No podrás revertir esto.!",

@@ -66,7 +66,7 @@ if ($tiempo  >= $tiempoMax) {
     $PapeletaSalida->horasalida = substr($request->tHoraSalida, 0, 8);
     $PapeletaSalida->horaretorno = substr($request->tHoraRetorno, 0, 8);
     $PapeletaSalida->motivopapeletasalida_id = $request->nIdMotivo;
-    $PapeletaSalida->estadopapeletasalida_id = '3';
+    $PapeletaSalida->estadopapeletasalida_id = '4';
     $PapeletaSalida->fundamento = nl2br(htmlentities(mb_strtoupper($request->cReferencia)));
     $PapeletaSalida->hora_emision =  substr($femision, 0,7);
     $PapeletaSalida->save();
@@ -241,12 +241,14 @@ if ($tiempo  >= $tiempoMax) {
         $valorUser = $user->firstname.' '.$user->secondname .' '. $user->lastname;
 
         $papeleta = Papeletasalida::where('id', $request->item)->first();
+
+
         if($papeleta->estadopapeletasalida_id == 2){
             Papeletasalida::where('id', $request->item)->update(['estadopapeletasalida_id' => '3']);
             Papeletasalida::where('id', $request->item)->update(['user_aprobacion' => NULL]);
         }
 
-          if($papeleta->estadopapeletasalida_id == 3 || $papeleta->estadopapeletasalida_id == 1 ){
+          if($papeleta->estadopapeletasalida_id == 4 || $papeleta->estadopapeletasalida_id == 1 || $papeleta->estadopapeletasalida_id == 3 ){
             Papeletasalida::where('id', $request->item)->update(['estadopapeletasalida_id' => '2']);
             Papeletasalida::where('id', $request->item)->update(['user_aprobacion' => $valorUser]);
         }
@@ -332,7 +334,7 @@ if ($tiempo  >= $tiempoMax) {
         if ($request->nIdMotivo == Null) {
             $dato = ClientsPapeletaSalida::with('papeletasalida', 'cliente', 'papeletasalida.user', 'papeletasalida.motivopapeletasalida')
                 ->whereHas('papeletasalida', function (Builder $query) use ($fecha1, $fecha2, $vendedor) {
-                    $query->whereBetween('fecha', [$fecha1, $fecha2])->where('estadopapeletasalida_id', 3)->where('user_id', $vendedor);
+                    $query->whereBetween('fecha', [$fecha1, $fecha2])->where('estadopapeletasalida_id', 4)->where('user_id', $vendedor);
                 })->get();
             return (new PapeletaExport)->setGenerarExcel($dato)->download('invoices.xlsx');
         }

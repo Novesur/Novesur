@@ -18239,6 +18239,19 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
     }
   },
   methods: {
+    esFechaMayorADosDias: function esFechaMayorADosDias(fechaItem) {
+      // Convertir la fecha del ítem a un objeto Date
+      var fecha = new Date(fechaItem);
+      // Obtener la fecha actual
+      var hoy = new Date();
+      // Calcular la diferencia en milisegundos
+      var diferencia = hoy - fecha;
+      // Convertir milisegundos a días (1000 ms * 60 seg * 60 min * 24 hrs)
+      var diasDiferencia = diferencia / (1000 * 60 * 60 * 24);
+
+      // Retornar true si la diferencia es mayor a 2 días
+      return diasDiferencia >= 2;
+    },
     ModalObservacion: function ModalObservacion(itemId) {
       this.modalObservacion = !this.modalObservacion;
       this.fillBsqPapeletaSalida.itemid = itemId;
@@ -18365,7 +18378,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
           }
         });
       }
-      if (estadoPapeleta == 3 || estadoPapeleta == 1) {
+      if (estadoPapeleta == 3 || estadoPapeleta == 1 || estadoPapeleta == 4) {
         Swal.fire({
           title: "Desea aprobar la papeleta de salida?",
           text: "No podrás revertir esto.!",
@@ -56881,8 +56894,11 @@ var render = function render() {
       }
     }, [_c("span", [_c("i", {
       staticClass: "far fa-file-pdf"
-    })]), _vm._v("\n                                    PDF\n                                  ")]), _vm._v(" "), _vm.listRolPermisoByUsuario.includes("papeleta.admin") ? [item.estadopapeletasalida_id == 1 ? _c("button", {
+    })]), _vm._v("\n                                    PDF\n                                  ")]), _vm._v(" "), _vm.listRolPermisoByUsuario.includes("papeleta.admin") ? [item.estadopapeletasalida_id == 4 ? _c("button", {
       staticClass: "btn btn-success btn-sm",
+      attrs: {
+        disabled: _vm.esFechaMayorADosDias(item.fecha)
+      },
       on: {
         click: function click($event) {
           $event.preventDefault();
@@ -56893,6 +56909,9 @@ var render = function render() {
       staticClass: "far fa-thumbs-up"
     }), _vm._v("\n                                      Aprobar\n                                    ")]) : _vm._e(), _vm._v(" "), item.estadopapeletasalida_id == 2 ? _c("button", {
       staticClass: "btn btn-secondary btn-sm",
+      attrs: {
+        disabled: _vm.esFechaMayorADosDias(item.fecha)
+      },
       on: {
         click: function click($event) {
           $event.preventDefault();
@@ -56903,6 +56922,9 @@ var render = function render() {
       staticClass: "far fa-thumbs-down"
     }), _vm._v("\n                                      Desaprobar\n                                    ")]) : _vm._e(), _vm._v(" "), item.estadopapeletasalida_id == 3 ? _c("button", {
       staticClass: "btn btn-success btn-sm",
+      attrs: {
+        disabled: _vm.esFechaMayorADosDias(item.fecha)
+      },
       on: {
         click: function click($event) {
           $event.preventDefault();
@@ -56913,6 +56935,9 @@ var render = function render() {
       staticClass: "far fa-thumbs-up"
     }), _vm._v("\n                                      Aprobar\n                                    ")]) : _vm._e(), _vm._v(" "), _c("button", {
       staticClass: "btn btn-info btn-sm",
+      attrs: {
+        disabled: _vm.esFechaMayorADosDias(item.fecha)
+      },
       on: {
         click: function click($event) {
           $event.preventDefault();
