@@ -56662,7 +56662,7 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "fas fa-plus-square"
-  }), _vm._v("Regresar\n          ")]), _vm._v(" "), _vm.listRolPermisoByUsuario.includes("Papeleta.Reporte.excel") ? [_c("button", {
+  }), _vm._v("Regresar\n                        ")]), _vm._v(" "), _vm.listRolPermisoByUsuario.includes("Papeleta.Reporte.excel") ? [_c("button", {
     staticClass: "btn btn-success btn-sm",
     on: {
       click: function click($event) {
@@ -56838,7 +56838,7 @@ var render = function render() {
         return _vm.getlistPapeleByVendedor.apply(null, arguments);
       }
     }
-  }, [_vm._v("\n                            Buscar\n                          ")]), _vm._v(" "), _c("button", {
+  }, [_vm._v("\n                                                            Buscar\n                                                        ")]), _vm._v(" "), _c("button", {
     staticClass: "btn btn-flat btn-default btnWidth",
     on: {
       click: function click($event) {
@@ -56846,7 +56846,7 @@ var render = function render() {
         return _vm.limpiarCriteriosBsq.apply(null, arguments);
       }
     }
-  }, [_vm._v("\n                            Limpiar\n                          ")])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                                                            Limpiar\n                                                        ")])])])]), _vm._v(" "), _c("div", {
     staticClass: "card card-info"
   }, [_c("div", {
     staticClass: "card-header"
@@ -56868,7 +56868,7 @@ var render = function render() {
           return _vm.getlistClientxIndex(item.id, index);
         }
       }
-    }, [_vm._v("\n                                  " + _vm._s(_vm._f("moment")(item.created_at.substring(0, 10), "DD - MM - Y")) + "\n                                ")]), _vm._v(" "), _c("td", [_vm._v("\n                                  " + _vm._s(_vm._f("moment")(item.fecha, "DD - MM - Y")) + "\n                                ")]), _vm._v(" "), _c("td", [_vm._v("\n                                  " + _vm._s(item.hora_emision) + "\n                                ")]), _vm._v(" "), _c("td", [_vm._v("\n                                  " + _vm._s(item.user.fullname) + "\n                                ")]), _vm._v(" "), _c("td", {
+    }, [_vm._v("\n                                                                        " + _vm._s(_vm._f("moment")(item.created_at.substring(0, 10), "DD - MM - Y")) + "\n                                                                    ")]), _vm._v(" "), _c("td", [_vm._v("\n                                                                        " + _vm._s(_vm._f("moment")(item.fecha, "DD - MM - Y")) + "\n                                                                    ")]), _vm._v(" "), _c("td", [_vm._v("\n                                                                        " + _vm._s(item.hora_emision) + "\n                                                                    ")]), _vm._v(" "), _c("td", [_vm._v("\n                                                                        " + _vm._s(item.user.fullname) + "\n                                                                    ")]), _vm._v(" "), _c("td", {
       domProps: {
         textContent: _vm._s(item.horasalida)
       }
@@ -56894,7 +56894,7 @@ var render = function render() {
       }
     }, [_c("span", [_c("i", {
       staticClass: "far fa-file-pdf"
-    })]), _vm._v("\n                                    PDF\n                                  ")]), _vm._v(" "), _vm.listRolPermisoByUsuario.includes("papeleta.admin") ? [item.estadopapeletasalida_id == 4 ? _c("button", {
+    })]), _vm._v("\n                                                                            PDF\n                                                                        ")]), _vm._v(" "), _vm.listRolPermisoByUsuario.includes("papeleta.admin") ? [item.estadopapeletasalida_id == 4 ? _c("button", {
       staticClass: "btn btn-success btn-sm",
       attrs: {
         disabled: _vm.esFechaMayorADosDias(item.fecha)
@@ -56907,7 +56907,7 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "far fa-thumbs-up"
-    }), _vm._v("\n                                      Aprobar\n                                    ")]) : _vm._e(), _vm._v(" "), item.estadopapeletasalida_id == 2 ? _c("button", {
+    }), _vm._v("\n                                                                                Aprobar\n                                                                            ")]) : _vm._e(), _vm._v(" "), item.estadopapeletasalida_id == 2 ? _c("button", {
       staticClass: "btn btn-secondary btn-sm",
       attrs: {
         disabled: _vm.esFechaMayorADosDias(item.fecha)
@@ -56920,7 +56920,7 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "far fa-thumbs-down"
-    }), _vm._v("\n                                      Desaprobar\n                                    ")]) : _vm._e(), _vm._v(" "), item.estadopapeletasalida_id == 3 ? _c("button", {
+    }), _vm._v("\n                                                                                Desaprobar\n                                                                            ")]) : _vm._e(), _vm._v(" "), item.estadopapeletasalida_id == 3 ? _c("button", {
       staticClass: "btn btn-success btn-sm",
       attrs: {
         disabled: _vm.esFechaMayorADosDias(item.fecha)
@@ -56933,7 +56933,17 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "far fa-thumbs-up"
-    }), _vm._v("\n                                      Aprobar\n                                    ")]) : _vm._e(), _vm._v(" "), _c("button", {
+    }), _vm._v("\n                                                                                Aprobar\n                                                                            ")]) : _vm._e(), _vm._v(" "), _vm.listRolPermisoByUsuario.includes("papeleta.anularAdmin") ? [_c("button", {
+      staticClass: "btn btn-info btn-sm",
+      on: {
+        click: function click($event) {
+          $event.preventDefault();
+          return _vm.abrirAnularVendedor(item.id);
+        }
+      }
+    }, [_c("i", {
+      staticClass: "far fa-calendar-check"
+    }), _vm._v("\n                                                                                    Anular\n                                                                                ")])] : [_c("button", {
       staticClass: "btn btn-info btn-sm",
       attrs: {
         disabled: _vm.esFechaMayorADosDias(item.fecha)
@@ -56946,7 +56956,7 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "far fa-calendar-check"
-    }), _vm._v("\n                                      Anular\n                                    ")])] : [_c("td")], _vm._v(" "), _vm.listRolPermisoByUsuario.includes("observacion.papeleta") ? [_c("button", {
+    }), _vm._v("\n                                                                                    Anular\n                                                                                ")])]] : [_c("td")], _vm._v(" "), _vm.listRolPermisoByUsuario.includes("observacion.papeleta") ? [_c("button", {
       staticClass: "btn btn-secondary btn-sm",
       on: {
         click: function click($event) {
@@ -56956,7 +56966,7 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "far fa-pen-to-square"
-    }), _vm._v("\n                                      Observación\n                                    ")])] : _vm._e()], 2)]), _vm._v(" "), _vm._l(item.clientes, function (itemclient, index) {
+    }), _vm._v("\n                                                                    Observación\n                                                                ")])] : _vm._e()], 2)]), _vm._v(" "), _vm._l(item.clientes, function (itemclient, index) {
       return item.collapse ? _c("tr", [_c("td", {
         staticStyle: {
           "background-color": "#f0f8ff"
@@ -56964,21 +56974,21 @@ var render = function render() {
         attrs: {
           colspan: "2"
         }
-      }, [_vm._v("\n                                  " + _vm._s(itemclient.cliente.razonsocial) + "\n                                ")]), _vm._v(" "), _c("td", {
+      }, [_vm._v("\n                                                                    " + _vm._s(itemclient.cliente.razonsocial) + "\n                                                                ")]), _vm._v(" "), _c("td", {
         staticStyle: {
           "background-color": "#f0f8ff"
         },
         attrs: {
           colspan: "2"
         }
-      }, [_vm._v("\n                                  " + _vm._s(itemclient.direccion) + "\n                                ")]), _vm._v(" "), _c("td", {
+      }, [_vm._v("\n                                                                    " + _vm._s(itemclient.direccion) + "\n                                                                ")]), _vm._v(" "), _c("td", {
         staticStyle: {
           "background-color": "#f0f8ff"
         },
         attrs: {
           colspan: "2"
         }
-      }, [_vm._v("\n                                  " + _vm._s(itemclient.contacto) + "\n                                ")])]) : _vm._e();
+      }, [_vm._v("\n                                                                    " + _vm._s(itemclient.contacto) + "\n                                                                ")])]) : _vm._e();
     })];
   })], 2)]), _vm._v(" "), _c("div", {
     staticClass: "card-footer"
@@ -57013,7 +57023,7 @@ var render = function render() {
           return _vm.selectPage(page);
         }
       }
-    }, [_vm._v("\n                                " + _vm._s(page + 1))])]);
+    }, [_vm._v("\n                " + _vm._s(page + 1))])]);
   }), _vm._v(" "), _vm.pageNumber < _vm.pageCount - 1 ? _c("li", {
     staticClass: "page-item"
   }, [_c("a", {
@@ -57114,7 +57124,7 @@ var render = function render() {
         return _vm.getlistPapeleByCliente.apply(null, arguments);
       }
     }
-  }, [_vm._v("\n                            Buscar\n                          ")]), _vm._v(" "), _c("button", {
+  }, [_vm._v("\n                    Buscar\n                ")]), _vm._v(" "), _c("button", {
     staticClass: "btn btn-flat btn-default btnWidth",
     on: {
       click: function click($event) {
@@ -57122,7 +57132,7 @@ var render = function render() {
         return _vm.limpiarCriteriosBsq.apply(null, arguments);
       }
     }
-  }, [_vm._v("\n                            Limpiar\n                          ")])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                    Limpiar\n                ")])])])]), _vm._v(" "), _c("div", {
     staticClass: "card card-info"
   }, [_c("div", {
     staticClass: "card-header"
@@ -57138,7 +57148,7 @@ var render = function render() {
   }, [_c("thead", [_c("tr", [_c("th", [_vm._v("Fecha")]), _vm._v(" "), _c("th", [_vm._v("Vendedor")]), _vm._v(" "), _c("th", [_vm._v("Hora Salida")]), _vm._v(" "), _c("th", [_vm._v("Hora Retorno")])])]), _vm._v(" "), _c("tbody", _vm._l(_vm.listPapeleByClient, function (item, index) {
     return _c("tr", {
       key: index
-    }, [_c("td", [_vm._v("\n                                " + _vm._s(_vm._f("moment")(item.papeletasalida.fecha, "DD - MM - Y")) + "\n                              ")]), _vm._v(" "), _c("td", {
+    }, [_c("td", [_vm._v("\n                            " + _vm._s(_vm._f("moment")(item.papeletasalida.fecha, "DD - MM - Y")) + "\n                        ")]), _vm._v(" "), _c("td", {
       domProps: {
         textContent: _vm._s(item.papeletasalida.user.fullname)
       }
@@ -57160,7 +57170,7 @@ var render = function render() {
       }
     }, [_c("span", [_c("i", {
       staticClass: "far fa-file-pdf"
-    })]), _vm._v("\n                                PDF\n                              ")])]);
+    })]), _vm._v("\n                            PDF\n                        ")])]);
   }), 0)]), _vm._v(" "), _c("div", {
     staticClass: "card-footer"
   }, [_c("ul", {
@@ -57194,7 +57204,7 @@ var render = function render() {
           return _vm.selectPage(page);
         }
       }
-    }, [_vm._v("\n                                " + _vm._s(page + 1))])]);
+    }, [_vm._v("\n                            " + _vm._s(page + 1))])]);
   }), _vm._v(" "), _vm.pageNumber < _vm.pageCount - 1 ? _c("li", {
     staticClass: "page-item"
   }, [_c("a", {
@@ -57277,7 +57287,7 @@ var render = function render() {
         return _vm.setGrabarObservacion();
       }
     }
-  }, [_vm._v("\n                          Guardar\n                        ")])])])])]), _vm._v(" "), _vm._m(3)]), _vm._v(" "), _c("tbody", _vm._l(this.listObservaciones, function (item, index) {
+  }, [_vm._v("\n                                                Guardar\n                                            ")])])])])]), _vm._v(" "), _vm._m(3)]), _vm._v(" "), _c("tbody", _vm._l(this.listObservaciones, function (item, index) {
     return _c("tr", {
       key: index
     }, [_c("td", {
@@ -57291,7 +57301,7 @@ var render = function render() {
           return _vm.setEliminarObservacion(item.id, item.papeletasalida_id);
         }
       }
-    }, [_vm._v("\n                      Eliminar\n                    ")])])]);
+    }, [_vm._v("\n                                        Eliminar\n                                    ")])])]);
   }), 0)])])]), _vm._v(" "), _c("div", {
     staticClass: "modal-footer"
   }, [_c("button", {
@@ -57299,7 +57309,7 @@ var render = function render() {
     on: {
       click: _vm.abrirModalObservacion
     }
-  }, [_vm._v("\n            Cerrar\n          ")])])])])])]);
+  }, [_vm._v("\n                    Cerrar\n                ")])])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -78262,7 +78272,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.accordion[data-v-3ef6e1d4] {\n  width: 100%;\n  display: block;\n}\n", ""]);
+exports.push([module.i, "\n.accordion[data-v-3ef6e1d4] {\n    width: 100%;\n    display: block;\n}\n", ""]);
 
 // exports
 

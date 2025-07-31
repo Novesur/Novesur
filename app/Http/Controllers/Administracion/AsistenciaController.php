@@ -128,10 +128,9 @@ public function ListTardanzAsistenciaByDate0113(Request $request){
     $sede = $request->nIdSedeDetallado;
 
 
-            $reporteTardanza0113 = Personal::query()->with(['asistencias'=>function($query)use($dFechainicio, $dFechafin){
-                $query->whereBetween('asistencia.fecha', [now()->parse($dFechainicio)->format('Y-m-d'), now()->parse($dFechafin)->format('Y-m-d')]);
-
-           }])->where('estado','A')->where('sede_id',$sede)
+            $reporteTardanza0113 = Personal::query()->with(['asistencias'=>function($query)use($dFechainicio, $dFechafin,$sede ){
+                $query->whereBetween('asistencia.fecha', [now()->parse($dFechainicio)->format('Y-m-d'), now()->parse($dFechafin)->format('Y-m-d')])->where('sede_id',$sede);
+           }])->where('estado','A')
            ->has('asistencias')
            ->get();
 
