@@ -300,6 +300,30 @@ th,
 
     </table>
 
+        <table width="100%" border="1" align="center" style="margin-top: 5px" >
+
+        <tr>
+            <td colspan="3" align="center" style="font-size: 12px" ><strong>CUENTAS CORRIENTES INVERSIONES
+                    NOVESUR SAC</strong></td>
+        </tr>
+        <tr>
+            <td align="center" style="background-color: lightgreen ;font-size: 11px" ><strong>BANCO</strong></td>
+            <td align="center" style="background-color: lightgreen;font-size: 11px" ><strong>CTE. SOLES</strong></td>
+            <td align="center" style="background-color: lightgreen;font-size: 11px" ><strong>CTA. INTERBANCARIO
+                    CCI</strong></td>
+        </tr>
+        <tr>
+            <td align="center"  ><strong style="color: red">BCP</strong></td>
+            <td align="center" >193-1760590-0-36</td>
+            <td align="center" >CCI 002-193-001760590036-18</td>
+        </tr>
+        <tr>
+            <td align="center" ><strong style="color: blue">BBVA</strong></td>
+            <td align="center" >0011-0933-0100025143</td>
+            <td align="center" >CCI 011-933-000100025143-97</td>
+        </tr>
+    </table>
+
 
         <table width="100%" border="0">
         <tr>

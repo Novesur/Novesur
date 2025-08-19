@@ -128,17 +128,16 @@ public function ListTardanzAsistenciaByDate0113(Request $request){
     $sede = $request->nIdSedeDetallado;
 
 
-            $reporteTardanza0113 = Personal::query()->with(['asistencias'=>function($query)use($dFechainicio, $dFechafin,$sede ){
-                $query->whereBetween('asistencia.fecha', [now()->parse($dFechainicio)->format('Y-m-d'), now()->parse($dFechafin)->format('Y-m-d')])->where('sede_id',$sede);
+            $reporteTardanza0113 = Personal::query()->with(['sede','asistencias'=>function($query)use($dFechainicio, $dFechafin,$sede ){
+                $query->whereBetween('asistencia.fecha', [now()->parse($dFechainicio)->format('Y-m-d'), now()->parse($dFechafin)->format('Y-m-d')]);
            }])->where('estado','A')
-           ->has('asistencias')
+           ->has('asistencias')->orderBy('ApPaterno', 'asc')
            ->get();
-
-
     return  $reporteTardanza0113;
 }
 
 public function reporteTardanzAsistExcel0113(Request $request){
+
     $listAsistenciaTardanza = json_decode($request->params['listAsistenciaTardanza']);
 
     return (new AsistenciaTardanzaExport)->setGenerarExcel($listAsistenciaTardanza)->download('invoices.xlsx');

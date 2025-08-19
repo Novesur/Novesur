@@ -36642,7 +36642,8 @@ var render = function render() {
     }],
     staticClass: "form-control",
     attrs: {
-      type: "text"
+      type: "text",
+      maxlength: "150"
     },
     domProps: {
       value: _vm.fillregistrarCotizacionLibre.Docu
@@ -36875,7 +36876,9 @@ var render = function render() {
     }],
     staticClass: "form-control",
     attrs: {
-      type: "text"
+      type: "text",
+      maxlength: "250",
+      placeholder: "Cantidad maxima 250 caracteres"
     },
     domProps: {
       value: _vm.fillregistrarCotizacionLibre.nIdprod
@@ -56896,9 +56899,6 @@ var render = function render() {
       staticClass: "far fa-file-pdf"
     })]), _vm._v("\n                                                                            PDF\n                                                                        ")]), _vm._v(" "), _vm.listRolPermisoByUsuario.includes("papeleta.admin") ? [item.estadopapeletasalida_id == 4 ? _c("button", {
       staticClass: "btn btn-success btn-sm",
-      attrs: {
-        disabled: _vm.esFechaMayorADosDias(item.fecha)
-      },
       on: {
         click: function click($event) {
           $event.preventDefault();
@@ -56909,9 +56909,6 @@ var render = function render() {
       staticClass: "far fa-thumbs-up"
     }), _vm._v("\n                                                                                Aprobar\n                                                                            ")]) : _vm._e(), _vm._v(" "), item.estadopapeletasalida_id == 2 ? _c("button", {
       staticClass: "btn btn-secondary btn-sm",
-      attrs: {
-        disabled: _vm.esFechaMayorADosDias(item.fecha)
-      },
       on: {
         click: function click($event) {
           $event.preventDefault();
@@ -56922,9 +56919,6 @@ var render = function render() {
       staticClass: "far fa-thumbs-down"
     }), _vm._v("\n                                                                                Desaprobar\n                                                                            ")]) : _vm._e(), _vm._v(" "), item.estadopapeletasalida_id == 3 ? _c("button", {
       staticClass: "btn btn-success btn-sm",
-      attrs: {
-        disabled: _vm.esFechaMayorADosDias(item.fecha)
-      },
       on: {
         click: function click($event) {
           $event.preventDefault();
@@ -56945,9 +56939,6 @@ var render = function render() {
       staticClass: "far fa-calendar-check"
     }), _vm._v("\n                                                                                    Anular\n                                                                                ")])] : [_c("button", {
       staticClass: "btn btn-info btn-sm",
-      attrs: {
-        disabled: _vm.esFechaMayorADosDias(item.fecha)
-      },
       on: {
         click: function click($event) {
           $event.preventDefault();

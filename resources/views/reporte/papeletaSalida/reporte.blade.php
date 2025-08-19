@@ -49,19 +49,21 @@
 
 <table width="100%" border="1">
   <tr>
-    <td bgcolor="#FFFFFF"><b>FUNDAMENTO :</b></td>
+    <td bgcolor="#FFFFFF" class="titulo"><b>FUNDAMENTO :</b></td>
   </tr>
   <tr>
-    <td>
+    <td style="text-align: center;">
         @php
             echo $Papeletasalida->fundamento
         @endphp</td></td>
   </tr>
 </table>
 <br />
+
+@if($Papeletasalida->motivopapeletasalida_id !== 4 and  $Papeletasalida->motivopapeletasalida_id !== 5 )
 <table width="100%" border="1">
   <tr>
-    <td colspan="3"><b><b></B>CLIENTE</b></td>
+    <td colspan="3" class="titulo"><b><b></B>CLIENTE</b></td>
   </tr>
   <tr>
       <td><center><b>RAZON SOCIAL</b></center></td>
@@ -77,6 +79,8 @@
   </tr>
          @endforeach @endif
 </table>
+@endif
+
 
 <H4>OBSERVACION</H4>
 <UL>
@@ -112,3 +116,10 @@
 </body>
 
 </html>
+
+<style>
+  .titulo{
+background-color: #B4D8F0;
+ text-align: center;
+  }
+</style>

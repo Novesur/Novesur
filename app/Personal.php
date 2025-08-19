@@ -17,11 +17,15 @@ class Personal extends Model
 
     public function zonal()
     {
-        return $this->belongsTo(Zonal::class); 
+        return $this->belongsTo(Zonal::class);
     }
 
     public function asistencias(){
         return $this->hasMany(Asistencia::class ,'asistencia','codigo');
+    }
+
+     public function sede(){
+        return $this->belongsTo(Sede::class ,"sede_id");
     }
 
 

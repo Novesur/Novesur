@@ -223,11 +223,19 @@
                                                                         <template v-if="
                                                                             listRolPermisoByUsuario.includes('papeleta.admin')
                                                                         ">
-                                                                            <button
+                                                                            <!-- <button
                                                                                 v-if="item.estadopapeletasalida_id == 4"
                                                                                 class="btn btn-success btn-sm"
                                                                                 @click.prevent="aprobarPartidaSalida(item.id, item.estadopapeletasalida_id)"
                                                                                 :disabled="esFechaMayorADosDias(item.fecha)">
+                                                                                <i class="far fa-thumbs-up"></i>
+                                                                                Aprobar
+                                                                            </button> -->
+
+                                                                                <button
+                                                                                v-if="item.estadopapeletasalida_id == 4"
+                                                                                class="btn btn-success btn-sm"
+                                                                                @click.prevent="aprobarPartidaSalida(item.id, item.estadopapeletasalida_id)">
                                                                                 <i class="far fa-thumbs-up"></i>
                                                                                 Aprobar
                                                                             </button>
@@ -235,8 +243,7 @@
                                                                             <button
                                                                                 v-if="item.estadopapeletasalida_id == 2"
                                                                                 class="btn btn-secondary btn-sm"
-                                                                                @click.prevent="aprobarPartidaSalida(item.id, item.estadopapeletasalida_id)"
-                                                                                :disabled="esFechaMayorADosDias(item.fecha)">
+                                                                                @click.prevent="aprobarPartidaSalida(item.id, item.estadopapeletasalida_id)">
                                                                                 <i class="far fa-thumbs-down"></i>
                                                                                 Desaprobar
                                                                             </button>
@@ -244,8 +251,7 @@
                                                                             <button
                                                                                 v-if="item.estadopapeletasalida_id == 3"
                                                                                 class="btn btn-success btn-sm"
-                                                                                @click.prevent="aprobarPartidaSalida(item.id, item.estadopapeletasalida_id)"
-                                                                                :disabled="esFechaMayorADosDias(item.fecha)">
+                                                                                @click.prevent="aprobarPartidaSalida(item.id, item.estadopapeletasalida_id)">
                                                                                 <i class="far fa-thumbs-up"></i>
                                                                                 Aprobar
                                                                             </button>
@@ -262,10 +268,8 @@
                                                                             </template>
                                                                             <template v-else>
                                                                                 <button class="btn btn-info btn-sm"
-                                                                                    @click.prevent="abrirAnularVendedor(item.id)"
-                                                                                    :disabled="esFechaMayorADosDias(item.fecha)">
-                                                                                    <i
-                                                                                        class="far fa-calendar-check"></i>
+                                                                                    @click.prevent="abrirAnularVendedor(item.id)">
+                                                                                    <i class="far fa-calendar-check"></i>
                                                                                     Anular
                                                                                 </button>
                                                                             </template>

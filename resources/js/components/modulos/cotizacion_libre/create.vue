@@ -327,6 +327,7 @@
                                                             v-model="
                                                                 fillregistrarCotizacionLibre.Docu
                                                             "
+                                                            maxlength="150"
                                                         />
                                                     </div>
                                                 </div>
@@ -498,6 +499,8 @@
                                                 v-model="
                                                     fillregistrarCotizacionLibre.nIdprod
                                                 "
+                                                maxlength="250"
+                                                placeholder="Cantidad maxima 250 caracteres"
 
                                             />
 
