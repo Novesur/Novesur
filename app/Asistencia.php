@@ -13,6 +13,6 @@ class Asistencia extends Model
 
 
     public function personal(){
-        return $this->belongsTo(Personal::class ,'codigo','id');
+        return $this->belongsTo(Personal::class ,'asistencia','codigo')->with(["sede"]);
     }
 }

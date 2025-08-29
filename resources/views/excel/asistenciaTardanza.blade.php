@@ -44,11 +44,13 @@
         <tr>
             <td align="center"><strong>REPORTE HUELLERO - {{ strtoupper($mes) }} {{ $anio }}</strong></td>
         </tr>
-        @foreach ($listAsistenciaTardanza as $data)
+        @foreach ($listAsistenciaTardanza as $grupos)
             <tr>
-                <td><strong> {{ $data->ApPaterno }} {{ $data->ApMaterno }} {{ $data->nombres }}</strong></td>
+                <td><strong> {{ $grupos[0]->personal->ApPaterno }} {{ $grupos[0]->personal->ApMaterno }}
+                        {{ $grupos[0]->personal->nombres }}</strong></td>
             </tr>
             <br />
+
     </table>
     <table width="100%" border="1">
         <tr>
@@ -58,13 +60,12 @@
             <td align="center"><strong>SEDE</strong></td>
             <td align="center"><strong>OBSERVACIONES</strong></td>
         </tr>
-
-        @foreach ($data->asistencias as $asistencia)
+        @foreach ($grupos as $asistencia)
             <tr>
                 <td>{{ $dias[date('l', strtotime($asistencia->fecha))] }}</td>
                 <td>{{ $asistencia->fecha }}</td>
                 <td>{{ $asistencia->tiempo }}</td>
-                <td>{{ $data->sede->nombre }}</td>
+                <td>{{ isset($asistencia->personal->sede) ? $asistencia->personal->sede->nombre : '' }}</td>
                 <td>NINGUNO</td>
             </tr>
         @endforeach

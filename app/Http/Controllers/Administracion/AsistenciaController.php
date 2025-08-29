@@ -10,6 +10,7 @@ use App\Exports\Asistencia1431Export;
 use App\Exports\AsistenciaTardanzaExport;
 use App\Imports\AsistenciaLurinImport;
 use App\Personal;
+use App\Asistencia;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
@@ -124,15 +125,41 @@ public function ListTardanzAsistenciaByDate0113(Request $request){
 
 
     $dFechainicio = $request->dFechainicio;
-    $dFechafin = $request->dFechafin;
+    $dFechafin = $request->dFechafin; 
     $sede = $request->nIdSedeDetallado;
 
 
-            $reporteTardanza0113 = Personal::query()->with(['sede','asistencias'=>function($query)use($dFechainicio, $dFechafin,$sede ){
-                $query->whereBetween('asistencia.fecha', [now()->parse($dFechainicio)->format('Y-m-d'), now()->parse($dFechafin)->format('Y-m-d')]);
-           }])->where('estado','A')
+            /* $reporteTardanza0113 = Personal::query()
+            ->with(['sede','asistencias'=>function($query)use($dFechainicio, $dFechafin,$sede ){
+               $query->whereBetween('asistencia.fecha', [now()->parse($dFechainicio)->format('Y-m-d'), now()->parse($dFechafin)->format('Y-m-d')]);
+           }])
+           ->where('estado','A')
            ->has('asistencias')->orderBy('ApPaterno', 'asc')
-           ->get();
+           ->get(); */
+
+           /* $reporteTardanza0113 = Personal::query()->with(['sede'])
+            ->whereHas("asistencias",function($query) use($dFechainicio,$dFechafin) {
+                $query->whereDate('fecha','>=', now()->parse($dFechainicio)->format('Y-m-d'))
+                ->whereDate('fecha','<=',now()->parse($dFechafin)->format('Y-m-d'));
+            })
+            ->has("sede")
+            ->where('estado','A')
+           ->orderBy('ApPaterno', 'asc')
+           ->get(); */
+$reporteTardanza0113 = Asistencia::query()->with(['personal'])
+->select("asistencia.*")
+->join("personal as p","p.codigo","=","asistencia.asistencia")
+->whereBetween('fecha', [now()->parse($dFechainicio)->format('Y-m-d'), now()->parse($dFechafin)->format('Y-m-d')])
+->whereHas('personal',function($query){
+    $query->where('estado','A');
+})
+->orderBy("fecha","ASC")
+->orderBy("p.ApMaterno","ASC")
+->get()->groupBy(function($asistencia){
+    return $asistencia->personal->ApPaterno.' '.$asistencia->personal->ApMaterno.' '.$asistencia->personal->nombres;
+})->values();
+
+           // dd($reporteTardanza0113); 
     return  $reporteTardanza0113;
 }
 
