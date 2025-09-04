@@ -16575,7 +16575,8 @@ __webpack_require__.r(__webpack_exports__);
         cLEntrega: this.fillEditOrdenCompra.cLEntrega,
         nIdTipoPago: this.fillEditOrdenCompra.nIdTipoPago,
         cObservacion: this.fillEditOrdenCompra.cObservacion,
-        nIdTipoMoneda: this.fillEditOrdenCompra.nIdTipoMoneda
+        nIdTipoMoneda: this.fillEditOrdenCompra.nIdTipoMoneda,
+        cDocEnvio: this.fillEditOrdenCompra.cDocEnvio
       }).then(function (response) {
         _this12.getListaDetalleOrdenCompra();
         Swal.fire({
@@ -29084,39 +29085,6 @@ var render = function render() {
       role: ""
     }
   }, [_c("div", {
-    staticClass: "row"
-  }, [_c("div", {
-    staticClass: "col-md-6"
-  }, [_c("div", {
-    staticClass: "form-group row"
-  }, [_c("label", {
-    staticClass: "col-md-3 col-form-label"
-  }, [_vm._v("Seleccione la\n                                                            Sede")]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-6"
-  }, [_c("el-select", {
-    style: {
-      width: "350px"
-    },
-    attrs: {
-      filterable: "",
-      placeholder: "Seleccione una Sede"
-    },
-    model: {
-      value: _vm.fillBsqReportePersonal.nIdSedeDetallado,
-      callback: function callback($$v) {
-        _vm.$set(_vm.fillBsqReportePersonal, "nIdSedeDetallado", $$v);
-      },
-      expression: "fillBsqReportePersonal.nIdSedeDetallado"
-    }
-  }, _vm._l(_vm.listSede, function (item) {
-    return _c("el-option", {
-      key: item.id,
-      attrs: {
-        label: item.nombre,
-        value: item.id
-      }
-    });
-  }), 1)], 1)])])]), _vm._v(" "), _c("div", {
     staticClass: "row"
   }, [_c("div", {
     staticClass: "col-md-6"

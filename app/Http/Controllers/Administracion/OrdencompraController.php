@@ -40,6 +40,7 @@ class OrdencompraController extends Controller
         $ordenCompra->observacion = $request->cObservacion;
         $ordenCompra->tipocambio_id = $request->nIdTipoMoneda;
         $ordenCompra->tipo_ordencompra_id = $proveedor->tipo_ordencompra_id;
+        $ordenCompra->documento_enviar =  $request->cDocEnvio;
         $ordenCompra->save();
 
     }

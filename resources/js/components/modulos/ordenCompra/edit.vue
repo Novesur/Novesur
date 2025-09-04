@@ -1051,6 +1051,7 @@ export default {
                     nIdTipoPago: this.fillEditOrdenCompra.nIdTipoPago,
                     cObservacion: this.fillEditOrdenCompra.cObservacion,
                     nIdTipoMoneda: this.fillEditOrdenCompra.nIdTipoMoneda,
+                    cDocEnvio : this.fillEditOrdenCompra.cDocEnvio
                 })
                 .then((response) => {
                     this.getListaDetalleOrdenCompra();

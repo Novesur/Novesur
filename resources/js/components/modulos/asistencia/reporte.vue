@@ -375,7 +375,7 @@
                                     <el-tab-pane label="Reporte Detallado" name="tercer">
                                         <form role="">
 
-                                                            <div class="row">
+                                                     <!--        <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group row">
                                                         <label class="col-md-3 col-form-label">Seleccione la
@@ -393,7 +393,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> -->
 
 
                                             <div class="row">

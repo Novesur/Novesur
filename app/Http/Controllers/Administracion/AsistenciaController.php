@@ -125,7 +125,7 @@ public function ListTardanzAsistenciaByDate0113(Request $request){
 
 
     $dFechainicio = $request->dFechainicio;
-    $dFechafin = $request->dFechafin; 
+    $dFechafin = $request->dFechafin;
     $sede = $request->nIdSedeDetallado;
 
 
@@ -146,20 +146,28 @@ public function ListTardanzAsistenciaByDate0113(Request $request){
             ->where('estado','A')
            ->orderBy('ApPaterno', 'asc')
            ->get(); */
-$reporteTardanza0113 = Asistencia::query()->with(['personal'])
-->select("asistencia.*")
-->join("personal as p","p.codigo","=","asistencia.asistencia")
-->whereBetween('fecha', [now()->parse($dFechainicio)->format('Y-m-d'), now()->parse($dFechafin)->format('Y-m-d')])
-->whereHas('personal',function($query){
-    $query->where('estado','A');
-})
-->orderBy("fecha","ASC")
-->orderBy("p.ApMaterno","ASC")
-->get()->groupBy(function($asistencia){
-    return $asistencia->personal->ApPaterno.' '.$asistencia->personal->ApMaterno.' '.$asistencia->personal->nombres;
-})->values();
 
-           // dd($reporteTardanza0113); 
+$reporteTardanza0113 = Asistencia::query()
+    ->selectRaw("
+        CONCAT( p.nombres,' ', p.ApPaterno,' ',p.ApMaterno) as personal,
+        asistencia.fecha,
+        asistencia.tiempo,
+        s.nombre as sede
+    ")
+    ->join("personal as p", "p.id", "=", "asistencia.personal_id")
+    ->join("sedes as s", "s.id", "=", "asistencia.sede_id")
+    ->whereNotNull("p.codigo")
+    ->where("p.estado", "A")
+    ->whereBetween("asistencia.fecha", [
+        now()->parse($dFechainicio)->format('Y-m-d'),
+        now()->parse($dFechafin)->format('Y-m-d')
+    ])
+    ->orderBy("asistencia.fecha")
+    ->orderByRaw("CONCAT(p.nombres,' ', p.ApPaterno,' ', p.ApMaterno)")
+    ->orderBy("asistencia.tiempo")
+    ->orderBy("s.nombre")
+    ->get()->groupBy("personal");
+
     return  $reporteTardanza0113;
 }
 

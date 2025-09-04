@@ -20,7 +20,12 @@ class Ordencompra extends Model
         'tipordercompra_id',
         'pago_id',
         'user_id',
-        'estadoordencompra_id'
+        'estadoordencompra_id',
+        'observacion',
+        'tipocambio_id',
+        'tipo_ordencompra_id',
+        'documento_enviar'
+
 
     ];
 

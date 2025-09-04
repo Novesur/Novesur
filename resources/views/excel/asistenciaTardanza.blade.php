@@ -34,7 +34,7 @@
             'December' => 'Diciembre',
         ];
 
-        $fechaEjemplo = $listAsistenciaTardanza[0]->asistencias[0]->fecha ?? null;
+        $fechaEjemplo = now()->format('Y-m-d');
         $mes = $fechaEjemplo ? $meses[date('F', strtotime($fechaEjemplo))] : '';
         $anio = $fechaEjemplo ? date('Y', strtotime($fechaEjemplo)) : '';
 
@@ -44,10 +44,9 @@
         <tr>
             <td align="center"><strong>REPORTE HUELLERO - {{ strtoupper($mes) }} {{ $anio }}</strong></td>
         </tr>
-        @foreach ($listAsistenciaTardanza as $grupos)
+        @foreach ($listAsistenciaTardanza as $key => $grupos)
             <tr>
-                <td><strong> {{ $grupos[0]->personal->ApPaterno }} {{ $grupos[0]->personal->ApMaterno }}
-                        {{ $grupos[0]->personal->nombres }}</strong></td>
+                <td><strong> {{$key}}</strong></td>
             </tr>
             <br />
 
@@ -65,7 +64,7 @@
                 <td>{{ $dias[date('l', strtotime($asistencia->fecha))] }}</td>
                 <td>{{ $asistencia->fecha }}</td>
                 <td>{{ $asistencia->tiempo }}</td>
-                <td>{{ isset($asistencia->personal->sede) ? $asistencia->personal->sede->nombre : '' }}</td>
+                <td>{{ isset($asistencia->sede) ? $asistencia->sede : '' }}</td>
                 <td>NINGUNO</td>
             </tr>
         @endforeach
