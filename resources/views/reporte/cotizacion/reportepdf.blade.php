@@ -101,7 +101,7 @@ th,
 
     <table width="100%" border="0" >
         <tr>
-            <td> <img src="{{ $logo }}"
+            <td> <img src="{{$logo}}"
                     style=" width: 200px; height: 70px; padding-left: 25px" /></td>
             <td> <img src="{{ $productos01 }}" alt=""
                     style=" width: 400px; height: 40px; padding-left: 25px" /></td>

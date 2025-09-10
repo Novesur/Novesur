@@ -4,7 +4,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Requerimientos de Materiales2</h1>
+            <h1 class="m-0 text-dark">Requerimientos de Materiales</h1>
           </div>
         </div>
       </div>

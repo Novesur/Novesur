@@ -66386,7 +66386,7 @@ var staticRenderFns = [function () {
     staticClass: "col-sm-6"
   }, [_c("h1", {
     staticClass: "m-0 text-dark"
-  }, [_vm._v("Requerimientos de Materiales2")])])])])]);
+  }, [_vm._v("Requerimientos de Materiales")])])])])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;

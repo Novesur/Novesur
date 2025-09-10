@@ -114,6 +114,8 @@ class RequerimientoMaterialesController extends Controller
 
 
         $OtrosRequerimientos = Session::get('OtrosReqMateriales');
+
+        if($OtrosRequerimientos !== null){
         $allOtrosReque =  $OtrosRequerimientos->map(function ($otrosReque) use ($requerimientoMateriales) {
             return [
                 'pk_ReqMateriales' => $requerimientoMateriales->id,
@@ -128,8 +130,8 @@ class RequerimientoMaterialesController extends Controller
         DB::commit();
         Session::put('OtrosReqMateriales', collect([]));
 
-
-        return response()->json(['message' => 'Nuevo Requerimiento Materiales agregado', 'icon' => 'success'], 200);
+    }
+    return response()->json(['message' => 'Nuevo Requerimiento Materiales agregado', 'icon' => 'success'], 200);
     }
 
     public function addOrden(Request $request)
