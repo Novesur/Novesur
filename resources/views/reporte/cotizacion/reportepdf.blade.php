@@ -68,11 +68,13 @@
         .page-break {
             page-break-before: always;
         }
-        table{
-            border:none
+
+        table {
+            border: none
         }
+
         th,
-/* td {
+        /* td {
   padding: 2px;
   text-align: left;
   border: 0px solid #ddd;
@@ -99,7 +101,7 @@ th,
 
 
 
-    <table width="100%" border="0" >
+    <table width="100%" border="0">
         <tr>
             <td> <img src="{{$logo}}"
                     style=" width: 200px; height: 70px; padding-left: 25px" /></td>
@@ -120,12 +122,15 @@ th,
 
     <table width="100%" border="0">
         <tr>
-            {{--           <td colspan="4" align="center" style="border: 1px; background-color: rgb(109, 172, 243);width: -10px;padding-top: 0rem" ><h3><strong>COTIZACION Nº {{str_pad($coti->id,3,'0',STR_PAD_LEFT) }} - {{substr($coti->fecha,0,4)}}</strong></h3></td>
- --}}
+            {{-- <td colspan="4" align="center" style="border: 1px; background-color: rgb(109, 172, 243);width: -10px;padding-top: 0rem" ><h3><strong>COTIZACION Nº {{str_pad($coti->id,3,'0',STR_PAD_LEFT) }} - {{substr($coti->fecha,0,4)}}</strong></h3>
+            </td>
+            --}}
 
             <td colspan="4" align="center"
                 style="border: 1px; background-color: rgb(109, 172, 243);width: -10px;padding-top: 0rem">
-                <h3><center><strong>COTIZACION Nº {{ $coti->codigo }}</strong></center></h3>
+                <h3>
+                    <center><strong>COTIZACION Nº {{ $coti->codigo }}</strong></center>
+                </h3>
             </td>
 
         </tr>
@@ -136,13 +141,13 @@ th,
             <td style="font-size: 11px"><strong>FECHA:</strong></td>
             <td style="font-size: 10px">
                 @if ($coti->fechacotiupdate == null)
-                    @php
-                        echo date('d-m-Y', strtotime($coti->fecha));
-                    @endphp
+                @php
+                echo date('d-m-Y', strtotime($coti->fecha));
+                @endphp
             </td>
-        @else
+            @else
             @php
-                echo date('d-m-Y', strtotime($coti->fechacotiupdate));
+            echo date('d-m-Y', strtotime($coti->fechacotiupdate));
             @endphp </td>
             @endif
 
@@ -155,7 +160,8 @@ th,
 
             <td style="font-size: 11px"><strong>VENDEDOR:</strong></td>
             <td style="font-size: 10px">
-                {{ $coti->user->gradousers->cod . ' ' . $coti->user->firstname . ' ' . $coti->user->secondname }}</td>
+                {{ $coti->user->gradousers->cod . ' ' . $coti->user->firstname . ' ' . $coti->user->secondname }}
+            </td>
         </tr>
         <tr>
             <td align="left" style="font-size: 11px"><strong>RUC:</strong></td>
@@ -220,104 +226,105 @@ th,
     </table>
 
     <h6 style="margin: 0.5em">
-        <center style="text-transform: uppercase">De nuestra consideración; Hacemos llegar  nuestra propuesta económica, según se muestra a
+        <center style="text-transform: uppercase">De nuestra consideración; Hacemos llegar nuestra propuesta económica, según se muestra a
             continuación</center>
     </h6>
 
-    <table width="100%" border="1" >
+    <table width="100%" border="1">
         <tr>
-            <td align="center" style="background-color:rgba(238, 229, 229, 0.719); font-size: 12px" ><strong>Nro</strong>
+            <td align="center" style="background-color:rgba(238, 229, 229, 0.719); font-size: 12px"><strong>Nro</strong>
             </td>
-            <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 12px" >
+            <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 12px">
                 <strong>CANT</strong>
             </td>
-            <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 12px" >
+            <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 12px">
                 <strong>CODIGO</strong>
             </td>
-            <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 12px" ><strong>DESCRIPCION
+            <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 12px"><strong>DESCRIPCION
                     DEL PRODUCTO</strong></td>
-            <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 12px" >
+            <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 12px">
                 <strong>P/UNIT</strong>
             </td>
-            <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 12px" ><strong>Total
+            <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 12px"><strong>Total
                     S/IGV</strong></td>
         </tr>
 
         @php
-            $i = 0;
+        $i = 0;
         @endphp
         @if ($detcoti)
-            @foreach ($detcoti as $data)
-                <tr>
-                    <td align="center" style="font-size:1em" >@php
-                        echo $i = $i + 1;
-                    @endphp</td>
-                    </td>
-                    <td align="center" style="font-size: 10px" >{{ $data->cantidad }}</td>
-                    <td align="center" style="font-size: 10px" >{{ $data->producto->codigo }}</td>
-                    <td align="center" style="font-size: 10px" >
-                        {{ $data->producto->familia->nombre . ' ' . $data->producto->subfamilia->nombre . ', MODELO ' . $data->producto->modelotipo->nombre . ', MATERIAL ' . $data->producto->material->nombre . ', MARCA ' . $data->producto->marca->nombre . ', - ' . $data->producto->homologacion->nombre }}
-                    </td>
-                    <td align="center" style="font-size: 10px" >S/. {{ number_format($data->punit, 2) }}</td>
+        @foreach ($detcoti as $data)
+        <tr>
+            <td align="center" style="font-size:1em">@php
+                echo $i = $i + 1;
+                @endphp</td>
+            </td>
+            <td align="center" style="font-size: 10px">{{ $data->cantidad }}</td>
+            <td align="center" style="font-size: 10px">{{ $data->producto->codigo }}</td>
+            <td align="center" style="font-size: 10px">
+                {{ $data->producto->familia->nombre . ' ' . $data->producto->subfamilia->nombre . ', MODELO ' . $data->producto->modelotipo->nombre . ', MATERIAL ' . $data->producto->material->nombre . ', MARCA ' . $data->producto->marca->nombre . ', - ' . $data->producto->homologacion->nombre }}
+            </td>
+            <td align="center" style="font-size: 10px">S/. {{ number_format($data->punit, 2) }}</td>
 
-                    <td align="right" style="font-size: 9px" >S/.
-                        {{ number_format($data->cantidad * $data->punit, 2) }}
-                    </td>
+            <td align="right" style="font-size: 9px">S/.
+                {{ number_format($data->cantidad * $data->punit, 2) }}
+            </td>
 
-                </tr>
-            @endforeach
+        </tr>
+        @endforeach
         @endif
         @php
-            $subtotal = 0;
-            foreach ($detcoti as $data) {
-                $valor = $data->cantidad * $data->punit;
-                $subtotal = $valor + $subtotal;
-            }
-            $IGV = $subtotal * 0.18;
-            $total = $subtotal + $IGV;
+        $subtotal = 0;
+        foreach ($detcoti as $data) {
+        $valor = $data->cantidad * $data->punit;
+        $subtotal = $valor + $subtotal;
+        }
+        $IGV = $subtotal * 0.18;
+        $total = $subtotal + $IGV;
         @endphp
         <tr>
-            <td colspan="4" rowspan="3" align="center" >&nbsp;</td>
+            <td colspan="4" rowspan="3" align="center">&nbsp;</td>
             <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 10px">
                 <strong>SUBTOTAL</strong>
             </td>
-            <td align="right" style="font-size: 9px" >S/. {{ number_format($subtotal, 2) }}</td>
+            <td align="right" style="font-size: 9px">S/. {{ number_format($subtotal, 2) }}</td>
         </tr>
 
-        <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 10px" ><strong>IGV
+        <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 10px"><strong>IGV
                 18%</strong></td>
         <td align="right" style="font-size: 10px">S/.{{ number_format($IGV, 2) }}</td>
         </tr>
         <tr>
-            <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 10px" ><strong>TOTAL
+            <td align="center" style="background-color: rgba(238, 229, 229, 0.719);font-size: 10px"><strong>TOTAL
                     GENERAL</strong></td>
-            <td align="right" style="background-color: rgba(238, 229, 229, 0.719,font-size:0.8em);font-size: 9px" >S/.
-                {{ number_format($total, 2) }}</td>
+            <td align="right" style="background-color: rgba(238, 229, 229, 0.719); font-size: 9px;">
+                S/. {{ number_format($total, 2) }}
+            </td>
         </tr>
 
     </table>
 
-    <table width="100%" border="1" align="center" style="margin-top: 5px" >
+    <table width="100%" border="1" align="center" style="margin-top: 5px">
 
         <tr>
-            <td colspan="3" align="center" style="font-size: 12px" ><strong>CUENTAS CORRIENTES INVERSIONES
+            <td colspan="3" align="center" style="font-size: 12px"><strong>CUENTAS CORRIENTES INVERSIONES
                     NOVESUR SAC</strong></td>
         </tr>
         <tr>
-            <td align="center" style="background-color: lightgreen ;font-size: 11px" ><strong>BANCO</strong></td>
-            <td align="center" style="background-color: lightgreen;font-size: 11px" ><strong>CTE. SOLES</strong></td>
-            <td align="center" style="background-color: lightgreen;font-size: 11px" ><strong>CTA. INTERBANCARIO
+            <td align="center" style="background-color: lightgreen ;font-size: 11px"><strong>BANCO</strong></td>
+            <td align="center" style="background-color: lightgreen;font-size: 11px"><strong>CTE. SOLES</strong></td>
+            <td align="center" style="background-color: lightgreen;font-size: 11px"><strong>CTA. INTERBANCARIO
                     CCI</strong></td>
         </tr>
         <tr>
-            <td align="center"  ><strong style="color: red">BCP</strong></td>
-            <td align="center" >193-1760590-0-36</td>
-            <td align="center" >CCI 002-193-001760590036-18</td>
+            <td align="center"><strong style="color: red">BCP</strong></td>
+            <td align="center">193-1760590-0-36</td>
+            <td align="center">CCI 002-193-001760590036-18</td>
         </tr>
         <tr>
-            <td align="center" ><strong style="color: blue">BBVA</strong></td>
-            <td align="center" >0011-0933-0100025143</td>
-            <td align="center" >CCI 011-933-000100025143-97</td>
+            <td align="center"><strong style="color: blue">BBVA</strong></td>
+            <td align="center">0011-0933-0100025143</td>
+            <td align="center">CCI 011-933-000100025143-97</td>
         </tr>
     </table>
     <br>
@@ -342,10 +349,10 @@ th,
             <td style="font-size: 11px"><strong>Condición de Pago :</strong></td>
             <td style="font-size: 10px"> {{ $coti->pago->nombre }}</td>
         </tr>
-                <tr>
+        <tr>
             <td style="font-size: 11px"><strong>Referencia :</strong></td>
             <td style="font-size: 10px">- TODA COMISON GENERADA POR DEPOSITOS EN AGENTES DE BANCO
-                <strong>(PROVINCIA)</strong>, SERÁ ASUMIDA POR EL CLIENTE
+                <strong>(PROVINCIA)</strong> Y/O VENTANILLA, SERÁ ASUMIDA POR EL CLIENTE
             </td>
 
         </tr>
@@ -353,8 +360,8 @@ th,
             <td style="font-size: 11px">&nbsp;</td>
             <td style="font-size: 10px">
 
-                    <div style="text-transform: uppercase">- El incumplimiento del pago generara interés a la tasa vigente del sistema Bancario
-                    </div>
+                <div style="text-transform: uppercase">- El incumplimiento del pago generara interés a la tasa vigente del sistema Bancario
+                </div>
 
             </td>
         </tr>
@@ -387,7 +394,7 @@ th,
             {{ $coti->user->gradousers->cod . ' ' . $coti->user->firstname . ' ' . $coti->user->secondname }}<br />
             <strong style="text-transform: uppercase">Coordinador Comercial</strong>
         </h6>
-        <footer style="padding-bottom: 0px" >
+        <footer style="padding-bottom: 0px">
             <h6 class="text-align: center; ">Jr. Monte Abeto 376 Urb. Monterrico Sur -
                 santiago de Surco<br>
                 Ventas@novesur.com / www.novesur.com<span style="text-align: center"></span><span

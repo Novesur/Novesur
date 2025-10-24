@@ -15,7 +15,7 @@ class UsuarioController extends Controller
 
     public function index(Request $request)
     {
-            $dato = User::with('almacen','zonal')->where('firstname', 'like', '%' . $request->cFirstname . '%')
+        $dato = User::with('almacen', 'zonal')->where('firstname', 'like', '%' . $request->cFirstname . '%')
             ->where('username', 'like', '%' . $request->cUsername . '%')
             ->where('email', 'like', '%' . $request->cEmail . '%')->get();
         return $dato;
@@ -46,7 +46,7 @@ class UsuarioController extends Controller
         if (!$request->ajax()) return redirect('/');
         $nIdUsuario = $request->nIdUsuario;
         $nIdUsuario = ($nIdUsuario == NULL) ? ($nIdUsuario = '') : $nIdUsuario;
-        $dato = User::with('roles','zonal')->where('id', $nIdUsuario)->first();
+        $dato = User::with('roles', 'zonal')->where('id', $nIdUsuario)->first();
         return $dato;
     }
 
@@ -70,9 +70,14 @@ class UsuarioController extends Controller
             if (trim($request->cPassword) != NULL) {
                 $usuario->password = Hash::make($request->cPassword);
             }
+
             $usuario->gradousers_id = $request->nIdGradoAcad;
             $usuario->zonal_id = $request->nIdZonal;
-            $usuario->estado_edit_cliente = $usuario->estado_edit_cliente;
+            if ($request->checkEditClient == false) {
+                $usuario->estado_edit_cliente = 0;
+            } else {
+                $usuario->estado_edit_cliente = 1;
+            }
             $usuario->save();
         }
     }
@@ -101,33 +106,36 @@ class UsuarioController extends Controller
         User::find($request->nIdUsuario)->delete();
     }
 
-    public function getListarUsusarios(){
-        $dato = User::where('roles_id',3)
-        ->Orwhere('roles_id',1)
-        ->Orwhere('roles_id',5)
-        ->Orwhere('roles_id',4)
-        ->Orwhere('roles_id',13)
-        ->Orwhere('roles_id',11)
-        ->Orwhere('roles_id',7)->get();
+    public function getListarUsusarios()
+    {
+        $dato = User::where('roles_id', 3)
+            ->Orwhere('roles_id', 1)
+            ->Orwhere('roles_id', 5)
+            ->Orwhere('roles_id', 4)
+            ->Orwhere('roles_id', 13)
+            ->Orwhere('roles_id', 11)
+            ->Orwhere('roles_id', 7)->get();
         return $dato;
     }
 
-    public function getListarUsusariosbyId(Request $request){
+    public function getListarUsusariosbyId(Request $request)
+    {
 
-       // $dato = User::where('id', $request->nIdUsuario)->where('roles_id',3)->get();
+        // $dato = User::where('id', $request->nIdUsuario)->where('roles_id',3)->get();
 
         $dato = User::where('id', $request->nIdUsuario)->get();
         return $dato;
     }
 
-    public function getListarVendedores(){
+    public function getListarVendedores()
+    {
         $dato = User::orderBy('firstname')->get();
         return $dato;
     }
 
-    public function getListarGradoAcad(){
+    public function getListarGradoAcad()
+    {
         $dato = Gradouser::orderBy('nombre')->get();
         return $dato;
     }
-
 }
