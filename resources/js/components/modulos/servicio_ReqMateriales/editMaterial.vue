@@ -4,20 +4,22 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-12">
-            <h1 class="m-0 text-dark">Editar Requerimientos de Materiales para servicio al Cliente </h1>
+            <h1 class="m-0 text-dark">
+              Editar Requerimientos de Materiales para servicio al Cliente
+            </h1>
           </div>
         </div>
       </div>
     </div>
     <div class="content container-fluid">
       <div class="card">
-          <div class="card-header">
-                    <div class="card-tools">
-                        <router-link class="btn btn-info btn-sm" :to="'/servicio_ReqMateriales/list'">
-                            <i class="fas fa-arrow-left"></i>Regresar
-                        </router-link>
-                    </div>
-                </div>
+        <div class="card-header">
+          <div class="card-tools">
+            <router-link class="btn btn-info btn-sm" :to="'/servicio_ReqMateriales/list'">
+              <i class="fas fa-arrow-left"></i>Regresar
+            </router-link>
+          </div>
+        </div>
         <div class="card-body">
           <div class="container-fluid">
             <div class="card card-info">
@@ -26,19 +28,14 @@
               </div>
               <div class="card-body">
                 <form role="form">
-
                   <div class="col-md-12">
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
                           <label class="col-md-3 col-form-label">Cliente</label>
                           <div class="col-md-6">
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="fillEditReqMaterialesServicio.cClient"
-                              readonly="true"
-                            />
+                            <input type="text" class="form-control" v-model="fillEditReqMaterialesServicio.cClient"
+                              readonly="true" />
                           </div>
                         </div>
                       </div>
@@ -47,21 +44,17 @@
                         <div class="form-group row">
                           <label class="col-md-2 col-form-label">RUC o DNI </label>
                           <div class="col-md-5">
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="fillEditReqMaterialesServicio.cRuc"
-                              :maxlength="11"
-                            />
+                            <input type="text" class="form-control" v-model="fillEditReqMaterialesServicio.cRuc"
+                              :maxlength="11" />
                           </div>
                           <div class="text-center">
                             <span style="color: red; text-align: end">{{
                               this.fillEditReqMaterialesServicio.cRuc.length +
                               " " +
                               "Caracteres"
-                            }}</span>
+                              }}</span>
                           </div>
-                        <!--          <div class="col">
+                          <!--          <div class="col">
                           <span>
                             <button
                               class="btn btn-success btn-sm"
@@ -80,8 +73,6 @@
                             </button></span
                           >
                         </div> -->
-
-
                         </div>
                       </div>
                     </div>
@@ -92,11 +83,7 @@
                       <div class="form-group row">
                         <label class="col-md-2 col-form-label">Detalle Servicio</label>
                         <div class="col-md-9">
-                          <input
-                            type="text"
-                            class="form-control"
-                            v-model="fillEditReqMaterialesServicio.detservicio"
-                          />
+                          <input type="text" class="form-control" v-model="fillEditReqMaterialesServicio.detservicio" />
                         </div>
                       </div>
                     </div>
@@ -108,13 +95,8 @@
                         <div class="form-group row">
                           <label class="col-md-3 col-form-label">Fecha Inicio</label>
                           <div class="col-md-6">
-                            <el-date-picker
-                              v-model="fillEditReqMaterialesServicio.FInicio"
-                              type="date"
-                              placeholder="Indique la fecha"
-                              format="dd/MM/yyyy"
-                              value-format="yyyy-MM-dd"
-                            >
+                            <el-date-picker v-model="fillEditReqMaterialesServicio.FInicio" type="date"
+                              placeholder="Indique la fecha" format="dd/MM/yyyy" value-format="yyyy-MM-dd">
                             </el-date-picker>
                           </div>
                         </div>
@@ -125,14 +107,9 @@
                           <div class="form-group row">
                             <label class="col-md-3 col-form-label">Fecha Final</label>
                             <div class="col-md-6">
-                              <el-date-picker
-                                v-model="fillEditReqMaterialesServicio.FFinal"
-                                type="date"
-                                placeholder="Indique la fecha"
-                                format="dd/MM/yyyy"
-                                value-format="yyyy-MM-dd"
-                                @change="calculoFecha"
-                              >
+                              <el-date-picker v-model="fillEditReqMaterialesServicio.FFinal" type="date"
+                                placeholder="Indique la fecha" format="dd/MM/yyyy" value-format="yyyy-MM-dd"
+                                @change="calculoFecha">
                               </el-date-picker>
                             </div>
                           </div>
@@ -147,11 +124,7 @@
                         <div class="form-group row">
                           <label class="col-md-3 col-form-label">Duracion (Días)</label>
                           <div class="col-md-3" v-if="calculoFechas != 'NaN'">
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="fillEditReqMaterialesServicio.cDuracion"
-                            />
+                            <input type="text" class="form-control" v-model="fillEditReqMaterialesServicio.cDuracion" />
                           </div>
                         </div>
                       </div>
@@ -160,21 +133,12 @@
                         <div class="form-group row">
                           <label class="col-md-2 col-form-label">Cantidad</label>
                           <div class="col-md-3">
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="fillEditReqMaterialesServicio.cCantidad"
-                            />
+                            <input type="text" class="form-control" v-model="fillEditReqMaterialesServicio.cCantidad" />
                           </div>
                         </div>
-
+                      </div>
                     </div>
-                    </div>
-
-
                   </div>
-
-
 
                   <!-- INICIO  DE REQUERIMIENTOS DE MATERIALES -->
 
@@ -188,38 +152,26 @@
                             </div>
                             <div class="card-body">
                               <div class="form-group row">
-                                <label class="col-md-2 col-form-label"
-                                  >DESCRIPCION DEL MATERIAL</label
-                                >
+                                <label class="col-md-2 col-form-label">DESCRIPCION DEL MATERIAL</label>
 
                                 <div class="col-md-10">
-                                  <el-select
-                                    v-model="fillEditReqMaterialesServicio.nIdmaterial"
-                                    style="width: 90%"
-                                    filterable
-                                    placeholder="Select"
-                                  >
+                                  <el-select v-model="fillEditReqMaterialesServicio.nIdmaterial" style="width: 90%"
+                                    filterable placeholder="Select">
                                     <v-row align="right">
-                                      <el-option
-                                        v-for="item in listProd"
-                                        :key="item.id"
-                                        :label="
-                                          item.codigo +
-                                          ' - ' +
-                                          item.familia.nombre +
-                                          ' , ' +
-                                          item.subfamilia.nombre +
-                                          ' , Modelo: ' +
-                                          item.modelotipo.nombre +
-                                          ' , Marca : ' +
-                                          item.marca.nombre +
-                                          ' , Material : ' +
-                                          item.material.nombre +
-                                          ' ,' +
-                                          item.homologacion.nombre
-                                        "
-                                        :value="item.id"
-                                      >
+                                      <el-option v-for="item in listProd" :key="item.id" :label="item.codigo +
+                                        ' - ' +
+                                        item.familia.nombre +
+                                        ' , ' +
+                                        item.subfamilia.nombre +
+                                        ' , Modelo: ' +
+                                        item.modelotipo.nombre +
+                                        ' , Marca : ' +
+                                        item.marca.nombre +
+                                        ' , Material : ' +
+                                        item.material.nombre +
+                                        ' ,' +
+                                        item.homologacion.nombre
+                                        " :value="item.id">
                                       </el-option>
                                     </v-row>
                                   </el-select>
@@ -228,11 +180,8 @@
                               <div class="form-group row">
                                 <label class="col-md-2 col-form-label">CANTIDAD</label>
                                 <div class="col-md-3">
-                                  <input
-                                    type="text"
-                                    class="form-control"
-                                    v-model="fillEditReqMaterialesServicio.cCantMaterial"
-                                  />
+                                  <input type="text" class="form-control"
+                                    v-model="fillEditReqMaterialesServicio.cCantMaterial" />
                                 </div>
                               </div>
 
@@ -240,17 +189,10 @@
                                 <div class="form-group row">
                                   <label class="col-md-4 col-form-label">MEDIDA</label>
                                   <div class="col-md-4">
-                                    <el-select
-                                      v-model="fillEditReqMaterialesServicio.nIdUnidMedMat"
-                                      placeholder="Select"
-                                      style="width: 70%"
-                                    >
-                                      <el-option
-                                        v-for="item in listUnidMed"
-                                        :key="item.id"
-                                        :label="item.nombre"
-                                        :value="item.id"
-                                      >
+                                    <el-select v-model="fillEditReqMaterialesServicio.nIdUnidMedMat
+                                      " placeholder="Select" style="width: 70%">
+                                      <el-option v-for="item in listUnidMed" :key="item.id" :label="item.nombre"
+                                        :value="item.id">
                                       </el-option>
                                     </el-select>
                                   </div>
@@ -267,16 +209,10 @@
               <div class="card-footer">
                 <div class="row">
                   <div class="col-md-4 offset-4">
-                    <button
-                      class="btn btn-flat btn-primary btnWidth"
-                      @click.prevent="setRegistrarServMaterialesList"
-                    >
+                    <button class="btn btn-flat btn-primary btnWidth" @click.prevent="setRegistrarServMaterialesList">
                       Agregar
                     </button>
-                    <button
-                      class="btn btn-flat btn-default btnWidth"
-                      @click.prevent="setCleanReqMateriales"
-                    >
+                    <button class="btn btn-flat btn-default btnWidth" @click.prevent="setCleanReqMateriales">
                       Limpiar
                     </button>
                   </div>
@@ -305,25 +241,19 @@
                         <td v-text="item.producto.codigo"></td>
                         <td v-text="item.cantServicio"></td>
 
-                        <td
-                          v-text="
-                            item.producto.familia.nombre  +
-                            ' ' +
-                            item.producto.subfamilia.nombre +
-                            ', MARCA :' +
-                            item.producto.marca.nombre +
-                            ', MODELO/TIPO :' +
-                            item.producto.modelotipo.nombre +
-                            ', MATERIAL :' +
-                            item.producto.material.nombre
-                          "
-                        ></td>
+                        <td v-text="item.producto.familia.nombre +
+                          ' ' +
+                          item.producto.subfamilia.nombre +
+                          ', MARCA :' +
+                          item.producto.marca.nombre +
+                          ', MODELO/TIPO :' +
+                          item.producto.modelotipo.nombre +
+                          ', MATERIAL :' +
+                          item.producto.material.nombre
+                          "></td>
                         <td v-text="item.unidmedida.nombre"></td>
                         <td>
-                          <button
-                            class="btn btn-danger btn-sm"
-                            @click.prevent="DeletListReqMateriales(item.id)"
-                          >
+                          <button class="btn btn-danger btn-sm" @click.prevent="DeletListReqMateriales(item.id)">
                             <i class="fas fa-trash-alt"></i>
                             Eliminar
                           </button>
@@ -356,16 +286,11 @@
           </div>
         </div>
       </div>
-
     </div>
 
     <!-- FIN DE OTROS REQUERIMIENTOS -->
 
-    <div
-      class="modal fade"
-      :class="{ show: modalShow }"
-      :style="modalShow ? mostrarModal : ocultarModal"
-    >
+    <div class="modal fade" :class="{ show: modalShow }" :style="modalShow ? mostrarModal : ocultarModal">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -373,13 +298,8 @@
             <button class="close" @click="abrirModal"></button>
           </div>
           <div class="modal-body">
-            <div
-              class="callout callout-danger"
-              style="padding: 5px"
-              v-for="(item, index) in mensajeError"
-              :key="index"
-              v-text="item"
-            ></div>
+            <div class="callout callout-danger" style="padding: 5px" v-for="(item, index) in mensajeError" :key="index"
+              v-text="item"></div>
           </div>
           <div class="modal-footer">
             <button class="btn btn-secondary" @click="abrirModal">Cerrar</button>
@@ -435,7 +355,7 @@ export default {
       listartempMobra: [],
       listartempRequerimientos: [],
       listartempOtrosRequerimientos: [],
-      listServicioMateriales:[],
+      listServicioMateriales: [],
       listDescripPago: [
         {
           value: "1",
@@ -474,8 +394,8 @@ export default {
   },
 
   methods: {
-    getListServicioById(){
-        var url = "/administracion/servicio/servicioById";
+    getListServicioById() {
+      var url = "/administracion/servicio/servicioById";
       axios
         .get(url, {
           params: {
@@ -491,11 +411,10 @@ export default {
           this.fillEditReqMaterialesServicio.cDuracion = response.data.duracion;
           this.fillEditReqMaterialesServicio.cCantidad = response.data.cantidad;
         });
-
     },
 
-    getListServicioMaterialesById(){
-        var url = "/administracion/servicioReqMateriales/listMaterialById";
+    getListServicioMaterialesById() {
+      var url = "/administracion/servicioReqMateriales/listMaterialById";
       axios
         .get(url, {
           params: {
@@ -503,12 +422,10 @@ export default {
           },
         })
         .then((response) => {
-            console.log(response.data)
+          console.log(response.data);
           this.listServicioMateriales = response.data;
-
         });
     },
-
 
     calculoFecha() {
       if (
@@ -576,7 +493,7 @@ export default {
         });
     },
 
-        consultaDNI() {
+    consultaDNI() {
       var url = "/administracion/cliente/consultaDNI";
       axios
         .post(url, {
@@ -584,7 +501,7 @@ export default {
         })
         .then((response) => {
           if (response.data.success == false) {
-           /*  this.estadobutton = true;
+            /*  this.estadobutton = true;
             (this.fillEditReqMaterialesServicio.cRSocial = ""),
               (this.fillEditReqMaterialesServicio.cDireccion = ""); */
 
@@ -597,14 +514,14 @@ export default {
             });
             this.estadobutton = false;
           } else {
-            (this.fillEditReqMaterialesServicio.cClient =
+            this.fillEditReqMaterialesServicio.cClient =
               response.data.nombres +
               " " +
               response.data.apellidoPaterno +
               " " +
-              response.data.apellidoMaterno);
-             // (this.fillEditReqMaterialesServicio.cClient  = response.data.direccion);
-       /*     this.estadobutton = false;
+              response.data.apellidoMaterno;
+            // (this.fillEditReqMaterialesServicio.cClient  = response.data.direccion);
+            /*     this.estadobutton = false;
             this.disabledbtnRuc = true;  */
           }
         });
@@ -617,7 +534,7 @@ export default {
           nIdPersonal: this.fillEditReqMaterialesServicio.nIdPersonal,
           cDiasMObra: this.fillEditReqMaterialesServicio.cDiasMObra,
           cHorasMObra: this.fillEditReqMaterialesServicio.cHorasMObra,
-         estado: "S",
+          estado: "S",
         })
         .then((response) => {
           this.listartempMobra = response.data.datos;
@@ -640,8 +557,6 @@ export default {
       this.fillEditReqMaterialesServicio.cHorasMObra = 0;
     },
 
-
-
     setOtrosRequerimientos() {
       var url = "/administracion/servicio/addOtrosServicios";
       axios
@@ -649,7 +564,7 @@ export default {
           cDescripcion: this.fillEditReqMaterialesServicio.cDescripcion,
           cCantidadReq: this.fillEditReqMaterialesServicio.cCantidadReq,
           nIdUnidMedOtroReq: this.fillEditReqMaterialesServicio.nIdUnidMedOtroReq,
-         estado: "S",
+          estado: "S",
         })
         .then((response) => {
           /*            if (
@@ -714,8 +629,6 @@ export default {
         });
     },
 
-
-
     getlistTipoCambio() {
       var url = "/administracion/ordenCompra/TipoCambio";
       axios.get(url).then((response) => {
@@ -723,7 +636,6 @@ export default {
         this.fillEditReqMaterialesServicio.nIdTipoMoneda = this.listTipoCambio[0].id;
       });
     },
-
 
     getListarproductosByName() {
       var url = "/administracion/detallecotizancion/listProdByName";
@@ -800,7 +712,7 @@ export default {
       if (!this.fillEditReqMaterialesServicio.detservicio) {
         this.mensajeError.push("Detalle Servicio Campo Obligatorio");
       }
-          if (!this.fillEditReqMaterialesServicio.cCantidad) {
+      if (!this.fillEditReqMaterialesServicio.cCantidad) {
         this.mensajeError.push("Cantidad es obligatorio");
       }
 
@@ -838,15 +750,15 @@ export default {
       return this.error;
     },
     setAddReqMaterial() {
-      var url = "/administracion/servicioReqMateriales/createMaterialServicioById";
+      var url = "/administracion/servicioReqMateriales/AddMaterialEdit";
 
       axios
         .post(url, {
-         nIdServicio: this.fillEditReqMaterialesServicio.nIdServicio,
+          nIdServicio: this.fillEditReqMaterialesServicio.nIdServicio,
           nIdmaterial: this.fillEditReqMaterialesServicio.nIdmaterial,
           cCantMaterial: this.fillEditReqMaterialesServicio.cCantMaterial,
           nIdUnidMedMat: this.fillEditReqMaterialesServicio.nIdUnidMedMat,
-         estado: "S",
+          estado: "S",
         })
         .then((response) => {
           if (response.data.message == "Ya fue agregado anteriormente") {
@@ -861,7 +773,6 @@ export default {
             this.setLimpiaMaterial();
             this.fillEditReqMaterialesServicio.cCantMaterial = 0;
             this.getListServicioMaterialesById();
-
           }
 
           if (response.data.message == "El valor no puede ser cero") {
@@ -876,7 +787,6 @@ export default {
             this.setLimpiaMaterial();
             this.fillEditReqMaterialesServicio.cCantMaterial = 0;
             this.getListServicioMaterialesById();
-
           }
         });
     },
@@ -889,8 +799,6 @@ export default {
     setLimpiaCampos() {
       this.fillEditReqMaterialesServicio.nIdmaterial = null;
       this.fillEditReqMaterialesServicio.cCantidad = 0;
-
-
     },
 
     setResetCampos() {
@@ -930,7 +838,6 @@ export default {
       this.fillEditReqMaterialesServicio.FInicio = "";
       this.fillEditReqMaterialesServicio.FFinal = "";
       this.fillEditReqMaterialesServicio.cDuracion = "";
-
     },
 
     setListtemOrders() {

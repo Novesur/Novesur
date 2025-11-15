@@ -53,7 +53,7 @@ class ServicioController extends Controller
         $servicio->cliente = $request->cClient;
         $servicio->ruc_dni = $request->cRuc;
         $servicio->detservicio = mb_strtoupper($request->detservicio);
-         $servicio->cantidad = $request->cCantidad;
+        $servicio->cantidad = $request->cCantidad;
         $servicio->fechainicio = $dateIni;
         $servicio->fechafinal = $dateFinal;
         $servicio->duracion = $request->Duracionfechas;
@@ -283,8 +283,11 @@ class ServicioController extends Controller
         }
     }
 
-    public function servicioById(Request $request){
-        $dato = Servicio::where('id',$request->nIdServicio)->first();
+    public function servicioById(Request $request)
+    {
+
+
+        $dato = Servicio::where('id', $request->nIdServicio)->first();
         return $dato;
     }
 }

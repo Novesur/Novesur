@@ -585,9 +585,9 @@ Route::post('/administracion/ProyectoMateriales/EditModalReqMateriales', 'Admini
 Route::post('/administracion/ProyectoManoObra/addProyManObra', 'Administracion\ProyectoManoObraController@addProyManObra');
 Route::get('/administracion/ProyectoManoObra/CleanProyectManObra', 'Administracion\ProyectoManoObraController@CleanProyectManObra');
 Route::post('/administracion/ProyectoManoObra/reorderProyectManObra', 'Administracion\ProyectoManoObraController@reorderProyectManObra');
- Route::get('/administracion/ProyectoManoObra/listproyManoObra', 'Administracion\ProyectoManoObraController@listproyManoObra');
- Route::get('/administracion/ProyectoManoObra/CleanProyectManObra', 'Administracion\ProyectoManoObraController@CleanProyectManObra');
- Route::post('/administracion/ProyectoManoObra/addReqMatProyManObra', 'Administracion\ProyectoManoObraController@addReqMatProyManObra');
+Route::get('/administracion/ProyectoManoObra/listproyManoObra', 'Administracion\ProyectoManoObraController@listproyManoObra');
+Route::get('/administracion/ProyectoManoObra/CleanProyectManObra', 'Administracion\ProyectoManoObraController@CleanProyectManObra');
+Route::post('/administracion/ProyectoManoObra/addReqMatProyManObra', 'Administracion\ProyectoManoObraController@addReqMatProyManObra');
 
 
 
@@ -751,6 +751,7 @@ Route::get('/administracion/servicio/servicioById', 'Administracion\ServicioCont
 
 
 
+
 Route::post('/administracion/servicioReqMateriales/listbyId', 'Administracion\ServicioReqMaterialesController@listbyId');
 Route::get('/administracion/servicioReqMateriales/listproyMateriales', 'Administracion\ServicioReqMaterialesController@listproyMateriales');
 Route::get('/administracion/servicioReqMateriales/list', 'Administracion\ServicioReqMaterialesController@list');
@@ -758,7 +759,7 @@ Route::get('/administracion/servicioManoObra/listproyManoObra', 'Administracion\
 Route::post('/administracion/servicioManoObra/reorderReqManObra', 'Administracion\ServicioManoObraController@reorderReqManObra');
 Route::get('/administracion/servicioManoObra/ListValorMaNObraxInfoValor', 'Administracion\ServicioManoObraController@ListValorMaNObraxInfoValor');
 Route::get('/administracion/servicioManoObra/mostrarInfoManObra', 'Administracion\ServicioManoObraController@mostrarInfoManObra');
-
+Route::get('/administracion/servicioReqMateriales/listReqMaterial', 'Administracion\ServicioReqMaterialesController@listReqMaterial');
 
 Route::get('/administracion/servicioOtrosReq/listproyOtrosReq', 'Administracion\ServicioOtrosReqController@listproyOtrosReq');
 Route::post('/administracion/servicioReqMateriales/addReqMatServicio', 'Administracion\ServicioReqMaterialesController@addReqMatServicio');
@@ -768,9 +769,7 @@ Route::post('/administracion/servicioReqMateriales/EditModalReqMateriales', 'Adm
 Route::get('/administracion/servicioReqMateriales/listMaterialById', 'Administracion\ServicioReqMaterialesController@listMaterialById');
 Route::post('/administracion/servicioReqMateriales/createMaterialServicioById', 'Administracion\ServicioReqMaterialesController@createMaterialServicioById');
 Route::post('/administracion/servicioReqMateriales/deleteItemMaterialById', 'Administracion\ServicioReqMaterialesController@deleteItemMaterialById');
-
-
-
+Route::post('/administracion/servicioReqMateriales/AddMaterialEdit', 'Administracion\ServicioReqMaterialesController@AddMaterialEdit');
 
 Route::post('/administracion/servicioManoObra/addReqMatProyManObra', 'Administracion\ServicioManoObraController@addReqMatProyManObra');
 Route::post('/administracion/servicioOtrosReq/addReqMatProyOtrosReq', 'Administracion\ServicioOtrosReqController@addReqMatProyOtrosReq');

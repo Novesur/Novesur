@@ -3,7 +3,9 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0 text-dark">Reporte de Orden de Requerimiento de Materiales - Servicio</h1>
+          <h1 class="m-0 text-dark">
+            Reporte de Orden de Requerimiento de Materiales - Servicio
+          </h1>
         </div>
       </div>
     </div>
@@ -22,7 +24,7 @@
 
               <div class="card-body">
                 <form role="form">
-             <!--      <div class="row">
+                  <!--      <div class="row">
                     <div class="col-md-12">
                       <div class="form-group row">
                         <label class="col-md-1 col-form-label"
@@ -68,40 +70,26 @@
                     </div>
                   </div> -->
 
-                          <div class="row">
-                        <div class="col-md-12">
-                          <div class="form-group row">
-                            <label class="col-md-1 col-form-label">Fecha</label>
-                            <el-date-picker
-                              v-model="fillReporteOrdProduccion.dFecha"
-                              type="daterange"
-                              range-separator="To"
-                              start-placeholder="Start date"
-                              end-placeholder="End date"
-                              value-format="yyyy-MM-dd"
-                              clearable
-                              :style="{ width: '530px', height: '38px' }"
-                            >
-                            </el-date-picker>
-                          </div>
-                        </div>
-
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group row">
+                        <label class="col-md-1 col-form-label">Fecha</label>
+                        <el-date-picker v-model="fillReporteOrdProduccion.dFecha" type="daterange" range-separator="To"
+                          start-placeholder="Start date" end-placeholder="End date" value-format="yyyy-MM-dd" clearable
+                          :style="{ width: '530px', height: '38px' }">
+                        </el-date-picker>
                       </div>
+                    </div>
+                  </div>
                 </form>
               </div>
               <div class="card-footer">
                 <div class="row">
                   <div class="col-md-4 offset-4">
-                    <button
-                      class="btn btn-flat btn-info btnWidth"
-                      @click.prevent="getListReportProduc"
-                    >
+                    <button class="btn btn-flat btn-info btnWidth" @click.prevent="getListReportProduc">
                       Buscar
                     </button>
-                    <button
-                      class="btn btn-flat btn-default btnWidth"
-                      @click.prevent="limpiarListClientsBsq"
-                    >
+                    <button class="btn btn-flat btn-default btnWidth" @click.prevent="limpiarListClientsBsq">
                       Limpiar
                     </button>
                   </div>
@@ -109,22 +97,16 @@
               </div>
             </div>
 
-           <div class="card card-info">
+            <div class="card card-info">
               <div class="card-header">
                 <h3 class="card-title">Bandeja de Resultados</h3>
               </div>
               <div class="card-body table-responsive">
-                <table
-                  class="
-                    table table-hover table-head-fixed
-                    text-nowrap
-                    projects
-                  "
-                >
+                <table class="table table-hover table-head-fixed text-nowrap projects">
                   <thead>
                     <tr>
-                      <th>CODIGO </th>
-                      <th>FECHA </th>
+                      <th>CODIGO</th>
+                      <th>FECHA</th>
                       <th>CLIENTE</th>
                       <th>DETALLE</th>
                       <th>CANTIDAD</th>
@@ -135,53 +117,40 @@
                     </tr>
                   </thead>
                   <tbody>
-
-                    <tr
-                      v-for="(item, index) in listOrdenProduc"
-                      :key="index"
-                    >
-                    <td v-text="item.codigo"></td>
-                      <td>{{item.fecha | moment("DD - MM - Y") }}
-                     <!--    {{
+                    <tr v-for="(item, index) in listOrdenProduc" :key="index">
+                      <td v-text="item.codigo"></td>
+                      <td>
+                        {{ item.fecha | moment("DD - MM - Y") }}
+                        <!--    {{
                           item.user == null
                             ? "Dado de Baja"
                             : item.user.fullname
                         }} -->
                       </td>
 
-                       <td v-text="item.cliente"></td>
-                      <td  v-text="item.detservicio">
-                            </td>
+                      <td v-text="item.cliente"></td>
+                      <td v-text="item.detservicio"></td>
 
-                            <td>{{item.cantidad}}</td>
-                            <td>{{item.fechainicio | moment("DD - MM - Y")  }}</td>
-                            <td>{{item.fechafinal | moment("DD - MM - Y") }}</td>
-                             <td  v-text="item.duracion"></td>
-                            <td>     <button
-                                class="btn btn-danger btn-sm"
-                                @click.prevent="
-                                  SetGenerarreqMaterialesPDF(item.id)
-                                "
-                              >
-                                <i class="fas fa-file-pdf"></i> PDF
-                              </button>
+                      <td>{{ item.cantidad }}</td>
+                      <td>{{ item.fechainicio | moment("DD - MM - Y") }}</td>
+                      <td>{{ item.fechafinal | moment("DD - MM - Y") }}</td>
+                      <td v-text="item.duracion"></td>
+                      <td>
+                        <button class="btn btn-danger btn-sm" @click.prevent="SetGenerarreqMaterialesPDF(item.id)">
+                          <i class="fas fa-file-pdf"></i> PDF
+                        </button>
 
-                             <router-link
-                                class="btn btn-info btn-sm tamañoletra"
-                                :to="{
-                                  name: 'servicio_ReqMateriales.editMaterial',
-                                  params: { id: item.id },
-                                }"
-                              >
-                                <i class="fas fa-pencil-alt"></i> Editar
-                              </router-link>
-
-
-                            </td>
+                        <router-link class="btn btn-info btn-sm tamañoletra" :to="{
+                          name: 'servicio_ReqMateriales.editMaterial',
+                          params: { id: item.id },
+                        }">
+                          <i class="fas fa-pencil-alt"></i> Editar
+                        </router-link>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
-<!--                 <div class="card-footer clearfix">
+                <!--                 <div class="card-footer clearfix">
                   <ul class="pagination pagination-sm m-0 float-right">
                     <li class="page-item" v-if="pageNumber > 0">
                       <a href="" class="page-link" @click.prevent="prevPage"
@@ -223,11 +192,11 @@ export default {
   data() {
     return {
       fillReporteOrdProduccion: {
-        nIdprod :"",
+        nIdprod: "",
         dFecha: "",
       },
-       listProd: [],
-       listOrdenProduc:[],
+      listProd: [],
+      listOrdenProduc: [],
 
       pageNumber: 0,
       perPage: 10,
@@ -237,10 +206,10 @@ export default {
     };
   },
   mounted() {
-      this.getListarproductosByName();
+    this.getListarproductosByName();
   },
 
-/*   computed: {
+  /*   computed: {
     pageCount() {
       let a = this.listOrdenProduc.length,
         b = this.perPage;
@@ -265,9 +234,8 @@ export default {
     },
   }, */
   methods: {
-
-      SetGenerarreqMaterialesPDF(item){
- var config = { responseType: "blob" };
+    SetGenerarreqMaterialesPDF(item) {
+      var config = { responseType: "blob" };
       var url = "/administracion/servicio/setGenerarServicioPdf";
       axios
         .post(
@@ -286,9 +254,9 @@ export default {
           window.open(url);
           //window.print();
         });
-      },
+    },
 
-   getListarproductosByName() {
+    getListarproductosByName() {
       var url = "/administracion/detallecotizancion/listProdByName";
       axios
         .get(url, {
@@ -304,14 +272,13 @@ export default {
     limpiarListClientsBsq() {
       this.fillReporteOrdProduccion.cNombre = "";
       this.fillReporteOrdProduccion.cRuc = "";
-        this.listOrdenProduc =[];
-
+      this.listOrdenProduc = [];
     },
     limpiarBandejaProveedor() {
       this.listOrdenProduc = [];
     },
     getListReportProduc() {
-      var url = "/administracion/servicioReqMateriales/list";
+      var url = "/administracion/servicioReqMateriales/listReqMaterial";
       axios
         .get(url, {
           params: {
@@ -320,8 +287,7 @@ export default {
           },
         })
         .then((response) => {
-               this.listOrdenProduc = response.data;
-
+          this.listOrdenProduc = response.data;
         });
     },
 
@@ -341,5 +307,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

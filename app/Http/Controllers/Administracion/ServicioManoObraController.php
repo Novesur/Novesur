@@ -15,21 +15,26 @@ class ServicioManoObraController extends Controller
     public function listproyManoObra(Request $request)
     {
         $servicio = Servicio::where('codigo', $request->codRequMateriales)->first();
-        $manoObraServicio = ManObraServicio::where('pk_Servicios', $servicio->id)->first();
+        $manoObraServicio = ManObraServicio::where('pk_Servicios', $servicio->id)->get();
+
 
         $validaServicioInforme = ServicioInforme::where('ord_servicio', $request->codRequMateriales)->first();
         $countSerInfoManoObra = ServicioInforme_ManObra::where('pk_servicio_informe', $validaServicioInforme->id)->get();
         if ($countSerInfoManoObra->count() == 0) {
-            $servicioManObraServicio = new ServicioInforme_ManObra();
-            $servicioManObraServicio->pk_servicio_informe = $manoObraServicio->id;
-            $servicioManObraServicio->personal = $manoObraServicio->personalServicio;
-            $servicioManObraServicio->dias = $manoObraServicio->diasServicio;
-            $servicioManObraServicio->horas = $manoObraServicio->horasServicio;
-            $servicioManObraServicio->costdias = 0;
-            $servicioManObraServicio->costhoras = 0;
-            $servicioManObraServicio->total = 0;
 
-            $servicioManObraServicio->save();
+            foreach ($manoObraServicio as $manoObra) {
+
+                $servicioManObraServicio = new ServicioInforme_ManObra();
+                $servicioManObraServicio->pk_servicio_informe = $validaServicioInforme->id;
+                $servicioManObraServicio->personal = $manoObra->personalServicio;
+                $servicioManObraServicio->dias = $manoObra->diasServicio;
+                $servicioManObraServicio->horas = $manoObra->horasServicio;
+                $servicioManObraServicio->costdias = 0;
+                $servicioManObraServicio->costhoras = 0;
+                $servicioManObraServicio->total = 0;
+
+                $servicioManObraServicio->save();
+            }
         }
 
         $dato = ServicioInforme_ManObra::where('pk_servicio_informe', $validaServicioInforme->id)->get();
@@ -70,7 +75,7 @@ class ServicioManoObraController extends Controller
         return $dato;
     }
 
-        public function mostrarInfoManObra(Request $request)
+    public function mostrarInfoManObra(Request $request)
     {
         $datos = ServicioInforme_ManObra::where('pk_servicio_informe', $request->item)->get();
         return $datos;
