@@ -2,10 +2,7 @@
     <div class="content-header">
         <div class="container-fluid">
             <div class="float-right">
-                <router-link
-                    class="btn btn-info btn-sm"
-                    :to="'/cotizacion/index'"
-                >
+                <router-link class="btn btn-info btn-sm" :to="'/cotizacion/index'">
                     <i class="fas fa-angle-double-left"></i> Regresar
                 </router-link>
             </div>
@@ -32,98 +29,50 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label"
-                                            >SEÑORES</label
-                                        >
+                                        <label class="col-md-2 col-form-label">SEÑORES</label>
                                         <div class="col-md-8">
-                                            <input
-                                                type="text"
-                                                class="form-control"
-                                                v-model="
-                                                    fillEditarProducto.cNomClient
-                                                "
-                                                :readonly="true"
-                                            />
+                                            <input type="text" class="form-control"
+                                                v-model="fillEditarProducto.cNomClient" :readonly="true" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label"
-                                            >DIRECCION</label
-                                        >
+                                        <label class="col-md-2 col-form-label">DIRECCION</label>
                                         <div class="col-md-10">
-                                            <input
-                                                type="text"
-                                                class="form-control"
-                                                :readonly="true"
-                                                v-model="
-                                                    fillEditarProducto.cDirClient
-                                                "
-                                            />
+                                            <input type="text" class="form-control" :readonly="true"
+                                                v-model="fillEditarProducto.cDirClient" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label"
-                                            >RUC</label
-                                        >
+                                        <label class="col-md-2 col-form-label">RUC</label>
                                         <div class="col-md-8">
-                                            <input
-                                                type="text"
-                                                class="form-control"
-                                                v-model="
-                                                    fillEditarProducto.cRucClient
-                                                "
-                                                :readonly="true"
-                                            />
+                                            <input type="text" class="form-control"
+                                                v-model="fillEditarProducto.cRucClient" :readonly="true" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label"
-                                            >ATENCION</label
-                                        >
+                                        <label class="col-md-2 col-form-label">ATENCION</label>
                                         <div class="col-md-8">
-                                            <input
-                                                type="text"
-                                                class="form-control"
-                                                v-model="
-                                                    fillEditarProducto.cAtencion
-                                                "
-                                                :readonly="true"
-                                            />
+                                            <input type="text" class="form-control"
+                                                v-model="fillEditarProducto.cAtencion" :readonly="true" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label"
-                                            >TELEFONO</label
-                                        >
+                                        <label class="col-md-2 col-form-label">TELEFONO</label>
                                         <div class="col-md-8">
-                                            <input
-                                                type="text"
-                                                class="form-control"
-                                                v-model="
-                                                    fillEditarProducto.cFonoClient
-                                                "
-                                                :readonly="true"
-                                            />
+                                            <input type="text" class="form-control"
+                                                v-model="fillEditarProducto.cFonoClient" :readonly="true" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label"
-                                            >EMAIL</label
-                                        >
+                                        <label class="col-md-2 col-form-label">EMAIL</label>
                                         <div class="col-md-8">
-                                            <input
-                                                type="text"
-                                                class="form-control"
-                                                v-model="
-                                                    fillEditarProducto.cEmail
-                                                "
-                                                :readonly="true"
-                                            />
+                                            <input type="text" class="form-control" v-model="fillEditarProducto.cEmail"
+                                                :readonly="true" />
                                         </div>
                                     </div>
                                 </div>
@@ -139,66 +88,34 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="form-group row">
-                                        <label class="col-md-3 col-form-label"
-                                            >VENDEDOR</label
-                                        >
+                                        <label class="col-md-3 col-form-label">VENDEDOR</label>
                                         <div class="col-md-9">
-                                            <input
-                                                type="text"
-                                                class="form-control"
-                                                :readonly="true"
-                                                v-model="
-                                                    fillEditarProducto.cVendedor
-                                                "
-                                            />
+                                            <input type="text" class="form-control" :readonly="true"
+                                                v-model="fillEditarProducto.cVendedor" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label class="col-md-3 col-form-label"
-                                            >CELULAR</label
-                                        >
+                                        <label class="col-md-3 col-form-label">CELULAR</label>
                                         <div class="col-md-9">
-                                            <input
-                                                type="text"
-                                                class="form-control"
-                                                :readonly="true"
-                                                v-model="
-                                                    fillEditarProducto.cCeluVendedor
-                                                "
-                                            />
+                                            <input type="text" class="form-control" :readonly="true"
+                                                v-model="fillEditarProducto.cCeluVendedor" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label class="col-md-3 col-form-label"
-                                            >CENTRAL</label
-                                        >
+                                        <label class="col-md-3 col-form-label">CENTRAL</label>
                                         <div class="col-md-9">
-                                            <input
-                                                type="text"
-                                                class="form-control"
-                                                :readonly="true"
-                                                v-model="
-                                                    fillEditarProducto.cCentral
-                                                "
-                                            />
+                                            <input type="text" class="form-control" :readonly="true"
+                                                v-model="fillEditarProducto.cCentral" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label class="col-md-3 col-form-label"
-                                            >EMAIL</label
-                                        >
+                                        <label class="col-md-3 col-form-label">EMAIL</label>
                                         <div class="col-md-9">
-                                            <input
-                                                type="text"
-                                                class="form-control"
-                                                :readonly="true"
-                                                v-model="
-                                                    fillEditarProducto.cEmailVendedor
-                                                "
-                                            />
+                                            <input type="text" class="form-control" :readonly="true"
+                                                v-model="fillEditarProducto.cEmailVendedor" />
                                         </div>
                                     </div>
                                 </div>
@@ -213,221 +130,109 @@
                                     <div class="col-md-12">
                                         <div class="card card-primary">
                                             <div class="card-header">
-                                                <h3 class="card-title">
-                                                    CONDICIONES COMERCIALES
-                                                </h3>
+                                                <h3 class="card-title">CONDICIONES COMERCIALES</h3>
                                             </div>
                                             <div class="card-body">
                                                 <div class="form-group row">
-                                                    <label
-                                                        class="col-md-2 col-form-label"
-                                                        >VALIDEZ DE
-                                                        OFERTA</label
-                                                    >
+                                                    <label class="col-md-2 col-form-label">VALIDEZ DE OFERTA</label>
                                                     <div class="col-md-3">
-                                                        <input
-                                                            type="text"
-                                                            class="form-control"
-                                                            v-model="
-                                                                fillEditarProducto.cValidez
-                                                            "
-                                                        />
+                                                        <input type="text" class="form-control"
+                                                            v-model="fillEditarProducto.cValidez" />
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row">
-                                                    <label
-                                                        class="col-md-2 col-form-label"
-                                                        >ENTREGA</label
-                                                    >
+                                                    <label class="col-md-2 col-form-label">ENTREGA</label>
                                                     <div class="col-md-8">
-                                                        <input
-                                                            type="text"
-                                                            class="form-control"
-                                                            v-model="
-                                                                fillEditarProducto.cEntrega
-                                                            "
-                                                        />
+                                                        <input type="text" class="form-control"
+                                                            v-model="fillEditarProducto.cEntrega" />
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row">
-                                                    <label
-                                                        class="col-md-2 col-form-label"
-                                                        >CONDICIÓN DE
-                                                        PAGO</label
-                                                    >
+                                                    <label class="col-md-2 col-form-label">CONDICIÓN DE PAGO</label>
                                                     <div class="col-md-4">
-                                                        <el-select
-                                                            v-model="
-                                                                fillEditarProducto.nIdTipoPago
-                                                            "
-                                                            placeholder="Select"
-                                                            style="width: 70%"
-                                                        >
-                                                            <el-option
-                                                                v-for="item in listTipoPago"
-                                                                :key="item.id"
-                                                                :label="
-                                                                    item.nombre
-                                                                "
-                                                                :value="item.id"
-                                                            >
+                                                        <el-select v-model="fillEditarProducto.nIdTipoPago"
+                                                            placeholder="Select" style="width: 70%">
+                                                            <el-option v-for="item in listTipoPago" :key="item.id"
+                                                                :label="item.nombre" :value="item.id">
                                                             </el-option>
                                                         </el-select>
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row">
-                                                    <label
-                                                        class="col-md-2 col-form-label"
-                                                        >CONDICIÓN DE
-                                                        PAGO</label
-                                                    >
+                                                    <label class="col-md-2 col-form-label">CONDICIÓN DE PAGO</label>
                                                     <div class="col-md-4">
-                                                        <el-select
-                                                            v-model="
-                                                                fillEditarProducto.nIdDescripPago
-                                                            "
-                                                            placeholder="Select"
-                                                            style="width: 70%"
-                                                        >
-                                                            <el-option
-                                                                v-for="item in listDescripPago"
-                                                                :key="item.id"
-                                                                :label="
-                                                                    item.nombre
-                                                                "
-                                                                :value="item.id"
-                                                            >
+                                                        <el-select v-model="fillEditarProducto.nIdDescripPago"
+                                                            placeholder="Select" style="width: 70%">
+                                                            <el-option v-for="item in listDescripPago" :key="item.id"
+                                                                :label="item.nombre" :value="item.id">
                                                             </el-option>
                                                         </el-select>
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row">
-                                                    <label
-                                                        class="col-md-2 col-form-label"
-                                                        >FLETE</label
-                                                    >
+                                                    <label class="col-md-2 col-form-label">FLETE</label>
                                                     <div class="col-md-8">
-                                                        <input
-                                                            type="text"
-                                                            class="form-control"
-                                                            v-model="
-                                                                fillEditarProducto.cFlete
-                                                            "
-                                                        />
+                                                        <input type="text" class="form-control"
+                                                            v-model="fillEditarProducto.cFlete" />
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row">
-                                                    <label
-                                                        class="col-md-2 col-form-label"
-                                                        >DOCUMENTACION</label
-                                                    >
+                                                    <label class="col-md-2 col-form-label">DOCUMENTACION</label>
                                                     <div class="col-md-8">
-                                                        <input
-                                                            type="text"
-                                                            class="form-control"
-                                                            v-model="
-                                                                fillEditarProducto.Docu
-                                                            "
-                                                        />
+                                                        <input type="text" class="form-control"
+                                                            v-model="fillEditarProducto.Docu" />
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row">
-                                                    <label
-                                                        class="col-md-2 col-form-label"
-                                                        >GARANTIA</label
-                                                    >
+                                                    <label class="col-md-2 col-form-label">GARANTIA</label>
                                                     <div class="col-md-4">
-                                                        <el-select
-                                                            v-model="
-                                                                fillEditarProducto.nIdGarantia
-                                                            "
-                                                            placeholder="Select"
-                                                            style="width: 70%"
-                                                        >
-                                                            <el-option
-                                                                v-for="item in listGarantia"
-                                                                :key="item.id"
-                                                                :label="
-                                                                    item.nombre
-                                                                "
-                                                                :value="item.id"
-                                                            >
+                                                        <el-select v-model="fillEditarProducto.nIdGarantia"
+                                                            placeholder="Select" style="width: 70%">
+                                                            <el-option v-for="item in listGarantia" :key="item.id"
+                                                                :label="item.nombre" :value="item.id">
                                                             </el-option>
                                                         </el-select>
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row">
-                                                    <label
-                                                        class="col-md-2 col-form-label"
-                                                        >OBSERVACION</label
-                                                    >
+                                                    <label class="col-md-2 col-form-label">OBSERVACION</label>
                                                     <div class="col-md-8">
-                                                        <input
-                                                            type="text"
-                                                            class="form-control"
-                                                            v-model="
-                                                                fillEditarProducto.cObservacion
-                                                            "
-                                                            :maxlength="255"
-                                                        />
+                                                        <input type="text" class="form-control"
+                                                            v-model="fillEditarProducto.cObservacion"
+                                                            :maxlength="255" />
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row">
-                                                    <label
-                                                        class="col-md-2 col-form-label"
-                                                        >PUNTO DE LLEGADA
-                                                        CONSIGNADO :</label
-                                                    >
+                                                    <label class="col-md-2 col-form-label">PUNTO DE LLEGADA CONSIGNADO
+                                                        :</label>
                                                     <div class="col-md-8">
-                                                        <input
-                                                            type="text"
-                                                            class="form-control"
-                                                            v-model="
-                                                                fillEditarProducto.cPuntoLlegada
-                                                            "
-                                                            :maxlength="100"
-                                                        />
+                                                        <input type="text" class="form-control"
+                                                            v-model="fillEditarProducto.cPuntoLlegada"
+                                                            :maxlength="100" />
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row">
-                                                    <label
-                                                        class="col-md-2 col-form-label"
-                                                        >EMP. DE
-                                                        TRANSPORTE</label
-                                                    >
+                                                    <label class="col-md-2 col-form-label">EMP. DE TRANSPORTE</label>
                                                     <div class="col-md-8">
-                                                        <input
-                                                            type="text"
-                                                            class="form-control"
-                                                            v-model="
-                                                                fillEditarProducto.cTransporte
-                                                            "
-                                                        />
+                                                        <input type="text" class="form-control"
+                                                            v-model="fillEditarProducto.cTransporte" />
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row">
-                                                    <label
-                                                        class="col-md-2 col-form-label"
-                                                        >CONSIGNADO</label
-                                                    >
+                                                    <label class="col-md-2 col-form-label">CONSIGNADO</label>
                                                     <div class="col-md-8">
-                                                        <input
-                                                            type="text"
-                                                            class="form-control"
-                                                            v-model="
-                                                                fillEditarProducto.Cconsignado
-                                                            "
-                                                        />
+                                                        <input type="text" class="form-control"
+                                                            v-model="fillEditarProducto.Cconsignado" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -445,43 +250,22 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group row">
-                                            <label
-                                                class="col-md-4 col-form-label"
-                                                >CANTIDAD</label
-                                            >
+                                            <label class="col-md-4 col-form-label">CANTIDAD</label>
                                             <div class="col-md-4">
-                                                <input
-                                                    type="text"
-                                                    class="form-control"
-                                                    v-int
-                                                    v-model="
-                                                        fillEditarProducto.cCantidad
-                                                    "
-                                                />
+                                                <input type="text" class="form-control" v-int
+                                                    v-model="fillEditarProducto.cCantidad" />
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group row">
-                                            <label
-                                                class="col-md-2 col-form-label"
-                                                >MEDIDA</label
-                                            >
+                                            <label class="col-md-2 col-form-label">MEDIDA</label>
                                             <div class="col-md-4">
-                                                <el-select
-                                                    v-model="
-                                                        fillEditarProducto.nIdUnidMed
-                                                    "
-                                                    placeholder="Select"
-                                                    style="width: 70%"
-                                                >
-                                                    <el-option
-                                                        v-for="item in listUnidMed"
-                                                        :key="item.id"
-                                                        :label="item.nombre"
-                                                        :value="item.id"
-                                                    >
+                                                <el-select v-model="fillEditarProducto.nIdUnidMed" placeholder="Select"
+                                                    style="width: 70%">
+                                                    <el-option v-for="item in listUnidMed" :key="item.id"
+                                                        :label="item.nombre" :value="item.id">
                                                     </el-option>
                                                 </el-select>
                                             </div>
@@ -491,20 +275,11 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group row">
-                                            <label
-                                                class="col-md-2 col-form-label"
-                                                >DESCRIPCION DEL MEDIDOR</label
-                                            >
+                                            <label class="col-md-2 col-form-label">DESCRIPCION DEL MEDIDOR</label>
 
                                             <div class="col-md-9">
-                                                <input
-                                                    type="text"
-                                                    class="form-control"
-
-                                                    v-model="
-                                                        fillEditarProducto.cProduct
-                                                    "
-                                                />
+                                                <input type="text" class="form-control"
+                                                    v-model="fillEditarProducto.cProduct" />
                                             </div>
                                         </div>
                                     </div>
@@ -513,43 +288,22 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group row">
-                                            <label
-                                                class="col-md-4 col-form-label"
-                                                >P/UNIT</label
-                                            >
+                                            <label class="col-md-4 col-form-label">P/UNIT</label>
                                             <div class="col-md-6">
-                                                <input
-                                                    type="text"
-                                                    class="form-control"
-                                                    v-model="
-                                                        fillEditarProducto.cPUnit
-                                                    "
-                                                    :onchange="
-                                                        this.setCalculaTotal()
-                                                    "
-                                                />
+                                                <input type="text" class="form-control"
+                                                    v-model="fillEditarProducto.cPUnit"
+                                                    :onchange="this.setCalculaTotal()" />
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group row">
-                                            <label
-                                                class="col-md-2 col-form-label"
-                                                >TOTAL S/IGV</label
-                                            >
+                                            <label class="col-md-2 col-form-label">TOTAL S/IGV</label>
                                             <div class="col-md-4">
-                                                <input
-                                                    type="text"
-                                                    class="form-control"
-                                                    v-model="
-                                                        fillEditarProducto.cTotal
-                                                    "
-                                                    :readonly="true"
-                                                    :onchange="
-                                                        this.setCalculaTotal()
-                                                    "
-                                                />
+                                                <input type="text" class="form-control"
+                                                    v-model="fillEditarProducto.cTotal" :readonly="true"
+                                                    :onchange="this.setCalculaTotal()" />
                                             </div>
                                         </div>
                                     </div>
@@ -558,20 +312,12 @@
                                 <div class="card-footer">
                                     <div class="row">
                                         <div class="col-md-4 offset-4">
-                                            <button
-                                                class="btn btn-flat btn-info btnWidth"
-                                                @click.prevent="
-                                                    setAddTempCotizacion
-                                                "
-                                            >
+                                            <button class="btn btn-flat btn-info btnWidth"
+                                                @click.prevent="setAddTempCotizacion">
                                                 Agregar
                                             </button>
-                                            <button
-                                                class="btn btn-flat btn-default btnWidth"
-                                                @click.prevent="
-                                                    limpiarCotizacionBsq
-                                                "
-                                            >
+                                            <button class="btn btn-flat btn-default btnWidth"
+                                                @click.prevent="limpiarCotizacionBsq">
                                                 Limpiar
                                             </button>
                                         </div>
@@ -580,24 +326,18 @@
 
                                 <div class="card card-info">
                                     <div class="card-header">
-                                        <h3 class="card-title">
-                                            Bandeja de Resultados
-                                        </h3>
+                                        <h3 class="card-title">Bandeja de Resultados</h3>
                                     </div>
 
                                     <div class="card-body table-responsive">
-                                        <table
-                                            class="table table-hover table-head-fixed text-nowrap projects"
-                                        >
+                                        <table class="table table-hover table-head-fixed text-nowrap projects">
                                             <thead>
                                                 <tr>
                                                     <th>ITEM</th>
                                                     <th>CANT</th>
                                                     <th>MEDIDA</th>
                                                     <th>CODIGO</th>
-                                                    <th>
-                                                        DESCRIPCION DEL PRODUCTO
-                                                    </th>
+                                                    <th>DESCRIPCION DEL PRODUCTO</th>
 
                                                     <th>P/UNIT</th>
                                                     <th>TOTAL S/IGV</th>
@@ -605,68 +345,27 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr
-                                                    v-for="(
-                                                        item, index
-                                                    ) in listDetCotizacion"
-                                                    :key="index"
-                                                >
+                                                <tr v-for="(item, index) in listDetCotizacion" :key="index">
                                                     <td v-text="index + 1"></td>
-                                                    <td
-                                                        v-text="item.cantidad"
-                                                    ></td>
-                                                    <td
-                                                        v-text="
-                                                            item.unidmedida
-                                                                .nombre
-                                                        "
-                                                    ></td>
+                                                    <td v-text="item.cantidad"></td>
+                                                    <td v-text="item.unidmedida.nombre"></td>
 
-                                                    <td
-                                                        v-text="
-                                                            item.producto"
-                                                    ></td>
+                                                    <td v-text="item.producto"></td>
 
-                                                    <td
-                                                        v-text="item.punit"
-                                                    ></td>
+                                                    <td v-text="item.punit"></td>
                                                     <td>
-                                                        {{
-                                                            (item.cantidad *
-                                                                item.punit)
-                                                                | formatPrice
-                                                        }}
+                                                        {{ (item.cantidad * item.punit) | formatPrice }}
                                                     </td>
                                                     <td>
-                                                        <button
-                                                            class="btn btn-danger btn-sm"
-                                                            @click.prevent="
-                                                                borradoItems(
-                                                                    item.id
-                                                                )
-                                                            "
-                                                        >
-                                                            <span
-                                                                ><i
-                                                                    class="far fa-trash-alt"
-                                                                ></i
-                                                            ></span>
+                                                        <button class="btn btn-danger btn-sm"
+                                                            @click.prevent="borradoItems(item.id)">
+                                                            <span><i class="far fa-trash-alt"></i></span>
                                                             Eliminar
                                                         </button>
 
-                                                        <button
-                                                            class="btn btn-primary btn-sm"
-                                                            @click.prevent="
-                                                                EditarItems(
-                                                                    item.id
-                                                                )
-                                                            "
-                                                        >
-                                                            <span
-                                                                ><i
-                                                                    class="far fa-edit"
-                                                                ></i
-                                                            ></span>
+                                                        <button class="btn btn-primary btn-sm"
+                                                            @click.prevent="EditarItems(item.id)">
+                                                            <span><i class="far fa-edit"></i></span>
                                                             Editar
                                                         </button>
                                                     </td>
@@ -678,20 +377,12 @@
                                     <div class="card-footer">
                                         <div class="row">
                                             <div class="col-md-4 offset-4">
-                                                <button
-                                                    class="btn btn-flat btn-info btnWidth"
-                                                    @click.prevent="
-                                                        setEditCotizacion
-                                                    "
-                                                >
+                                                <button class="btn btn-flat btn-info btnWidth"
+                                                    @click.prevent="setEditCotizacion">
                                                     Guardar
                                                 </button>
-                                                <button
-                                                    class="btn btn-flat btn-default btnWidth"
-                                                    @click.prevent="
-                                                        eliminarTempitemCoti
-                                                    "
-                                                >
+                                                <button class="btn btn-flat btn-default btnWidth"
+                                                    @click.prevent="eliminarTempitemCoti">
                                                     Limpiar
                                                 </button>
                                             </div>
@@ -706,11 +397,7 @@
             </div>
         </div>
 
-        <div
-            class="modal fade"
-            :class="{ show: modalShow }"
-            :style="modalShow ? mostrarModal : ocultarModal"
-        >
+        <div class="modal fade" :class="{ show: modalShow }" :style="modalShow ? mostrarModal : ocultarModal">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -718,36 +405,23 @@
                         <button class="close" @click="abrirModal"></button>
                     </div>
                     <div class="modal-body">
-                        <div
-                            class="callout callout-danger"
-                            style="padding: 5px"
-                            v-for="(item, index) in mensajeError"
-                            :key="index"
-                            v-text="item"
-                        ></div>
+                        <div class="callout callout-danger" style="padding: 5px" v-for="(item, index) in mensajeError"
+                            :key="index" v-text="item"></div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" @click="abrirModal">
-                            Cerrar
-                        </button>
+                        <button class="btn btn-secondary" @click="abrirModal">Cerrar</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div
-            class="modal fade"
-            :class="{ show: modalShowEditItem }"
-            :style="modalShowEditItem ? mostrarModal : ocultarModal"
-        >
+        <div class="modal fade" :class="{ show: modalShowEditItem }"
+            :style="modalShowEditItem ? mostrarModal : ocultarModal">
             <div class="modal-editcotitem modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Editar Cotización</h5>
-                        <button
-                            class="close"
-                            @click="abrirModalEditItem"
-                        ></button>
+                        <button class="close" @click="abrirModalEditItem"></button>
                     </div>
                     <div class="modal-body">
                         <div class="content container-fluid">
@@ -755,43 +429,22 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group row">
-                                            <label
-                                                class="col-md-4 col-form-label"
-                                                >CANTIDAD</label
-                                            >
+                                            <label class="col-md-4 col-form-label">CANTIDAD</label>
                                             <div class="col-md-4">
-                                                <input
-                                                    type="text"
-                                                    class="form-control"
-                                                    v-int
-                                                    v-model="
-                                                        fillEditarProducto.cCantidadEdit
-                                                    "
-                                                />
+                                                <input type="text" class="form-control" v-int
+                                                    v-model="fillEditarProducto.cCantidadEdit" />
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group row">
-                                            <label
-                                                class="col-md-2 col-form-label"
-                                                >MEDIDA</label
-                                            >
+                                            <label class="col-md-2 col-form-label">MEDIDA</label>
                                             <div class="col-md-4">
-                                                <el-select
-                                                    v-model="
-                                                        fillEditarProducto.nIdUnidMedEdit
-                                                    "
-                                                    placeholder="Select"
-                                                    style="width: 70%"
-                                                >
-                                                    <el-option
-                                                        v-for="item in listUnidMed"
-                                                        :key="item.id"
-                                                        :label="item.nombre"
-                                                        :value="item.id"
-                                                    >
+                                                <el-select v-model="fillEditarProducto.nIdUnidMedEdit"
+                                                    placeholder="Select" style="width: 70%">
+                                                    <el-option v-for="item in listUnidMed" :key="item.id"
+                                                        :label="item.nombre" :value="item.id">
                                                     </el-option>
                                                 </el-select>
                                             </div>
@@ -802,20 +455,11 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group row">
-                                            <label
-                                                class="col-md-2 col-form-label"
-                                                >DESCRIPCION DEL MEDIDOR</label
-                                            >
+                                            <label class="col-md-2 col-form-label">DESCRIPCION DEL MEDIDOR</label>
 
                                             <div class="col-md-9">
-                                                <input
-                                                    type="text"
-                                                    class="form-control"
-
-                                                    v-model="
-                                                        fillEditarProducto.cProductEdit
-                                                    "
-                                                />
+                                                <input type="text" class="form-control"
+                                                    v-model="fillEditarProducto.cProductEdit" />
                                             </div>
                                         </div>
                                     </div>
@@ -824,43 +468,22 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group row">
-                                            <label
-                                                class="col-md-4 col-form-label"
-                                                >P/UNIT
-                                            </label>
+                                            <label class="col-md-4 col-form-label">P/UNIT </label>
                                             <div class="col-md-6">
-                                                <input
-                                                    type="text"
-                                                    class="form-control"
-                                                    v-model="
-                                                        fillEditarProducto.cPUnitEdit
-                                                    "
-                                                    :onchange="
-                                                        this.setCalculaTotalModal()
-                                                    "
-                                                />
+                                                <input type="text" class="form-control"
+                                                    v-model="fillEditarProducto.cPUnitEdit"
+                                                    :onchange="this.setCalculaTotalModal()" />
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group row">
-                                            <label
-                                                class="col-md-2 col-form-label"
-                                                >TOTAL S/IGV</label
-                                            >
+                                            <label class="col-md-2 col-form-label">TOTAL S/IGV</label>
                                             <div class="col-md-4">
-                                                <input
-                                                    type="text"
-                                                    class="form-control"
-                                                    v-model="
-                                                        fillEditarProducto.cTotalEdit
-                                                    "
-                                                    :readonly="true"
-                                                    :onchange="
-                                                        this.setCalculaTotalModal()
-                                                    "
-                                                />
+                                                <input type="text" class="form-control"
+                                                    v-model="fillEditarProducto.cTotalEdit" :readonly="true"
+                                                    :onchange="this.setCalculaTotalModal()" />
                                             </div>
                                         </div>
                                     </div>
@@ -869,15 +492,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-success" @click="EditDatosItem">
-                            Guardar
-                        </button>
-                        <button
-                            class="btn btn-secondary"
-                            @click="abrirModalEditItem"
-                        >
-                            Cerrar
-                        </button>
+                        <button class="btn btn-success" @click="EditDatosItem">Guardar</button>
+                        <button class="btn btn-secondary" @click="abrirModalEditItem">Cerrar</button>
                     </div>
                 </div>
             </div>
@@ -909,7 +525,7 @@ export default {
                 vidUSer: "",
                 nIdUnidMed: "",
                 nIdTipoPago: "",
-                cProduct:"",
+                cProduct: "",
                 cProductEdit: "",
                 cPUnit: "",
                 cValidez: "",
@@ -954,7 +570,7 @@ export default {
     },
     mounted() {
         this.getClienteById();
-       this.getListarTipoPago();
+        this.getListarTipoPago();
         this.getlistDescricionPago();
         this.getListGarantia();
         this.getListarUnidadMedida();
@@ -963,8 +579,8 @@ export default {
         this.getCargaCotizacionByCotizacion();
 
         /*
-    this.setListtempCotizacion();
-   */
+        this.setListtempCotizacion();
+       */
     },
 
     methods: {
@@ -998,45 +614,27 @@ export default {
                     },
                 })
                 .then((response) => {
-                    this.fillEditarProducto.cNomClient =
-                        response.data.cliente.razonsocial;
-                    this.fillEditarProducto.cDirClient =
-                        response.data.cliente.direccion;
-                    this.fillEditarProducto.cRucClient =
-                        response.data.cliente.ruc;
-                    this.fillEditarProducto.cAtencion =
-                        response.data.cliente.atencion;
-                    this.fillEditarProducto.cFonoClient =
-                        response.data.cliente.telefono;
-                    this.fillEditarProducto.cEmail =
-                        response.data.cliente.email;
-                    this.fillEditarProducto.cVendedor =
-                        response.data.user.fullname;
-                    this.fillEditarProducto.cEmailVendedor =
-                        response.data.user.email;
-                    this.fillEditarProducto.cCeluVendedor =
-                        response.data.user.celular;
-                    this.fillEditarProducto.cValidez =
-                        response.data.validezoferta;
+                    this.fillEditarProducto.cNomClient = response.data.cliente.razonsocial;
+                    this.fillEditarProducto.cDirClient = response.data.cliente.direccion;
+                    this.fillEditarProducto.cRucClient = response.data.cliente.ruc;
+                    this.fillEditarProducto.cAtencion = response.data.cliente.atencion;
+                    this.fillEditarProducto.cFonoClient = response.data.cliente.telefono;
+                    this.fillEditarProducto.cEmail = response.data.cliente.email;
+                    this.fillEditarProducto.cVendedor = response.data.user.fullname;
+                    this.fillEditarProducto.cEmailVendedor = response.data.user.email;
+                    this.fillEditarProducto.cCeluVendedor = response.data.user.celular;
+                    this.fillEditarProducto.cValidez = response.data.validezoferta;
                     this.fillEditarProducto.cEntrega = response.data.Entrega;
-                    this.fillEditarProducto.nIdTipoPago =
-                        response.data.tipopago_id;
-                    this.fillEditarProducto.nIdDescripPago =
-                        response.data.pago_id;
+                    this.fillEditarProducto.nIdTipoPago = response.data.tipopago_id;
+                    this.fillEditarProducto.nIdDescripPago = response.data.pago_id;
                     this.fillEditarProducto.cFlete = response.data.flete;
                     this.fillEditarProducto.Docu = response.data.documentacion;
-                    this.fillEditarProducto.nIdGarantia =
-                        response.data.garantia_id;
-                    this.fillEditarProducto.cPuntoLlegada =
-                        response.data.punto_llegada;
-                    this.fillEditarProducto.Cconsignado =
-                        response.data.consignado;
-                    this.fillEditarProducto.cTransporte =
-                        response.data.transporte;
-                    this.fillEditarProducto.cObservacion =
-                        response.data.observacion;
-                    this.fillEditarProducto.ctipoPrecio =
-                        response.data.cliente.tipoPrecio;
+                    this.fillEditarProducto.nIdGarantia = response.data.garantia_id;
+                    this.fillEditarProducto.cPuntoLlegada = response.data.punto_llegada;
+                    this.fillEditarProducto.Cconsignado = response.data.consignado;
+                    this.fillEditarProducto.cTransporte = response.data.transporte;
+                    this.fillEditarProducto.cObservacion = response.data.observacion;
+                    this.fillEditarProducto.ctipoPrecio = response.data.cliente.tipoPrecio;
                 });
         },
 
@@ -1071,7 +669,7 @@ export default {
             var url = "/administracion/KardexDetalle/listUnidMed";
             axios.get(url).then((response) => {
                 this.listUnidMed = response.data;
-                this.fillEditarProducto.nIdUnidMed = this.listUnidMed[7].id;
+                this.fillEditarProducto.nIdUnidMed = this.listUnidMed[8].id;
             });
         },
 
@@ -1107,49 +705,33 @@ export default {
             this.error = 0;
             this.mensajeError = [];
             if (!this.fillEditarProducto.cValidez) {
-                this.mensajeError.push(
-                    "La validacion de Oferta es un campo obligatorio"
-                );
+                this.mensajeError.push("La validacion de Oferta es un campo obligatorio");
             }
             if (!this.fillEditarProducto.cEntrega) {
-                this.mensajeError.push(
-                    "El Campo Entrega es un campo obligatorio"
-                );
+                this.mensajeError.push("El Campo Entrega es un campo obligatorio");
             }
 
             if (!this.fillEditarProducto.cFlete) {
-                this.mensajeError.push(
-                    "El Campo Flete es un campo obligatorio"
-                );
+                this.mensajeError.push("El Campo Flete es un campo obligatorio");
             }
             if (!this.fillEditarProducto.Docu) {
-                this.mensajeError.push(
-                    "El Campo Documento es un campo obligatorio"
-                );
+                this.mensajeError.push("El Campo Documento es un campo obligatorio");
             }
 
             if (!this.fillEditarProducto.cCantidad) {
-                this.mensajeError.push(
-                    "El Campo Cantidad es un campo obligatorio"
-                );
+                this.mensajeError.push("El Campo Cantidad es un campo obligatorio");
             }
 
             if (!this.fillEditarProducto.nIdUnidMed) {
-                this.mensajeError.push(
-                    "El Campo Medida es un campo obligatorio"
-                );
+                this.mensajeError.push("El Campo Medida es un campo obligatorio");
             }
 
             if (!this.fillEditarProducto.nIdprod) {
-                this.mensajeError.push(
-                    "El Campo Medidor es un campo obligatorio"
-                );
+                this.mensajeError.push("El Campo Medidor es un campo obligatorio");
             }
 
             if (!this.fillEditarProducto.cPUnit) {
-                this.mensajeError.push(
-                    "El Campo P.Unit es un campo obligatorio"
-                );
+                this.mensajeError.push("El Campo P.Unit es un campo obligatorio");
             }
 
             if (this.mensajeError.length) {
@@ -1207,7 +789,7 @@ export default {
                 });
         },
 
-        setCargaDetalleCotizacionByCoti() {},
+        setCargaDetalleCotizacionByCoti() { },
 
         setListtempCotizacion() {
             var url = "/administracion/tempcotizacion/ListtempCotizacion";
@@ -1259,14 +841,9 @@ export default {
                 confirmButtonText: "Si, Eliminalo!",
             }).then((result) => {
                 if (result.isConfirmed) {
-                    Swal.fire(
-                        "Deleted!",
-                        "Your file has been deleted.",
-                        "success"
-                    );
+                    Swal.fire("Deleted!", "Your file has been deleted.", "success");
 
-                    var url =
-                        "/administracion/cotizacionLibre/dellTempEditCotizacion";
+                    var url = "/administracion/cotizacionLibre/dellTempEditCotizacion";
                     axios
                         .post(url, {
                             item: item,
@@ -1285,25 +862,21 @@ export default {
         },
 
         CargaDatosItemEdit(item) {
-            var url =
-                "/administracion/detallecotizancionLibre/DatosItemDetalleCotixItem";
+            var url = "/administracion/detallecotizancionLibre/DatosItemDetalleCotixItem";
             axios
                 .post(url, {
                     item: item,
                 })
                 .then((response) => {
-                    this.fillEditarProducto.cCantidadEdit =
-                        response.data.cantidad;
-                    this.fillEditarProducto.nIdUnidMedEdit =
-                        response.data.unidmedida.id;
-                    this.fillEditarProducto.cProductEdit =
-                        response.data.producto;
+                    this.fillEditarProducto.cCantidadEdit = response.data.cantidad;
+                    this.fillEditarProducto.nIdUnidMedEdit = response.data.unidmedida.id;
+                    this.fillEditarProducto.cProductEdit = response.data.producto;
                     this.fillEditarProducto.cPUnitEdit = response.data.punit;
                 });
         },
 
         EditDatosItem() {
-            var url = "/administracion/detallecotizancionLibre/EditDatosItem"
+            var url = "/administracion/detallecotizancionLibre/EditDatosItem";
             axios
                 .post(url, {
                     item: localStorage.Codigo,
@@ -1345,13 +918,9 @@ export default {
                 .then((response) => {
                     // this.fillEditarProducto.cPUnit = response.data.precioSugerido;
                     if (this.fillEditarProducto.ctipoPrecio == "Lista") {
-                        this.fillEditarProducto.cPUnit =
-                            response.data.precioSugerido;
-                    } else if (
-                        this.fillEditarProducto.ctipoPrecio == "Distribuidor"
-                    )
-                        this.fillEditarProducto.cPUnit =
-                            response.data.precioDistribuidor;
+                        this.fillEditarProducto.cPUnit = response.data.precioSugerido;
+                    } else if (this.fillEditarProducto.ctipoPrecio == "Distribuidor")
+                        this.fillEditarProducto.cPUnit = response.data.precioDistribuidor;
                 });
         },
 
@@ -1366,13 +935,9 @@ export default {
                 .then((response) => {
                     // this.fillEditarProducto.cPUnitEdit = response.data.precioSugerido;
                     if (this.fillEditarProducto.ctipoPrecio == "Lista") {
-                        this.fillEditarProducto.cPUnitEdit =
-                            response.data.precioSugerido;
-                    } else if (
-                        this.fillEditarProducto.ctipoPrecio == "Distribuidor"
-                    )
-                        this.fillEditarProducto.cPUnitEdit =
-                            response.data.precioDistribuidor;
+                        this.fillEditarProducto.cPUnitEdit = response.data.precioSugerido;
+                    } else if (this.fillEditarProducto.ctipoPrecio == "Distribuidor")
+                        this.fillEditarProducto.cPUnitEdit = response.data.precioDistribuidor;
                 });
         },
     },

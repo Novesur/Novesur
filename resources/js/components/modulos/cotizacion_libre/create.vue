@@ -25,98 +25,50 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label"
-                                            >SEÑORES</label
-                                        >
+                                        <label class="col-md-2 col-form-label">SEÑORES</label>
                                         <div class="col-md-8">
-                                            <input
-                                                type="text"
-                                                class="form-control"
-                                                v-model="
-                                                    fillregistrarCotizacionLibre.cNomClient
-                                                "
-                                                :readonly="true"
-                                            />
+                                            <input type="text" class="form-control"
+                                                v-model="fillregistrarCotizacionLibre.cNomClient" :readonly="true" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label"
-                                            >DIRECCION</label
-                                        >
+                                        <label class="col-md-2 col-form-label">DIRECCION</label>
                                         <div class="col-md-10">
-                                            <input
-                                                type="text"
-                                                class="form-control"
-                                                :readonly="true"
-                                                v-model="
-                                                    fillregistrarCotizacionLibre.cDirClient
-                                                "
-                                            />
+                                            <input type="text" class="form-control" :readonly="true"
+                                                v-model="fillregistrarCotizacionLibre.cDirClient" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label"
-                                            >RUC</label
-                                        >
+                                        <label class="col-md-2 col-form-label">RUC</label>
                                         <div class="col-md-8">
-                                            <input
-                                                type="text"
-                                                class="form-control"
-                                                v-model="
-                                                    fillregistrarCotizacionLibre.cRucClient
-                                                "
-                                                :readonly="true"
-                                            />
+                                            <input type="text" class="form-control"
+                                                v-model="fillregistrarCotizacionLibre.cRucClient" :readonly="true" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label"
-                                            >ATENCION</label
-                                        >
+                                        <label class="col-md-2 col-form-label">ATENCION</label>
                                         <div class="col-md-8">
-                                            <input
-                                                type="text"
-                                                class="form-control"
-                                                v-model="
-                                                    fillregistrarCotizacionLibre.cAtencion
-                                                "
-                                                :readonly="true"
-                                            />
+                                            <input type="text" class="form-control"
+                                                v-model="fillregistrarCotizacionLibre.cAtencion" :readonly="true" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label"
-                                            >TELEFONO</label
-                                        >
+                                        <label class="col-md-2 col-form-label">TELEFONO</label>
                                         <div class="col-md-8">
-                                            <input
-                                                type="text"
-                                                class="form-control"
-                                                v-model="
-                                                    fillregistrarCotizacionLibre.cFonoClient
-                                                "
-                                                :readonly="true"
-                                            />
+                                            <input type="text" class="form-control"
+                                                v-model="fillregistrarCotizacionLibre.cFonoClient" :readonly="true" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label"
-                                            >EMAIL</label
-                                        >
+                                        <label class="col-md-2 col-form-label">EMAIL</label>
                                         <div class="col-md-8">
-                                            <input
-                                                type="text"
-                                                class="form-control"
-                                                v-model="
-                                                    fillregistrarCotizacionLibre.cEmail
-                                                "
-                                                :readonly="true"
-                                            />
+                                            <input type="text" class="form-control"
+                                                v-model="fillregistrarCotizacionLibre.cEmail" :readonly="true" />
                                         </div>
                                     </div>
                                 </div>
@@ -132,66 +84,34 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="form-group row">
-                                        <label class="col-md-3 col-form-label"
-                                            >VENDEDOR</label
-                                        >
+                                        <label class="col-md-3 col-form-label">VENDEDOR</label>
                                         <div class="col-md-9">
-                                            <input
-                                                type="text"
-                                                class="form-control"
-                                                :readonly="true"
-                                                v-model="
-                                                    fillregistrarCotizacionLibre.cVendedor
-                                                "
-                                            />
+                                            <input type="text" class="form-control" :readonly="true"
+                                                v-model="fillregistrarCotizacionLibre.cVendedor" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label class="col-md-3 col-form-label"
-                                            >CELULAR</label
-                                        >
+                                        <label class="col-md-3 col-form-label">CELULAR</label>
                                         <div class="col-md-9">
-                                            <input
-                                                type="text"
-                                                class="form-control"
-                                                :readonly="true"
-                                                v-model="
-                                                    fillregistrarCotizacionLibre.cCeluVendedor
-                                                "
-                                            />
+                                            <input type="text" class="form-control" :readonly="true"
+                                                v-model="fillregistrarCotizacionLibre.cCeluVendedor" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label class="col-md-3 col-form-label"
-                                            >CENTRAL</label
-                                        >
+                                        <label class="col-md-3 col-form-label">CENTRAL</label>
                                         <div class="col-md-9">
-                                            <input
-                                                type="text"
-                                                class="form-control"
-                                                :readonly="true"
-                                                v-model="
-                                                    fillregistrarCotizacionLibre.cCentral
-                                                "
-                                            />
+                                            <input type="text" class="form-control" :readonly="true"
+                                                v-model="fillregistrarCotizacionLibre.cCentral" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label class="col-md-3 col-form-label"
-                                            >EMAIL</label
-                                        >
+                                        <label class="col-md-3 col-form-label">EMAIL</label>
                                         <div class="col-md-9">
-                                            <input
-                                                type="text"
-                                                class="form-control"
-                                                :readonly="true"
-                                                v-model="
-                                                    fillregistrarCotizacionLibre.cEmailVendedor
-                                                "
-                                            />
+                                            <input type="text" class="form-control" :readonly="true"
+                                                v-model="fillregistrarCotizacionLibre.cEmailVendedor" />
                                         </div>
                                     </div>
                                 </div>
@@ -206,223 +126,111 @@
                                     <div class="col-md-12">
                                         <div class="card card-primary">
                                             <div class="card-header">
-                                                <h3 class="card-title">
-                                                    CONDICIONES COMERCIALES
-                                                </h3>
+                                                <h3 class="card-title">CONDICIONES COMERCIALES</h3>
                                             </div>
                                             <div class="card-body">
                                                 <div class="form-group row">
-                                                    <label
-                                                        class="col-md-2 col-form-label"
-                                                        >VALIDEZ DE
-                                                        OFERTA</label
-                                                    >
+                                                    <label class="col-md-2 col-form-label">VALIDEZ DE OFERTA</label>
                                                     <div class="col-md-3">
-                                                        <input
-                                                            type="text"
-                                                            class="form-control"
-                                                            v-model="
-                                                                fillregistrarCotizacionLibre.cValidez
-                                                            "
-                                                        />
+                                                        <input type="text" class="form-control"
+                                                            v-model="fillregistrarCotizacionLibre.cValidez" />
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row">
-                                                    <label
-                                                        class="col-md-2 col-form-label"
-                                                        >ENTREGA</label
-                                                    >
+                                                    <label class="col-md-2 col-form-label">ENTREGA</label>
                                                     <div class="col-md-8">
-                                                        <input
-                                                            type="text"
-                                                            class="form-control"
-                                                            v-model="
-                                                                fillregistrarCotizacionLibre.cEntrega
-                                                            "
-                                                        />
+                                                        <input type="text" class="form-control"
+                                                            v-model="fillregistrarCotizacionLibre.cEntrega" />
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row">
-                                                    <label
-                                                        class="col-md-2 col-form-label"
-                                                        >TIPO  DE
-                                                        PAGO</label
-                                                    >
+                                                    <label class="col-md-2 col-form-label">TIPO DE PAGO</label>
                                                     <div class="col-md-4">
-                                                        <el-select
-                                                            v-model="
-                                                                fillregistrarCotizacionLibre.nIdTipoPago
-                                                            "
-                                                            placeholder="Select"
-                                                            style="width: 70%"
-                                                        >
-                                                            <el-option
-                                                                v-for="item in listTipoPago"
-                                                                :key="item.id"
-                                                                :label="
-                                                                    item.nombre
-                                                                "
-                                                                :value="item.id"
-                                                            >
+                                                        <el-select v-model="fillregistrarCotizacionLibre.nIdTipoPago"
+                                                            placeholder="Select" style="width: 70%">
+                                                            <el-option v-for="item in listTipoPago" :key="item.id"
+                                                                :label="item.nombre" :value="item.id">
                                                             </el-option>
                                                         </el-select>
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row">
-                                                    <label
-                                                        class="col-md-2 col-form-label"
-                                                        >CONDICIÓN DE
-                                                        PAGO</label
-                                                    >
+                                                    <label class="col-md-2 col-form-label">CONDICIÓN DE PAGO</label>
                                                     <div class="col-md-4">
-                                                        <el-select
-                                                            v-model="
-                                                                fillregistrarCotizacionLibre.cFPago
-                                                            "
-                                                            placeholder="Select"
-                                                            style="width: 70%"
-                                                        >
-                                                            <el-option
-                                                                v-for="item in listDescripPago"
-                                                                :key="item.id"
-                                                                :label="
-                                                                    item.nombre
-                                                                "
-                                                                :value="item.id"
-                                                            >
+                                                        <el-select v-model="fillregistrarCotizacionLibre.cFPago"
+                                                            placeholder="Select" style="width: 70%">
+                                                            <el-option v-for="item in listDescripPago" :key="item.id"
+                                                                :label="item.nombre" :value="item.id">
                                                             </el-option>
                                                         </el-select>
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row">
-                                                    <label
-                                                        class="col-md-2 col-form-label"
-                                                        >FLETE</label
-                                                    >
+                                                    <label class="col-md-2 col-form-label">FLETE</label>
                                                     <div class="col-md-8">
-                                                        <input
-                                                            type="text"
-                                                            class="form-control"
-                                                            v-model="
-                                                                fillregistrarCotizacionLibre.cFlete
-                                                            "
-                                                            maxlength="20"
-                                                        />
+                                                        <input type="text" class="form-control"
+                                                            v-model="fillregistrarCotizacionLibre.cFlete"
+                                                            maxlength="20" />
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row">
-                                                    <label
-                                                        class="col-md-2 col-form-label"
-                                                        >DOCUMENTACION</label
-                                                    >
+                                                    <label class="col-md-2 col-form-label">DOCUMENTACION</label>
                                                     <div class="col-md-8">
-                                                        <input
-                                                            type="text"
-                                                            class="form-control"
-                                                            v-model="
-                                                                fillregistrarCotizacionLibre.Docu
-                                                            "
-                                                            maxlength="150"
-                                                        />
+                                                        <input type="text" class="form-control"
+                                                            v-model="fillregistrarCotizacionLibre.Docu"
+                                                            maxlength="150" />
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row">
-                                                    <label
-                                                        class="col-md-2 col-form-label"
-                                                        >GARANTIA</label
-                                                    >
+                                                    <label class="col-md-2 col-form-label">GARANTIA</label>
                                                     <div class="col-md-4">
-                                                        <el-select
-                                                            v-model="
-                                                                fillregistrarCotizacionLibre.nIdGarantia
-                                                            "
-                                                            placeholder="Select"
-                                                            style="width: 70%"
-                                                        >
-                                                            <el-option
-                                                                v-for="item in listGarantia"
-                                                                :key="item.id"
-                                                                :label="
-                                                                    item.nombre
-                                                                "
-                                                                :value="item.id"
-                                                            >
+                                                        <el-select v-model="fillregistrarCotizacionLibre.nIdGarantia"
+                                                            placeholder="Select" style="width: 70%">
+                                                            <el-option v-for="item in listGarantia" :key="item.id"
+                                                                :label="item.nombre" :value="item.id">
                                                             </el-option>
                                                         </el-select>
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row">
-                                                    <label
-                                                        class="col-md-2 col-form-label"
-                                                        >OBSERVACIÓN</label
-                                                    >
+                                                    <label class="col-md-2 col-form-label">OBSERVACIÓN</label>
                                                     <div class="col-md-8">
-                                                        <input
-                                                            type="text"
-                                                            class="form-control"
-                                                            v-model="
-                                                                fillregistrarCotizacionLibre.cObservacion
-                                                            "
-                                                            :maxlength="255"
-                                                        />
+                                                        <input type="text" class="form-control"
+                                                            v-model="fillregistrarCotizacionLibre.cObservacion"
+                                                            :maxlength="255" />
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row">
-                                                    <label
-                                                        class="col-md-2 col-form-label"
-                                                        >PUNTO DE LLEGADA
-                                                        CONSIGNADO :</label
-                                                    >
+                                                    <label class="col-md-2 col-form-label">PUNTO DE LLEGADA CONSIGNADO
+                                                        :</label>
                                                     <div class="col-md-8">
-                                                        <input
-                                                            type="text"
-                                                            class="form-control"
-                                                            v-model="
-                                                                fillregistrarCotizacionLibre.cPuntoLlegada
-                                                            "
-                                                            :maxlength="100"
-                                                        />
+                                                        <input type="text" class="form-control"
+                                                            v-model="fillregistrarCotizacionLibre.cPuntoLlegada"
+                                                            :maxlength="100" />
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row">
-                                                    <label
-                                                        class="col-md-2 col-form-label"
-                                                        >EMP. DE
-                                                        TRANSPORTE</label
-                                                    >
+                                                    <label class="col-md-2 col-form-label">EMP. DE TRANSPORTE</label>
                                                     <div class="col-md-8">
-                                                        <input
-                                                            type="text"
-                                                            class="form-control"
-                                                            v-model="
-                                                                fillregistrarCotizacionLibre.cTransporte
-                                                            "
-                                                        />
+                                                        <input type="text" class="form-control"
+                                                            v-model="fillregistrarCotizacionLibre.cTransporte" />
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row">
-                                                    <label
-                                                        class="col-md-2 col-form-label"
-                                                        >CONSIGNADO</label
-                                                    >
+                                                    <label class="col-md-2 col-form-label">CONSIGNADO</label>
                                                     <div class="col-md-8">
-                                                        <input
-                                                            type="text"
-                                                            class="form-control"
-                                                            v-model="
-                                                                fillregistrarCotizacionLibre.Cconsignado
-                                                            "
-                                                        />
+                                                        <input type="text" class="form-control"
+                                                            v-model="fillregistrarCotizacionLibre.Cconsignado" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -440,43 +248,22 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group row">
-                                            <label
-                                                class="col-md-4 col-form-label"
-                                                >CANTIDAD</label
-                                            >
+                                            <label class="col-md-4 col-form-label">CANTIDAD</label>
                                             <div class="col-md-4">
-                                                <input
-                                                    type="text"
-                                                    class="form-control"
-                                                    v-int
-                                                    v-model="
-                                                        fillregistrarCotizacionLibre.cCantidad
-                                                    "
-                                                />
+                                                <input type="text" class="form-control" v-int
+                                                    v-model="fillregistrarCotizacionLibre.cCantidad" />
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group row">
-                                            <label
-                                                class="col-md-2 col-form-label"
-                                                >MEDIDA</label
-                                            >
+                                            <label class="col-md-2 col-form-label">MEDIDA</label>
                                             <div class="col-md-4">
-                                                <el-select
-                                                    v-model="
-                                                        fillregistrarCotizacionLibre.nIdUnidMed
-                                                    "
-                                                    placeholder="Select"
-                                                    style="width: 70%"
-                                                >
-                                                    <el-option
-                                                        v-for="item in listUnidMed"
-                                                        :key="item.id"
-                                                        :label="item.nombre"
-                                                        :value="item.id"
-                                                    >
+                                                <el-select v-model="fillregistrarCotizacionLibre.nIdUnidMed"
+                                                    placeholder="Select" style="width: 70%">
+                                                    <el-option v-for="item in listUnidMed" :key="item.id"
+                                                        :label="item.nombre" :value="item.id">
                                                     </el-option>
                                                 </el-select>
                                             </div>
@@ -486,25 +273,12 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group row">
-                                            <label
-                                                class="col-md-2 col-form-label"
-                                                >DESCRIPCION DEL MEDIDOR</label
-                                            >
+                                            <label class="col-md-2 col-form-label">DESCRIPCION DEL MEDIDOR</label>
 
                                             <div class="col-md-10">
-
-                                                <input
-                                                type="text"
-                                                class="form-control"
-                                                v-model="
-                                                    fillregistrarCotizacionLibre.nIdprod
-                                                "
-                                                maxlength="250"
-                                                placeholder="Cantidad maxima 250 caracteres"
-
-                                            />
-
-
+                                                <input type="text" class="form-control"
+                                                    v-model="fillregistrarCotizacionLibre.nIdprod" maxlength="250"
+                                                    placeholder="Cantidad maxima 250 caracteres" />
                                             </div>
                                         </div>
                                     </div>
@@ -513,43 +287,22 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group row">
-                                            <label
-                                                class="col-md-4 col-form-label"
-                                                >P/UNIT</label
-                                            >
+                                            <label class="col-md-4 col-form-label">P/UNIT</label>
                                             <div class="col-md-6">
-                                                <input
-                                                    type="text"
-                                                    class="form-control"
-                                                    v-model="
-                                                        fillregistrarCotizacionLibre.cPUnit
-                                                    "
-                                                    :onchange="
-                                                        this.setCalculaTotal()
-                                                    "
-                                                />
+                                                <input type="text" class="form-control"
+                                                    v-model="fillregistrarCotizacionLibre.cPUnit"
+                                                    :onchange="this.setCalculaTotal()" />
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group row">
-                                            <label
-                                                class="col-md-2 col-form-label"
-                                                >TOTAL S/IGV</label
-                                            >
+                                            <label class="col-md-2 col-form-label">TOTAL S/IGV</label>
                                             <div class="col-md-4">
-                                                <input
-                                                    type="text"
-                                                    class="form-control"
-                                                    v-model="
-                                                        fillregistrarCotizacionLibre.cTotal
-                                                    "
-                                                    :readonly="true"
-                                                    :onchange="
-                                                        this.setCalculaTotal()
-                                                    "
-                                                />
+                                                <input type="text" class="form-control"
+                                                    v-model="fillregistrarCotizacionLibre.cTotal" :readonly="true"
+                                                    :onchange="this.setCalculaTotal()" />
                                             </div>
                                         </div>
                                     </div>
@@ -558,43 +311,24 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group row">
-                                            <label
-                                                class="col-md-4 col-form-label"
-                                                >STOCK</label
-                                            >
+                                            <label class="col-md-4 col-form-label">STOCK</label>
                                             <div class="col-md-2">
-                                                <input
-                                                    type="text"
-                                                    class="form-control"
-                                                    v-model="
-                                                        fillregistrarCotizacionLibre.cStock
-                                                    "
-                                                    :readonly="true"
-                                                />
+                                                <input type="text" class="form-control"
+                                                    v-model="fillregistrarCotizacionLibre.cStock" :readonly="true" />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-
 
                                 <div class="card-footer">
                                     <div class="row">
                                         <div class="col-md-4 offset-4">
-                                            <button
-                                                class="btn btn-flat btn-info btnWidth"
-                                                @click.prevent="
-                                                    setRegistrarCotizacionLibre
-                                                "
-                                            >
+                                            <button class="btn btn-flat btn-info btnWidth"
+                                                @click.prevent="setRegistrarCotizacionLibre">
                                                 Agregar
                                             </button>
-                                            <button
-                                                class="btn btn-flat btn-default btnWidth"
-                                                @click.prevent="
-                                                    limpiarCotizacionBsq
-                                                "
-                                            >
+                                            <button class="btn btn-flat btn-default btnWidth"
+                                                @click.prevent="limpiarCotizacionBsq">
                                                 Limpiar
                                             </button>
                                         </div>
@@ -603,24 +337,18 @@
 
                                 <div class="card card-info">
                                     <div class="card-header">
-                                        <h3 class="card-title">
-                                            Bandeja de Resultados
-                                        </h3>
+                                        <h3 class="card-title">Bandeja de Resultados</h3>
                                     </div>
 
                                     <div class="card-body table-responsive">
-                                        <table
-                                            class="table table-hover table-head-fixed text-nowrap projects"
-                                        >
+                                        <table class="table table-hover table-head-fixed text-nowrap projects">
                                             <thead>
                                                 <tr>
                                                     <th>ITEM</th>
                                                     <th>CANT</th>
                                                     <th>MEDIDA</th>
 
-                                                    <th>
-                                                        DESCRIPCION DEL PRODUCTO
-                                                    </th>
+                                                    <th>DESCRIPCION DEL PRODUCTO</th>
 
                                                     <th>P/UNIT</th>
                                                     <th>TOTAL S/IGV</th>
@@ -628,46 +356,19 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr
-                                                    v-for="(
-                                                        item, index
-                                                    ) in listarProductosPaginated"
-                                                    :key="index"
-                                                >
-                                                    <td
-                                                        v-text="Number(index)"
-                                                    ></td>
-                                                    <td
-                                                        v-text="item.cantidad"
-                                                    ></td>
-                                                    <td
-                                                        v-text="
-                                                            item.unidmedNombre
-                                                        "
-                                                    ></td>
+                                                <tr v-for="(item, index) in listarProductosPaginated" :key="index">
+                                                    <td v-text="Number(index)"></td>
+                                                    <td v-text="item.cantidad"></td>
+                                                    <td v-text="item.unidmedNombre"></td>
 
-                                                    <td
-                                                        v-text="
-                                                            item.producto
-                                                        "
-                                                    ></td>
+                                                    <td v-text="item.producto"></td>
 
-                                                    <td
-                                                        v-text="item.punit"
-                                                    ></td>
-                                                    <td
-                                                        v-text="item.total"
-                                                    ></td>
+                                                    <td v-text="item.punit"></td>
+                                                    <td v-text="item.total"></td>
 
                                                     <td>
-                                                         <button
-                                                            class="btn btn-info btn-sm"
-                                                            @click.prevent="
-                                                                borradoItems(
-                                                                    item.producto
-                                                                )
-                                                            "
-                                                        >
+                                                        <button class="btn btn-info btn-sm"
+                                                            @click.prevent="borradoItems(item.producto)">
                                                             Eliminar
                                                         </button>
                                                     </td>
@@ -679,20 +380,12 @@
                                     <div class="card-footer">
                                         <div class="row">
                                             <div class="col-md-4 offset-4">
-                                                <button
-                                                    class="btn btn-flat btn-info btnWidth"
-                                                    @click.prevent="
-                                                        setGrabarCotizacion
-                                                    "
-                                                >
+                                                <button class="btn btn-flat btn-info btnWidth"
+                                                    @click.prevent="setGrabarCotizacion">
                                                     Guardar
                                                 </button>
-                                                <button
-                                                    class="btn btn-flat btn-default btnWidth"
-                                                    @click.prevent="
-                                                        eliminarTempitemCoti
-                                                    "
-                                                >
+                                                <button class="btn btn-flat btn-default btnWidth"
+                                                    @click.prevent="eliminarTempitemCoti">
                                                     Limpiar
                                                 </button>
                                             </div>
@@ -707,11 +400,7 @@
             </div>
         </div>
 
-        <div
-            class="modal fade"
-            :class="{ show: modalShow }"
-            :style="modalShow ? mostrarModal : ocultarModal"
-        >
+        <div class="modal fade" :class="{ show: modalShow }" :style="modalShow ? mostrarModal : ocultarModal">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -719,18 +408,11 @@
                         <button class="close" @click="abrirModal"></button>
                     </div>
                     <div class="modal-body">
-                        <div
-                            class="callout callout-danger"
-                            style="padding: 5px"
-                            v-for="(item, index) in mensajeError"
-                            :key="index"
-                            v-text="item"
-                        ></div>
+                        <div class="callout callout-danger" style="padding: 5px" v-for="(item, index) in mensajeError"
+                            :key="index" v-text="item"></div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" @click="abrirModal">
-                            Cerrar
-                        </button>
+                        <button class="btn btn-secondary" @click="abrirModal">Cerrar</button>
                     </div>
                 </div>
             </div>
@@ -820,8 +502,7 @@ export default {
             var url = "/administracion/pago/index";
             axios.get(url).then((response) => {
                 this.listDescripPago = response.data;
-                this.fillregistrarCotizacionLibre.cFPago =
-                    this.listDescripPago[0].id;
+                this.fillregistrarCotizacionLibre.cFPago = this.listDescripPago[0].id;
             });
         },
 
@@ -829,8 +510,7 @@ export default {
             var url = "/administracion/garantia/index";
             axios.get(url).then((response) => {
                 this.listGarantia = response.data;
-                this.fillregistrarCotizacionLibre.nIdGarantia =
-                    this.listGarantia[0].id;
+                this.fillregistrarCotizacionLibre.nIdGarantia = this.listGarantia[0].id;
             });
         },
 
@@ -846,18 +526,13 @@ export default {
                     },
                 })
                 .then((response) => {
-                    this.fillregistrarCotizacionLibre.cNomClient =
-                        response.data.razonsocial;
-                    this.fillregistrarCotizacionLibre.cDirClient =
-                        response.data.direccion;
+                    this.fillregistrarCotizacionLibre.cNomClient = response.data.razonsocial;
+                    this.fillregistrarCotizacionLibre.cDirClient = response.data.direccion;
                     this.fillregistrarCotizacionLibre.cRucClient = response.data.ruc;
-                    this.fillregistrarCotizacionLibre.cAtencion =
-                        response.data.atencion;
-                    this.fillregistrarCotizacionLibre.cFonoClient =
-                        response.data.telefono;
+                    this.fillregistrarCotizacionLibre.cAtencion = response.data.atencion;
+                    this.fillregistrarCotizacionLibre.cFonoClient = response.data.telefono;
                     this.fillregistrarCotizacionLibre.cEmail = response.data.email;
-                    this.fillregistrarCotizacionLibre.ctipoPrecio =
-                        response.data.tipoPrecio;
+                    this.fillregistrarCotizacionLibre.ctipoPrecio = response.data.tipoPrecio;
 
                     this.fillregistrarCotizacionLibre.vidUSer = JSON.parse(
                         sessionStorage.getItem("iduser")
@@ -876,12 +551,9 @@ export default {
                     },
                 })
                 .then((response) => {
-                    this.fillregistrarCotizacionLibre.cVendedor =
-                        response.data.fullname;
-                    this.fillregistrarCotizacionLibre.cEmailVendedor =
-                        response.data.email;
-                    this.fillregistrarCotizacionLibre.cCeluVendedor =
-                        response.data.celular;
+                    this.fillregistrarCotizacionLibre.cVendedor = response.data.fullname;
+                    this.fillregistrarCotizacionLibre.cEmailVendedor = response.data.email;
+                    this.fillregistrarCotizacionLibre.cCeluVendedor = response.data.celular;
                     //console.log(response.data);
                 });
         },
@@ -903,8 +575,7 @@ export default {
             var url = "/administracion/KardexDetalle/listUnidMed";
             axios.get(url).then((response) => {
                 this.listUnidMed = response.data;
-                this.fillregistrarCotizacionLibre.nIdUnidMed =
-                    this.listUnidMed[7].id;
+                this.fillregistrarCotizacionLibre.nIdUnidMed = this.listUnidMed[8].id;
             });
         },
 
@@ -912,8 +583,7 @@ export default {
             var url = "/administracion/cotizacion/listTipoPago";
             axios.get(url).then((response) => {
                 this.listTipoPago = response.data;
-                this.fillregistrarCotizacionLibre.nIdTipoPago =
-                    this.listTipoPago[0].id;
+                this.fillregistrarCotizacionLibre.nIdTipoPago = this.listTipoPago[0].id;
             });
         },
 
@@ -942,49 +612,33 @@ export default {
             this.error = 0;
             this.mensajeError = [];
             if (!this.fillregistrarCotizacionLibre.cValidez) {
-                this.mensajeError.push(
-                    "La validacion de Oferta es un campo obligatorio"
-                );
+                this.mensajeError.push("La validacion de Oferta es un campo obligatorio");
             }
             if (!this.fillregistrarCotizacionLibre.cEntrega) {
-                this.mensajeError.push(
-                    "El Campo Entrega es un campo obligatorio"
-                );
+                this.mensajeError.push("El Campo Entrega es un campo obligatorio");
             }
 
             if (!this.fillregistrarCotizacionLibre.cFlete) {
-                this.mensajeError.push(
-                    "El Campo Flete es un campo obligatorio"
-                );
+                this.mensajeError.push("El Campo Flete es un campo obligatorio");
             }
             if (!this.fillregistrarCotizacionLibre.Docu) {
-                this.mensajeError.push(
-                    "El Campo Documento es un campo obligatorio"
-                );
+                this.mensajeError.push("El Campo Documento es un campo obligatorio");
             }
 
             if (!this.fillregistrarCotizacionLibre.cCantidad) {
-                this.mensajeError.push(
-                    "El Campo Cantidad es un campo obligatorio"
-                );
+                this.mensajeError.push("El Campo Cantidad es un campo obligatorio");
             }
 
             if (!this.fillregistrarCotizacionLibre.nIdUnidMed) {
-                this.mensajeError.push(
-                    "El Campo Medida es un campo obligatorio"
-                );
+                this.mensajeError.push("El Campo Medida es un campo obligatorio");
             }
 
             if (!this.fillregistrarCotizacionLibre.nIdprod) {
-                this.mensajeError.push(
-                    "El Campo Medidor es un campo obligatorio"
-                );
+                this.mensajeError.push("El Campo Medidor es un campo obligatorio");
             }
 
             if (!this.fillregistrarCotizacionLibre.cPUnit) {
-                this.mensajeError.push(
-                    "El Campo P.Unit es un campo obligatorio"
-                );
+                this.mensajeError.push("El Campo P.Unit es un campo obligatorio");
             }
 
             if (this.mensajeError.length) {
@@ -1019,14 +673,14 @@ export default {
                     }
 
                     /*          if (response.data.message == "Ya fue agregado anteriormente") {
-            Swal.fire({
-              position: "center",
-              icon: response.data.icon,
-              title: response.data.message,
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          } */
+                      Swal.fire({
+                        position: "center",
+                        icon: response.data.icon,
+                        title: response.data.message,
+                        showConfirmButton: false,
+                        timer: 1500,
+                      });
+                    } */
                 });
         },
         setGrabarCotizacion() {
@@ -1093,7 +747,7 @@ export default {
             this.fillregistrarCotizacionLibre.cTotal = parseFloat(c).toFixed(2);
         },
         limpiaItems() {
-            this.fillregistrarCotizacionLibre.nIdprod="";
+            this.fillregistrarCotizacionLibre.nIdprod = "";
             this.fillregistrarCotizacionLibre.cCantidad = "";
             this.fillregistrarCotizacionLibre.cMedida = "";
             this.fillregistrarCotizacionLibre.cDescripcion = "";
@@ -1108,7 +762,7 @@ export default {
                     item: item,
                 })
                 .then((response) => {
-                    this.listarProductosPaginated=response.data.datos ;
+                    this.listarProductosPaginated = response.data.datos;
                     // this.fillregistrarCotizacionLibre.nIdprod = '';
 
                     //console.log(item);
@@ -1117,8 +771,7 @@ export default {
 
         cargaDatosPredeterminados() {
             this.fillregistrarCotizacionLibre.cValidez = "15 días";
-            this.fillregistrarCotizacionLibre.Docu =
-                "Factura, guía y carta de Garantía";
+            this.fillregistrarCotizacionLibre.Docu = "Factura, guía y carta de Garantía";
             this.fillregistrarCotizacionLibre.cFlete = "NOVESUR";
         },
 
