@@ -925,8 +925,8 @@ export default {
                     } else {
                         this.fillCrearInformeValorizacion.cRSocial = response.data.razonSocial;
                         /*        (this.fillRegistrarCliente.cDireccion = response.data.direccion),
-                                        (this.estadobutton = false);
-                                      this.disabledbtnRuc = true; */
+                                                    (this.estadobutton = false);
+                                                  this.disabledbtnRuc = true; */
                     }
                 });
         },
@@ -1135,8 +1135,8 @@ export default {
             this.mensajeError = [];
 
             /*   if (!this.fillCrearInformeValorizacion.nIdCcostos) {
-                        this.mensajeError.push("El Centro de Costos es obligatorio");
-                    } */
+                              this.mensajeError.push("El Centro de Costos es obligatorio");
+                          } */
 
             if (!this.fillCrearInformeValorizacion.FInicio) {
                 this.mensajeError.push("Fecha Inicio es campo obligatorio");
@@ -1155,8 +1155,8 @@ export default {
             }
 
             /*   if (!this.fillCrearInformeValorizacion.nIdOS) {
-                        this.mensajeError.push("Campo O/S Campo Obligatorio");
-                    } */
+                              this.mensajeError.push("Campo O/S Campo Obligatorio");
+                          } */
 
             if (this.mensajeError.length) {
                 this.error = 1;
@@ -1240,8 +1240,8 @@ export default {
             var url = "/administracion/KardexDetalle/listUnidMed";
             axios.get(url).then((response) => {
                 this.listUnidMed = response.data;
-                this.fillCrearInformeValorizacion.nIdUnidMed = this.listUnidMed[7].id;
-                this.fillCrearInformeValorizacion.nIdUnidMedMat = this.listUnidMed[7].id;
+                this.fillCrearInformeValorizacion.nIdUnidMed = this.listUnidMed[9].id;
+                this.fillCrearInformeValorizacion.nIdUnidMedMat = this.listUnidMed[9].id;
             });
         },
 

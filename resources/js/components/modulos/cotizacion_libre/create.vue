@@ -575,7 +575,7 @@ export default {
             var url = "/administracion/KardexDetalle/listUnidMed";
             axios.get(url).then((response) => {
                 this.listUnidMed = response.data;
-                this.fillregistrarCotizacionLibre.nIdUnidMed = this.listUnidMed[8].id;
+                this.fillregistrarCotizacionLibre.nIdUnidMed = this.listUnidMed[9].id;
             });
         },
 
@@ -673,14 +673,14 @@ export default {
                     }
 
                     /*          if (response.data.message == "Ya fue agregado anteriormente") {
-                      Swal.fire({
-                        position: "center",
-                        icon: response.data.icon,
-                        title: response.data.message,
-                        showConfirmButton: false,
-                        timer: 1500,
-                      });
-                    } */
+                                          Swal.fire({
+                                            position: "center",
+                                            icon: response.data.icon,
+                                            title: response.data.message,
+                                            showConfirmButton: false,
+                                            timer: 1500,
+                                          });
+                                        } */
                 });
         },
         setGrabarCotizacion() {

@@ -11,12 +11,8 @@
     </div>
     <div class="content container-fluid">
       <div class="card">
-
         <div class="card-body">
           <div class="col-md-12">
-
-
-
             <div class="row">
               <div class="col-md-9">
                 <div class="form-group row">
@@ -49,9 +45,9 @@
                             <el-select v-model="fillCrearInfoProduccion.nIdproduct" style="width: 70vw" filterable
                               disabled placeholder="Select">
                               <v-row align="right">
-                                <el-option v-for="item in listProd" :key="item.id" :label="
-                                  item.codigo + ' - '
-                                  + item.familia.nombre +
+                                <el-option v-for="item in listProd" :key="item.id" :label="item.codigo +
+                                  ' - ' +
+                                  item.familia.nombre +
                                   ' , ' +
                                   item.subfamilia.nombre +
                                   ' , Modelo: ' +
@@ -62,7 +58,7 @@
                                   item.material.nombre +
                                   ' ,' +
                                   item.homologacion.nombre
-                                " :value="item.id">
+                                  " :value="item.id">
                                 </el-option>
                               </v-row>
                             </el-select>
@@ -97,37 +93,21 @@
                         </div>
                       </div>
 
-
-
-                    <div class="col-md-4">
-                      <div class="form-group row">
-                        <label class="col-md-3 col-form-label">Cliente-Ref</label>
-                        <div class="col-md-9">
-                          <el-select v-model="fillCrearInfoProduccion.nIdTipoPago" placeholder="Select" disabled
-                            style="width: 70%">
-                            <el-option v-for="item in listDescripPago" :key="item.id" :label="item.label"
-                              :value="item.value">
-                            </el-option>
-                          </el-select>
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label class="col-md-3 col-form-label">Cliente-Ref</label>
+                          <div class="col-md-9">
+                            <el-select v-model="fillCrearInfoProduccion.nIdTipoPago" placeholder="Select" disabled
+                              style="width: 70%">
+                              <el-option v-for="item in listDescripPago" :key="item.id" :label="item.label"
+                                :value="item.value">
+                              </el-option>
+                            </el-select>
+                          </div>
                         </div>
                       </div>
                     </div>
-
-
-
-
-                    </div>
                   </div>
-
-
-
-
-
-
-
-
-
-
 
                   <div v-if="fillCrearInfoProduccion.nIdTipoPago == 1" class="col-md-9">
                     <div class="col-md-8">
@@ -145,14 +125,13 @@
                   </div>
 
                   <div class="col-md-12">
-                      <div class="form-group row">
-                        <label class="col-md-1 col-form-label">Referencia</label>
-                        <div class="col-md-9">
-                          <input type="text" class="form-control" v-model="fillCrearInfoProduccion.cReferencia" />
-
-                        </div>
+                    <div class="form-group row">
+                      <label class="col-md-1 col-form-label">Referencia</label>
+                      <div class="col-md-9">
+                        <input type="text" class="form-control" v-model="fillCrearInfoProduccion.cReferencia" />
                       </div>
                     </div>
+                  </div>
 
                   <div v-if="fillCrearInfoProduccion.nIdTipoPago == 2" class="col-md-12">
                     <div class="col-md-6">
@@ -179,52 +158,38 @@
                             :disabled="true" />
                         </div>
                       </div>
-
-
                     </div>
-
                   </div>
-                  <template >
-
-
-
-
-                  </template>
-                     <div v-if="listRolPermisoByUsuario.includes('informeproduccion.agregar')" class="card-footer">
+                  <template> </template>
+                  <div v-if="listRolPermisoByUsuario.includes('informeproduccion.agregar')" class="card-footer">
                     <div class="row">
                       <div class="col-md-4 offset-4">
                         <button class="btn btn-flat btn-info btnWidth" @click.prevent="setEditInfoProd">
                           Editar
                         </button>
-
                       </div>
                     </div>
                   </div>
 
-
                   <!-- INICIO  DE REQUERIMIENTOS DE MATERIALES -->
 
-                   <div v-if="listRolPermisoByUsuario.includes('informeproduccion.agregar')" class="container-fluid">
+                  <div v-if="listRolPermisoByUsuario.includes('informeproduccion.agregar')" class="container-fluid">
                     <form role="form">
                       <div class="row">
                         <div class="col-md-12">
                           <div class="card card-primary">
                             <div class="card-header">
-                              <h3 class="card-title">
-                                REQUERIMIENTOS DE MATERIALES
-                              </h3>
+                              <h3 class="card-title">REQUERIMIENTOS DE MATERIALES</h3>
                             </div>
                             <div class="card-body">
                               <div class="form-group row">
                                 <label class="col-md-2 col-form-label">DESCRIPCION DEL MATERIAL</label>
 
                                 <div class="col-md-10">
-                                  <el-select v-model="
-                                    fillCrearInfoProduccion.nIdmaterial
-                                  " style="width: 60vw" filterable placeholder="Select">
+                                  <el-select v-model="fillCrearInfoProduccion.nIdmaterial" style="width: 60vw"
+                                    filterable placeholder="Select">
                                     <v-row align="right">
-                                      <el-option v-for="item in listProd" :key="item.id" :label="
-                                        item.codigo +
+                                      <el-option v-for="item in listProd" :key="item.id" :label="item.codigo +
                                         ' - ' +
                                         item.familia.nombre +
                                         ' , ' +
@@ -237,7 +202,7 @@
                                         item.material.nombre +
                                         ' ,' +
                                         item.homologacion.nombre
-                                      " :value="item.id">
+                                        " :value="item.id">
                                       </el-option>
                                     </v-row>
                                   </el-select>
@@ -246,9 +211,8 @@
                               <div class="form-group row">
                                 <label class="col-md-2 col-form-label">CANTIDAD</label>
                                 <div class="col-md-3">
-                                  <input type="text" class="form-control" v-int v-model="
-                                    fillCrearInfoProduccion.cCantMaterial
-                                  " />
+                                  <input type="text" class="form-control" v-int
+                                    v-model="fillCrearInfoProduccion.cCantMaterial" />
                                 </div>
                               </div>
 
@@ -256,9 +220,8 @@
                                 <div class="form-group row">
                                   <label class="col-md-4 col-form-label">MEDIDA</label>
                                   <div class="col-md-4">
-                                    <el-select v-model="
-                                      fillCrearInfoProduccion.nIdUnidMedMat
-                                    " placeholder="Select" style="width: 70%">
+                                    <el-select v-model="fillCrearInfoProduccion.nIdUnidMedMat" placeholder="Select"
+                                      style="width: 70%">
                                       <el-option v-for="item in listUnidMed" :key="item.id" :label="item.nombre"
                                         :value="item.id">
                                       </el-option>
@@ -266,18 +229,15 @@
                                   </div>
                                 </div>
                               </div>
-
                             </div>
                           </div>
                         </div>
                       </div>
                     </form>
                   </div>
-
-
                 </form>
               </div>
-               <div v-if="listRolPermisoByUsuario.includes('informeproduccion.agregar')" class="card-footer">
+              <div v-if="listRolPermisoByUsuario.includes('informeproduccion.agregar')" class="card-footer">
                 <div class="row">
                   <div class="col-md-4 offset-4">
                     <button class="btn btn-flat btn-primary btnWidth" @click.prevent="setAddPMaterialReqMateriales">
@@ -297,11 +257,7 @@
                 </div>
 
                 <div class="card-body table-responsive">
-                  <table class="
-                      table table-hover table-head-fixed
-                      text-nowrap
-                      projects
-                    ">
+                  <table class="table table-hover table-head-fixed text-nowrap projects">
                     <thead>
                       <tr>
                         <th>Codigo Producto</th>
@@ -314,11 +270,9 @@
                     </thead>
                     <tbody>
                       <tr v-for="(item, index) in ListReqMatInfoProduc" :key="index">
-
                         <td v-text="item.producto.codigo"></td>
 
-                        <td v-text="
-                          item.producto.familia.nombre +
+                        <td v-text="item.producto.familia.nombre +
                           ' ' +
                           item.producto.subfamilia.nombre +
                           ', MARCA :' +
@@ -327,12 +281,11 @@
                           item.producto.modelotipo.nombre +
                           ', MATERIAL :' +
                           item.producto.material.nombre
-                        "></td>
+                          "></td>
                         <td v-text="item.cantInfProd"></td>
                         <td v-text="item.unidmedida.nombre"></td>
 
                         <td>
-
                           <button class="btn btn-secondary btn-sm" @click="ModalReqMateriales(item.id)">
                             <i class="far fa-edit"></i> Editar
                           </button>
@@ -342,8 +295,6 @@
                   </table>
                 </div>
               </div>
-
-
             </div>
           </div>
         </div>
@@ -373,7 +324,8 @@
                   <label class="col-md-2 col-form-label"></label>
                   <div class="col-md-6">
                     <el-radio v-model="fillCrearInfoProduccion.radTipoTiempo" @change="onChange($event)" label="1"
-                      checked>POR DIAS
+                      checked>POR
+                      DIAS
                     </el-radio>
                     <el-radio v-model="fillCrearInfoProduccion.radTipoTiempo" @change="onChange($event)" label="2">POR
                       HORAS
@@ -527,7 +479,6 @@
             </table>
           </div>
         </div>
-
       </div>
     </div>
 
@@ -545,9 +496,7 @@
               v-text="item"></div>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-secondary" @click="abrirModal">
-              Cerrar
-            </button>
+            <button class="btn btn-secondary" @click="abrirModal">Cerrar</button>
           </div>
         </div>
       </div>
@@ -575,8 +524,7 @@
                       <div class="col-md-9">
                         <el-select v-model="fillCrearInfoProduccion.nIdEditmaterial" style="width: 90%" filterable
                           placeholder="Select">
-                          <el-option v-for="item in listProd" :key="item.id" :label="
-                            item.codigo +
+                          <el-option v-for="item in listProd" :key="item.id" :label="item.codigo +
                             ' - ' +
                             item.familia.nombre +
                             ' , ' +
@@ -589,14 +537,13 @@
                             item.material.nombre +
                             ' ,' +
                             item.homologacion.nombre
-                          " :value="item.id">
+                            " :value="item.id">
                           </el-option>
                         </el-select>
                       </div>
                     </div>
                   </div>
                 </div>
-
 
                 <div class="col-md-12">
                   <div class="row">
@@ -623,8 +570,6 @@
                     </div>
                   </div>
                 </div>
-
-
               </form>
             </div>
 
@@ -638,13 +583,10 @@
             </div>
           </div>
         </div>
-
-
       </div>
     </div>
 
     <!--  FIN DEL MODAL DE REQUERIMIENTOS DE MATERIALES -->
-
 
     <!-- MODAL DE MANO DE OBRA  -->
 
@@ -672,7 +614,6 @@
                   </div>
                 </div>
 
-
                 <div class="col-md-12">
                   <div class="row">
                     <div class="col-md-6">
@@ -694,27 +635,20 @@
                     </div>
                   </div>
                 </div>
-
-
               </form>
             </div>
 
             <div class="modal-footer">
-              <button class="btn btn-success" @click="EditModalManoObra">
-                Editar
-              </button>
+              <button class="btn btn-success" @click="EditModalManoObra">Editar</button>
               <button class="btn btn-secondary" @click="abrirModalEditManoObra">
                 Cerrar
               </button>
             </div>
           </div>
         </div>
-
-
       </div>
     </div>
     <!-- FIN DEL  MODAL DE MANO DE OBRA  -->
-
 
     <!-- MODAL OTROS REQUERIMIENTOS  -->
 
@@ -742,7 +676,6 @@
                   </div>
                 </div>
 
-
                 <div class="col-md-12">
                   <div class="row">
                     <div class="col-md-8">
@@ -753,29 +686,20 @@
                         </div>
                       </div>
                     </div>
-
-
                   </div>
                 </div>
-
-
               </form>
             </div>
 
             <div class="modal-footer">
-              <button class="btn btn-success" @click="EditModalOtrosReq()">
-                Editar
-              </button>
+              <button class="btn btn-success" @click="EditModalOtrosReq()">Editar</button>
               <button class="btn btn-secondary" @click="abrirModalOtrosRequerimientos">
                 Cerrar
               </button>
             </div>
           </div>
         </div>
-
-
       </div>
-
     </div>
     <div class="card-footer">
       <div class="row">
@@ -790,18 +714,7 @@
       </div>
     </div>
     <!-- FIN DEL  MODAL OTROS REQUERIMIENTOS  -->
-
-
-
-
   </div>
-
-
-
-
-
-
-
 </template>
 
 <script>
@@ -842,9 +755,7 @@ export default {
         nIdEditmaterial: "",
         cCantprodEdit: "",
         nIdUnidMedEdit: "",
-
       },
-
 
       modalShowEditItem: false,
       modalShowEditManoObra: false,
@@ -895,7 +806,6 @@ export default {
         sessionStorage.getItem("listRolPermisosByUsuario")
       ),
     };
-
   },
 
   mounted() {
@@ -930,16 +840,14 @@ export default {
           this.fillCrearInfoProduccion.nIdUnidMed = response.data.unidmedida_id;
 
           if (response.data.cliente_id == "202") {
-            this.fillCrearInfoProduccion.nIdTipoPago =this.listDescripPago[0].value;
+            this.fillCrearInfoProduccion.nIdTipoPago = this.listDescripPago[0].value;
             this.fillCrearInfoProduccion.nidAlmacen = response.data.almacen_id;
           } else {
-            this.fillCrearInfoProduccion.nIdTipoPago =this.listDescripPago[1].value;
-            this.fillCrearInfoProduccion.cRSocial =response.data.cliente.razonsocial;
+            this.fillCrearInfoProduccion.nIdTipoPago = this.listDescripPago[1].value;
+            this.fillCrearInfoProduccion.cRSocial = response.data.cliente.razonsocial;
           }
 
-          this.cargaRequeMateriales(
-            this.fillCrearInfoProduccion.codRequMateriales
-          );
+          this.cargaRequeMateriales(this.fillCrearInfoProduccion.codRequMateriales);
         });
     },
 
@@ -976,11 +884,7 @@ export default {
         confirmButtonText: "Si, borralo!",
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire(
-            "Borrado!",
-            "El item seleccionado a sido eliminado.",
-            "success"
-          );
+          Swal.fire("Borrado!", "El item seleccionado a sido eliminado.", "success");
           var url = "/administracion/InformeProduccion/DeleteReqMateriales";
           axios
             .post(url, {
@@ -1017,11 +921,7 @@ export default {
         confirmButtonText: "Si, borralo!",
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire(
-            "Borrado!",
-            "El item seleccionado a sido eliminado.",
-            "success"
-          );
+          Swal.fire("Borrado!", "El item seleccionado a sido eliminado.", "success");
           var url = "/administracion/InformeProduccion/DeleteManodeObra";
           axios
             .post(url, {
@@ -1034,8 +934,7 @@ export default {
       });
     },
     OtrosRequerimientosObraReqMat(codReqMat) {
-      var url =
-        "/administracion/InformeProduccion/getOtrosRequerimientosReqMateriales";
+      var url = "/administracion/InformeProduccion/getOtrosRequerimientosReqMateriales";
       axios
         .get(url, {
           params: {
@@ -1058,11 +957,7 @@ export default {
         confirmButtonText: "Si, borralo!",
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire(
-            "Borrado!",
-            "El item seleccionado a sido eliminado.",
-            "success"
-          );
+          Swal.fire("Borrado!", "El item seleccionado a sido eliminado.", "success");
           var url = "/administracion/InformeProduccion/DeleteOtrosReque";
           axios
             .post(url, {
@@ -1073,7 +968,6 @@ export default {
             });
         }
       });
-
     },
 
     onChange(e) {
@@ -1127,7 +1021,7 @@ export default {
           cPersonal: this.fillCrearInfoProduccion.cPersonal,
           cDiasMObra: this.fillCrearInfoProduccion.cDiasMObra,
           cHorasMObra: this.fillCrearInfoProduccion.cHorasMObra,
-          estado: 'P',
+          estado: "P",
         })
         .then((response) => {
           this.CargaInfoProduccion();
@@ -1148,7 +1042,7 @@ export default {
           codRequMateriales: this.fillCrearInfoProduccion.codRequMateriales,
           cDescripcion: this.fillCrearInfoProduccion.cDescripcion,
           cCantidadReq: this.fillCrearInfoProduccion.cCantidadReq,
-          estado: 'P',
+          estado: "P",
         })
         .then((response) => {
           this.CargaInfoProduccion();
@@ -1206,7 +1100,7 @@ export default {
           codRequMateriales: this.fillCrearInfoProduccion.codRequMateriales,
           cCantprod: this.fillCrearInfoProduccion.cCantprod,
           nIdUser: this.fillCrearInfoProduccion.nIdUser,
-          cReferencia: this.fillCrearInfoProduccion.cReferencia
+          cReferencia: this.fillCrearInfoProduccion.cReferencia,
         })
         .then((response) => {
           Swal.fire({
@@ -1242,8 +1136,6 @@ export default {
         this.mensajeError.push("Tipo de Pago es campo obligatorio");
       }
 
-
-
       if (this.mensajeError.length) {
         this.error = 1;
       }
@@ -1251,8 +1143,6 @@ export default {
       return this.error;
     },
     setAddPMaterialReqMateriales() {
-
-
       var url = "/administracion/InformeProduccion/addMaterialReqMateriales";
       axios
         .post(url, {
@@ -1260,12 +1150,12 @@ export default {
           nIdmaterial: this.fillCrearInfoProduccion.nIdmaterial,
           cCantMaterial: this.fillCrearInfoProduccion.cCantMaterial,
           nIdUnidMedMat: this.fillCrearInfoProduccion.nIdUnidMedMat,
-          estado: 'P',
-
-        }).then((response) => {
+          estado: "P",
+        })
+        .then((response) => {
           this.CargaInfoProduccion();
           this.setLimpiaCampos();
-        })
+        });
 
       /*  var url = "/administracion/InformeProduccion/saveReqMateriales";
 
@@ -1342,39 +1232,33 @@ export default {
       });
     },
 
-
     getListarUnidadMedida() {
       var url = "/administracion/KardexDetalle/listUnidMed";
       axios.get(url).then((response) => {
         this.listUnidMed = response.data;
-        this.fillCrearInfoProduccion.nIdUnidMed = this.listUnidMed[7].id;
-        this.fillCrearInfoProduccion.nIdUnidMedMat = this.listUnidMed[7].id;
+        this.fillCrearInfoProduccion.nIdUnidMed = this.listUnidMed[9].id;
+        this.fillCrearInfoProduccion.nIdUnidMedMat = this.listUnidMed[9].id;
       });
     },
 
     ModalReqMateriales(item) {
-
       this.abrirModalEditItem(item);
-      this.ShowReqMateriales(item)
-
+      this.ShowReqMateriales(item);
     },
 
     ModalManoObra(item) {
-      this.abrirModalEditManoObra(item)
-
+      this.abrirModalEditManoObra(item);
     },
 
     abrirModalEditManoObra(item) {
       this.modalShowEditManoObra = !this.modalShowEditManoObra;
-      this.ShowReqManoObra(item)
+      this.ShowReqManoObra(item);
     },
 
     abrirModalOtrosRequerimientos(item) {
       this.modalShowEditOtrosRequ = !this.modalShowEditOtrosRequ;
       this.ShowOtrosReq(item);
-
     },
-
 
     ShowReqMateriales(item) {
       var url = "/administracion/RequerimientoMateriales/getDataReqMateriales";
@@ -1383,12 +1267,11 @@ export default {
           item,
         })
         .then((response) => {
-          this.fillCrearInfoProduccion.nIdEditmaterial = response.data.producto_id,
-            this.fillCrearInfoProduccion.cCantprodEdit = response.data.cantInfProd,
-            this.fillCrearInfoProduccion.nIdUnidMedEdit = response.data.unidmedida_id
+          (this.fillCrearInfoProduccion.nIdEditmaterial = response.data.producto_id),
+            (this.fillCrearInfoProduccion.cCantprodEdit = response.data.cantInfProd),
+            (this.fillCrearInfoProduccion.nIdUnidMedEdit = response.data.unidmedida_id);
           localStorage.Codigo = item;
         });
-
     },
 
     ShowReqManoObra(item) {
@@ -1398,13 +1281,11 @@ export default {
           item,
         })
         .then((response) => {
-
-          this.fillCrearInfoProduccion.cPersonalModal = response.data.personalInfoProd,
-            this.fillCrearInfoProduccion.cDiasMObraModal = response.data.diasInfoProd,
-            this.fillCrearInfoProduccion.cHorasMObraModal = response.data.horasInfoProd
+          (this.fillCrearInfoProduccion.cPersonalModal = response.data.personalInfoProd),
+            (this.fillCrearInfoProduccion.cDiasMObraModal = response.data.diasInfoProd),
+            (this.fillCrearInfoProduccion.cHorasMObraModal = response.data.horasInfoProd);
           localStorage.Codigo = item;
         });
-
     },
 
     ShowOtrosReq(item) {
@@ -1414,79 +1295,59 @@ export default {
           item,
         })
         .then((response) => {
-          this.fillCrearInfoProduccion.cDescripModal = response.data.descripcionInfoProd
-          this.fillCrearInfoProduccion.cCantidadModal = response.data.cantidadInfoProd
+          this.fillCrearInfoProduccion.cDescripModal = response.data.descripcionInfoProd;
+          this.fillCrearInfoProduccion.cCantidadModal = response.data.cantidadInfoProd;
           localStorage.Codigo = item;
-
         });
-
     },
 
     EditModalReqMateriales() {
-
       var url = "/administracion/RequerimientoMateriales/EditModalReqMateriales";
       axios
         .post(url, {
           item: localStorage.Codigo,
           cCantprodEdit: this.fillCrearInfoProduccion.cCantprodEdit,
           nIdUnidMedEdit: this.fillCrearInfoProduccion.nIdUnidMedEdit,
-
         })
         .then((response) => {
-          this.cargaRequeMateriales(
-            this.fillCrearInfoProduccion.codRequMateriales
-
-          );
-          this.abrirModalEditItem()
+          this.cargaRequeMateriales(this.fillCrearInfoProduccion.codRequMateriales);
+          this.abrirModalEditItem();
         });
-
     },
 
     EditModalManoObra(item) {
-
       var url = "/administracion/RequerimientoMateriales/EditModalManoObra";
       axios
         .post(url, {
           item: localStorage.Codigo,
           cPersonalModal: this.fillCrearInfoProduccion.cPersonalModal,
           cDiasMObraModal: this.fillCrearInfoProduccion.cDiasMObraModal,
-          cHorasMObraModal: this.fillCrearInfoProduccion.cHorasMObraModal
-
+          cHorasMObraModal: this.fillCrearInfoProduccion.cHorasMObraModal,
         })
         .then((response) => {
-          this.cargaReqManoObraRequMat(
-            this.fillCrearInfoProduccion.codRequMateriales
-          );
-          this.abrirModalEditManoObra()
-
+          this.cargaReqManoObraRequMat(this.fillCrearInfoProduccion.codRequMateriales);
+          this.abrirModalEditManoObra();
         });
-
     },
 
     EditModalOtrosReq() {
-
       var url = "/administracion/RequerimientoMateriales/EditModalOtrosReq";
       axios
         .post(url, {
           item: localStorage.Codigo,
           cDescripModal: this.fillCrearInfoProduccion.cDescripModal,
           cCantidadModal: this.fillCrearInfoProduccion.cCantidadModal,
-
         })
         .then((response) => {
-          this.OtrosRequerimientosObraReqMat(this.fillCrearInfoProduccion.codRequMateriales);
+          this.OtrosRequerimientosObraReqMat(
+            this.fillCrearInfoProduccion.codRequMateriales
+          );
         });
 
-      this.abrirModalOtrosRequerimientos()
-
-    }
-
-
+      this.abrirModalOtrosRequerimientos();
+    },
   },
-
 };
 </script>
 
-<style>
-
-</style>
+<style></style>

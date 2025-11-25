@@ -629,8 +629,8 @@ export default {
         this.getCargaCotizacionByCotizacion();
 
         /*
-        this.setListtempCotizacion();
-       */
+            this.setListtempCotizacion();
+           */
     },
 
     methods: {
@@ -719,7 +719,7 @@ export default {
             var url = "/administracion/KardexDetalle/listUnidMed";
             axios.get(url).then((response) => {
                 this.listUnidMed = response.data;
-                this.fillEditarProducto.nIdUnidMed = this.listUnidMed[8].id;
+                this.fillEditarProducto.nIdUnidMed = this.listUnidMed[9].id;
             });
         },
 
@@ -796,12 +796,12 @@ export default {
                 .post(url, {
                     item: this.fillEditarProducto.ncodCotizacion,
                     /*   cValidez: this.fillEditarProducto.cValidez,
-                    cEntrega: this.fillEditarProducto.cEntrega,
-                    nIdTipoPago: this.fillEditarProducto.nIdTipoPago,
-                    nIdDescripPago: this.fillEditarProducto.nIdDescripPago,
-                    cFlete: this.fillEditarProducto.cFlete,
-                    Docu: this.fillEditarProducto.Docu,
-                    nIdGarantia: this.fillEditarProducto.nIdGarantia, */
+                              cEntrega: this.fillEditarProducto.cEntrega,
+                              nIdTipoPago: this.fillEditarProducto.nIdTipoPago,
+                              nIdDescripPago: this.fillEditarProducto.nIdDescripPago,
+                              cFlete: this.fillEditarProducto.cFlete,
+                              Docu: this.fillEditarProducto.Docu,
+                              nIdGarantia: this.fillEditarProducto.nIdGarantia, */
                     cCantidad: this.fillEditarProducto.cCantidad,
                     nIdUnidMed: this.fillEditarProducto.nIdUnidMed,
                     nIdprod: this.fillEditarProducto.nIdprod,
