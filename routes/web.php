@@ -634,6 +634,9 @@ Route::post('/administracion/informeValorizacion/reorderReqManObra', 'Administra
 Route::get('/administracion/informeValorizacion/ListValorMaNObraxInfoValor', 'Administracion\InformeValorizacionManoObraController@ListValorMaNObraxInfoValor');
 Route::get('/administracion/informeValorizacion/ListValorMaNObraxId', 'Administracion\InformeValorizacionManoObraController@ListValorMaNObraxId');
 Route::post('/administracion/informeValorizacion/EditOtrosReqPersonal', 'Administracion\InformeValorizacionManoObraController@EditOtrosReqPersonal');
+Route::post('/administracion/informeValorizacion/EditManoObraDias', 'Administracion\InformeValorizacionManoObraController@EditManoObraDias');
+Route::post('/administracion/informeValorizacion/EditManoObraHoras', 'Administracion\InformeValorizacionManoObraController@EditManoObraHoras');
+
 
 
 

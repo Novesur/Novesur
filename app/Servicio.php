@@ -8,8 +8,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Servicio extends Model
 {
     protected $table = 'servicio';
+    use SoftDeletes;
 
-      use SoftDeletes;
+  public function producto()
+  {
+    return $this->belongsTo(Producto::class);
+  }
+
+  public function unidmedida()
+  {
+    return $this->belongsTo(UnidMedida::class);
+  }
+
 
 
 }

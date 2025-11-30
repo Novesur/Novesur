@@ -135,6 +135,18 @@
                     </div>
                   </div>
 
+                  <div class="col-md-12">
+                    <div class="col-md-9">
+                      <div class="form-group row">
+                        <label class="col-md-2 col-form-label">Observación</label>
+                        <div class="col-md-9">
+                          <input type="text" class="form-control"
+                            v-model="fillCrearReqMaterialesServicio.cObservacion" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                   <!-- INICIO  DE REQUERIMIENTOS DE MATERIALES -->
 
                   <div class="container-fluid">
@@ -539,7 +551,7 @@ export default {
         cRSocial: "",
         cRuc: "",
         nIdmaterial: "",
-        cCantMaterial: "",
+        cCantMaterial: 0,
         cCantidad: "",
         nIdTipoPago: "",
         nIdTipoMoneda: "",
@@ -553,6 +565,7 @@ export default {
         nIdUnidMedMat: "",
         radTipoTiempo: "1",
         estado: "",
+        cObservacion: "",
       },
 
       listAlmacen: [],
@@ -863,6 +876,7 @@ export default {
           cClient: this.fillCrearReqMaterialesServicio.cClient,
           detservicio: this.fillCrearReqMaterialesServicio.detservicio,
           cCantidad: this.fillCrearReqMaterialesServicio.cCantidad,
+          cObservacion: this.fillCrearReqMaterialesServicio.cObservacion,
         })
         .then((response) => {
           Swal.fire({
@@ -928,7 +942,8 @@ export default {
       }
 
       if (!this.fillCrearReqMaterialesServicio.cCantMaterial) {
-        this.mensajeError.push("Campo Cantidad de requerimientos Obligatorio");
+        //this.mensajeError.push("Campo Cantidad de requerimientos Obligatorio");
+        this.fillCrearReqMaterialesServicio.cCantMaterial = 0;
       }
 
       if (this.mensajeError.length) {
@@ -962,7 +977,11 @@ export default {
             this.fillCrearReqMaterialesServicio.cCantMaterial = 0;
           }
 
-          if (response.data.message == "El valor no puede ser cero") {
+          this.listartempServicio = response.data.datos;
+          this.setLimpiaMaterial();
+          this.fillCrearReqMaterialesServicio.cCantMaterial = 0;
+
+          /*           if (response.data.message == "El valor no puede ser cero") { 
             Swal.fire({
               position: "center",
               icon: response.data.icon,
@@ -974,7 +993,7 @@ export default {
             this.listartempServicio = response.data.datos;
             this.setLimpiaMaterial();
             this.fillCrearReqMaterialesServicio.cCantMaterial = 0;
-          }
+          } */
         });
     },
 

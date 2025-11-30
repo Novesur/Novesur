@@ -3,9 +3,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">
-                        Reporte de Informe de Valorización
-                    </h1>
+                    <h1 class="m-0 text-dark">Reporte de Informe de Valorización</h1>
                 </div>
             </div>
         </div>
@@ -27,30 +25,12 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group row">
-                                                <label
-                                                    class="col-md-2 col-form-label"
-                                                    >Proyecto</label
-                                                >
+                                                <label class="col-md-2 col-form-label">Proyecto</label>
                                                 <div class="col-md-6">
-                                                    <el-select
-                                                        v-model="
-                                                            fillBPInfValor.nIdProyecto
-                                                        "
-                                                        style="width: 100%"
-                                                        filterable
-                                                        placeholder="Select"
-                                                        clearable
-                                                    >
-                                                        <el-option
-                                                            v-for="item in listCCostos"
-                                                            :key="item.id"
-                                                            :label="
-                                                                item.codigo +
-                                                                ' - ' +
-                                                                item.nombre
-                                                            "
-                                                            :value="item.id"
-                                                        >
+                                                    <el-select v-model="fillBPInfValor.nIdProyecto" style="width: 100%"
+                                                        filterable placeholder="Select" clearable>
+                                                        <el-option v-for="item in listCCostos" :key="item.id"
+                                                            :label="item.codigo + ' - ' + item.nombre" :value="item.id">
                                                         </el-option>
                                                     </el-select>
                                                 </div>
@@ -60,25 +40,14 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group row">
-                                                <label
-                                                    class="col-md-1 col-form-label"
-                                                    >Fecha</label
-                                                >
-                                                <el-date-picker
-                                                    v-model="
-                                                        fillBPInfValor.dFecha
-                                                    "
-                                                    type="daterange"
-                                                    range-separator="To"
-                                                    start-placeholder="Start date"
-                                                    end-placeholder="End date"
-                                                    value-format="yyyy-MM-dd"
-                                                    clearable
+                                                <label class="col-md-1 col-form-label">Fecha</label>
+                                                <el-date-picker v-model="fillBPInfValor.dFecha" type="daterange"
+                                                    range-separator="To" start-placeholder="Start date"
+                                                    end-placeholder="End date" value-format="yyyy-MM-dd" clearable
                                                     :style="{
                                                         width: '530px',
                                                         height: '38px',
-                                                    }"
-                                                >
+                                                    }">
                                                 </el-date-picker>
                                             </div>
                                         </div>
@@ -87,22 +56,11 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group row">
-                                                <label
-                                                    class="col-md-1 col-form-label"
-                                                    >O/S Nro</label
-                                                >
+                                                <label class="col-md-1 col-form-label">O/S Nro</label>
                                                 <div class="col-md-2">
-                                                    <input
-                                                        type="text"
-                                                        class="form-control"
-                                                        v-model="
-                                                            fillBPInfValor.cServicio
-                                                        "
-                                                        :maxlength="11"
-                                                        @keyup.enter="
-                                                            getListarPReqMateriales
-                                                        "
-                                                    />
+                                                    <input type="text" class="form-control"
+                                                        v-model="fillBPInfValor.cServicio" :maxlength="11"
+                                                        @keyup.enter="getListarPReqMateriales" />
                                                 </div>
                                             </div>
                                         </div>
@@ -112,27 +70,17 @@
                             <div class="card-footer">
                                 <div class="row">
                                     <div class="col-md-6 offset-3">
-                                        <button
-                                            class="btn btn-flat btn-info btnWidth3buttons"
-                                            @click.prevent="
-                                                getListInfoValorizacion
-                                            "
-                                        >
+                                        <button class="btn btn-flat btn-info btnWidth3buttons"
+                                            @click.prevent="getListInfoValorizacion">
                                             Buscar
                                         </button>
-                                        <button
-                                            class="btn btn-flat btn-default btnWidth3buttons"
-                                            @click.prevent="
-                                                limpiarListClientsBsq
-                                            "
-                                        >
+                                        <button class="btn btn-flat btn-default btnWidth3buttons"
+                                            @click.prevent="limpiarListClientsBsq">
                                             Limpiar
                                         </button>
 
-                                        <button
-                                            class="btn btn-flat btn-success btnWidth3buttons"
-                                            @click.prevent="ExcelListOrdProd"
-                                        >
+                                        <button class="btn btn-flat btn-success btnWidth3buttons"
+                                            @click.prevent="ExcelListOrdProd">
                                             Excel
                                         </button>
                                     </div>
@@ -142,14 +90,10 @@
 
                         <div class="card card-info">
                             <div class="card-header">
-                                <h3 class="card-title">
-                                    Bandeja de Resultados
-                                </h3>
+                                <h3 class="card-title">Bandeja de Resultados</h3>
                             </div>
                             <div class="card-body table-responsive">
-                                <table
-                                    class="table table-hover table-head-fixed text-nowrap projects"
-                                >
+                                <table class="table table-hover table-head-fixed text-nowrap projects">
                                     <thead>
                                         <tr>
                                             <th>Fecha</th>
@@ -164,17 +108,10 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr
-                                            v-for="(
-                                                item, index
-                                            ) in listarClientesPaginated"
-                                            :key="index"
-                                        >
+                                        <tr v-for="(item, index) in listarClientesPaginated" :key="index">
                                             <td v-text="item.fecha"></td>
                                             <td v-text="item.codigo"></td>
-                                            <td
-                                                v-text="item.ccostos.nombre"
-                                            ></td>
+                                            <td v-text="item.ccostos.nombre"></td>
                                             <td v-text="item.cliente"></td>
                                             <td v-text="item.detservicio"></td>
                                             <td v-text="item.fechainicio"></td>
@@ -182,80 +119,35 @@
                                             <td v-text="item.ord_servicio"></td>
 
                                             <td>
-                                                <button
-                                                    class="btn btn-danger btn-sm"
-                                                    @click.prevent="
-                                                        SetGenerarInfoValorizacionPDF(
-                                                            item.id
-                                                        )
-                                                    "
-                                                >
-                                                    <i
-                                                        class="fas fa-file-pdf"
-                                                    ></i>
+                                                <button class="btn btn-danger btn-sm"
+                                                    @click.prevent="SetGenerarInfoValorizacionPDF(item.id)">
+                                                    <i class="fas fa-file-pdf"></i>
                                                     PDF
                                                 </button>
 
                                                 <template
-                                                    v-if="
-                                                        listRolPermisoByUsuario.includes(
-                                                            'infoProduccion_precio'
-                                                        )
-                                                    "
-                                                >
-                                                    <button
-                                                        class="btn btn-secondary btn-sm"
-                                                        @click.prevent="
-                                                            abrirModalInfoProd(
-                                                                item.id
-                                                            )
-                                                        "
-                                                    >
-                                                        <i
-                                                            class="fas fa-wrench"
-                                                        ></i>
+                                                    v-if="listRolPermisoByUsuario.includes('infoProduccion_precio')">
+                                                    <button class="btn btn-secondary btn-sm"
+                                                        @click.prevent="abrirModalInfoProd(item.id)">
+                                                        <i class="fas fa-wrench"></i>
                                                         Material
                                                     </button>
 
-                                                    <button
-                                                        class="btn btn-primary btn-sm"
-                                                        @click.prevent="
-                                                            abrirModalManoObra(
-                                                                item.id
-                                                            )
-                                                        "
-                                                    >
-                                                        <i
-                                                            class="fas fa-user-cog"
-                                                        ></i>
+                                                    <button class="btn btn-primary btn-sm"
+                                                        @click.prevent="abrirModalManoObra(item.id)">
+                                                        <i class="fas fa-user-cog"></i>
                                                         Mano de Obra
                                                     </button>
 
-                                                    <button
-                                                        class="btn btn-info btn-sm"
-                                                        @click.prevent="
-                                                            abrirModalOtrosReque(
-                                                                item.id
-                                                            )
-                                                        "
-                                                    >
-                                                        <i
-                                                            class="fas fa-list-alt"
-                                                        ></i>
+                                                    <button class="btn btn-info btn-sm"
+                                                        @click.prevent="abrirModalOtrosReque(item.id)">
+                                                        <i class="fas fa-list-alt"></i>
                                                         Otros Reque..
                                                     </button>
 
-                                                    <button
-                                                        class="btn btn-success btn-sm"
-                                                        @click.prevent="
-                                                            getExcelReporte(
-                                                                item.id
-                                                            )
-                                                        "
-                                                    >
-                                                        <i
-                                                            class="far fa-file-excel"
-                                                        ></i>
+                                                    <button class="btn btn-success btn-sm"
+                                                        @click.prevent="getExcelReporte(item.id)">
+                                                        <i class="far fa-file-excel"></i>
                                                         Reporte
                                                     </button>
                                                 </template>
@@ -264,49 +156,18 @@
                                     </tbody>
                                 </table>
                                 <div class="card-footer clearfix">
-                                    <ul
-                                        class="pagination pagination-sm m-0 float-right"
-                                    >
-                                        <li
-                                            class="page-item"
-                                            v-if="pageNumber > 0"
-                                        >
-                                            <a
-                                                href=""
-                                                class="page-link"
-                                                @click.prevent="prevPage"
-                                                >Ant</a
-                                            >
+                                    <ul class="pagination pagination-sm m-0 float-right">
+                                        <li class="page-item" v-if="pageNumber > 0">
+                                            <a href="" class="page-link" @click.prevent="prevPage">Ant</a>
                                         </li>
-                                        <li
-                                            class="page-item"
-                                            v-for="(page, index) in pagesList"
-                                            :key="index"
-                                            :class="[
-                                                page == pageNumber
-                                                    ? 'active'
-                                                    : '',
-                                            ]"
-                                        >
-                                            <a
-                                                href=""
-                                                class="page-link"
-                                                @click.prevent="
-                                                    selectPage(page)
-                                                "
-                                                >{{ page + 1 }}</a
-                                            >
+                                        <li class="page-item" v-for="(page, index) in pagesList" :key="index"
+                                            :class="[page == pageNumber ? 'active' : '']">
+                                            <a href="" class="page-link" @click.prevent="selectPage(page)">{{
+                                                page + 1
+                                                }}</a>
                                         </li>
-                                        <li
-                                            class="page-item"
-                                            v-if="pageNumber < pageCount - 1"
-                                        >
-                                            <a
-                                                href=""
-                                                class="page-link"
-                                                @click.prevent="nextPage"
-                                                >Post</a
-                                            >
+                                        <li class="page-item" v-if="pageNumber < pageCount - 1">
+                                            <a href="" class="page-link" @click.prevent="nextPage">Post</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -319,20 +180,13 @@
 
         <!--    MODAL DE REQUERIMIENTOS DE MATERIALES -->
 
-        <div
-            class="modal fade modal-scroll "
-            :class="{ show: modalShowEditItem }"
-
-            :style="modalShowEditItem ? mostrarModal : ocultarModal "
-        >
-            <div class="modal-editcotitem modal-lg " role="document">
+        <div class="modal fade modal-scroll" :class="{ show: modalShowEditItem }"
+            :style="modalShowEditItem ? mostrarModal : ocultarModal">
+            <div class="modal-editcotitem modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Requerimiento de Materiales</h5>
-                        <button
-                            class="close"
-                            @click="abrirModalInfoProd"
-                        ></button>
+                        <button class="close" @click="abrirModalInfoProd"></button>
                     </div>
                     <div class="modal-body">
                         <div class="content container-fluid">
@@ -340,18 +194,11 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group row">
-                                            <div
-                                                class="card-body table-responsive"
-                                            >
-                                                <table
-                                                    class="table table-hover table-head-fixed text-nowrap projects"
-                                                >
+                                            <div class="card-body table-responsive">
+                                                <table class="table table-hover table-head-fixed text-nowrap projects">
                                                     <thead>
                                                         <tr>
-                                                            <th>
-                                                                Descripcion
-                                                                Material
-                                                            </th>
+                                                            <th>Descripcion Material</th>
                                                             <th>Cantidad</th>
                                                             <th>Precio Unit</th>
                                                             <th>Total</th>
@@ -359,80 +206,43 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr
-                                                            v-for="(
-                                                                item, index
-                                                            ) in listInfoValMateriales"
-                                                            :key="index"
-                                                        >
+                                                        <tr v-for="(item, index) in listInfoValMateriales" :key="index">
                                                             <td>
                                                                 {{
-                                                                    item
-                                                                        .producto
-                                                                        .codigo +
+                                                                    item.producto.codigo +
                                                                     " - " +
-                                                                    item
-                                                                        .producto
-                                                                        .familia
-                                                                        .nombre +
+                                                                    item.producto.familia.nombre +
                                                                     " , " +
-                                                                    item
-                                                                        .producto
-                                                                        .subfamilia
-                                                                        .nombre +
+                                                                    item.producto.subfamilia.nombre +
                                                                     " , Modelo: " +
-                                                                    item
-                                                                        .producto
-                                                                        .modelotipo
-                                                                        .nombre +
+                                                                    item.producto.modelotipo.nombre +
                                                                     " , Marca : " +
-                                                                    item
-                                                                        .producto
-                                                                        .marca
-                                                                        .nombre +
-                                                                    " , Material : " +
-                                                                    item
-                                                                        .producto
-                                                                        .material
-                                                                        .nombre +
-                                                                    " ," +
-                                                                    item
-                                                                        .producto
-                                                                        .homologacion
-                                                                        .nombre
+                                                                    item.producto.marca.nombre +
+                                                                " , Material : " +
+                                                                item.producto.material.nombre +
+                                                                " ," +
+                                                                item.producto.homologacion.nombre
                                                                 }}
                                                             </td>
                                                             <td>
-                                                                {{
-                                                                    item.cantidad
-                                                                }}
+                                                                {{ item.cantidad }}
                                                             </td>
                                                             <td>
-                                                                {{
-                                                                    item.costunit
-                                                                }}
+                                                                {{ item.costunit }}
                                                             </td>
                                                             <td>
-                                                                {{
-                                                                    item.cantidad *
-                                                                    item.costunit
-                                                                }}
+                                                                {{ item.cantidad * item.costunit }}
                                                             </td>
                                                             <td>
-                                                                <button
-                                                                    class="btn btn-primary btn-sm"
-                                                                    @click.prevent="
-                                                                        MandarDatosPrecio(
-                                                                            item.id,
-                                                                            item.costunit,
-                                                                            item.cantidad,
-                                                                            item.pk_informe_valorizacion
-                                                                        )
-                                                                    "
-                                                                >
-                                                                    <i
-                                                                        class="fas fa-comment-dollar"
-                                                                    ></i>
+                                                                <button class="btn btn-primary btn-sm" @click.prevent="
+                                                                    MandarDatosPrecio(
+                                                                        item.id,
+                                                                        item.costunit,
+                                                                        item.cantidad,
+                                                                        item.pk_informe_valorizacion
+                                                                    )
+                                                                    ">
+                                                                    <i class="fas fa-comment-dollar"></i>
                                                                     Precio
                                                                 </button>
                                                             </td>
@@ -449,10 +259,7 @@
                             <!--    <button class="btn btn-success" @click="EditModalReqMateriales()">
                     Editar
                   </button> -->
-                            <button
-                                class="btn btn-secondary"
-                                @click="abrirModalInfoProd"
-                            >
+                            <button class="btn btn-secondary" @click="abrirModalInfoProd">
                                 Cerrar
                             </button>
                         </div>
@@ -464,19 +271,13 @@
 
         <!--    MODAL DE MANO DE OBRA  -->
 
-        <div
-            class="modal fade"
-            :class="{ show: modalShowEditMObra }"
-            :style="modalShowEditMObra ? mostrarModal : ocultarModal"
-        >
+        <div class="modal fade" :class="{ show: modalShowEditMObra }"
+            :style="modalShowEditMObra ? mostrarModal : ocultarModal">
             <div class="modal-editcotitem modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Mano de Obra</h5>
-                        <button
-                            class="close"
-                            @click="abrirModalManoObra"
-                        ></button>
+                        <button class="close" @click="abrirModalManoObra"></button>
                     </div>
                     <div class="modal-body">
                         <div class="content container-fluid">
@@ -484,12 +285,8 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group row">
-                                            <div
-                                                class="card-body table-responsive"
-                                            >
-                                                <table
-                                                    class="table table-hover table-head-fixed text-nowrap projects"
-                                                >
+                                            <div class="card-body table-responsive">
+                                                <table class="table table-hover table-head-fixed text-nowrap projects">
                                                     <thead>
                                                         <tr>
                                                             <th>Personal</th>
@@ -503,28 +300,11 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr
-                                                            v-for="(
-                                                                item, index
-                                                            ) in listManObra"
-                                                            :key="index"
-                                                        >
+                                                        <tr v-for="(item, index) in listManObra" :key="index">
                                                             <td>
-                                                                {{
-                                                                    item
-                                                                        .personal
-                                                                        .ApPaterno
-                                                                }}
-                                                                {{
-                                                                    item
-                                                                        .personal
-                                                                        .ApMaterno
-                                                                }}
-                                                                {{
-                                                                    item
-                                                                        .personal
-                                                                        .nombres
-                                                                }}
+                                                                {{ item.personal.ApPaterno }}
+                                                                {{ item.personal.ApMaterno }}
+                                                                {{ item.personal.nombres }}
                                                             </td>
                                                             <td>
                                                                 {{ item.horas }}
@@ -533,71 +313,48 @@
                                                                 {{ item.dias }}
                                                             </td>
                                                             <td>
-                                                                {{
-                                                                    item.costdias
-                                                                }}
+                                                                {{ item.costdias }}
                                                             </td>
                                                             <td>
-                                                                {{
-                                                                    item.costhoras
-                                                                }}
+                                                                {{ item.costhoras }}
                                                             </td>
                                                             <td>
                                                                 {{ item.total }}
                                                             </td>
 
                                                             <td>
-                                                                <button
-                                                                    class="btn btn-primary btn-sm"
-                                                                    @click.prevent="
-                                                                        MandarDiaMObra(
-                                                                            item.id,
-                                                                            item.pk_informe_valorizacion,
-                                                                            (total =
-                                                                                item.dias *
-                                                                                    item.costdias +
-                                                                                item.horas *
-                                                                                    item.costhoras)
-                                                                        )
-                                                                    "
-                                                                >
-                                                                    <i
-                                                                        class="fas fa-comment-dollar"
-                                                                    ></i>
+                                                                <button class="btn btn-primary btn-sm" @click.prevent="
+                                                                    MandarDiaMObra(
+                                                                        item.id,
+                                                                        item.pk_informe_valorizacion,
+                                                                        (total =
+                                                                            item.dias * item.costdias +
+                                                                            item.horas * item.costhoras)
+                                                                    )
+                                                                    ">
+                                                                    <i class="fas fa-comment-dollar"></i>
                                                                     Días
                                                                 </button>
-                                                                <button
-                                                                    class="btn btn-primary btn-sm"
-                                                                    @click.prevent="
-                                                                        MandarHoraMObra(
-                                                                            item.id,
-                                                                            item.informeproduccion_id,
-                                                                            (total =
-                                                                                item.dias *
-                                                                                    item.costdias +
-                                                                                item.horas *
-                                                                                    item.costhoras)
-                                                                        )
-                                                                    "
-                                                                >
-                                                                    <i
-                                                                        class="fas fa-comment-dollar"
-                                                                    ></i>
+                                                                <button class="btn btn-primary btn-sm" @click.prevent="
+                                                                    MandarHoraMObra(
+                                                                        item.id,
+                                                                        item.informeproduccion_id,
+                                                                        (total =
+                                                                            item.dias * item.costdias +
+                                                                            item.horas * item.costhoras)
+                                                                    )
+                                                                    ">
+                                                                    <i class="fas fa-comment-dollar"></i>
                                                                     Horas
                                                                 </button>
 
-                                                                <button
-                                                                    class="btn btn-primary btn-sm"
-                                                                    @click.prevent="
-                                                                        abrirModalEditPersonal(
-                                                                            item.id,
-                                                                            item.pk_informe_valorizacion
-                                                                        )
-                                                                    "
-                                                                >
-                                                                    <i
-                                                                        class="fas fa-user"
-                                                                    ></i>
+                                                                <button class="btn btn-primary btn-sm" @click.prevent="
+                                                                    abrirModalEditPersonal(
+                                                                        item.id,
+                                                                        item.pk_informe_valorizacion
+                                                                    )
+                                                                    ">
+                                                                    <i class="fas fa-user"></i>
                                                                     Personal
                                                                 </button>
                                                             </td>
@@ -614,10 +371,7 @@
                             <!--    <button class="btn btn-success" @click="EditModalReqMateriales()">
                     Editar
                   </button> -->
-                            <button
-                                class="btn btn-secondary"
-                                @click="abrirModalManoObra"
-                            >
+                            <button class="btn btn-secondary" @click="abrirModalManoObra">
                                 Cerrar
                             </button>
                         </div>
@@ -629,19 +383,13 @@
 
         <!--    MODAL DE OTROS REQUERIMIENTOS  -->
 
-        <div
-            class="modal fade"
-            :class="{ show: modalShowEditOtrosReque }"
-            :style="modalShowEditOtrosReque ? mostrarModal : ocultarModal"
-        >
+        <div class="modal fade" :class="{ show: modalShowEditOtrosReque }"
+            :style="modalShowEditOtrosReque ? mostrarModal : ocultarModal">
             <div class="modal-editcotitem modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Otros Requerimientos</h5>
-                        <button
-                            class="close"
-                            @click="abrirModalOtrosReque"
-                        ></button>
+                        <button class="close" @click="abrirModalOtrosReque"></button>
                     </div>
                     <div class="modal-body">
                         <div class="content container-fluid">
@@ -649,20 +397,14 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group row">
-                                            <div
-                                                class="card-body table-responsive"
-                                            >
-                                                <table
-                                                    class="table table-hover table-head-fixed text-nowrap projects"
-                                                >
+                                            <div class="card-body table-responsive">
+                                                <table class="table table-hover table-head-fixed text-nowrap projects">
                                                     <thead>
                                                         <tr>
                                                             <th>Descripción</th>
                                                             <th>Cantidad</th>
                                                             <th>Precio</th>
-                                                            <th>
-                                                                Unid. Medida
-                                                            </th>
+                                                            <th>Unid. Medida</th>
                                                             <th>Alquiler</th>
                                                             <!--   <th>
                                                                 Unid. Alquiler
@@ -672,33 +414,19 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr
-                                                            v-for="(
-                                                                item, index
-                                                            ) in listOtrosReq"
-                                                            :key="index"
-                                                        >
+                                                        <tr v-for="(item, index) in listarInfoValorizacionPaginated"
+                                                            :key="index">
                                                             <td>
-                                                                {{
-                                                                    item.descripcion
-                                                                }}
+                                                                {{ item.descripcion }}
                                                             </td>
                                                             <td>
-                                                                {{
-                                                                    item.cantidad
-                                                                }}
+                                                                {{ item.cantidad }}
                                                             </td>
                                                             <td>
-                                                                {{
-                                                                    item.precio
-                                                                }}
+                                                                {{ item.precio }}
                                                             </td>
                                                             <td>
-                                                                {{
-                                                                    item
-                                                                        .unidmedida
-                                                                        .nombre
-                                                                }}
+                                                                {{ item.unidmedida.nombre }}
                                                             </td>
                                                             <!--      <td>
                                                                 {{
@@ -706,58 +434,67 @@
                                                                 }}
                                                             </td> -->
                                                             <td>
-                                                                {{
-                                                                    item
-                                                                        .pk_tiempo_alquiler
-                                                                        .nombre
-                                                                }}
+                                                                {{ item.pk_tiempo_alquiler.nombre }}
                                                             </td>
                                                             <td>
                                                                 {{ item.total }}
                                                             </td>
 
                                                             <td>
-                                                                <button
-                                                                    class="btn btn-primary btn-sm"
-                                                                    @click.prevent="
-                                                                        MandarPreciOtroReq(
-                                                                            item.id,
-                                                                            item.pk_informe_valorizacion,
-                                                                            item.cantidad
-                                                                        )
-                                                                    "
-                                                                >
-                                                                    <i
-                                                                        class="fas fa-comment-dollar"
-                                                                    ></i>
+                                                                <button class="btn btn-primary btn-sm" @click.prevent="
+                                                                    MandarPreciOtroReq(
+                                                                        item.id,
+                                                                        item.pk_informe_valorizacion,
+                                                                        item.cantidad
+                                                                    )
+                                                                    ">
+                                                                    <i class="fas fa-comment-dollar"></i>
                                                                     Precio
                                                                 </button>
 
-                                                                <button
-                                                                    class="btn btn-success btn-sm"
-                                                                    tabindex="-1"
-                                                                    role="dialog"
-                                                                    @click.prevent="
+                                                                <button class="btn btn-success btn-sm" tabindex="-1"
+                                                                    role="dialog" @click.prevent="
                                                                         /*       MandarPreciOtroReq(
-                                                                            item.id,
-                                                                            item.pk_informe_valorizacion,
-                                                                            item.cantidad
-                                                                        ) */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    item.id,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    item.pk_informe_valorizacion,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    item.cantidad
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ) */
                                                                         abrirModalOtrosReqAlquiler(
                                                                             item.id,
                                                                             item.pk_informe_valorizacion
                                                                         )
-                                                                    "
-                                                                >
-                                                                    <i
-                                                                        class="fas fa-pencil-alt"
-                                                                    ></i>
+                                                                        ">
+                                                                    <i class="fas fa-pencil-alt"></i>
                                                                     Alquiler
                                                                 </button>
                                                             </td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
+                                                <div class="card-footer clearfix">
+                                                    <ul class="pagination pagination-sm m-0 float-right">
+                                                        <li class="page-item" v-if="pageNumberInfoValorizacion > 0">
+                                                            <a href="" class="page-link"
+                                                                @click.prevent="prevPageInfoValorizacion">Ant</a>
+                                                        </li>
+                                                        <li class="page-item"
+                                                            v-for="(page, index) in pagesListInfoValorizacion"
+                                                            :key="index" :class="[
+                                                                page == pageNumberInfoValorizacion ? 'active' : '',
+                                                            ]">
+                                                            <a href="" class="page-link"
+                                                                @click.prevent="selectPageInfoValorizacion(page)">{{
+                                                                page + 1
+                                                                }}</a>
+                                                        </li>
+                                                        <li class="page-item" v-if="
+                                                            pageNumberInfoValorizacion < pageCountInfoValorizacion - 1
+                                                        ">
+                                                            <a href="" class="page-link"
+                                                                @click.prevent="nextPageInfoValorizacion">Post</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -768,10 +505,7 @@
                             <!--    <button class="btn btn-success" @click="EditModalReqMateriales()">
                     Editar
                   </button> -->
-                            <button
-                                class="btn btn-secondary"
-                                @click="abrirModalOtrosReque"
-                            >
+                            <button class="btn btn-secondary" @click="abrirModalOtrosReque">
                                 Cerrar
                             </button>
                         </div>
@@ -782,19 +516,13 @@
         <!-- FIN DEL MODAL DE OTROS REQUERIMIENTOS  -->
 
         <!--   MODAL  DEL  ALQUILER -->
-        <div
-            class="modal fade"
-            :class="{ show: modalShowEditOtrosReqAquiler }"
-            :style="modalShowEditOtrosReqAquiler ? mostrarModal : ocultarModal"
-        >
+        <div class="modal fade" :class="{ show: modalShowEditOtrosReqAquiler }"
+            :style="modalShowEditOtrosReqAquiler ? mostrarModal : ocultarModal">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Alquiler</h5>
-                        <button
-                            class="close"
-                            @click="abrirModalOtrosReque"
-                        ></button>
+                        <button class="close" @click="abrirModalOtrosReque"></button>
                     </div>
                     <div class="modal-body">
                         <div class="content container-fluid">
@@ -802,30 +530,14 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group row">
-                                            <div
-                                                class="card-body table-responsive"
-                                            >
+                                            <div class="card-body table-responsive">
                                                 <div class="form-group row">
-                                                    <label
-                                                        class="col-md-2 col-form-label"
-                                                        >Unid. Medida</label
-                                                    >
+                                                    <label class="col-md-2 col-form-label">Unid. Medida</label>
                                                     <div class="col-md-10">
-                                                        <el-select
-                                                            v-model="
-                                                                fillBPInfValor.nIdUnidMedAlquiler
-                                                            "
-                                                            placeholder="Select"
-                                                            style="width: 70%"
-                                                        >
-                                                            <el-option
-                                                                v-for="item in listUnidMed"
-                                                                :key="item.id"
-                                                                :label="
-                                                                    item.nombre
-                                                                "
-                                                                :value="item.id"
-                                                            >
+                                                        <el-select v-model="fillBPInfValor.nIdUnidMedAlquiler"
+                                                            placeholder="Select" style="width: 70%">
+                                                            <el-option v-for="item in listUnidMed" :key="item.id"
+                                                                :label="item.nombre" :value="item.id">
                                                             </el-option>
                                                         </el-select>
                                                     </div>
@@ -834,41 +546,16 @@
 
                                             <div class="col-md-12">
                                                 <div class="form-group row">
-                                                    <div
-                                                        class="card-body table-responsive"
-                                                    >
-                                                        <div
-                                                            class="form-group row"
-                                                        >
-                                                            <label
-                                                                class="col-md-2 col-form-label"
-                                                                >Unid.
-                                                                Alquiler</label
-                                                            >
-                                                            <div
-                                                                class="col-md-10"
-                                                            >
-                                                                <el-select
-                                                                    v-model="
-                                                                        fillBPInfValor.nIdAlquiler
-                                                                    "
-                                                                    placeholder="Select"
-                                                                    style="
-                                                                        width: 70%;
-                                                                    "
-                                                                >
-                                                                    <el-option
-                                                                        v-for="item in listUnidAlquiler"
-                                                                        :key="
-                                                                            item.id
-                                                                        "
-                                                                        :label="
-                                                                            item.nombre
-                                                                        "
-                                                                        :value="
-                                                                            item.id
-                                                                        "
-                                                                    >
+                                                    <div class="card-body table-responsive">
+                                                        <div class="form-group row">
+                                                            <label class="col-md-2 col-form-label">Unid.
+                                                                Alquiler</label>
+                                                            <div class="col-md-10">
+                                                                <el-select v-model="fillBPInfValor.nIdAlquiler"
+                                                                    placeholder="Select" style="width: 70%">
+                                                                    <el-option v-for="item in listUnidAlquiler"
+                                                                        :key="item.id" :label="item.nombre"
+                                                                        :value="item.id">
                                                                     </el-option>
                                                                 </el-select>
                                                             </div>
@@ -882,21 +569,11 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button
-                                class="btn btn-success"
-                                @click="EditOtrosReqAlquiler()"
-                            >
+                            <button class="btn btn-success" @click="EditOtrosReqAlquiler()">
                                 Editar
                             </button>
-                            <button
-                                class="btn btn-secondary"
-                                @click="
-                                    abrirModalOtrosReqAlquiler(
-                                        id,
-                                        pk_informe_valorizacion
-                                    )
-                                "
-                            >
+                            <button class="btn btn-secondary"
+                                @click="abrirModalOtrosReqAlquiler(id, pk_informe_valorizacion)">
                                 Cerrar
                             </button>
                         </div>
@@ -907,19 +584,13 @@
         <!--  FIN DEL MODAL ALQUILER -->
 
         <!--   MODAL  DEL  PERSONAL -->
-        <div
-            class="modal fade"
-            :class="{ show: modalShowEditPersonal }"
-            :style="modalShowEditPersonal ? mostrarModal : ocultarModal"
-        >
+        <div class="modal fade" :class="{ show: modalShowEditPersonal }"
+            :style="modalShowEditPersonal ? mostrarModal : ocultarModal">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Personal</h5>
-                        <button
-                            class="close"
-                            @click="abrirModalEditPersonal"
-                        ></button>
+                        <button class="close" @click="abrirModalEditPersonal"></button>
                     </div>
                     <div class="modal-body">
                         <div class="content container-fluid">
@@ -929,44 +600,19 @@
                                         <div class="form-group row">
                                             <div class="col-md-12">
                                                 <div class="form-group row">
-                                                    <div
-                                                        class="card-body table-responsive"
-                                                    >
-                                                        <div
-                                                            class="form-group row"
-                                                        >
-                                                            <label
-                                                                class="col-md-2 col-form-label"
-                                                                >Personal</label
-                                                            >
-                                                            <div
-                                                                class="col-md-10"
-                                                            >
-                                                                <el-select
-                                                                    v-model="
-                                                                        fillBPInfValor.nidPersonalModal
-                                                                    "
-                                                                    placeholder="Select"
-                                                                    style="
-                                                                        width: 70%;
-                                                                    "
-                                                                >
-                                                                    <el-option
-                                                                        v-for="item in listPersonal"
-                                                                        :key="
-                                                                            item.id
-                                                                        "
-                                                                        :label="
-                                                                            item.ApPaterno +
+                                                    <div class="card-body table-responsive">
+                                                        <div class="form-group row">
+                                                            <label class="col-md-2 col-form-label">Personal</label>
+                                                            <div class="col-md-10">
+                                                                <el-select v-model="fillBPInfValor.nidPersonalModal"
+                                                                    placeholder="Select" style="width: 70%">
+                                                                    <el-option v-for="item in listPersonal"
+                                                                        :key="item.id" :label="item.ApPaterno +
                                                                             ' ' +
                                                                             item.ApMaterno +
                                                                             ' ' +
                                                                             item.nombres
-                                                                        "
-                                                                        :value="
-                                                                            item.id
-                                                                        "
-                                                                    >
+                                                                            " :value="item.id">
                                                                     </el-option>
                                                                 </el-select>
                                                             </div>
@@ -980,16 +626,10 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button
-                                class="btn btn-success"
-                                @click="EditManObraPersonal()"
-                            >
+                            <button class="btn btn-success" @click="EditManObraPersonal()">
                                 Editar
                             </button>
-                            <button
-                                class="btn btn-secondary"
-                                @click="abrirModalEditPersonal()"
-                            >
+                            <button class="btn btn-secondary" @click="abrirModalEditPersonal()">
                                 Cerrar
                             </button>
                         </div>
@@ -1065,7 +705,9 @@ export default {
             listPersonal: [],
 
             pageNumber: 0,
+            pageNumberInfoValorizacion: 0,
             perPage: 10,
+            perPageInfoValorizacion: 10,
             listRolPermisoByUsuario: JSON.parse(
                 sessionStorage.getItem("listRolPermisosByUsuario")
             ),
@@ -1079,6 +721,7 @@ export default {
     },
 
     computed: {
+        //PageList de Informe de Valorizacion
         pageCount() {
             let a = this.listPInfoValorizacion.length,
                 b = this.perPage;
@@ -1101,8 +744,65 @@ export default {
             }
             return pagesArray;
         },
+        //Fin de PageList de Informe de Valorizacion
+
+        //PageList de OtrosRequerimiento
+        pageCountInfoValorizacion() {
+            let a = this.listOtrosReq.length,
+                b = this.perPageInfoValorizacion;
+            return Math.ceil(a / b);
+        },
+        listarInfoValorizacionPaginated() {
+            let inicio = this.pageNumberInfoValorizacion * this.perPageInfoValorizacion,
+                fin = inicio + this.perPage;
+            return this.listOtrosReq.slice(inicio, fin);
+        },
+        pagesListInfoValorizacion() {
+            let a = this.listOtrosReq.length,
+                b = this.perPageInfoValorizacion;
+            let pageCount = Math.ceil(a / b);
+            let count = 0,
+                pagesArray = [];
+            while (count < pageCount) {
+                pagesArray.push(count);
+                count++;
+            }
+            return pagesArray;
+        },
+
+        //Fin de PageList de OtrosRequerimiento
     },
     methods: {
+        // PageList de Informe de Valorizacion
+        nextPage() {
+            this.pageNumber++;
+        },
+        prevPage() {
+            this.pageNumber--;
+        },
+        selectPage(page) {
+            this.pageNumber = page;
+        },
+        inicializarPAginacion() {
+            this.pageNumber = 0;
+        },
+        //Fin de PageList de Informe de Valorizacion
+
+        //PageList de OtrosRequerimiento
+        nextPageInfoValorizacion() {
+            this.pageNumberInfoValorizacion++;
+        },
+        prevPageInfoValorizacion() {
+            this.pageNumberInfoValorizacion--;
+        },
+        selectPageInfoValorizacion(page) {
+            this.pageNumberInfoValorizacion = page;
+        },
+        inicializarPAginacionInfoValorizacion() {
+            this.pageNumberInfoValorizacion = 0;
+        },
+        //Fin de PageList de OtrosRequerimiento
+
         getListPersonal() {
             var url = "/administracion/personal/list";
             axios.get(url).then((response) => {
@@ -1152,8 +852,7 @@ export default {
         },
 
         abrirModalOtrosReqAlquiler(id, pk_informe_valorizacion) {
-            this.modalShowEditOtrosReqAquiler =
-                !this.modalShowEditOtrosReqAquiler;
+            this.modalShowEditOtrosReqAquiler = !this.modalShowEditOtrosReqAquiler;
 
             var url = "/administracion/InformeValorizacion/getAlquiler";
             axios
@@ -1162,21 +861,18 @@ export default {
                     pk_informe_valorizacion,
                 })
                 .then((response) => {
-                    this.fillBPInfValor.nIdUnidMedAlquiler =
-                        response.data.unidmedida_id;
-                    this.fillBPInfValor.nIdAlquiler =
-                        response.data.pk_tiempo_alquiler.id;
+                    this.fillBPInfValor.nIdUnidMedAlquiler = response.data.unidmedida_id;
+                    this.fillBPInfValor.nIdAlquiler = response.data.pk_tiempo_alquiler.id;
                     localStorage.id = response.data.id;
+
                     /*        localStorage.IdAlquiler = response.data.pk_tiempo_alquiler.id;
-          localStorage.IdUnidMed = response.data.unidmedida_id; */
-                    localStorage.pk_informe_valorizacion =
-                        pk_informe_valorizacion;
+                                                                                                                                                                                                                                      localStorage.IdUnidMed = response.data.unidmedida_id; */
+                    localStorage.pk_informe_valorizacion = pk_informe_valorizacion;
                 });
         },
 
         EditOtrosReqAlquiler() {
-            var url =
-                "/administracion/InformeValorizacion/EditOtrosReqAlquiler";
+            var url = "/administracion/InformeValorizacion/EditOtrosReqAlquiler";
             axios
                 .post(url, {
                     id: localStorage.id,
@@ -1185,18 +881,14 @@ export default {
                 })
                 .then(() => {
                     this.fillBPInfValor.cantAlquiler = "";
-                    this.setMostrarInfOtrosReq(
-                        localStorage.informe_valorizacion
-                    );
-                    this.modalShowEditOtrosReqAquiler =
-                        !this.modalShowEditOtrosReqAquiler;
+                    this.setMostrarInfOtrosReq(localStorage.informe_valorizacion);
+                    this.modalShowEditOtrosReqAquiler = !this.modalShowEditOtrosReqAquiler;
                     localStorage.removeItem(id);
                 });
         },
 
         EditManObraPersonal() {
-            var url =
-                "/administracion/informeValorizacion/EditOtrosReqPersonal";
+            var url = "/administracion/informeValorizacion/EditOtrosReqPersonal";
             axios
                 .post(url, {
                     itemStorage: localStorage.itemStorage,
@@ -1204,20 +896,15 @@ export default {
                 })
                 .then(() => {
                     this.fillBPInfValor.nidPersonalModal = "";
-                    this.setMostrarInfoManObra(
-                        localStorage.pk_informe_valorizacion
-                    );
+                    this.setMostrarInfoManObra(localStorage.pk_informe_valorizacion);
                     this.modalShowEditPersonal = !this.modalShowEditPersonal;
                     localStorage.removeItem(itemStorage);
-                    localStorage.removeItem(
-                        localStorage.pk_informe_valorizacion
-                    );
+                    localStorage.removeItem(localStorage.pk_informe_valorizacion);
                 });
         },
 
         setMostrarInfo(item) {
-            var url =
-                "/administracion/informeValorizacion/mostrarInfoReqMateriales";
+            var url = "/administracion/informeValorizacion/mostrarInfoReqMateriales";
             axios
                 .get(url, {
                     params: {
@@ -1251,6 +938,7 @@ export default {
                 })
                 .then((response) => {
                     this.listOtrosReq = response.data;
+                    this.inicializarPAginacionInfoValorizacion();
                 });
         },
 
@@ -1263,11 +951,9 @@ export default {
                     },
                 })
                 .then((response) => {
-                    this.fillBPInfValor.nidPersonalModal =
-                        response.data.personal_id;
+                    this.fillBPInfValor.nidPersonalModal = response.data.personal_id;
                     localStorage.itemStorage = item;
-                    localStorage.pk_informe_valorizacion =
-                        pk_informe_valorizacion;
+                    localStorage.pk_informe_valorizacion = pk_informe_valorizacion;
                     // this.setMostrarInfoManObra(pk_informe_valorizacion);
                 });
         },
@@ -1280,8 +966,7 @@ export default {
             this.fillBPInfValor.totalInfoValor =
                 cantidad * this.fillBPInfValor.precioMatInfoValor;
 
-            var url =
-                "/administracion/InformeValorizacion/editPrecioMatInfoValor";
+            var url = "/administracion/InformeValorizacion/editPrecioMatInfoValor";
             axios
                 .post(url, {
                     item,
@@ -1294,10 +979,8 @@ export default {
         },
 
         MandarDiaMObra(id, informeproduccion_id, total) {
-            this.fillBPInfValor.precioDia = prompt(
-                "Ingrese el precio de la Hora "
-            );
-            var url = "/administracion/InformeProduccion/editPrecioDiaOdrProd";
+            this.fillBPInfValor.precioDia = prompt("Ingrese el precio de la Hora ");
+            var url = "/administracion/informeValorizacion/EditManoObraDias";
             axios
                 .post(url, {
                     id,
@@ -1327,7 +1010,7 @@ export default {
 
         MandarHoraMObra(id, informeproduccion_id, total) {
             let precioHora = prompt("Ingrese el precio de la Hora ");
-            var url = "/administracion/InformeProduccion/editPrecioHoraOdrProd";
+            var url = "/administracion/informeValorizacion/EditManoObraHoras";
             axios
                 .post(url, {
                     id,
@@ -1341,8 +1024,7 @@ export default {
 
         SetGenerarInfoValorizacionPDF(id) {
             var config = { responseType: "blob" };
-            var url =
-                "/administracion/InformeValorizacion/setGenerarInfoValorizacionPdf";
+            var url = "/administracion/InformeValorizacion/setGenerarInfoValorizacionPdf";
             axios
                 .post(
                     url,
@@ -1363,8 +1045,7 @@ export default {
         },
 
         getExcelReporte(item) {
-            var url =
-                "/administracion/InformeValorizacion/ExcelDetalladoInfoValor";
+            var url = "/administracion/InformeValorizacion/ExcelDetalladoInfoValor";
             axios
                 .post(
                     url,
@@ -1421,9 +1102,7 @@ export default {
                     url,
                     {
                         params: {
-                            listPInfoValorizacion: JSON.stringify(
-                                this.listPInfoValorizacion
-                            ),
+                            listPInfoValorizacion: JSON.stringify(this.listPInfoValorizacion),
                         },
                     },
                     { responseType: "blob" }
@@ -1431,19 +1110,6 @@ export default {
                 .then((response) => {
                     FileSaver.saveAs(response.data, "InfoProduccion.xlsx");
                 });
-        },
-
-        nextPage() {
-            this.pageNumber++;
-        },
-        prevPage() {
-            this.pageNumber--;
-        },
-        selectPage(page) {
-            this.pageNumber = page;
-        },
-        inicializarPAginacion() {
-            this.pageNumber = 0;
         },
     },
 };

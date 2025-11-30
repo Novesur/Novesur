@@ -58,6 +58,7 @@ class ServicioController extends Controller
         $servicio->fechafinal = $dateFinal;
         $servicio->duracion = $request->Duracionfechas;
         $servicio->user_id = $request->nIdUser;
+        $servicio->observacion = $request->cObservacion;
         $servicio->save();
 
         Countable::where('id', 1)->update(['countServicio' => $countMaxServicio + 1]);
@@ -137,9 +138,9 @@ class ServicioController extends Controller
 
         $unidMedida = UnidMedida::where('id', $request->nIdUnidMedMat)->first();
 
-        if ($request->cCantMaterial == 0) {
+        /*    if ($request->cCantMaterial == 0) {
             return response()->json(['message' => 'El valor no puede ser cero', 'icon' => 'error'], 200);
-        }
+        } */
 
 
         $exists = $products->firstWhere("producto_id", $product->id);
@@ -234,25 +235,24 @@ class ServicioController extends Controller
     {
 
 
-
         $idReqMateriales = $request->get("params")['idReqMatProduc'];
-        $servicio = MaterialServicio::with('producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion', 'unidmedida')
-            ->where('id', $idReqMateriales)->first();
+        $servicio = Servicio::where('id', $idReqMateriales)->first();
+
+        /*       $servicio = MaterialServicio::with('producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion', 'unidmedida')
+            ->where('id', $idReqMateriales)->first(); */
 
         // dd($servicio->pk_Servicios);
 
 
         $materialServicio = MaterialServicio::with('producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion')
             ->where(
-                ['pk_Servicios' => $servicio->pk_Servicios],
+                ['pk_Servicios' => $servicio->id],
                 ['estado' => 'R']
-            )
-            ->get();
+            )->get();
 
-        $ManoObraReqmateriales = ManObraServicio::where('pk_Servicios', $servicio->pk_Servicios)->where('estado', 'S')->get();
+        $ManoObraReqmateriales = ManObraServicio::where('pk_Servicios', $servicio->id)->where('estado', 'S')->get();
 
-
-        $OtrosRequerimientosReqMateriales = OtrosRequerimientosServicio::where('pk_Servicios', $servicio->pk_Servicios)->where('estado', 'S')->get();
+        $OtrosRequerimientosReqMateriales = OtrosRequerimientosServicio::where('pk_Servicios', $servicio->id)->where('estado', 'S')->get();
         $logo = asset('img/logo.gif');
 
         $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('reporte.servicio.reporte', [

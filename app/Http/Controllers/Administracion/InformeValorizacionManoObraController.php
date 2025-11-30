@@ -41,14 +41,30 @@ class InformeValorizacionManoObraController extends Controller
         return $dato;
     }
 
-    public function ListValorMaNObraxId(Request $request){
+    public function ListValorMaNObraxId(Request $request)
+    {
         $dato = valorizacionManoObra::where('id', $request->item)->first();
         return $dato;
     }
 
-    public function EditOtrosReqPersonal(Request $request){
-
+    public function EditOtrosReqPersonal(Request $request)
+    {
         valorizacionManoObra::where('id', $request->itemStorage)->update(['personal_id' => $request->nidPersonalModal]);
+    }
 
+    public function EditManoObraDias(Request $request)
+    {
+        valorizacionManoObra::where('id', $request->id)->update(['costdias' => $request->precioDia]);
+        $valorizacionManoObra =  valorizacionManoObra::where('id', $request->id)->first();
+        valorizacionManoObra::where('id', $request->id)->update(['total' => ($valorizacionManoObra->dias * $valorizacionManoObra->costdias) + ($valorizacionManoObra->horas * $valorizacionManoObra->costhoras)]);
+    }
+
+    public function EditManoObraHoras(Request $request)
+    {
+        //dd($request);
+        valorizacionManoObra::where('id', $request->id)->update(['costhoras' => $request->precioHora]);
+        $valorizacionManoObra =  valorizacionManoObra::where('id', $request->id)->first();
+        dd($valorizacionManoObra);
+        valorizacionManoObra::where('id', $request->id)->update(['total' => ($valorizacionManoObra->dias * $valorizacionManoObra->costdias) + ($valorizacionManoObra->horas * $valorizacionManoObra->costhoras)]);
     }
 }

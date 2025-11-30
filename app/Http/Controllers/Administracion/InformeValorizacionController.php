@@ -243,8 +243,8 @@ class InformeValorizacionController extends Controller
             ->get();
         $valorizacionManoObra = valorizacionManoObra::with('personal')->where('pk_informe_valorizacion', $idReqMateriales)->get();
         $valorizacionOtrosReq = valorizacionOtrosReq::with('unidmedida')->where('pk_informe_valorizacion', $idReqMateriales)->get();
-       
-       
+
+
         $logo = asset('img/logo.gif');
         $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('reporte.informeValorizacion.InformeValorizacion', [
             'logo' => $logo,
@@ -256,15 +256,16 @@ class InformeValorizacionController extends Controller
         return $pdf->download('invoice.pdf');
     }
 
-    public function ExcelDetalladoInfoValor(Request $request){
-       
+    public function ExcelDetalladoInfoValor(Request $request)
+    {
+
         $idReqMateriales = $request->get("params")['item'];
         $diaActual = Carbon::now()->format('d/m/Y');
-        $InformeValorizacion = InformeValorizacion::with( 'ccostos', 'user','proyectoReqMateriales')->where('id', $idReqMateriales)->first();
+        $InformeValorizacion = InformeValorizacion::with('ccostos', 'user', 'proyectoReqMateriales')->where('id', $idReqMateriales)->first();
         $valorizacionReqMateriales = valorizacionReqMateriales::with('producto')->where('pk_informe_valorizacion', $idReqMateriales)->get();
         $valorizacionManoObra = valorizacionManoObra::where('pk_informe_valorizacion', $idReqMateriales)->get();
         $valorizacionOtrosReq = valorizacionOtrosReq::where('pk_informe_valorizacion', $idReqMateriales)->get();
-        return (new InfoValorDetalleExport)->setGenerarExcel($InformeValorizacion, $valorizacionReqMateriales,$valorizacionManoObra,  $valorizacionOtrosReq, $diaActual )->download('invoices.xlsx'); 
+        return (new InfoValorDetalleExport)->setGenerarExcel($InformeValorizacion, $valorizacionReqMateriales, $valorizacionManoObra,  $valorizacionOtrosReq, $diaActual)->download('invoices.xlsx');
     }
 
     public function mostrarInfoReqMateriales(Request $request)
