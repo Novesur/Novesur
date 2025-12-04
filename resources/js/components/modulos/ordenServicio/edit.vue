@@ -30,9 +30,7 @@
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-md-2 col-form-label"
-                            >Proveedor</label
-                          >
+                          <label class="col-md-2 col-form-label">Proveedor</label>
                           <div class="col-md-8">
                             <input
                               type="text"
@@ -47,9 +45,7 @@
 
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-md-2 col-form-label"
-                            >Referencia</label
-                          >
+                          <label class="col-md-2 col-form-label">Referencia</label>
                           <div class="col-md-9">
                             <input
                               type="text"
@@ -67,9 +63,7 @@
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-md-3 col-form-label"
-                            >Fecha Emision</label
-                          >
+                          <label class="col-md-3 col-form-label">Fecha Emision</label>
                           <div class="col-md-9">
                             <el-date-picker
                               v-model="fillEditOrdenServicio.cFechaEmision"
@@ -86,9 +80,7 @@
 
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-md-3 col-form-label"
-                            >Fecha Entrega</label
-                          >
+                          <label class="col-md-3 col-form-label">Fecha Entrega</label>
                           <div class="col-md-9">
                             <el-date-picker
                               v-model="fillEditOrdenServicio.cFechaEntrega"
@@ -107,20 +99,15 @@
 
                   <div class="col-md-12">
                     <div class="row">
-
-
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-md-3 col-form-label"
-                            >Lugar de Entrega</label
-                          >
+                          <label class="col-md-3 col-form-label">Lugar de Entrega</label>
                           <div class="col-md-9">
                             <input
                               type="text"
                               class="form-control"
                               v-model="fillEditOrdenServicio.cLEntrega"
                               @keypress.prevent.enter="setRegistrarPIngreso"
-
                             />
                           </div>
                         </div>
@@ -149,19 +136,14 @@
                         </div>
                       </div>
 
-
-                                    <div class="col-md-6">
-
+                      <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-md-3 col-form-label"
-                            >Observación</label
-                          >
+                          <label class="col-md-3 col-form-label">Observación</label>
                           <div class="col-md-9">
                             <input
                               type="text"
                               class="form-control"
                               v-model="fillEditOrdenServicio.cObservacion"
-
                             />
                           </div>
                         </div>
@@ -193,10 +175,7 @@
                                     <el-option
                                       v-for="item in listProd"
                                       :key="item.id"
-                                      :label="
-                                        item.codigo +
-                                        ' - ' +
-                                        item.familia.nombre  "
+                                      :label="item.codigo + ' - ' + item.familia.nombre"
                                       :value="item.id"
                                     >
                                     </el-option>
@@ -204,21 +183,16 @@
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <label class="col-md-1 col-form-label"
-                                  >CANTIDAD</label
-                                >
+                                <label class="col-md-1 col-form-label">CANTIDAD</label>
                                 <div class="col-md-3">
                                   <input
                                     type="text"
                                     class="form-control"
                                     v-model="fillEditOrdenServicio.cCantidad"
-
                                   />
                                 </div>
 
-                                <label class="col-md-1 col-form-label"
-                                  >MEDIDA</label
-                                >
+                                <label class="col-md-1 col-form-label">MEDIDA</label>
                                 <div class="col-md-3">
                                   <el-select
                                     v-model="fillEditOrdenServicio.nIdUnidMed"
@@ -235,9 +209,7 @@
                                   </el-select>
                                 </div>
 
-                                <label class="col-md-1 col-form-label"
-                                  >PRECIO</label
-                                >
+                                <label class="col-md-1 col-form-label">PRECIO</label>
                                 <div class="col-md-3">
                                   <input
                                     type="text"
@@ -257,15 +229,13 @@
               <div class="card-footer">
                 <div class="row">
                   <div class="col-md-4 offset-4">
-
-
                     <button
-                      class="btn btn-flat btn-info justify-content-center "
+                      class="btn btn-flat btn-info justify-content-center"
                       @click.prevent="setAddProduct"
                     >
                       Agregar
                     </button>
-                 <!--    <button
+                    <!--    <button
                       class="btn btn-flat btn-default btnWidth"
                       @click.prevent="setResetCampos"
                     >
@@ -282,13 +252,7 @@
                 </div>
 
                 <div class="card-body table-responsive">
-                  <table
-                    class="
-                      table table-hover table-head-fixed
-                      text-nowrap
-                      projects
-                    "
-                  >
+                  <table class="table table-hover table-head-fixed text-nowrap projects">
                     <thead>
                       <tr>
                         <th>Codigo</th>
@@ -300,18 +264,13 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr
-                        v-for="(item, index) in listDetalleOrder"
-                        :key="index"
-                      >
+                      <tr v-for="(item, index) in listDetalleOrder" :key="index">
                         <td v-text="item.producto.codigo"></td>
                         <td v-text="item.cantidad"></td>
                         <td v-text="item.punit"></td>
                         <td v-text="item.unidmedida.nombre"></td>
 
-                        <td
-                          v-text="item.producto.familia.nombre  "
-                        ></td>
+                        <td v-text="item.producto.familia.nombre"></td>
 
                         <td>
                           <button
@@ -334,7 +293,7 @@
                   </table>
                 </div>
               </div>
-<!--
+              <!--
               <div class="card-footer">
                 <div class="row">
                   <div class="col-md-4 offset-4">
@@ -379,9 +338,7 @@
               ></div>
             </div>
             <div class="modal-footer">
-              <button class="btn btn-secondary" @click="abrirModal">
-                Cerrar
-              </button>
+              <button class="btn btn-secondary" @click="abrirModal">Cerrar</button>
             </div>
           </div>
         </div>
@@ -412,7 +369,6 @@
                         <input
                           type="text"
                           class="form-control"
-
                           v-model="fillEditOrdenServicio.cCantidadEdit"
                         />
                       </div>
@@ -458,10 +414,7 @@
                           <el-option
                             v-for="item in listProd"
                             :key="item.id"
-                            :label="
-                              item.codigo +
-                              ' - ' +
-                              item.familia.nombre"
+                            :label="item.codigo + ' - ' + item.familia.nombre"
                             :value="item.id"
                           >
                           </el-option>
@@ -505,12 +458,8 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-success" @click="abrirModalSaveItem">
-              Guardar
-            </button>
-            <button class="btn btn-secondary" @click="abrirModalEditItem">
-              Cerrar
-            </button>
+            <button class="btn btn-success" @click="abrirModalSaveItem">Guardar</button>
+            <button class="btn btn-secondary" @click="abrirModalEditItem">Cerrar</button>
           </div>
         </div>
       </div>
@@ -569,7 +518,6 @@ export default {
     this.getListarUnidadMedida();
     this.getListarproductosByName();
     this.getlistDescricionPago();
-
   },
   computed: {},
   methods: {
@@ -586,52 +534,44 @@ export default {
       localStorage.Codigo = item;
     },
     getCargaDetalleOrdenCompraEdit(item) {
-      var url =
-        "/administracion/DetalleOrdenservicio/CargaDetalleOrdenServicioEdit";
+      var url = "/administracion/DetalleOrdenservicio/CargaDetalleOrdenServicioEdit";
       axios
         .post(url, {
           item: item,
         })
         .then((response) => {
-
           this.fillEditOrdenServicio.cCantidadEdit = response.data.cantidad;
           this.fillEditOrdenServicio.nIdUnidMedEdit = response.data.unidmedida_id;
           this.fillEditOrdenServicio.nIdprodEdit = response.data.producto_id;
           this.fillEditOrdenServicio.cPUnitEdit = response.data.punit;
-
         });
     },
 
-    abrirModalSaveItem(){
-//alert(localStorage.Codigo,)
+    abrirModalSaveItem() {
+      //alert(localStorage.Codigo,)
 
       var url = "/administracion/DetalleOrdenservicio/ModalSaveItemsDetalleOS";
       axios
         .post(url, {
           id: localStorage.Codigo,
-            cCantidadEdit : this.fillEditOrdenServicio.cCantidadEdit ,
-          nIdUnidMedEdit :this.fillEditOrdenServicio.nIdUnidMedEdit ,
-          nIdprodEdit : this.fillEditOrdenServicio.nIdprodEdit ,
-         cPUnitEdit : this.fillEditOrdenServicio.cPUnitEdit
+          cCantidadEdit: this.fillEditOrdenServicio.cCantidadEdit,
+          nIdUnidMedEdit: this.fillEditOrdenServicio.nIdUnidMedEdit,
+          nIdprodEdit: this.fillEditOrdenServicio.nIdprodEdit,
+          cPUnitEdit: this.fillEditOrdenServicio.cPUnitEdit,
         })
         .then((response) => {
-            this.abrirModalEditItem();
+          this.abrirModalEditItem();
           this.getListaDetalleOrdenServicio();
-
         });
-
     },
 
     getCargaDatosOrdenServicio() {
-
-
-      var url = "/administracion/ordenServicio/CargaDatosOrdenServicio"; 
+      var url = "/administracion/ordenServicio/CargaDatosOrdenServicio";
       axios
         .post(url, {
           nidOrdenServicio: this.fillEditOrdenServicio.nidOrdenServicio,
         })
         .then((response) => {
-  
           this.fillEditOrdenServicio.cProveedor =
             response.data[0].ordenservicio.proveedor.nombre;
           this.fillEditOrdenServicio.cReferencia =
@@ -643,17 +583,16 @@ export default {
 
           this.fillEditOrdenServicio.cLEntrega =
             response.data[0].ordenservicio.LugarEntrega;
-          this.fillEditOrdenServicio.nIdTipoPago =
-            response.data[0].ordenservicio.pago_id;
-            this.fillEditOrdenServicio.cObservacion = response.data[0].ordenservicio.observacion;
+          this.fillEditOrdenServicio.nIdTipoPago = response.data[0].ordenservicio.pago_id;
+          this.fillEditOrdenServicio.cObservacion =
+            response.data[0].ordenservicio.observacion;
 
           this.getListaDetalleOrdenServicio();
         });
     },
 
     DeleteItemDetalleOrdenCompra(item) {
-      var url =
-        "/administracion/DetalleOrdenservicio/DeleteItemDetalleOrdenServicio";
+      var url = "/administracion/DetalleOrdenservicio/DeleteItemDetalleOrdenServicio";
       axios
         .post(url, {
           item: item,
@@ -664,7 +603,7 @@ export default {
     },
 
     getListaDetalleOrdenServicio() {
-        //alert(this.fillEditOrdenServicio.nidOrdenServicio)
+      //alert(this.fillEditOrdenServicio.nidOrdenServicio)
       var url = "/administracion/DetalleOrdenservicio/viewDetalleOrdenServicio";
       axios
         .get(url, {
@@ -673,7 +612,6 @@ export default {
           },
         })
         .then((response) => {
-
           this.listDetalleOrder = response.data;
         });
     },
@@ -684,8 +622,6 @@ export default {
         this.listDescripPago = response.data;
       });
     },
-
-
 
     getListarproductosByName() {
       var url = "/administracion/detallecotizancion/listProdByName";
@@ -704,7 +640,7 @@ export default {
       var url = "/administracion/KardexDetalle/listUnidMed";
       axios.get(url).then((response) => {
         this.listUnidMed = response.data;
-        this.fillEditOrdenServicio.nIdUnidMed = this.listUnidMed[3].id;
+        this.fillEditOrdenServicio.nIdUnidMed = this.listUnidMed[10].id;
       });
     },
     limpiarCriteriosBsq() {
@@ -729,8 +665,6 @@ export default {
           cLEntrega: this.fillEditOrdenServicio.cLEntrega,
           nIdTipoPago: this.fillEditOrdenServicio.nIdTipoPago,
           nIdUser: this.fillEditOrdenServicio.nIdUser,
-
-
         })
         .then((response) => {
           Swal.fire({
@@ -777,21 +711,20 @@ export default {
           CestadoDet: this.fillEditOrdenServicio.CestadoDet,
           cLEntrega: this.fillEditOrdenServicio.cLEntrega,
           nIdTipoPago: this.fillEditOrdenServicio.nIdTipoPago,
-          cObservacion : this.fillEditOrdenServicio.cObservacion
-
+          cObservacion: this.fillEditOrdenServicio.cObservacion,
         })
         .then((response) => {
           this.getListaDetalleOrdenServicio();
-            Swal.fire({
-            position: 'top-center',
-            icon: 'success',
-            title: 'Orden de compra editado',
+          Swal.fire({
+            position: "top-center",
+            icon: "success",
+            title: "Orden de compra editado",
             showConfirmButton: false,
-            timer: 1500
-            })
+            timer: 1500,
+          });
         });
 
-        this.setLimpiaCampos()
+      this.setLimpiaCampos();
     },
 
     setLimpiaCampos() {
@@ -819,5 +752,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
