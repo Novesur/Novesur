@@ -392,7 +392,7 @@ export default {
             });
             this.estadobutton = true;
           } else {
-            (this.fillRegistrarCliente.cRSocial = response.data.razonSocial),
+            (this.fillRegistrarCliente.cRSocial = response.data.razon_social),
               (this.fillRegistrarCliente.cDireccion = response.data.direccion),
               (this.estadobutton = false);
             this.disabledbtnRuc = true;
@@ -421,13 +421,7 @@ export default {
             });
             this.estadobutton = false;
           } else {
-            (this.fillRegistrarCliente.cRSocial =
-              response.data.nombres +
-              " " +
-              response.data.apellidoPaterno +
-              " " +
-              response.data.apellidoMaterno),
-              (this.fillRegistrarCliente.cDireccion = response.data.direccion);
+            (this.fillRegistrarCliente.cRSocial = response.data.full_name),
             this.estadobutton = false;
             this.disabledbtnRuc = true;
           }

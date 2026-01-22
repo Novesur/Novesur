@@ -322,7 +322,7 @@
                 </div>
                 <div class="form-group row">
                   <label class="col-md-2 col-form-label"></label>
-                  <div class="col-md-6">
+             <!--      <div class="col-md-6">
                     <el-radio v-model="fillCrearInfoProduccion.radTipoTiempo" @change="onChange($event)" label="1"
                       checked>POR
                       DIAS
@@ -330,13 +330,15 @@
                     <el-radio v-model="fillCrearInfoProduccion.radTipoTiempo" @change="onChange($event)" label="2">POR
                       HORAS
                     </el-radio>
-                  </div>
+                  </div> -->
                 </div>
 
                 <div class="form-group row">
                   <label class="col-md-2 col-form-label">DIAS</label>
                   <div class="col-md-2">
-                    <input type="text" class="form-control" :disabled="validatedDias"
+                    <!-- <input type="text" class="form-control" :disabled="validatedDias"
+                      v-model="fillCrearInfoProduccion.cDiasMObra" v-int /> -->
+                      <input type="text" class="form-control"
                       v-model="fillCrearInfoProduccion.cDiasMObra" v-int />
                   </div>
                 </div>
@@ -344,7 +346,10 @@
                 <div class="form-group row">
                   <label class="col-md-2 col-form-label">HORAS</label>
                   <div class="col-md-2">
-                    <input type="text" class="form-control" :disabled="validateHoras"
+                  <!--   <input type="text" class="form-control" :disabled="validateHoras"
+                      v-model="fillCrearInfoProduccion.cHorasMObra" v-int /> -->
+
+                      <input type="text" class="form-control"
                       v-model="fillCrearInfoProduccion.cHorasMObra" v-int />
                   </div>
                 </div>

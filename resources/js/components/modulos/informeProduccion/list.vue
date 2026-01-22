@@ -572,11 +572,9 @@ export default {
     },
 
     MandarDiaMObra(id, informeproduccion_id, dias, costdias, horas, costhoras) {
-      this.fillReporteInfoProduccion.precioDiaObra = prompt(
-        "Ingrese el precio de la Hora "
-      );
-      this.fillReporteInfoProduccion.totalMObra =
-        dias * this.fillReporteInfoProduccion.precioDiaObra + horas * costhoras;
+
+      this.fillReporteInfoProduccion.precioDiaObra = prompt("Ingrese el precio de la Hora ");
+      this.fillReporteInfoProduccion.totalMObra = (horas * costhoras )+(dias * this.fillReporteInfoProduccion.precioDiaObra );
       var url = "/administracion/InformeProduccion/editPrecioDiaOdrProd";
       axios
         .post(url, {
@@ -606,10 +604,9 @@ export default {
     },
 
     MandarHoraMObra(id, informeproduccion_id, dias, costdias, horas, costhoras) {
-      this.fillReporteInfoProduccion.precioHora = prompt("Ingrese el precio de la Hora ");
-      this.fillReporteInfoProduccion.totalHObra =
-        horas * this.fillReporteInfoProduccion.precioHora;
 
+      this.fillReporteInfoProduccion.precioHora = prompt("Ingrese el precio de la Hora ");
+      this.fillReporteInfoProduccion.totalHObra = (horas * this.fillReporteInfoProduccion.precioHora )+(dias * costdias );
       var url = "/administracion/InformeProduccion/editPrecioHoraOdrProd";
       axios
         .post(url, {

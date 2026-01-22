@@ -319,8 +319,10 @@ class InformeProduccionController extends Controller
 
     public function editPrecioDiaOdrProd(Request $request){
 
+
         InfoProduccionManoObra::where('id', $request->id)->update(['costdias' => $request->precioDia, 'total' => $request->total]);
     }
+
 
     public function editPrecioOtrosReq(Request $request){
 

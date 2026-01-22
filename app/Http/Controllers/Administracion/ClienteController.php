@@ -215,47 +215,30 @@ class ClienteController extends Controller
 
     public function consultaRuc(Request $request)
     {
-        /*    $api1 = 'https://dniruc.apisperu.com/api/v1/ruc/';
-        $api2 = $request->cRuc;
-        $api3 = '?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImpvcmdlYW50b25pbzE2QGdtYWlsLmNvbSJ9.kbXXdK2xjatEd8UbHTNfnTc1-XiYqzxghdlH4HiSjGk';
-        $ruta = $api1.$api2.$api3;
-        $Ruc = Http::get($ruta) ;
-        $dato  = $Ruc->json();
-        return $dato; */
 
-       // https://api.apis.net.pe/v2/sunat/ruc/full?numero=20601030013&token=apis-token-8934.8jfJDAUvY-rcpH-ohHBWb3BXkI91cFFB
-        $Ruc = $request->cRuc;
-        $token = 'apis-token-8934.8jfJDAUvY-rcpH-ohHBWb3BXkI91cFFB';
-
-        $client = new Client(['base_uri' => 'https://api.apis.net.pe', 'verify' => false]);
-
-        $parameters = [
-            'http_errors' => false,
-            'connect_timeout' => 5,
-            'headers' => [
-                'Authorization' => 'Bearer ' . $token,
-                'Referer' => 'https://apis.net.pe/api-consulta-ruc',
-                'User-Agent' => 'laravel/guzzle',
-                'Accept' => 'application/json',
-            ],
-            'query' => ['numero' => $Ruc]
-        ];
-        $res = $client->request('GET', '/v2/sunat/ruc', $parameters);
-        $dato = json_decode($res->getBody()->getContents(), true);
-        return $dato;
-    }
-
-    public function consultaDNI(Request $request)
-    {
-       // https://api.apis.net.pe/v2/reniec/dni?numero=46027897&token=apis-token-8934.8jfJDAUvY-rcpH-ohHBWb3BXkI91cFFB
-
-        $api1 = 'https://api.apis.net.pe/v2/reniec/dni?numero=';
+    $api1 = 'https://api.decolecta.com/v1/sunat/ruc?numero=';
         $api2 = $request->cRuc.'&';
         $api3 = 'token=apis-token-8934.8jfJDAUvY-rcpH-ohHBWb3BXkI91cFFB';
         $ruta = $api1.$api2.$api3;
         $Ruc = Http::get($ruta) ;
         $dato  = $Ruc->json();
        return $dato;
+
+    }
+
+    public function consultaDNI(Request $request)
+    {
+       // https://api.apis.net.pe/v2/reniec/dni?numero=46027897&token=apis-token-8934.8jfJDAUvY-rcpH-ohHBWb3BXkI91cFFB
+
+        $api1 = 'https://api.decolecta.com/v1/reniec/dni?numero=';
+        $api2 = $request->cRuc.'&';
+        $api3 = 'token=apis-token-8934.8jfJDAUvY-rcpH-ohHBWb3BXkI91cFFB';
+        $ruta = $api1.$api2.$api3;
+        $Ruc = Http::get($ruta) ;
+        $dato  = $Ruc->json();
+
+       return $dato;
+
 
 
     }
