@@ -21090,7 +21090,7 @@ __webpack_require__.r(__webpack_exports__);
           });
           _this2.estadobutton = true;
         } else {
-          _this2.fillRegistrarProveedor.cNombreNacional = response.data.razonSocial, _this2.fillRegistrarProveedor.cDireccion = response.data.direccion, _this2.estadobutton = false;
+          _this2.fillRegistrarProveedor.cNombreNacional = response.data.razon_social, _this2.fillRegistrarProveedor.cDireccion = response.data.direccion, _this2.estadobutton = false;
           _this2.disabledbtnRuc = true;
         }
       });
@@ -21113,7 +21113,7 @@ __webpack_require__.r(__webpack_exports__);
           });
           _this3.estadobutton = false;
         } else {
-          _this3.fillRegistrarProveedor.cNombreNacional = response.data.nombres + " " + response.data.apellidoPaterno + " " + response.data.apellidoMaterno, _this3.fillRegistrarProveedor.cDireccion = response.data.direccion;
+          _this3.fillRegistrarProveedor.cNombreNacional = response.data.full_name, _this3.fillRegistrarProveedor.cDireccion = response.data.direccion;
           _this3.estadobutton = false;
           _this3.disabledbtnRuc = true;
         }

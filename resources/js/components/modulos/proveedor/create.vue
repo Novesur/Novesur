@@ -322,7 +322,7 @@ export default {
                         });
                         this.estadobutton = true;
                     } else {
-                        (this.fillRegistrarProveedor.cNombreNacional = response.data.razonSocial),
+                        (this.fillRegistrarProveedor.cNombreNacional = response.data.razon_social),
                             (this.fillRegistrarProveedor.cDireccion = response.data.direccion),
                             (this.estadobutton = false);
                         this.disabledbtnRuc = true;
@@ -352,11 +352,7 @@ export default {
                         this.estadobutton = false;
                     } else {
                         (this.fillRegistrarProveedor.cNombreNacional =
-                            response.data.nombres +
-                            " " +
-                            response.data.apellidoPaterno +
-                            " " +
-                            response.data.apellidoMaterno),
+                            response.data.full_name),
                             (this.fillRegistrarProveedor.cDireccion = response.data.direccion);
                         this.estadobutton = false;
                         this.disabledbtnRuc = true;
