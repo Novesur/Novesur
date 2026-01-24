@@ -21608,7 +21608,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
             timer: 2000
           });
         } else {
-          _this.fillCrearReqMaterialesProy.nIdClient = response.data.razonSocial;
+          _this.fillCrearReqMaterialesProy.nIdClient = response.data.razon_social;
           /*        (this.fillRegistrarCliente.cDireccion = response.data.direccion),
                         (this.estadobutton = false);
                       this.disabledbtnRuc = true; */
@@ -23197,7 +23197,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
             timer: 2000
           });
         } else {
-          _this.fillCrearReqMaterialesServicio.cClient = response.data.razonSocial;
+          _this.fillCrearReqMaterialesServicio.cClient = response.data.razon_social;
           /*        (this.fillCrearReqMaterialesServicio.cDireccion = response.data.direccion),
                         (this.estadobutton = false);
                       this.disabledbtnRuc = true; */
@@ -23224,7 +23224,8 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
           });
           _this2.estadobutton = false;
         } else {
-          _this2.fillCrearReqMaterialesServicio.cClient = response.data.nombres + " " + response.data.apellidoPaterno + " " + response.data.apellidoMaterno;
+          _this2.fillCrearReqMaterialesServicio.cClient = response.data.full_name;
+
           // (this.fillCrearReqMaterialesServicio.cClient  = response.data.direccion);
           /*     this.estadobutton = false;
           this.disabledbtnRuc = true;  */

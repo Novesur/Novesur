@@ -673,7 +673,7 @@ export default {
                 timer: 2000,
               });
           } else {
-            this.fillCrearReqMaterialesServicio.cClient = response.data.razonSocial;
+            this.fillCrearReqMaterialesServicio.cClient = response.data.razon_social;
             /*        (this.fillCrearReqMaterialesServicio.cDireccion = response.data.direccion),
                           (this.estadobutton = false);
                         this.disabledbtnRuc = true; */
@@ -703,11 +703,8 @@ export default {
             this.estadobutton = false;
           } else {
             this.fillCrearReqMaterialesServicio.cClient =
-              response.data.nombres +
-              " " +
-              response.data.apellidoPaterno +
-              " " +
-              response.data.apellidoMaterno;
+              response.data.full_name 
+             
             // (this.fillCrearReqMaterialesServicio.cClient  = response.data.direccion);
             /*     this.estadobutton = false;
             this.disabledbtnRuc = true;  */

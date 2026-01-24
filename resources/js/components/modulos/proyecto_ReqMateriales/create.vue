@@ -838,7 +838,7 @@ export default {
                 timer: 2000,
               });
           } else {
-            this.fillCrearReqMaterialesProy.nIdClient = response.data.razonSocial;
+            this.fillCrearReqMaterialesProy.nIdClient = response.data.razon_social; 
             /*        (this.fillRegistrarCliente.cDireccion = response.data.direccion),
                           (this.estadobutton = false);
                         this.disabledbtnRuc = true; */
