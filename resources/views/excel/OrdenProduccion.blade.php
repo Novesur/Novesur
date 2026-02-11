@@ -46,12 +46,12 @@
             </td>
         </tr>
 
-        @if ($InfoProduccion->cliente->razonsocial == 'NINGUNO')
+      {{--   @if ($InfoProduccion->cliente->razonsocial == 'NINGUNO') --}}
             <tr>
                 <td><strong>CANTIDAD :</strong></td>
                 <td colspan="4">{{ $InfoProduccion->cantidad }}</td>
             </tr>
-        @else
+       {{--  @else --}}
             <tr>
                 <td><strong>ALMACEN:</strong></td>
                 <td colspan="4">{{ $InfoProduccion->almacen->nombre }}</td>
