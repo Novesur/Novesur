@@ -60,7 +60,7 @@
                 <td><strong>CLIENTE-REF :</strong></td>
                 <td colspan="4">{{ $InfoProduccion->cliente->razonsocial }}</td>
             </tr>
-        @endif
+       {{--  @endif --}}
 
 
     </table>
