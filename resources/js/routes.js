@@ -714,6 +714,14 @@ export default new Router({
                 .default,
         },
 
+           {
+            path: "/informeProduccion/edit/:id",
+            name: "informeProduccion.edit",
+            component: require("./components/modulos/informeProduccion/edit")
+                .default,
+            props: true,
+        },
+
         ////NOTA DE PEDIDO /////
         {
             path: "/notapedido/create/:id",

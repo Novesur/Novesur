@@ -10304,6 +10304,568 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/modulos/informeProduccion/edit.vue?vue&type=script&lang=js":
+/*!****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/modulos/informeProduccion/edit.vue?vue&type=script&lang=js ***!
+  \****************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty({
+      fillEditInfoProduccion: {
+        nInfoProd: this.$attrs.id,
+        nIdproduct: "",
+        cReferencia: "",
+        cDocumento: "",
+        cFechaEmision: "",
+        nidAlmacen: "",
+        cRSocial: "",
+        cRuc: "",
+        nIdmaterial: "",
+        cCantMaterial: "",
+        cCantidad: "",
+        cCantprod: "",
+        nIdTipoPago: "",
+        nIdTipoMoneda: "",
+        nIdUser: sessionStorage.getItem("iduser"),
+        cDuracion: "",
+        cPersonal: "",
+        cPersonalModal: "",
+        cDiasMObra: "",
+        cDiasMObraModal: "",
+        cHorasMObra: "",
+        cHorasMObraModal: "",
+        cDescripcion: "",
+        cDescripModal: "",
+        cCantidadReq: "",
+        cCantidadModal: "",
+        nIdUnidMed: "",
+        nIdUnidMedMat: "",
+        radTipoTiempo: "1",
+        codRequMateriales: "",
+        cCostUnit: "",
+        nIdEditmaterial: "",
+        cCantprodEdit: "",
+        nIdUnidMedEdit: "",
+        codigoInfoProd: ""
+      },
+      modalShowEditItem: false,
+      modalShowEditManoObra: false,
+      modalShowEditOtrosRequ: false,
+      mostrarModal: {
+        display: "block",
+        background: "#0000006b"
+      },
+      ocultarModal: {
+        display: "none"
+      },
+      listAlmacen: [],
+      listUnidMed: [],
+      listProd: [],
+      ListReqMatInfoProduc: [],
+      ListManoObraReqMateriales: [],
+      ListOtrosReqInfoReqMateriales: [],
+      listartempProduccion: [],
+      listartempMobra: [],
+      listartempRequerimientos: [],
+      listDescripPago: [{
+        value: "1",
+        label: "PARA STOCK"
+      }, {
+        value: "2",
+        label: "PARA PEDIDO DE CLIENTE"
+      }],
+      listTipoCambio: [],
+      validatedDias: false,
+      validateHoras: true,
+      modalShow: false
+    }, "mostrarModal", {
+      display: "block",
+      background: "#0000006b"
+    }), "ocultarModal", {
+      display: "none"
+    }), "error", 0), "mensajeError", []), "listRolPermisoByUsuario", JSON.parse(sessionStorage.getItem("listRolPermisosByUsuario")));
+  },
+  mounted: function mounted() {
+    this.getListarproductosByName();
+    this.getlistTipoCambio();
+    this.defaultDiaHora();
+    this.getListarUnidadMedida();
+    this.getListarAlmacen();
+    this.CargaInfoProduccionById();
+  },
+  methods: {
+    CargaInfoProduccionById: function CargaInfoProduccionById() {
+      var _this = this;
+      var url = "/administracion/InformeProduccion/CargaInfoProduccionById";
+      axios.get(url, {
+        params: {
+          nInfoProd: this.fillEditInfoProduccion.nInfoProd
+        }
+      }).then(function (response) {
+        console.log(response.data);
+        if (response.data.icon == "warning") {
+          Swal.fire({
+            position: "center",
+            icon: response.data.icon,
+            title: response.data.message,
+            showConfirmButton: false,
+            timer: 1500
+          });
+          _this.fillEditInfoProduccion.cRSocial = "";
+        }
+        _this.fillEditInfoProduccion.nIdproduct = response.data.producto_id;
+        _this.fillEditInfoProduccion.cCantprod = response.data.cantidad;
+        _this.fillEditInfoProduccion.nIdUnidMed = response.data.unidmedida_id;
+        if (response.data.cliente_id == "202") {
+          _this.fillEditInfoProduccion.nIdTipoPago = _this.listDescripPago[0].value;
+          _this.fillEditInfoProduccion.nidAlmacen = response.data.almacen_id;
+        } else {
+          _this.fillEditInfoProduccion.nIdTipoPago = _this.listDescripPago[1].value;
+          _this.fillEditInfoProduccion.cRSocial = response.data.cliente.razonsocial;
+        }
+        _this.fillEditInfoProduccion.cReferencia = response.data.referencia;
+        _this.fillEditInfoProduccion.codigoInfoProd = response.data.codigo;
+        _this.cargaRequeMateriales();
+      });
+    },
+    buscaxCodRequMateriales: function buscaxCodRequMateriales() {
+      this.CargaInfoProduccion();
+    },
+    abrirModalEditItem: function abrirModalEditItem() {
+      this.modalShowEditItem = !this.modalShowEditItem;
+    },
+    cargaRequeMateriales: function cargaRequeMateriales() {
+      var _this2 = this;
+      var url = "/administracion/InformeProduccion/getListReqMatInfoProd";
+      axios.get(url, {
+        params: {
+          nInfoProd: this.fillEditInfoProduccion.nInfoProd
+        }
+      }).then(function (response) {
+        _this2.ListReqMatInfoProduc = response.data;
+        _this2.cargaReqManoObraRequMat();
+      });
+    },
+    DeleteReqMateriales: function DeleteReqMateriales(item) {
+      var _this3 = this;
+      Swal.fire({
+        title: "Desea eliminar el Registro?",
+        text: "En caso de querer recuperarlo consulte con el administrador de sistemas!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, borralo!"
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          Swal.fire("Borrado!", "El item seleccionado a sido eliminado.", "success");
+          var url = "/administracion/InformeProduccion/DeleteReqMateriales";
+          axios.post(url, {
+            item: item
+          }).then(function () {
+            _this3.CargaInfoProduccion();
+          });
+        }
+      });
+    },
+    cargaReqManoObraRequMat: function cargaReqManoObraRequMat() {
+      var _this4 = this;
+      var url = "/administracion/InformeProduccion/getListReqManoObraInfoProd";
+      axios.get(url, {
+        params: {
+          nInfoProd: this.fillEditInfoProduccion.nInfoProd
+        }
+      }).then(function (response) {
+        _this4.ListManoObraReqMateriales = response.data;
+        _this4.OtrosRequerimientosObraReqMat();
+      });
+    },
+    DeleteManodeObra: function DeleteManodeObra(item) {
+      var _this5 = this;
+      Swal.fire({
+        title: "Desea eliminar el Registro?",
+        text: "En caso de querer recuperarlo consulte con el administrador de sistemas!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, borralo!"
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          Swal.fire("Borrado!", "El item seleccionado a sido eliminado.", "success");
+          var url = "/administracion/InformeProduccion/DeleteManodeObra";
+          axios.post(url, {
+            item: item
+          }).then(function () {
+            _this5.CargaInfoProduccion();
+          });
+        }
+      });
+    },
+    OtrosRequerimientosObraReqMat: function OtrosRequerimientosObraReqMat() {
+      var _this6 = this;
+      var url = "/administracion/InformeProduccion/getOtrosRequerimientosInfoProd";
+      axios.get(url, {
+        params: {
+          nInfoProd: this.fillEditInfoProduccion.nInfoProd
+        }
+      }).then(function (response) {
+        _this6.ListOtrosReqInfoReqMateriales = response.data;
+      });
+    },
+    DeleteOtrosReque: function DeleteOtrosReque(item) {
+      var _this7 = this;
+      Swal.fire({
+        title: "Desea eliminar el Registro?",
+        text: "En caso de querer recuperarlo consulte con el administrador de sistemas!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, borralo!"
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          Swal.fire("Borrado!", "El item seleccionado a sido eliminado.", "success");
+          var url = "/administracion/InformeProduccion/DeleteOtrosReque";
+          axios.post(url, {
+            item: item
+          }).then(function () {
+            _this7.CargaInfoProduccion();
+          });
+        }
+      });
+    },
+    onChange: function onChange(e) {
+      if (e == 1) {
+        this.fillEditInfoProduccion.cHorasMObra = 0;
+        this.validateHoras = true;
+        this.validatedDias = false;
+      }
+      if (e == 2) {
+        this.fillEditInfoProduccion.cDiasMObra = 0;
+        this.validateHoras = false;
+        this.validatedDias = true;
+      }
+    },
+    defaultDiaHora: function defaultDiaHora() {
+      this.fillEditInfoProduccion.cCantidadReq = 0;
+      this.fillEditInfoProduccion.cDiasMObra = 0;
+      this.fillEditInfoProduccion.cHorasMObra = 0;
+    },
+    consultaRuc: function consultaRuc() {
+      var _this8 = this;
+      var url = "/administracion/cliente/consultaRuc";
+      axios.post(url, {
+        cRuc: this.fillEditInfoProduccion.cRuc
+      }).then(function (response) {
+        if (response.data.success == false) {
+          _this8.fillEditInfoProduccion.cRSocial = "", Swal.fire({
+            position: "center",
+            icon: "info",
+            title: "Ruc no encontrado o numero equivocado",
+            showConfirmButton: false,
+            timer: 2000
+          });
+        } else {
+          _this8.fillEditInfoProduccion.cRSocial = response.data.razonSocial;
+          /*        (this.fillRegistrarCliente.cDireccion = response.data.direccion),
+                        (this.estadobutton = false);
+                      this.disabledbtnRuc = true; */
+        }
+      });
+    },
+    setAddMObra: function setAddMObra() {
+      var _this9 = this;
+      var url = "/administracion/InformeProduccion/addMObra";
+      axios.post(url, {
+        codRequMateriales: this.fillEditInfoProduccion.codRequMateriales,
+        cPersonal: this.fillEditInfoProduccion.cPersonal,
+        cDiasMObra: this.fillEditInfoProduccion.cDiasMObra,
+        cHorasMObra: this.fillEditInfoProduccion.cHorasMObra,
+        estado: "P"
+      }).then(function (response) {
+        _this9.CargaInfoProduccion();
+        _this9.setcleanListMObra();
+      });
+    },
+    setcleanListMObra: function setcleanListMObra() {
+      this.fillEditInfoProduccion.cPersonal = "", this.fillEditInfoProduccion.cDiasMObra = "";
+      this.fillEditInfoProduccion.cHorasMObra = "";
+    },
+    setAddOtrosRequerimientos: function setAddOtrosRequerimientos() {
+      var _this10 = this;
+      var url = "/administracion/InformeProduccion/addOtrosRequerimientos";
+      axios.post(url, {
+        codRequMateriales: this.fillEditInfoProduccion.codRequMateriales,
+        cDescripcion: this.fillEditInfoProduccion.cDescripcion,
+        cCantidadReq: this.fillEditInfoProduccion.cCantidadReq,
+        estado: "P"
+      }).then(function (response) {
+        _this10.CargaInfoProduccion();
+        _this10.setCleanRequerimientos();
+      });
+    },
+    setLimpiaRequerimientos: function setLimpiaRequerimientos() {
+      this.fillEditInfoProduccion.cDescripcion = "", this.fillEditInfoProduccion.cCantidadReq = 0;
+    },
+    getlistTipoCambio: function getlistTipoCambio() {
+      var _this11 = this;
+      var url = "/administracion/ordenCompra/TipoCambio";
+      axios.get(url).then(function (response) {
+        _this11.listTipoCambio = response.data;
+        _this11.fillEditInfoProduccion.nIdTipoMoneda = _this11.listTipoCambio[0].id;
+      });
+    },
+    getListarAlmacen: function getListarAlmacen() {
+      var _this12 = this;
+      var url = "/administracion/almacen/AlmacenbyEstado";
+      axios.get(url).then(function (response) {
+        _this12.listAlmacen = response.data;
+      });
+    },
+    getListarproductosByName: function getListarproductosByName() {
+      var _this13 = this;
+      var url = "/administracion/detallecotizancion/listProdByName";
+      axios.get(url, {
+        params: {
+          nIdmaterial: this.fillEditInfoProduccion.nIdmaterial
+        }
+      }).then(function (response) {
+        _this13.listProd = response.data;
+      });
+    },
+    limpiarCriteriosBsq: function limpiarCriteriosBsq() {
+      this.fillEditInfoProduccion.cCodProduct = "";
+    },
+    setRegistrarOProduccion: function setRegistrarOProduccion() {
+      if (this.validaOrdenProduccion()) {
+        this.modalShow = true;
+        return;
+      }
+      this.setGrabarOrdenProduccion();
+    },
+    setSaveOrdProduccion: function setSaveOrdProduccion() {
+      var _this14 = this;
+      var url = "/administracion/InformeProduccion/editInfoProdSave";
+      axios.post(url, {
+        nInfoProd: this.fillEditInfoProduccion.nInfoProd,
+        cCantprod: this.fillEditInfoProduccion.cCantprod,
+        nIdUser: this.fillEditInfoProduccion.nIdUser,
+        cReferencia: this.fillEditInfoProduccion.cReferencia
+      }).then(function (response) {
+        _this14.$router.push("/informeProduccion/list");
+      });
+    },
+    abrirModal: function abrirModal() {
+      this.modalShow = !this.modalShow;
+    },
+    validaOrdenProduccion: function validaOrdenProduccion() {
+      this.error = 0;
+      this.mensajeError = [];
+      if (!this.fillEditInfoProduccion.nIdproduct) {
+        this.mensajeError.push("El campo producto es obligatorio");
+      }
+      if (this.fillEditInfoProduccion.cCantprod <= 0) {
+        this.mensajeError.push("Cantidad no puede ser menor o igual a cero");
+      }
+      if (!this.fillEditInfoProduccion.cCantprod) {
+        this.mensajeError.push("Cantidad es campo obligatorio");
+      }
+      if (!this.fillEditInfoProduccion.nIdTipoPago) {
+        this.mensajeError.push("Tipo de Pago es campo obligatorio");
+      }
+      if (this.mensajeError.length) {
+        this.error = 1;
+      }
+      return this.error;
+    },
+    setAddPMaterialReqMateriales: function setAddPMaterialReqMateriales() {
+      var _this15 = this;
+      var url = "/administracion/InformeProduccion/addMaterialReqMateriales";
+      axios.post(url, {
+        codRequMateriales: this.fillEditInfoProduccion.codRequMateriales,
+        nIdmaterial: this.fillEditInfoProduccion.nIdmaterial,
+        cCantMaterial: this.fillEditInfoProduccion.cCantMaterial,
+        nIdUnidMedMat: this.fillEditInfoProduccion.nIdUnidMedMat,
+        estado: "P"
+      }).then(function (response) {
+        _this15.CargaInfoProduccion();
+        _this15.setLimpiaCampos();
+      });
+
+      /*  var url = "/administracion/InformeProduccion/saveReqMateriales";
+        axios
+         .post(url, {
+           //codRequMateriales: this.fillEditInfoProduccion.codRequMateriales,
+           nIdmaterial: this.fillEditInfoProduccion.nIdmaterial,
+           cCantMaterial: this.fillEditInfoProduccion.cCantMaterial,
+           nIdUnidMedMat: this.fillEditInfoProduccion.nIdUnidMedMat,
+           estado: 'R',
+         })
+         .then((response) => {
+           this.listartempProduccion = response.data.datos;
+           this.CargaInfoProduccion();
+            if (response.data.message == "Ya fue agregado anteriormente") {
+             Swal.fire({
+               position: "center",
+               icon: response.data.icon,
+               title: response.data.message,
+               showConfirmButton: false,
+               timer: 1500,
+             });
+           }
+         }); */
+    },
+    setLimpiaMaterial: function setLimpiaMaterial() {
+      this.fillEditInfoProduccion.nIdmaterial = "", this.fillEditInfoProduccion.cCantMaterial = 0;
+    },
+    setLimpiaCampos: function setLimpiaCampos() {
+      this.fillEditInfoProduccion.nIdmaterial = null;
+      this.fillEditInfoProduccion.cCantidad = 0;
+    },
+    setResetCampos: function setResetCampos() {
+      this.fillEditInfoProduccion.nIdmaterial = null;
+      this.fillEditInfoProduccion.cCantidad = 0;
+      this.fillEditInfoProduccion.cReferencia = "";
+      this.fillEditInfoProduccion.cDocumento = "";
+    },
+    setCleanMaterial: function setCleanMaterial() {
+      var _this16 = this;
+      var url = "/administracion/ordenProduccion/eliminarTemporder";
+      axios.get(url, {}).then(function (response) {
+        _this16.listartempProduccion = response.data.datos;
+        _this16.setLimpiaMaterial();
+      });
+    },
+    setCleanManoObra: function setCleanManoObra() {
+      var _this17 = this;
+      var url = "/administracion/ordenProduccion/CleanMaterialManoOBra";
+      axios.get(url, {}).then(function (response) {
+        _this17.listartempMobra = response.data.datos;
+        _this17.setcleanListMObra();
+      });
+    },
+    setCleanRequerimientos: function setCleanRequerimientos() {
+      var _this18 = this;
+      var url = "/administracion/ordenProduccion/cleanRequerimientos";
+      axios.get(url, {}).then(function (response) {
+        _this18.listartempRequerimientos = response.data.datos;
+        _this18.setLimpiaRequerimientos();
+      });
+    },
+    setListtemOrders: function setListtemOrders() {
+      var _this19 = this;
+      var url = "/administracion/ordenCompra/ListtempOrden";
+      axios.get(url, {}).then(function (response) {
+        _this19.listartempProduccion = response.data.datos;
+      });
+    },
+    getListarUnidadMedida: function getListarUnidadMedida() {
+      var _this20 = this;
+      var url = "/administracion/KardexDetalle/listUnidMed";
+      axios.get(url).then(function (response) {
+        _this20.listUnidMed = response.data;
+        _this20.fillEditInfoProduccion.nIdUnidMed = _this20.listUnidMed[9].id;
+        _this20.fillEditInfoProduccion.nIdUnidMedMat = _this20.listUnidMed[9].id;
+      });
+    },
+    ModalReqMateriales: function ModalReqMateriales(item) {
+      this.abrirModalEditItem(item);
+      this.ShowReqMateriales(item);
+    },
+    ModalManoObra: function ModalManoObra(item) {
+      this.abrirModalEditManoObra(item);
+    },
+    abrirModalEditManoObra: function abrirModalEditManoObra(item) {
+      this.modalShowEditManoObra = !this.modalShowEditManoObra;
+      this.ShowReqManoObra(item);
+    },
+    abrirModalOtrosRequerimientos: function abrirModalOtrosRequerimientos(item) {
+      this.modalShowEditOtrosRequ = !this.modalShowEditOtrosRequ;
+      this.ShowOtrosReq(item);
+    },
+    ShowReqMateriales: function ShowReqMateriales(item) {
+      var _this21 = this;
+      var url = "/administracion/InformeProduccion/getDataReqMaterialesInfoProd";
+      axios.post(url, {
+        nInfoProd: item
+      }).then(function (response) {
+        _this21.fillEditInfoProduccion.nIdEditmaterial = response.data.producto_id, _this21.fillEditInfoProduccion.cCantprodEdit = response.data.cantidad, _this21.fillEditInfoProduccion.nIdUnidMedEdit = response.data.unidmedida_id;
+        localStorage.Codigo = item;
+      });
+    },
+    ShowReqManoObra: function ShowReqManoObra(item) {
+      var _this22 = this;
+      var url = "/administracion/InformeProduccion/getDataReqManoObraInfoProd";
+      axios.post(url, {
+        item: item
+      }).then(function (response) {
+        _this22.fillEditInfoProduccion.cPersonalModal = response.data.personal, _this22.fillEditInfoProduccion.cDiasMObraModal = response.data.dias, _this22.fillEditInfoProduccion.cHorasMObraModal = response.data.horas;
+        localStorage.Codigo = item;
+      });
+    },
+    ShowOtrosReq: function ShowOtrosReq(item) {
+      var _this23 = this;
+      var url = "/administracion/InformeProduccion/getDataOtrosReqInfoProd";
+      axios.post(url, {
+        item: item
+      }).then(function (response) {
+        _this23.fillEditInfoProduccion.cDescripModal = response.data.descripcion;
+        _this23.fillEditInfoProduccion.cCantidadModal = response.data.cantidad;
+        localStorage.Codigo = item;
+      });
+    },
+    EditModalReqMateriales: function EditModalReqMateriales() {
+      var _this24 = this;
+      var url = "/administracion/InformeProduccion/EditModalReqMaterialesInfoProd";
+      axios.post(url, {
+        item: localStorage.Codigo,
+        cCantprodEdit: this.fillEditInfoProduccion.cCantprodEdit,
+        nIdUnidMedEdit: this.fillEditInfoProduccion.nIdUnidMedEdit
+      }).then(function (response) {
+        _this24.cargaRequeMateriales(_this24.fillEditInfoProduccion.codRequMateriales);
+        _this24.abrirModalEditItem();
+      });
+    },
+    EditModalManoObra: function EditModalManoObra(item) {
+      var _this25 = this;
+      var url = "/administracion/InformeProduccion/EditModalManoObraInfoProd";
+      axios.post(url, {
+        item: localStorage.Codigo,
+        cPersonalModal: this.fillEditInfoProduccion.cPersonalModal,
+        cDiasMObraModal: this.fillEditInfoProduccion.cDiasMObraModal,
+        cHorasMObraModal: this.fillEditInfoProduccion.cHorasMObraModal
+      }).then(function (response) {
+        _this25.cargaReqManoObraRequMat(_this25.fillEditInfoProduccion.codRequMateriales);
+        _this25.abrirModalEditManoObra();
+      });
+    },
+    EditModalOtrosReq: function EditModalOtrosReq() {
+      var _this26 = this;
+      var url = "/administracion/InformeProduccion/EditModalOtrosReqInfoProd";
+      axios.post(url, {
+        item: localStorage.Codigo,
+        cDescripModal: this.fillEditInfoProduccion.cDescripModal,
+        cCantidadModal: this.fillEditInfoProduccion.cCantidadModal
+      }).then(function (response) {
+        _this26.OtrosRequerimientosObraReqMat(_this26.fillEditInfoProduccion.codRequMateriales);
+      });
+      this.abrirModalOtrosRequerimientos();
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/modulos/informeProduccion/list.vue?vue&type=script&lang=js":
 /*!****************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/modulos/informeProduccion/list.vue?vue&type=script&lang=js ***!
@@ -10332,7 +10894,8 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         precioDiaObra: "",
         totalMObra: "",
         precioHora: "",
-        totalHObra: ""
+        totalHObra: "",
+        cCodRequerimiento: ""
       },
       modalShowEditItem: false,
       mostrarModal: {
@@ -10530,7 +11093,8 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
       axios.get(url, {
         params: {
           nIdprod: this.fillReporteInfoProduccion.nIdprod,
-          dFecha: this.fillReporteInfoProduccion.dFecha
+          dFecha: this.fillReporteInfoProduccion.dFecha,
+          cCodRequerimiento: this.fillReporteInfoProduccion.cCodRequerimiento
         }
       }).then(function (response) {
         _this9.listOrdenProduc = response.data;
@@ -40820,6 +41384,1007 @@ render._withStripped = true;
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/modulos/informeProduccion/edit.vue?vue&type=template&id=e5f92620":
+/*!**************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/modulos/informeProduccion/edit.vue?vue&type=template&id=e5f92620 ***!
+  \**************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", [_c("div", {
+    staticClass: "content-header"
+  }, [_c("div", {
+    staticClass: "container-fluid"
+  }, [_c("div", {
+    staticClass: "row mb-2"
+  }, [_c("div", {
+    staticClass: "col-sm-6"
+  }, [_c("h1", {
+    staticClass: "m-0 text-dark"
+  }, [_vm._v("Informe de Producción  N° " + _vm._s(_vm.fillEditInfoProduccion.codigoInfoProd))])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "content container-fluid"
+  }, [_c("div", {
+    staticClass: "card"
+  }, [_c("div", {
+    staticClass: "card-header"
+  }, [_c("div", {
+    staticClass: "card-tools"
+  }, [_c("router-link", {
+    staticClass: "btn btn-info btn-sm",
+    attrs: {
+      to: "/informeProduccion/list"
+    }
+  }, [_c("i", {
+    staticClass: "fas fa-plus-square"
+  }), _vm._v(" Regresar\n        ")])], 1)]), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_c("div", {
+    staticClass: "container-fluid"
+  }, [_c("div", {
+    staticClass: "card card-info"
+  }, [_vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_c("form", {
+    attrs: {
+      role: "form"
+    }
+  }, [_c("div", {
+    staticClass: "col-md-12"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-12"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-1 col-form-label"
+  }, [_vm._v("Producto")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-10"
+  }, [_c("el-select", {
+    staticStyle: {
+      width: "70vw"
+    },
+    attrs: {
+      filterable: "",
+      disabled: "",
+      placeholder: "Select"
+    },
+    model: {
+      value: _vm.fillEditInfoProduccion.nIdproduct,
+      callback: function callback($$v) {
+        _vm.$set(_vm.fillEditInfoProduccion, "nIdproduct", $$v);
+      },
+      expression: "fillEditInfoProduccion.nIdproduct"
+    }
+  }, [_c("v-row", {
+    attrs: {
+      align: "right"
+    }
+  }, _vm._l(_vm.listProd, function (item) {
+    return _c("el-option", {
+      key: item.id,
+      attrs: {
+        label: item.codigo + " - " + item.familia.nombre + " , " + item.subfamilia.nombre + " , Modelo: " + item.modelotipo.nombre + " , Marca : " + item.marca.nombre + " , Material : " + item.material.nombre + " ," + item.homologacion.nombre,
+        value: item.id
+      }
+    });
+  }), 1)], 1)], 1)])])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-12"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-4"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-3 col-form-label"
+  }, [_vm._v("Cantidad")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-3"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillEditInfoProduccion.cCantprod,
+      expression: "fillEditInfoProduccion.cCantprod"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text"
+    },
+    domProps: {
+      value: _vm.fillEditInfoProduccion.cCantprod
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillEditInfoProduccion, "cCantprod", $event.target.value);
+      }
+    }
+  })])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-4"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-2 col-form-label"
+  }, [_vm._v("Unid. Medida")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6"
+  }, [_c("el-select", {
+    staticStyle: {
+      width: "70%"
+    },
+    attrs: {
+      placeholder: "Select",
+      disabled: ""
+    },
+    model: {
+      value: _vm.fillEditInfoProduccion.nIdUnidMed,
+      callback: function callback($$v) {
+        _vm.$set(_vm.fillEditInfoProduccion, "nIdUnidMed", $$v);
+      },
+      expression: "fillEditInfoProduccion.nIdUnidMed"
+    }
+  }, _vm._l(_vm.listUnidMed, function (item) {
+    return _c("el-option", {
+      key: item.id,
+      attrs: {
+        label: item.nombre,
+        value: item.id
+      }
+    });
+  }), 1)], 1)])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-4"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-3 col-form-label"
+  }, [_vm._v("Cliente-Ref")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-9"
+  }, [_c("el-select", {
+    staticStyle: {
+      width: "70%"
+    },
+    attrs: {
+      placeholder: "Select",
+      disabled: ""
+    },
+    model: {
+      value: _vm.fillEditInfoProduccion.nIdTipoPago,
+      callback: function callback($$v) {
+        _vm.$set(_vm.fillEditInfoProduccion, "nIdTipoPago", $$v);
+      },
+      expression: "fillEditInfoProduccion.nIdTipoPago"
+    }
+  }, _vm._l(_vm.listDescripPago, function (item) {
+    return _c("el-option", {
+      key: item.id,
+      attrs: {
+        label: item.label,
+        value: item.value
+      }
+    });
+  }), 1)], 1)])])])]), _vm._v(" "), _vm.fillEditInfoProduccion.nIdTipoPago == 1 ? _c("div", {
+    staticClass: "col-md-9"
+  }, [_c("div", {
+    staticClass: "col-md-8"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-2 col-form-label"
+  }, [_vm._v("Para Stock")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-9"
+  }, [_c("el-select", {
+    staticStyle: {
+      width: "90%"
+    },
+    attrs: {
+      filterable: "",
+      disabled: "",
+      placeholder: "Select"
+    },
+    model: {
+      value: _vm.fillEditInfoProduccion.nidAlmacen,
+      callback: function callback($$v) {
+        _vm.$set(_vm.fillEditInfoProduccion, "nidAlmacen", $$v);
+      },
+      expression: "fillEditInfoProduccion.nidAlmacen"
+    }
+  }, _vm._l(_vm.listAlmacen, function (item) {
+    return _c("el-option", {
+      key: item.id,
+      attrs: {
+        label: item.nombre,
+        value: item.id
+      }
+    });
+  }), 1)], 1)])])]) : _vm._e(), _vm._v(" "), _c("div", {
+    staticClass: "col-md-12"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-1 col-form-label"
+  }, [_vm._v("Referencia  ")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-9"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillEditInfoProduccion.cReferencia,
+      expression: "fillEditInfoProduccion.cReferencia"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      disabled: true
+    },
+    domProps: {
+      value: _vm.fillEditInfoProduccion.cReferencia
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillEditInfoProduccion, "cReferencia", $event.target.value);
+      }
+    }
+  })])])]), _vm._v(" "), _vm.fillEditInfoProduccion.nIdTipoPago == 2 ? _c("div", {
+    staticClass: "col-md-12"
+  }, [_c("div", {
+    staticClass: "col-md-12"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-1 col-form-label"
+  }, [_vm._v("Empresa")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-9"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillEditInfoProduccion.cRSocial,
+      expression: "fillEditInfoProduccion.cRSocial"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      disabled: true
+    },
+    domProps: {
+      value: _vm.fillEditInfoProduccion.cRSocial
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillEditInfoProduccion, "cRSocial", $event.target.value);
+      }
+    }
+  })])])])]) : _vm._e(), _vm._v(" "), void 0, _vm._v(" "), _vm.listRolPermisoByUsuario.includes("informeproduccion.agregar") ? _c("div", {
+    staticClass: "container-fluid"
+  }, [_c("form", {
+    attrs: {
+      role: "form"
+    }
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-12"
+  }, [_c("div", {
+    staticClass: "card card-primary"
+  }, [_vm._m(1), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-2 col-form-label"
+  }, [_vm._v("DESCRIPCION DEL\n                                                                MATERIAL")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-10"
+  }, [_c("el-select", {
+    staticStyle: {
+      width: "60vw"
+    },
+    attrs: {
+      filterable: "",
+      placeholder: "Select"
+    },
+    model: {
+      value: _vm.fillEditInfoProduccion.nIdmaterial,
+      callback: function callback($$v) {
+        _vm.$set(_vm.fillEditInfoProduccion, "nIdmaterial", $$v);
+      },
+      expression: "fillEditInfoProduccion.nIdmaterial"
+    }
+  }, [_c("v-row", {
+    attrs: {
+      align: "right"
+    }
+  }, _vm._l(_vm.listProd, function (item) {
+    return _c("el-option", {
+      key: item.id,
+      attrs: {
+        label: item.codigo + " - " + item.familia.nombre + " , " + item.subfamilia.nombre + " , Modelo: " + item.modelotipo.nombre + " , Marca : " + item.marca.nombre + " , Material : " + item.material.nombre + " ," + item.homologacion.nombre,
+        value: item.id
+      }
+    });
+  }), 1)], 1)], 1)]), _vm._v(" "), _c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-2 col-form-label"
+  }, [_vm._v("CANTIDAD")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-3"
+  }, [_c("input", {
+    directives: [{
+      name: "int",
+      rawName: "v-int"
+    }, {
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillEditInfoProduccion.cCantMaterial,
+      expression: "fillEditInfoProduccion.cCantMaterial"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text"
+    },
+    domProps: {
+      value: _vm.fillEditInfoProduccion.cCantMaterial
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillEditInfoProduccion, "cCantMaterial", $event.target.value);
+      }
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-4 col-form-label"
+  }, [_vm._v("MEDIDA")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-4"
+  }, [_c("el-select", {
+    staticStyle: {
+      width: "70%"
+    },
+    attrs: {
+      placeholder: "Select"
+    },
+    model: {
+      value: _vm.fillEditInfoProduccion.nIdUnidMedMat,
+      callback: function callback($$v) {
+        _vm.$set(_vm.fillEditInfoProduccion, "nIdUnidMedMat", $$v);
+      },
+      expression: "fillEditInfoProduccion.nIdUnidMedMat"
+    }
+  }, _vm._l(_vm.listUnidMed, function (item) {
+    return _c("el-option", {
+      key: item.id,
+      attrs: {
+        label: item.nombre,
+        value: item.id
+      }
+    });
+  }), 1)], 1)])])])])])])])]) : _vm._e()], 2)]), _vm._v(" "), _vm.listRolPermisoByUsuario.includes("informeproduccion.agregar") ? _c("div", {
+    staticClass: "card-footer"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-4 offset-4"
+  }, [_c("button", {
+    staticClass: "btn btn-flat btn-primary btnWidth",
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.setAddPMaterialReqMateriales.apply(null, arguments);
+      }
+    }
+  }, [_vm._v("\n                                        Agregar\n                                    ")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-flat btn-default btnWidth",
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.setCleanMaterial.apply(null, arguments);
+      }
+    }
+  }, [_vm._v("\n                                        Limpiar\n                                    ")])])])]) : _vm._e(), _vm._v(" "), _c("div", {
+    staticClass: "card card-primary"
+  }, [_vm._m(2), _vm._v(" "), _c("div", {
+    staticClass: "card-body table-responsive"
+  }, [_c("table", {
+    staticClass: "table table-hover table-head-fixed text-nowrap projects"
+  }, [_vm._m(3), _vm._v(" "), _c("tbody", _vm._l(_vm.ListReqMatInfoProduc, function (item, index) {
+    return _c("tr", {
+      key: index
+    }, [_c("td", {
+      domProps: {
+        textContent: _vm._s(item.producto.codigo)
+      }
+    }), _vm._v(" "), _c("td", {
+      domProps: {
+        textContent: _vm._s(item.producto.familia.nombre + " " + item.producto.subfamilia.nombre + ", MARCA :" + item.producto.marca.nombre + ", MODELO/TIPO :" + item.producto.modelotipo.nombre + ", MATERIAL :" + item.producto.material.nombre)
+      }
+    }), _vm._v(" "), _c("td", {
+      domProps: {
+        textContent: _vm._s(item.cantidad)
+      }
+    }), _vm._v(" "), _c("td", {
+      domProps: {
+        textContent: _vm._s(item.unidmedida.nombre)
+      }
+    }), _vm._v(" "), _c("td", [_c("button", {
+      staticClass: "btn btn-secondary btn-sm",
+      on: {
+        click: function click($event) {
+          return _vm.ModalReqMateriales(item.id);
+        }
+      }
+    }, [_c("i", {
+      staticClass: "far fa-edit"
+    }), _vm._v(" Editar\n                                                ")])])]);
+  }), 0)])])])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "container-fluid"
+  }, [_c("div", {
+    staticClass: "card card-success"
+  }, [_vm._m(4), _vm._v(" "), _c("div", {
+    staticClass: "card-body table-responsive"
+  }, [_c("table", {
+    staticClass: "table table-hover table-head-fixed text-nowrap projects"
+  }, [_vm._m(5), _vm._v(" "), _c("tbody", _vm._l(_vm.ListManoObraReqMateriales, function (item, index) {
+    return _c("tr", {
+      key: index
+    }, [_c("td", {
+      domProps: {
+        textContent: _vm._s(item.personal)
+      }
+    }), _vm._v(" "), _c("td", {
+      domProps: {
+        textContent: _vm._s(item.dias)
+      }
+    }), _vm._v(" "), _c("td", {
+      domProps: {
+        textContent: _vm._s(item.horas)
+      }
+    }), _vm._v(" "), _c("td", [_c("button", {
+      staticClass: "btn btn-secondary btn-sm",
+      on: {
+        click: function click($event) {
+          return _vm.ModalManoObra(item.id);
+        }
+      }
+    }, [_c("i", {
+      staticClass: "far fa-edit"
+    }), _vm._v(" Editar\n                                    ")])])]);
+  }), 0)])])])]), _vm._v(" "), _c("div", {
+    staticClass: "container-fluid"
+  }, [_c("div", {
+    staticClass: "card card-light"
+  }, [_vm._m(6), _vm._v(" "), _c("div", {
+    staticClass: "card-body table-responsive"
+  }, [_c("table", {
+    staticClass: "table table-hover table-head-fixed text-nowrap projects"
+  }, [_vm._m(7), _vm._v(" "), _c("tbody", _vm._l(_vm.ListOtrosReqInfoReqMateriales, function (item, index) {
+    return _c("tr", {
+      key: index
+    }, [_c("td", {
+      domProps: {
+        textContent: _vm._s(item.descripcion)
+      }
+    }), _vm._v(" "), _c("td", {
+      domProps: {
+        textContent: _vm._s(item.cantidad)
+      }
+    }), _vm._v(" "), _c("td", [_c("button", {
+      staticClass: "btn btn-secondary btn-sm",
+      on: {
+        click: function click($event) {
+          return _vm.abrirModalOtrosRequerimientos(item.id);
+        }
+      }
+    }, [_c("i", {
+      staticClass: "far fa-edit"
+    }), _vm._v(" Editar\n                                    ")])])]);
+  }), 0)])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "modal fade",
+    "class": {
+      show: _vm.modalShow
+    },
+    style: _vm.modalShow ? _vm.mostrarModal : _vm.ocultarModal
+  }, [_c("div", {
+    staticClass: "modal-dialog",
+    attrs: {
+      role: "document"
+    }
+  }, [_c("div", {
+    staticClass: "modal-content"
+  }, [_c("div", {
+    staticClass: "modal-header"
+  }, [_c("h5", {
+    staticClass: "modal-title"
+  }, [_vm._v("Sistemas Novesur")]), _vm._v(" "), _c("button", {
+    staticClass: "close",
+    on: {
+      click: _vm.abrirModal
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "modal-body"
+  }, _vm._l(_vm.mensajeError, function (item, index) {
+    return _c("div", {
+      key: index,
+      staticClass: "callout callout-danger",
+      staticStyle: {
+        padding: "5px"
+      },
+      domProps: {
+        textContent: _vm._s(item)
+      }
+    });
+  }), 0), _vm._v(" "), _c("div", {
+    staticClass: "modal-footer"
+  }, [_c("button", {
+    staticClass: "btn btn-secondary",
+    on: {
+      click: _vm.abrirModal
+    }
+  }, [_vm._v("Cerrar")])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "modal fade",
+    "class": {
+      show: _vm.modalShowEditItem
+    },
+    style: _vm.modalShowEditItem ? _vm.mostrarModal : _vm.ocultarModal
+  }, [_c("div", {
+    staticClass: "modal-editcotitem modal-lg",
+    attrs: {
+      role: "document"
+    }
+  }, [_c("div", {
+    staticClass: "modal-content"
+  }, [_c("div", {
+    staticClass: "modal-header"
+  }, [_c("h5", {
+    staticClass: "modal-title"
+  }, [_vm._v("Requerimiento de Materiales")]), _vm._v(" "), _c("button", {
+    staticClass: "close",
+    on: {
+      click: _vm.abrirModalEditItem
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "modal-body"
+  }, [_c("div", {
+    staticClass: "content container-fluid"
+  }, [_c("form", {
+    attrs: {
+      role: "form"
+    }
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-12"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-2 col-form-label"
+  }, [_vm._v("DESCRIPCION DEL MEDIDOR")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-9"
+  }, [_c("el-select", {
+    staticStyle: {
+      width: "90%"
+    },
+    attrs: {
+      filterable: "",
+      placeholder: "Select"
+    },
+    model: {
+      value: _vm.fillEditInfoProduccion.nIdEditmaterial,
+      callback: function callback($$v) {
+        _vm.$set(_vm.fillEditInfoProduccion, "nIdEditmaterial", $$v);
+      },
+      expression: "fillEditInfoProduccion.nIdEditmaterial"
+    }
+  }, _vm._l(_vm.listProd, function (item) {
+    return _c("el-option", {
+      key: item.id,
+      attrs: {
+        label: item.codigo + " - " + item.familia.nombre + " , " + item.subfamilia.nombre + " , Modelo: " + item.modelotipo.nombre + " , Marca : " + item.marca.nombre + " , Material : " + item.material.nombre + " ," + item.homologacion.nombre,
+        value: item.id
+      }
+    });
+  }), 1)], 1)])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-12"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-6"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-3 col-form-label"
+  }, [_vm._v("Cantidad")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-3"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillEditInfoProduccion.cCantprodEdit,
+      expression: "fillEditInfoProduccion.cCantprodEdit"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text"
+    },
+    domProps: {
+      value: _vm.fillEditInfoProduccion.cCantprodEdit
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillEditInfoProduccion, "cCantprodEdit", $event.target.value);
+      }
+    }
+  })])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-2 col-form-label"
+  }, [_vm._v("Unid. Medida")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6"
+  }, [_c("el-select", {
+    staticStyle: {
+      width: "70%"
+    },
+    attrs: {
+      placeholder: "Select"
+    },
+    model: {
+      value: _vm.fillEditInfoProduccion.nIdUnidMedEdit,
+      callback: function callback($$v) {
+        _vm.$set(_vm.fillEditInfoProduccion, "nIdUnidMedEdit", $$v);
+      },
+      expression: "fillEditInfoProduccion.nIdUnidMedEdit"
+    }
+  }, _vm._l(_vm.listUnidMed, function (item) {
+    return _c("el-option", {
+      key: item.id,
+      attrs: {
+        label: item.nombre,
+        value: item.id
+      }
+    });
+  }), 1)], 1)])])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "modal-footer"
+  }, [_c("button", {
+    staticClass: "btn btn-success",
+    on: {
+      click: function click($event) {
+        return _vm.EditModalReqMateriales();
+      }
+    }
+  }, [_vm._v("\n                            Editar\n                        ")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-secondary",
+    on: {
+      click: _vm.abrirModalEditItem
+    }
+  }, [_vm._v("\n                            Cerrar\n                        ")])])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "modal fade",
+    "class": {
+      show: _vm.modalShowEditManoObra
+    },
+    style: _vm.modalShowEditManoObra ? _vm.mostrarModal : _vm.ocultarModal
+  }, [_c("div", {
+    staticClass: "modal-editcotitem modal-lg",
+    attrs: {
+      role: "document"
+    }
+  }, [_c("div", {
+    staticClass: "modal-content"
+  }, [_c("div", {
+    staticClass: "modal-header"
+  }, [_c("h5", {
+    staticClass: "modal-title"
+  }, [_vm._v("Requerimiento Mano de Obra")]), _vm._v(" "), _c("button", {
+    staticClass: "close",
+    on: {
+      click: _vm.modalShowEditManoObra
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "modal-body"
+  }, [_c("div", {
+    staticClass: "content container-fluid"
+  }, [_c("form", {
+    attrs: {
+      role: "form"
+    }
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-12"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-2 col-form-label"
+  }, [_vm._v("PERSONAL")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-9"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillEditInfoProduccion.cPersonalModal,
+      expression: "fillEditInfoProduccion.cPersonalModal"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text"
+    },
+    domProps: {
+      value: _vm.fillEditInfoProduccion.cPersonalModal
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillEditInfoProduccion, "cPersonalModal", $event.target.value);
+      }
+    }
+  })])])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-12"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-6"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-4 col-form-label"
+  }, [_vm._v("DIAS")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-2"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillEditInfoProduccion.cDiasMObraModal,
+      expression: "fillEditInfoProduccion.cDiasMObraModal"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text"
+    },
+    domProps: {
+      value: _vm.fillEditInfoProduccion.cDiasMObraModal
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillEditInfoProduccion, "cDiasMObraModal", $event.target.value);
+      }
+    }
+  })])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-2 col-form-label"
+  }, [_vm._v("HORAS")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-2"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillEditInfoProduccion.cHorasMObraModal,
+      expression: "fillEditInfoProduccion.cHorasMObraModal"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text"
+    },
+    domProps: {
+      value: _vm.fillEditInfoProduccion.cHorasMObraModal
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillEditInfoProduccion, "cHorasMObraModal", $event.target.value);
+      }
+    }
+  })])])])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "modal-footer"
+  }, [_c("button", {
+    staticClass: "btn btn-success",
+    on: {
+      click: _vm.EditModalManoObra
+    }
+  }, [_vm._v("Editar")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-secondary",
+    on: {
+      click: _vm.abrirModalEditManoObra
+    }
+  }, [_vm._v("\n                            Cerrar\n                        ")])])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "modal fade",
+    "class": {
+      show: _vm.modalShowEditOtrosRequ
+    },
+    style: _vm.modalShowEditOtrosRequ ? _vm.mostrarModal : _vm.ocultarModal
+  }, [_c("div", {
+    staticClass: "modal-editcotitem modal-lg",
+    attrs: {
+      role: "document"
+    }
+  }, [_c("div", {
+    staticClass: "modal-content"
+  }, [_c("div", {
+    staticClass: "modal-header"
+  }, [_c("h5", {
+    staticClass: "modal-title"
+  }, [_vm._v("Otros Requermientos")]), _vm._v(" "), _c("button", {
+    staticClass: "close",
+    on: {
+      click: _vm.modalShowEditOtrosRequ
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "modal-body"
+  }, [_c("div", {
+    staticClass: "content container-fluid"
+  }, [_c("form", {
+    attrs: {
+      role: "form"
+    }
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-12"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-2 col-form-label"
+  }, [_vm._v("DESCRIPCION")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-9"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillEditInfoProduccion.cDescripModal,
+      expression: "fillEditInfoProduccion.cDescripModal"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text"
+    },
+    domProps: {
+      value: _vm.fillEditInfoProduccion.cDescripModal
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillEditInfoProduccion, "cDescripModal", $event.target.value);
+      }
+    }
+  })])])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-12"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-8"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-3 col-form-label"
+  }, [_vm._v("CANTIDAD")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-4"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillEditInfoProduccion.cCantidadModal,
+      expression: "fillEditInfoProduccion.cCantidadModal"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text"
+    },
+    domProps: {
+      value: _vm.fillEditInfoProduccion.cCantidadModal
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillEditInfoProduccion, "cCantidadModal", $event.target.value);
+      }
+    }
+  })])])])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "modal-footer"
+  }, [_c("button", {
+    staticClass: "btn btn-success",
+    on: {
+      click: function click($event) {
+        return _vm.EditModalOtrosReq();
+      }
+    }
+  }, [_vm._v("Editar")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-secondary",
+    on: {
+      click: _vm.abrirModalOtrosRequerimientos
+    }
+  }, [_vm._v("\n                            Cerrar\n                        ")])])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "card-footer"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-4 offset-4"
+  }, [_c("button", {
+    staticClass: "btn btn-flat btn-success btnWidth",
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.setSaveOrdProduccion.apply(null, arguments);
+      }
+    }
+  }, [_vm._v("\n                    EDITAR\n                ")])])])])]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "card-header"
+  }, [_c("h3", {
+    staticClass: "card-title"
+  }, [_vm._v("Formulario Informe de Producción")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "card-header"
+  }, [_c("h3", {
+    staticClass: "card-title"
+  }, [_vm._v("REQUERIMIENTOS DE MATERIALES")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "card-header"
+  }, [_c("h3", {
+    staticClass: "card-title"
+  }, [_vm._v("Requerimiento de Materiales")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("Codigo Producto")]), _vm._v(" "), _c("th", [_vm._v("Descripcion")]), _vm._v(" "), _c("th", [_vm._v("Cantidad")]), _vm._v(" "), _c("th", [_vm._v("Unid. Medida")]), _vm._v(" "), _c("th", [_vm._v("Acción")])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "card-header"
+  }, [_c("h3", {
+    staticClass: "card-title"
+  }, [_vm._v("Mano de Obra - Personal")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("Personal")]), _vm._v(" "), _c("th", [_vm._v("Días")]), _vm._v(" "), _c("th", [_vm._v("Horas")]), _vm._v(" "), _c("th", [_vm._v("Acción")])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "card-header",
+    staticStyle: {
+      "background-color": "#9b59b6",
+      color: "white"
+    }
+  }, [_c("h3", {
+    staticClass: "card-title"
+  }, [_vm._v("Otros Requerimientos")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("Descripción")]), _vm._v(" "), _c("th", [_vm._v("Cantidad")]), _vm._v(" "), _c("th", [_vm._v("Acción")])])]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/modulos/informeProduccion/list.vue?vue&type=template&id=7dbb4584":
 /*!**************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/modulos/informeProduccion/list.vue?vue&type=template&id=7dbb4584 ***!
@@ -40918,7 +42483,37 @@ var render = function render() {
       },
       expression: "fillReporteInfoProduccion.dFecha"
     }
-  })], 1)])])])]), _vm._v(" "), _c("div", {
+  })], 1)])]), _vm._v(" "), _c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-12"
+  }, [_c("div", {
+    staticClass: "form-group row"
+  }, [_c("label", {
+    staticClass: "col-md-1 col-form-label"
+  }, [_vm._v("Codigo de Requerimiento")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-9"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.fillReporteInfoProduccion.cCodRequerimiento,
+      expression: "fillReporteInfoProduccion.cCodRequerimiento"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text"
+    },
+    domProps: {
+      value: _vm.fillReporteInfoProduccion.cCodRequerimiento
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.fillReporteInfoProduccion, "cCodRequerimiento", $event.target.value);
+      }
+    }
+  })])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "card-footer"
   }, [_c("div", {
     staticClass: "row"
@@ -40969,7 +42564,19 @@ var render = function render() {
       domProps: {
         textContent: _vm._s(item.producto.familia.nombre + " " + item.producto.subfamilia.nombre + ", MARCA :" + item.producto.marca.nombre + ", MODELO/TIPO :" + item.producto.modelotipo.nombre + ", MATERIAL :" + item.producto.material.nombre)
       }
-    }), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.cantidad))]), _vm._v(" "), _c("td", [_c("button", {
+    }), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.cantidad))]), _vm._v(" "), _c("td", [_c("router-link", {
+      staticClass: "btn btn-success btn-sm",
+      attrs: {
+        to: {
+          name: "informeProduccion.edit",
+          params: {
+            id: item.id
+          }
+        }
+      }
+    }, [_c("i", {
+      staticClass: "far fas fa-pen"
+    }), _vm._v("\n                        Editar\n                      ")]), _vm._v(" "), _c("button", {
       staticClass: "btn btn-danger btn-sm",
       on: {
         click: function click($event) {
@@ -193257,6 +194864,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/modulos/informeProduccion/edit.vue":
+/*!********************************************************************!*\
+  !*** ./resources/js/components/modulos/informeProduccion/edit.vue ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _edit_vue_vue_type_template_id_e5f92620__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./edit.vue?vue&type=template&id=e5f92620 */ "./resources/js/components/modulos/informeProduccion/edit.vue?vue&type=template&id=e5f92620");
+/* harmony import */ var _edit_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./edit.vue?vue&type=script&lang=js */ "./resources/js/components/modulos/informeProduccion/edit.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _edit_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _edit_vue_vue_type_template_id_e5f92620__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _edit_vue_vue_type_template_id_e5f92620__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/modulos/informeProduccion/edit.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/modulos/informeProduccion/edit.vue?vue&type=script&lang=js":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/modulos/informeProduccion/edit.vue?vue&type=script&lang=js ***!
+  \********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_edit_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./edit.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/modulos/informeProduccion/edit.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_edit_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/modulos/informeProduccion/edit.vue?vue&type=template&id=e5f92620":
+/*!**************************************************************************************************!*\
+  !*** ./resources/js/components/modulos/informeProduccion/edit.vue?vue&type=template&id=e5f92620 ***!
+  \**************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_edit_vue_vue_type_template_id_e5f92620__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../../node_modules/vue-loader/lib??vue-loader-options!./edit.vue?vue&type=template&id=e5f92620 */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/modulos/informeProduccion/edit.vue?vue&type=template&id=e5f92620");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_edit_vue_vue_type_template_id_e5f92620__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_edit_vue_vue_type_template_id_e5f92620__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/modulos/informeProduccion/list.vue":
 /*!********************************************************************!*\
   !*** ./resources/js/components/modulos/informeProduccion/list.vue ***!
@@ -199644,6 +201320,11 @@ function verificarAcceso(to, from, next) {
     path: "/informeProduccion/list",
     name: "informeProduccion.list",
     component: __webpack_require__(/*! ./components/modulos/informeProduccion/list */ "./resources/js/components/modulos/informeProduccion/list.vue")["default"]
+  }, {
+    path: "/informeProduccion/edit/:id",
+    name: "informeProduccion.edit",
+    component: __webpack_require__(/*! ./components/modulos/informeProduccion/edit */ "./resources/js/components/modulos/informeProduccion/edit.vue")["default"],
+    props: true
   },
   ////NOTA DE PEDIDO /////
   {

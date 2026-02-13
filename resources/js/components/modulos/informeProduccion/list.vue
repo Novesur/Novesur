@@ -62,6 +62,22 @@
                       </div>
                     </div>
                   </div>
+
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group row">
+                            <label class="col-md-1 col-form-label">Codigo de Requerimiento</label>
+                            <div class="col-md-9">
+                              <input
+                                type="text"
+                                class="form-control"
+                                v-model="fillReporteInfoProduccion.cCodRequerimiento"
+                              
+                              />
+                            </div>
+                          </div>
+                    </div>
+                  </div>
                 </form>
               </div>
               <div class="card-footer">
@@ -126,6 +142,15 @@
                       <td>{{ item.cantidad }}</td>
 
                       <td>
+                        <router-link class="btn btn-success btn-sm" :to="{
+                          name: 'informeProduccion.edit',
+                          params: {
+                            id: item.id,
+                          },
+                        }">
+                          <i class="far fas fa-pen"></i>
+                          Editar
+                        </router-link>
                         <button class="btn btn-danger btn-sm" @click.prevent="SetGenerarreqMaterialesPDF(item.id)">
                           <i class="fas fa-file-pdf"></i> PDF
                         </button>
@@ -160,7 +185,7 @@
                       :class="[page == pageNumber ? 'active' : '']">
                       <a href="" class="page-link" @click.prevent="selectPage(page)">{{
                         page + 1
-                        }}</a>
+                      }}</a>
                     </li>
                     <li class="page-item" v-if="pageNumber < pageCount - 1">
                       <a href="" class="page-link" @click.prevent="nextPage">Post</a>
@@ -434,6 +459,7 @@ export default {
         totalMObra: "",
         precioHora: "",
         totalHObra: "",
+        cCodRequerimiento: ""
       },
       modalShowEditItem: false,
       mostrarModal: {
@@ -574,7 +600,7 @@ export default {
     MandarDiaMObra(id, informeproduccion_id, dias, costdias, horas, costhoras) {
 
       this.fillReporteInfoProduccion.precioDiaObra = prompt("Ingrese el precio de la Hora ");
-      this.fillReporteInfoProduccion.totalMObra = (horas * costhoras )+(dias * this.fillReporteInfoProduccion.precioDiaObra );
+      this.fillReporteInfoProduccion.totalMObra = (horas * costhoras) + (dias * this.fillReporteInfoProduccion.precioDiaObra);
       var url = "/administracion/InformeProduccion/editPrecioDiaOdrProd";
       axios
         .post(url, {
@@ -606,7 +632,7 @@ export default {
     MandarHoraMObra(id, informeproduccion_id, dias, costdias, horas, costhoras) {
 
       this.fillReporteInfoProduccion.precioHora = prompt("Ingrese el precio de la Hora ");
-      this.fillReporteInfoProduccion.totalHObra = (horas * this.fillReporteInfoProduccion.precioHora )+(dias * costdias );
+      this.fillReporteInfoProduccion.totalHObra = (horas * this.fillReporteInfoProduccion.precioHora) + (dias * costdias);
       var url = "/administracion/InformeProduccion/editPrecioHoraOdrProd";
       axios
         .post(url, {
@@ -677,12 +703,14 @@ export default {
       this.listOrdenProduc = [];
     },
     getListReportProduc() {
-      var url = "/administracion/InformeProduccion/list";
+      var url = "/administracion/InformeProduccion/list"; 
       axios
         .get(url, {
           params: {
             nIdprod: this.fillReporteInfoProduccion.nIdprod,
             dFecha: this.fillReporteInfoProduccion.dFecha,
+            cCodRequerimiento: this.fillReporteInfoProduccion.cCodRequerimiento
+            
           },
         })
         .then((response) => {

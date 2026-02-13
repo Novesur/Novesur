@@ -146,19 +146,34 @@ class InformeProduccionController extends Controller
 
 
           public function list(Request $request){
-            if (is_null($request->dFecha)  && is_null($request->nIdprod)) {
-                $dato = InformeProduccion::with('requerimiento_materiales','producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion', 'unidmedida', 'cliente')->get();
+          
+              if (is_null($request->dFecha)  && is_null($request->nIdprod) && is_null($request->cCodRequerimiento)) {
+                  $dato = InformeProduccion::with('requerimiento_materiales','producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion', 'unidmedida', 'cliente')->get();
                 return $dato;
             }
-            if (is_null($request->dFecha)) {
+            
+            
+           elseif (is_null($request->dFecha)  && is_null($request->nIdprod)) {
+            $idRequerimiento = RequerimientosMateriales::where('codigo',$request->cCodRequerimiento)->first();
+            if($idRequerimiento){
+                $dato = InformeProduccion::with('requerimiento_materiales','producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion', 'unidmedida', 'cliente')
+                ->where('pk_ReqMateriales',$idRequerimiento->id)
+                ->get();
+                return $dato;
+                }
+          }
+
+
+         elseif (is_null($request->nIdprod ) && is_null($request->cCodRequerimiento)) {
+              $dato = InformeProduccion::with('requerimiento_materiales','producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion', 'unidmedida', 'cliente')->whereBetween('fecha', [$request->dFecha[0], $request->dFecha[1]])->get();
+              return $dato;
+          }
+            elseif (is_null($request->dFecha) && is_null($request->cCodRequerimiento)) {
                 $dato = InformeProduccion::with('requerimiento_materiales','producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion', 'unidmedida', 'cliente')->where('producto_id', $request->nIdprod)->get();
                 return $dato;
             }
 
-            if (is_null($request->nIdprod)) {
-                $dato = InformeProduccion::with('requerimiento_materiales','producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion', 'unidmedida', 'cliente')->whereBetween('fecha', [$request->dFecha[0], $request->dFecha[1]])->get();
-                return $dato;
-            }
+
         }
 
 
@@ -349,4 +364,30 @@ class InformeProduccionController extends Controller
         return (new InfoProdListExport)->setGenerarExcel($listOrdenProduc)->download('invoices.xlsx');
     }
 
+        public function CargaInfoProduccionById(Request $request)
+    {
+
+        $data = InformeProduccion::with('cliente')->where('id', $request->nInfoProd)->first();
+
+        return $data;
+    }
+
+
+        public function getListReqMatInfoProd(Request $request){
+
+                   $data = InfoProduccionMaterial::with('producto','producto.marca','producto.familia','producto.material','producto.modelotipo','producto.subfamilia','producto.homologacion','unidmedida')->where('informeproduccion_id', $request->nInfoProd)->get();
+
+                   return $data;
+        }
+
+         public function getListReqManoObraInfoProd(Request $request){
+            $data = InfoProduccionManoObra::where('informeproduccion_id', $request->nInfoProd)->get();
+            return $data;
+          }
+
+             public function getOtrosRequerimientosInfoProd(Request $request){
+
+            $dato = InfoProduccionOtrosRequerimientos::where('informeproduccion_id', $request->nInfoProd)->get();
+            return $dato;
+          }
 }

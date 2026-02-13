@@ -527,6 +527,13 @@ Route::get('/administracion/InformeProduccion/mostrarInfOtrosReq', 'Administraci
 Route::post('/administracion/InformeProduccion/editPrecioOtrosReq', 'Administracion\InformeProduccionController@editPrecioOtrosReq');
 Route::post('/operacion/InformeProduccion/export', 'Administracion\InformeProduccionController@export');
 Route::post('/administracion/InformeProduccion/ExcelListOrdProd', 'Administracion\InformeProduccionController@ExcelListOrdProd');
+Route::get('/administracion/InformeProduccion/CargaInfoProduccionById', 'Administracion\InformeProduccionController@CargaInfoProduccionById');
+Route::get('/administracion/InformeProduccion/getListReqMatInfoProd', 'Administracion\InformeProduccionController@getListReqMatInfoProd');
+Route::get('/administracion/InformeProduccion/getListReqManoObraInfoProd', 'Administracion\InformeProduccionController@getListReqManoObraInfoProd');
+Route::get('/administracion/InformeProduccion/getOtrosRequerimientosInfoProd', 'Administracion\InformeProduccionController@getOtrosRequerimientosInfoProd');
+
+
+
 
 
 
@@ -550,6 +557,15 @@ Route::post('administracion/RequerimientoMateriales/getDataReqManoObra', 'Admini
 Route::post('administracion/RequerimientoMateriales/EditModalManoObra', 'Administracion\RequerimientoMaterialesController@EditModalManoObra');
 Route::post('administracion/RequerimientoMateriales/getDataOtrosReq', 'Administracion\RequerimientoMaterialesController@getDataOtrosReq');
 Route::post('administracion/RequerimientoMateriales/EditModalOtrosReq', 'Administracion\RequerimientoMaterialesController@EditModalOtrosReq');
+Route::post('/administracion/InformeProduccion/getDataReqMaterialesInfoProd', 'Administracion\RequerimientoMaterialesController@getDataReqMaterialesInfoProd');
+Route::post('/administracion/InformeProduccion/EditModalReqMaterialesInfoProd', 'Administracion\RequerimientoMaterialesController@EditModalReqMaterialesInfoProd');
+Route::post('/administracion/InformeProduccion/getDataReqManoObraInfoProd', 'Administracion\RequerimientoMaterialesController@getDataReqManoObraInfoProd');
+Route::post('/administracion/InformeProduccion/EditModalManoObraInfoProd', 'Administracion\RequerimientoMaterialesController@EditModalManoObraInfoProd');
+Route::post('/administracion/InformeProduccion/EditModalOtrosReqInfoProd', 'Administracion\RequerimientoMaterialesController@EditModalOtrosReqInfoProd');
+Route::post('/administracion/InformeProduccion/getDataOtrosReqInfoProd', 'Administracion\RequerimientoMaterialesController@getDataOtrosReqInfoProd');
+Route::post('/administracion/InformeProduccion/editInfoProdSave', 'Administracion\RequerimientoMaterialesController@editInfoProdSave');
+
+
 
 
 

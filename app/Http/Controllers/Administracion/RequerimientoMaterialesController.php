@@ -15,6 +15,10 @@ use App\TempMaterialOrdenProd;
 use App\TempRequerimientos;
 use App\UnidMedida;
 use App\Countable;
+use App\InfoProduccionManoObra;
+use App\InfoProduccionMaterial;
+use App\InfoProduccionOtrosRequerimientos;
+use App\InformeProduccion;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
@@ -345,6 +349,54 @@ class RequerimientoMaterialesController extends Controller
         }
      }
 
+   public function getDataReqMaterialesInfoProd(Request $request){
+        $dato = InfoProduccionMaterial::with('producto', 'producto.marca', 'producto.familia', 'producto.material', 'producto.modelotipo', 'producto.subfamilia', 'producto.homologacion')->where('id', $request->nInfoProd)->first();
+        return $dato;
+    }
+    public function EditModalReqMaterialesInfoProd(Request $request){
+
+        $MaterialReqMateriales = InfoProduccionMaterial::find($request->item);
+        if($MaterialReqMateriales) {
+            $MaterialReqMateriales->cantidad = $request->cCantprodEdit;
+            $MaterialReqMateriales->unidmedida_id = $request->nIdUnidMedEdit;
+            $MaterialReqMateriales->save();
+        }
+    }
+
+      public function getDataReqManoObraInfoProd(Request $request){
+        $dato = InfoProduccionManoObra::where('id', $request->item)->first();
+        return $dato;
+    }
+
+        public function EditModalManoObraInfoProd(Request $request){
+
+         $ManoObraReqmateriales = InfoProduccionManoObra::find($request->item);
+
+         if($ManoObraReqmateriales) {
+             $ManoObraReqmateriales->personal = strtoupper($request->cPersonalModal);
+             $ManoObraReqmateriales->dias = $request->cDiasMObraModal;
+             $ManoObraReqmateriales->horas = $request->cHorasMObraModal;
+             $ManoObraReqmateriales->save();
+         }
+     }
 
 
+       public function getDataOtrosReqInfoProd(Request $request){
+        $dato = InfoProduccionOtrosRequerimientos::where('id', $request->item)->first();
+        return $dato;
+     }
+
+          public function EditModalOtrosReqInfoProd(Request $request){
+        $OtrosRequerimientosReqMateriales = InfoProduccionOtrosRequerimientos::find($request->item);
+
+        if($OtrosRequerimientosReqMateriales) {
+            $OtrosRequerimientosReqMateriales->descripcion = strtoupper($request->cDescripModal);
+            $OtrosRequerimientosReqMateriales->cantidad = $request->cCantidadModal;
+            $OtrosRequerimientosReqMateriales->save();
+        }
+     }
+
+     public function editInfoProdSave(Request $request){
+         InformeProduccion::where('id', $request->nInfoProd)->update(['cantidad' => $request->cCantprod ]);
+     }
 }
