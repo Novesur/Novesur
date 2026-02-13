@@ -41520,8 +41520,7 @@ var render = function render() {
       width: "70%"
     },
     attrs: {
-      placeholder: "Select",
-      disabled: ""
+      placeholder: "Select"
     },
     model: {
       value: _vm.fillEditInfoProduccion.nIdUnidMed,

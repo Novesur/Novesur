@@ -78,7 +78,7 @@
                                                     <label class="col-md-2 col-form-label">Unid. Medida</label>
                                                     <div class="col-md-6">
                                                         <el-select v-model="fillEditInfoProduccion.nIdUnidMed"
-                                                            placeholder="Select" disabled style="width: 70%">
+                                                            placeholder="Select"  style="width: 70%">
                                                             <el-option v-for="item in listUnidMed" :key="item.id"
                                                                 :label="item.nombre" :value="item.id">
                                                             </el-option>
